@@ -2,3 +2,9 @@
 *.sdf
 *.tlog
 *.obj
+*.ilk
+*.lastbuildstate
+*.pdb
+*.pch
+*.user
+*.unsuccessfulbuild
