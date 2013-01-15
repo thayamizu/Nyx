@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1B75596E-EBDA-47BD-A1FD-7E865274F809}</ProjectGuid>
+    <RootNamespace>NyxCore</RootNamespace>
+    <ProjectName>Nyx</ProjectName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Lib/Debug/</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../Bin/Debug/</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Lib/Release/</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../Bin/Release/</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Nyx_MT</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Nyx_MTd</TargetName>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\dev\mockpp-1.16\Incude\;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\dev\mockpp-1.16\Lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include/;../Source/;../../SDKs/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;DEBUG;</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH\PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ProgramDataBaseFileName>$(IntDir)Nyx_MTd.pdb</ProgramDataBaseFileName>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)Nyx_MTd.lib</OutputFile>
+      <AdditionalLibraryDirectories>..\..\SDKs\SDKs\FBX;$(DXSDK_DIR)Lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;..\Source;..\..\Common;..\..\SDKs\boost;..\..\SDKs\fbx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>UNICODE;WIN32;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH\PCH.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ProgramDataBaseFileName>$(IntDir)Nyx_MT.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86\..\..\SDKs\fbx;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Collision\BulletDefinition.h" />
+    <ClInclude Include="..\Source\Database\IDatabaseConnector.h" />
+    <ClInclude Include="..\Source\Database\SQLiteDefinition.h" />
+    <ClInclude Include="..\Source\Debug\Assert.h" />
+    <ClInclude Include="..\Source\Debug\DebugOutput.h" />
+    <ClInclude Include="..\Source\Debug\MemoryChecker.h" />
+    <ClInclude Include="..\Source\Graphics\Camera.h" />
+    <ClInclude Include="..\Source\Graphics\DirectXDefinition.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h" />
+    <ClInclude Include="..\Source\Graphics\IAnimationController.h" />
+    <ClInclude Include="..\Source\Graphics\IGraphicsDevice.h" />
+    <ClInclude Include="..\Source\Graphics\IMesh.h" />
+    <ClInclude Include="..\Source\Graphics\ISprite.h" />
+    <ClInclude Include="..\Source\Graphics\ISurface.h" />
+    <ClInclude Include="..\Source\Graphics\ITexture.h" />
+    <ClInclude Include="..\Source\Graphics\ITextureFont.h" />
+    <ClInclude Include="..\Source\Graphics\GDI\DIBitmap.h" />
+    <ClInclude Include="..\Source\Graphics\GDI\Font.h" />
+    <ClInclude Include="..\Source\Graphics\GDI\Pen.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\DirectGraphicsDevice.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\DXSprite.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\DXTextureFont.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h" />
+    <ClInclude Include="..\Source\Graphics\SceneNode.h" />
+    <ClInclude Include="..\Source\GUI\CheckBox.h" />
+    <ClInclude Include="..\Source\GUI\Dispatcher.h" />
+    <ClInclude Include="..\Source\GUI\ICheckBox.h" />
+    <ClInclude Include="..\Source\GUI\IComboBox.h" />
+    <ClInclude Include="..\Source\GUI\IControl.h" />
+    <ClInclude Include="..\Source\GUI\IDispatcher.h" />
+    <ClInclude Include="..\Source\GUI\IListBox.h" />
+    <ClInclude Include="..\Source\GUI\IPushButton.h" />
+    <ClInclude Include="..\Source\GUI\IRadioButton.h" />
+    <ClInclude Include="..\Source\GUI\IWindow.h" />
+    <ClInclude Include="..\Source\GUI\ListBox.h" />
+    <ClInclude Include="..\Source\GUI\PushButton.h" />
+    <ClInclude Include="..\Source\GUI\RadioButton.h" />
+    <ClInclude Include="..\Source\GUI\Window.h" />
+    <ClInclude Include="..\Source\Input\IKeyBase.h" />
+    <ClInclude Include="..\Source\Input\Joystick.h" />
+    <ClInclude Include="..\Source\Input\Keyboard.h" />
+    <ClInclude Include="..\Source\Input\Mouse.h" />
+    <ClInclude Include="..\Source\IO\detail\Win32\Win32File.h" />
+    <ClInclude Include="..\Source\IO\File.h" />
+    <ClInclude Include="..\Source\IO\IFile.h" />
+    <ClInclude Include="..\Source\IO\Logger.h" />
+    <ClInclude Include="..\Source\IO\PackedFile.h" />
+    <ClInclude Include="..\Source\Movie\DSMoviePlayer.h" />
+    <ClInclude Include="..\Source\Movie\IMoviePlayer.h" />
+    <ClInclude Include="..\Source\Movie\MoviePlayer.h" />
+    <ClInclude Include="..\Source\Network\ISocket.h" />
+    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h" />
+    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h" />
+    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h" />
+    <ClInclude Include="..\Source\Object\IResourceCache.h" />
+    <ClInclude Include="..\Source\Object\IResourceHandle.h" />
+    <ClInclude Include="..\Source\Object\IResourceManager.h" />
+    <ClInclude Include="..\Source\Object\ResourceCache.h" />
+    <ClInclude Include="..\Source\Object\ResourceHandle.h" />
+    <ClInclude Include="..\Source\Object\ResourceManager.h" />
+    <ClInclude Include="..\Source\Sound\WaveReader.h" />
+    <ClInclude Include="..\Source\SQLiteDatabase.h" />
+    <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h" />
+    <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h" />
+    <ClInclude Include="..\Source\Timer\detail\Win32\Win32Timer.h" />
+    <ClInclude Include="..\Source\Utility\Common.h" />
+    <ClInclude Include="..\Source\Utility\Limits.h" />
+    <ClInclude Include="..\Source\Utility\Math.h" />
+    <ClInclude Include="..\Source\Utility\Random.h" />
+    <ClInclude Include="..\Source\Timer\FixedTimer.h" />
+    <ClInclude Include="..\Source\Timer\FPSTimer.h" />
+    <ClInclude Include="..\Source\Timer\ITimer.h" />
+    <ClInclude Include="..\Source\Timer\PerformanceTimer.h" />
+    <ClInclude Include="..\Source\Timer\Timer.h" />
+    <ClInclude Include="..\Source\PCH\PCH.h" />
+    <ClInclude Include="..\Source\Object\Delegate.h" />
+    <ClInclude Include="..\Source\Object\IResource.h" />
+    <ClInclude Include="..\Source\Object\NonCopyable.h" />
+    <ClInclude Include="..\Source\Primitive\Color3c.h" />
+    <ClInclude Include="..\Source\Primitive\Color3f.h" />
+    <ClInclude Include="..\Source\Primitive\Color4c.h" />
+    <ClInclude Include="..\Source\Primitive\Color4f.h" />
+    <ClInclude Include="..\Source\Primitive\Matrix33.h" />
+    <ClInclude Include="..\Source\Primitive\Matrix44.h" />
+    <ClInclude Include="..\Source\Primitive\Plane.h" />
+    <ClInclude Include="..\Source\Primitive\Point2f.h" />
+    <ClInclude Include="..\Source\Primitive\Point2i.h" />
+    <ClInclude Include="..\Source\Primitive\Point3f.h" />
+    <ClInclude Include="..\Source\Primitive\Point3i.h" />
+    <ClInclude Include="..\Source\Primitive\Quaternion.h" />
+    <ClInclude Include="..\Source\Primitive\Rect2f.h" />
+    <ClInclude Include="..\Source\Primitive\Rect2i.h" />
+    <ClInclude Include="..\Source\Primitive\Vector2.h" />
+    <ClInclude Include="..\Source\Primitive\Vector3.h" />
+    <ClInclude Include="..\Source\Primitive\Vector4.h" />
+    <ClInclude Include="..\Source\Thread\CriticalSection.h" />
+    <ClInclude Include="..\Source\Thread\LockObject.h" />
+    <ClInclude Include="..\Source\Thread\Thread.h" />
+    <ClInclude Include="..\Source\Sound\AudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\AudioManager.h" />
+    <ClInclude Include="..\Source\Sound\DirectSound3DAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioManager.h" />
+    <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\IAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\IAudioManager.h" />
+    <ClInclude Include="..\Source\NyxCore.h" />
+    <ClInclude Include="..\Source\Utility\Type.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Debug\DebugOutput.cpp" />
+    <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
+    <ClCompile Include="..\Source\Graphics\Camera.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp" />
+    <ClCompile Include="..\Source\Graphics\ISprite.cpp" />
+    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp" />
+    <ClCompile Include="..\Source\Graphics\GDI\DIBitmap.cpp" />
+    <ClCompile Include="..\Source\Graphics\GDI\Font.cpp" />
+    <ClCompile Include="..\Source\Graphics\GDI\Pen.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\DirectGraphicsDevice.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\DXSprite.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\DXTextureFont.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp" />
+    <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
+    <ClCompile Include="..\Source\GUI\Dispatcher.cpp" />
+    <ClCompile Include="..\Source\GUI\ListBox.cpp" />
+    <ClCompile Include="..\Source\GUI\PushButton.cpp" />
+    <ClCompile Include="..\Source\GUI\RadioButton.cpp" />
+    <ClCompile Include="..\Source\GUI\Window.cpp" />
+    <ClCompile Include="..\Source\Input\Joystick.cpp" />
+    <ClCompile Include="..\Source\Input\Keyboard.cpp" />
+    <ClCompile Include="..\Source\Input\Mouse.cpp" />
+    <ClCompile Include="..\Source\IO\detail\Win32\Win32File.cpp" />
+    <ClCompile Include="..\Source\IO\File.cpp" />
+    <ClCompile Include="..\Source\IO\Logger.cpp" />
+    <ClCompile Include="..\Source\IO\PackedFile.cpp" />
+    <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp" />
+    <ClCompile Include="..\Source\Movie\MoviePlayer.cpp" />
+    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp" />
+    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp" />
+    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp" />
+    <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
+    <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
+    <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
+    <ClCompile Include="..\Source\Sound\WaveReader.cpp" />
+    <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp" />
+    <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp" />
+    <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp" />
+    <ClCompile Include="..\Source\Utility\Limits.cpp" />
+    <ClCompile Include="..\Source\Utility\Math.cpp" />
+    <ClCompile Include="..\Source\Utility\Random.cpp" />
+    <ClCompile Include="..\Source\Timer\FixedTimer.cpp" />
+    <ClCompile Include="..\Source\Timer\FPSTimer.cpp" />
+    <ClCompile Include="..\Source\Timer\PerformanceTimer.cpp" />
+    <ClCompile Include="..\Source\Timer\Timer.cpp" />
+    <ClCompile Include="..\Source\PCH\PCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Color3c.cpp" />
+    <ClCompile Include="..\Source\Primitive\Color3f.cpp" />
+    <ClCompile Include="..\Source\Primitive\Color4c.cpp" />
+    <ClCompile Include="..\Source\Primitive\Color4f.cpp" />
+    <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
+    <ClCompile Include="..\Source\Primitive\Matrix44.cpp" />
+    <ClCompile Include="..\Source\Primitive\Plane.cpp" />
+    <ClCompile Include="..\Source\Primitive\Point2f.cpp" />
+    <ClCompile Include="..\Source\Primitive\Point2i.cpp" />
+    <ClCompile Include="..\Source\Primitive\Point3f.cpp" />
+    <ClCompile Include="..\Source\Primitive\Point3i.cpp" />
+    <ClCompile Include="..\Source\Primitive\Quarternion.cpp" />
+    <ClCompile Include="..\Source\Primitive\Rect2f.cpp" />
+    <ClCompile Include="..\Source\Primitive\Rect2i.cpp" />
+    <ClCompile Include="..\Source\Primitive\Vector2.cpp" />
+    <ClCompile Include="..\Source\Primitive\Vector3.cpp" />
+    <ClCompile Include="..\Source\Primitive\Vector4.cpp" />
+    <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
+    <ClCompile Include="..\Source\Thread\Thread.cpp" />
+    <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
+    <ClCompile Include="..\Source\Sound\DirectSound3DAudioBuffer.cpp" />
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioBuffer.cpp" />
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioManager.cpp" />
+    <ClCompile Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,23 @@
+
+■ビルドについて
+このライブラリは，次のライブラリに依存しています
+ビルドする際は，下記ライブラリが導入されているかどうかご確認ください
+
+・DirectX SDK(feburary 2010) およびDirect 9.0c以上のランタイム
+・Windows SDK(DirectShow) 
+■環境変数
+ビルドするときは，いかの環境変数を設定してください
+
+$(DXSDK_DIR) = DirectX SDKのパス
+
+■単体テストについて
+単体テストフレームワークに利用しています
+・WinUnit
+
+■インストール方法
+パスの通っている場所に.libファイルと.hを置いてください
+
+■バグ報告
+Author:t.hayamizu
+TEL   :090-9629-1634 
+E-Mail:t.hayamizu@outlook.com(＠を半角にしてください) 

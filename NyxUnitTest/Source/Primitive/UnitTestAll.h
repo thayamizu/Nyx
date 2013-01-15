@@ -1,0 +1,17 @@
+#pragma once
+
+#include "Primitive/Color3cUnitTest.h"
+#include "Primitive/Color3fUnitTest.h"
+#include "Primitive/Color4cUnitTest.h"
+#include "Primitive/Color4fUnitTest.h"
+#include "Primitive/Color4fUnitTest.h"
+#include "Primitive/Matrix33UnitTest.h"
+#include "Primitive/Matrix44UnitTest.h"
+#include "Primitive/PlaneUnitTest.h"
+#include "Primitive/Point2iUnitTest.h"
+#include "Primitive/Point2fUnitTest.h"
+#include "Primitive/Point3iUnitTest.h"
+#include "Primitive/Point3fUnitTest.h"
+#include "Primitive/QuaternionUnitTest.h"
+#include "Primitive/Vector3UnitTest.h"
+#include "Primitive/Vector4UnitTest.h"

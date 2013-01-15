@@ -1,0 +1,769 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{4a93c902-84d7-4acc-867b-357da923ccdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{3f8d4bca-c1d5-4a5d-b382-f8f86a80ef31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GDI">
+      <UniqueIdentifier>{dcb3b735-18df-479b-b389-6e94d48fce77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\DX9">
+      <UniqueIdentifier>{3ba3e4eb-64da-4582-954f-19b3d98e2855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{2c25916e-2b58-4e27-91ca-81608c9ca34f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{0ae8796c-17f6-46c8-a89a-def79c2ffa0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{0193c9ef-2ce5-4e3f-bfd0-7dfc8d2581b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{c5262047-5d16-4747-a169-1b4d1a8b6ee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{a8e5788f-6b82-4b7b-94a7-d94b614a70a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{eee30b3c-4182-4815-986b-a2afe17b2fd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{318bcff4-437d-4eb1-9390-d90c638b52f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{f026a2ec-83b4-4737-aa72-f675ada15a3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitive">
+      <UniqueIdentifier>{2e226b03-e6ee-42be-9955-05163dce8a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{a74412fd-81e0-4037-8443-e999d5b4beef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{ba5282d5-d5ee-423b-862c-a89fed9a291a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{6fd923f3-74b8-4bdb-ac4a-03d426dcfa83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation">
+      <UniqueIdentifier>{bd750669-cddc-4aeb-9ec8-cf079c4cddce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Camera">
+      <UniqueIdentifier>{3d3db83e-9af0-4c1e-aa1a-8da528671e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer">
+      <UniqueIdentifier>{188e22da-c8e5-4568-9888-b6d72ea638db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Utiltiy">
+      <UniqueIdentifier>{661fab4c-b31d-48d0-8401-eaae6af06048}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Core">
+      <UniqueIdentifier>{30c428a5-9e68-45ee-a903-8a90d5740b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader">
+      <UniqueIdentifier>{59e187d4-35d1-4065-805c-e542b0c9e21c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie">
+      <UniqueIdentifier>{2b9a50a9-e9ec-411d-a61b-e814cc5af50e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\interfaces">
+      <UniqueIdentifier>{d1a77aa0-533c-4f5d-9915-85b00bbed86a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\implements">
+      <UniqueIdentifier>{4b796fee-324a-42df-8eb6-8a18ee5b46ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\interfaces">
+      <UniqueIdentifier>{abbda38a-d885-4e15-8d18-f79c78692d42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\implements">
+      <UniqueIdentifier>{c3073ab3-abd4-4951-908c-02339ba572fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie\interfaces">
+      <UniqueIdentifier>{eff8bcf6-436f-4a5d-a5e4-dc2314352590}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie\implements">
+      <UniqueIdentifier>{4a3c7e11-70dc-48cb-b953-e0600214da1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\interfaces">
+      <UniqueIdentifier>{a9de89d7-b7b6-4051-9a53-238f71b6d3ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\implements">
+      <UniqueIdentifier>{82ab8ad3-76b9-408c-99e5-13d8bdb462d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\interfaces">
+      <UniqueIdentifier>{cfd202c5-8faf-4297-afda-cd259f4851e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\implements">
+      <UniqueIdentifier>{c3e86ca3-627d-4a3b-92e1-cdbc136b3854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\interfaces">
+      <UniqueIdentifier>{2147cc52-54e3-4150-bdc9-a4ef183880ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\implements">
+      <UniqueIdentifier>{cd6c930d-2b9f-4d57-b92a-8e9f409415ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\interfaces">
+      <UniqueIdentifier>{ecc3c118-72ee-497a-9cda-59fbf5b570b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\implements">
+      <UniqueIdentifier>{291a375b-eff5-4d8f-9966-b0a0fdb9a3e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\utility">
+      <UniqueIdentifier>{1fd55d7b-546d-44c9-9135-ed35f46f3b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread\interfaces">
+      <UniqueIdentifier>{f0399042-c09b-4372-9125-ff011890382f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread\implements">
+      <UniqueIdentifier>{a99ce0b2-fa29-4951-8307-7f0154891332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\interfaces">
+      <UniqueIdentifier>{b80130c6-a483-4aa5-ab42-a3e2cce40342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\implements">
+      <UniqueIdentifier>{6c7d297d-29be-44fc-81eb-aba4ee6c9508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\interfaces">
+      <UniqueIdentifier>{a1e15a38-4392-4663-9df7-f9e5e5934b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\implements">
+      <UniqueIdentifier>{ae7d808e-9097-45c5-aa5b-fabef661bda9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation\interfaces">
+      <UniqueIdentifier>{250f46ad-ae63-4e62-ae11-eaa1c1044edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation\implements">
+      <UniqueIdentifier>{eeebc2e5-08dc-4307-af96-276012c0defa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision\interfaces">
+      <UniqueIdentifier>{035928b2-6b12-4429-b9ff-9a13936728e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision\base">
+      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision\implements">
+      <UniqueIdentifier>{76cca335-ea3c-4b10-b7ac-d173fbf88b53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\base">
+      <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\implements\detail">
+      <UniqueIdentifier>{8ff13dc7-7e0b-472e-b3a2-06e8e6171667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\implements\detail\Win32">
+      <UniqueIdentifier>{99c37ccf-a8af-474b-ae85-c34036b3b27a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread\implements\detail">
+      <UniqueIdentifier>{52f37c69-278f-45a3-a880-9ef2c3eb3eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread\implements\detail\Win32">
+      <UniqueIdentifier>{4a2751ed-13f3-436d-a1bb-2a5ccb0c6012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\implements\detail">
+      <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\implements\detail\DirectSound">
+      <UniqueIdentifier>{68a21d74-612a-4e5f-97b6-863aa8ed9ca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\implements\detail">
+      <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\implements\detail\Win32">
+      <UniqueIdentifier>{38cec03a-1066-4e4e-aca1-f54708ac01f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\implements\detail">
+      <UniqueIdentifier>{e69bb2af-99fb-4f15-9c53-6726a2ad4fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\implements\detail\DirectInput">
+      <UniqueIdentifier>{dbbe5706-7d19-41e2-bacc-abcfe3fa50c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie\implements\detail">
+      <UniqueIdentifier>{0967790e-47d9-426b-a457-9af07c03716e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie\implements\detail\DirectShow">
+      <UniqueIdentifier>{06cb3258-e262-4523-8ecc-ef5614c50d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\implements\detail">
+      <UniqueIdentifier>{17aa248f-8304-4cea-b2b3-e889e8c06d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\implements\detail\WinSock">
+      <UniqueIdentifier>{751bde4c-ee10-491f-894c-766a528bf5e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\implements\detail\Asio">
+      <UniqueIdentifier>{f2bcf752-6816-4b01-a0a8-be88b2022910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\implements\detail">
+      <UniqueIdentifier>{52ef462b-3300-4ff7-b46d-89cfd0c43727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\implements\detail\Win32">
+      <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Debug\Assert.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Debug\DebugOutput.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Debug\MemoryChecker.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GDI\DIBitmap.h">
+      <Filter>Graphics\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GDI\Font.h">
+      <Filter>Graphics\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GDI\Pen.h">
+      <Filter>Graphics\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\DirectGraphicsDevice.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\DXSprite.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\DXTextureFont.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Random.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\PCH\PCH.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color3c.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color3f.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color4c.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color4f.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Matrix33.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Matrix44.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Plane.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point2f.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point2i.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point3f.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point3i.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Quaternion.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Vector2.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Vector3.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Vector4.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\NyxCore.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h">
+      <Filter>Graphics\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Rect2i.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Rect2f.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Camera.h">
+      <Filter>Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\SceneNode.h">
+      <Filter>Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ITextureFont.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ISprite.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ISurface.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ITexture.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IGraphicsDevice.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IMesh.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Database\IDatabaseConnector.h">
+      <Filter>Database\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Collision\BulletDefinition.h">
+      <Filter>Collision\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
+      <Filter>Graphics\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\IFile.h">
+      <Filter>IO\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\PackedFile.h">
+      <Filter>IO\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\File.h">
+      <Filter>IO\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\Logger.h">
+      <Filter>IO\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Movie\IMoviePlayer.h">
+      <Filter>Movie\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Movie\MoviePlayer.h">
+      <Filter>Movie\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\ISocket.h">
+      <Filter>Network\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h">
+      <Filter>Network\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h">
+      <Filter>Network\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
+      <Filter>Network\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\ITimer.h">
+      <Filter>Timer\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\Timer.h">
+      <Filter>Timer\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\FixedTimer.h">
+      <Filter>Timer\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\FPSTimer.h">
+      <Filter>Timer\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\PerformanceTimer.h">
+      <Filter>Timer\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\Thread.h">
+      <Filter>Thread\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\CriticalSection.h">
+      <Filter>Thread\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\LockObject.h">
+      <Filter>Thread\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioBuffer.h">
+      <Filter>Sound\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioManager.h">
+      <Filter>Sound\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioBuffer.h">
+      <Filter>Sound\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\WaveReader.h">
+      <Filter>Sound\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioManager.h">
+      <Filter>Sound\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\Delegate.h">
+      <Filter>Object\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\NonCopyable.h">
+      <Filter>Object\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResource.h">
+      <Filter>Object\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Mouse.h">
+      <Filter>Input\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Joystick.h">
+      <Filter>Input\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Keyboard.h">
+      <Filter>Input\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\IKeyBase.h">
+      <Filter>Input\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IAnimationController.h">
+      <Filter>Graphics\Animation\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Database\SQLiteDefinition.h">
+      <Filter>Database\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\SQLiteDatabase.h">
+      <Filter>Database\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Limits.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Math.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Type.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Common.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResourceCache.h">
+      <Filter>Object\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResourceHandle.h">
+      <Filter>Object\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResourceManager.h">
+      <Filter>Object\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\ResourceCache.h">
+      <Filter>Object\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\ResourceHandle.h">
+      <Filter>Object\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\ResourceManager.h">
+      <Filter>Object\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\CheckBox.h">
+      <Filter>GUI\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\ListBox.h">
+      <Filter>GUI\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\RadioButton.h">
+      <Filter>GUI\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\Window.h">
+      <Filter>GUI\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IWindow.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IPushButton.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IControl.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\PushButton.h">
+      <Filter>GUI\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IRadioButton.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\ICheckBox.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IListBox.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IComboBox.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IDispatcher.h">
+      <Filter>GUI\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\Dispatcher.h">
+      <Filter>GUI\implements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\detail\Win32\Win32Timer.h">
+      <Filter>Timer\implements\detail\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h">
+      <Filter>Thread\implements\detail\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h">
+      <Filter>Thread\implements\detail\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSound3DAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioManager.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\detail\Win32\Win32File.h">
+      <Filter>IO\implements\detail\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
+      <Filter>Movie\implements\detail\DirectShow</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Debug\MemoryChecker.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\GDI\DIBitmap.cpp">
+      <Filter>Graphics\GDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\GDI\Font.cpp">
+      <Filter>Graphics\GDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\GDI\Pen.cpp">
+      <Filter>Graphics\GDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\DirectGraphicsDevice.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\DXSprite.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\DXTextureFont.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Random.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\PCH\PCH.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Color3c.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Color3f.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Color4c.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Color4f.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Matrix33.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Matrix44.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Plane.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Point2f.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Point2i.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Point3f.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Point3i.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Quarternion.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Vector2.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Vector3.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Vector4.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
+      <Filter>Graphics\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Rect2i.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Rect2f.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Camera.cpp">
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\ISprite.cpp">
+      <Filter>Graphics\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
+      <Filter>Graphics\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\File.cpp">
+      <Filter>IO\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\Logger.cpp">
+      <Filter>IO\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\PackedFile.cpp">
+      <Filter>IO\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
+      <Filter>Movie\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp">
+      <Filter>Network\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp">
+      <Filter>Network\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp">
+      <Filter>Network\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\FPSTimer.cpp">
+      <Filter>Timer\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\PerformanceTimer.cpp">
+      <Filter>Timer\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\Timer.cpp">
+      <Filter>Timer\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\FixedTimer.cpp">
+      <Filter>Timer\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\CriticalSection.cpp">
+      <Filter>Thread\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\Thread.cpp">
+      <Filter>Thread\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\AudioManager.cpp">
+      <Filter>Sound\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\WaveReader.cpp">
+      <Filter>Sound\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Joystick.cpp">
+      <Filter>Input\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Keyboard.cpp">
+      <Filter>Input\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Mouse.cpp">
+      <Filter>Input\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Math.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Limits.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Object\ResourceCache.cpp">
+      <Filter>Object\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
+      <Filter>Object\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Object\ResourceManager.cpp">
+      <Filter>Object\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\CheckBox.cpp">
+      <Filter>GUI\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\ListBox.cpp">
+      <Filter>GUI\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\RadioButton.cpp">
+      <Filter>GUI\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\Window.cpp">
+      <Filter>GUI\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\PushButton.cpp">
+      <Filter>GUI\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
+      <Filter>GUI\implements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp">
+      <Filter>Timer\implements\detail\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp">
+      <Filter>Thread\implements\detail\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp">
+      <Filter>Thread\implements\detail\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSound3DAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioManager.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\detail\Win32\Win32File.cpp">
+      <Filter>IO\implements\detail\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
+      <Filter>Movie\implements\detail\DirectShow</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
