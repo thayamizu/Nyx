@@ -7,7 +7,6 @@ Nyxは， オープンソースで開発しているゲームエンジンライブラリです．
 https://bitbucket.org/thayamizu/nyx
 
 
-
 ■ライセンス条項
 MITライセンスに準拠します．
 
