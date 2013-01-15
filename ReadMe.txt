@@ -1,15 +1,12 @@
 ■このソフトウェアについて
 Nyxは， オープンソースで開発しているゲームエンジンライブラリです．
-プロジェクトは，SourceForge.JPでホスティングされています．
+プロジェクトは，BitBucketでホスティングされています．
 
 プロジェクトサイトのURIは
 
-http://sourceforge.jp/projects/nyx-lib/
+https://bitbucket.org/thayamizu/nyx
 
-となります．最新のリリースバージョンは0.9bです．
-また，バージョン管理にはSubversionを利用しており，最新のリビジョンは，次のURIから取得できます．
 
-svn checkout http://sourceforge.jp/projects/nyx-lib/
 
 ■ライセンス条項
 MITライセンスに準拠します．
