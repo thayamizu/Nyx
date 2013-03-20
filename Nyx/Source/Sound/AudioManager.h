@@ -19,9 +19,8 @@
 #include "Sound/IAudioManager.h"
 
 namespace Nyx {
-	using std::shared_ptr;
 	//前方宣言
-	class AudioBuffer;
+	class IAudioBuffer;
 
 	enum SoundBufferType
 	{
@@ -34,19 +33,23 @@ namespace Nyx {
 
 	///オーディオマネージャ
 	class AudioManager : public IAudioManager{
-		typedef std::vector< AudioBuffer* > AudioBufferList;
-		typedef std::vector< AudioBuffer* >::iterator AudioBufferListIterator;
 	public:
+		AudioManager();
+		AudioManager(HWND hwnd, int volume);
+
+
 		/**
 		* デストラクタ
 		*/
 		virtual ~AudioManager();
 
+		void Create(HWND hwnd, int volume);
+
 		/**
 		* 指定したインデックスの曲を再生する
-		* @param uint インデックス
+		* @param size_t インデックス
 		*/
-		virtual void Play(uint index);
+		virtual void Play(size_t index);
 
 		/**
 		* すべての曲を再生する
@@ -55,9 +58,9 @@ namespace Nyx {
 
 		/**
 		* 指定したインデックスの曲を停止
-		* @param uint インデックス
+		* @param size_t インデックス
 		*/
-		virtual void Stop(uint index);
+		virtual void Stop(size_t index);
 
 		/**
 		*すべての曲を停止
@@ -66,9 +69,9 @@ namespace Nyx {
 
 		/**
 		* 指定したインデックスの曲をレジュームする
-		* @param uint インデックス
+		* @param size_t インデックス
 		*/
-		virtual void Resume(uint index);
+		virtual void Resume(size_t index);
 
 		/**
 		* すべての曲をレジュームする
@@ -78,9 +81,9 @@ namespace Nyx {
 		/**
 		* 指定したインデックスの曲をリセット
 		* つまり、オーディオをいったん止めて、先頭まで巻戻します。
-		* @param uint インデックス
+		* @param size_t インデックス
 		*/
-		virtual void Reset(uint index);
+		virtual void Reset(size_t index);
 
 		/**
 		* すべての曲をリセットする
@@ -89,10 +92,10 @@ namespace Nyx {
 
 		/**
 		*　指定したインデックスをポーズさせる
-		* @param uint インデックス
+		* @param size_t インデックス
 		* @param bool ポーズするならtrue
 		*/
-		virtual void SetPause(uint index, bool);
+		virtual void SetPause(size_t index, bool);
 
 		/**
 		* すべての曲をポーズさせる
@@ -110,16 +113,16 @@ namespace Nyx {
 		* マスターボリュームを設定
 		* @param int マスターボリューム値
 		*/
-		virtual  void SetMasterVolume(int v) ;
-
+		virtual void SetMasterVolume(int v) ;
+		virtual bool Load(std::wstring fileName, SoundBufferType bufferType);
 		/**
 		* オーディオバッファを取得
-		* @param uint インデックス
+		* @param size_t インデックス
 		*/
-		virtual AudioBuffer* GetAudioBuffer(uint index);
+		std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
 	protected:
-		int masterVolume;///< マスターボリューム
-		AudioBufferList audioBufferList;///< オーディオバッファのリスト
+		struct PImpl;
+		std::unique_ptr<PImpl> pimpl_;
 	};
 }
 #endif

@@ -18,8 +18,8 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "Sound/AudioBuffer.h"
-#include "Sound/DirectSoundStreamingAudioBuffer.h"
 #include "Sound/WaveReader.h"
+#include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
 

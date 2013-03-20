@@ -19,7 +19,7 @@
 #include "Debug/DebugOutput.h"
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
-#include "Sound/DirectSound3DAudioBuffer.h"
+#include "DirectSound3DAudioBuffer.h"
 namespace Nyx {
 	using Nyx::File;
 	//-------------------------------------------------------------------------------------------------------

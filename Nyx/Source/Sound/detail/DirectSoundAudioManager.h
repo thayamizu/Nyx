@@ -20,7 +20,8 @@
 
 namespace Nyx {
 	///オーディオマネージャのDirectSoundによる実装
-	class DirectSoundAudioManager : public AudioManager{
+	class DirectSoundAudioManager : public IAudioManager{
+		typedef std::vector< std::shared_ptr<AudioBuffer> > AudioBufferList;
 	public:
 		/**
 		* コンストラクタ
@@ -32,7 +33,77 @@ namespace Nyx {
 		* デストラクタ
 		*/
 		~DirectSoundAudioManager();
+		/**
+		* 指定したインデックスの曲を再生する
+		* @param size_t インデックス
+		*/
+		virtual void Play(size_t index);
 
+		/**
+		* すべての曲を再生する
+		*/
+		virtual void PlayAll();
+
+		/**
+		* 指定したインデックスの曲を停止
+		* @param size_t インデックス
+		*/
+		virtual void Stop(size_t index);
+
+		/**
+		*すべての曲を停止
+		*/
+		virtual void StopAll();
+
+		/**
+		* 指定したインデックスの曲をレジュームする
+		* @param size_t インデックス
+		*/
+		virtual void Resume(size_t index);
+
+		/**
+		* すべての曲をレジュームする
+		*/
+		virtual void ResumeAll();
+
+		/**
+		* 指定したインデックスの曲をリセット
+		* つまり、オーディオをいったん止めて、先頭まで巻戻します。
+		* @param size_t インデックス
+		*/
+		virtual void Reset(size_t index);
+
+		/**
+		* すべての曲をリセットする
+		*/
+		virtual void ResetAll();
+
+		/**
+		*　指定したインデックスをポーズさせる
+		* @param size_t インデックス
+		* @param bool ポーズするならtrue
+		*/
+		virtual void SetPause(size_t index, bool);
+
+		/**
+		* すべての曲をポーズさせる
+		* @param bool ポーズするならtrue  
+		*/
+		virtual void SetPauseAll(bool) ;
+
+		/**
+		* マスターボリュームを取得
+		* @return int マスターボリューム値
+		*/
+		virtual int GetMasterVolume() const ;
+
+		/**
+		* マスターボリュームを設定
+		* @param int マスターボリューム値
+		*/
+		virtual void SetMasterVolume(int v) ;
+
+		std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
 		/**
 		* Waveファイルをロードしてきます
 		* @param const std::wstring ファイル名
@@ -59,6 +130,9 @@ namespace Nyx {
 	private:	
 		HWND hWnd;///< ウインドウハンドル
 		DirectSound dsound;///< DirectSoundオブジェクト
+		int masterVolume;
+		AudioBufferList audioBufferList;
+
 	};
 }
 #endif

@@ -18,9 +18,10 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "IO/PackedFile.h"
-#include "Sound/DirectSoundAudioBuffer.h"
-#include "Sound/DirectSound3DAudioBuffer.h"
-#include "Sound/DirectSoundAudioManager.h"
+#include "DirectSoundAudioBuffer.h"
+#include "DirectSound3DAudioBuffer.h"
+#include "DirectSoundAudioManager.h"
+#include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
 	using Nyx::PackedFile;
@@ -44,12 +45,132 @@ namespace Nyx {
 		SetMasterVolume(volume);
 
 	}
+	
 	//--------------------------------------------------------------------------------------
 	//
 	DirectSoundAudioManager::~DirectSoundAudioManager() {
 		SafeRelease(dsound);
 	}
+	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::Play(size_t index) {
+		if (index >= audioBufferList.size()) return;
 
+		audioBufferList[index]->Play();
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::PlayAll() {
+
+		auto it = audioBufferList.begin();
+		while (it != audioBufferList.end()) {
+			(*it)->Play();
+			++it;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::Stop(size_t index) {
+		if (index >= audioBufferList.size()) return;
+
+		audioBufferList[index]->Stop();
+
+
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::StopAll() {
+		auto it = audioBufferList.begin();
+		while (it != audioBufferList.end()) {
+			(*it)->Stop();
+			++it;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::Resume(size_t index) {
+		if (index >= audioBufferList.size()) return;
+
+		audioBufferList[index]->Resume();
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::ResumeAll() {
+		auto it = audioBufferList.begin();
+		while (it != audioBufferList.end()) {
+			(*it)->Resume();
+			++it;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::Reset(size_t index) {
+		if (index >= audioBufferList.size()) return;
+
+		audioBufferList[index]->Reset();
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::ResetAll() {
+		auto it = audioBufferList.begin();
+		while (it != audioBufferList.end()) {
+			(*it)->Reset();
+			++it;
+		}
+	}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::SetPause(size_t index, bool p) {
+		if (index >= audioBufferList.size()) return;
+
+		audioBufferList[index]->SetPause(p);
+	}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::SetPauseAll(bool p) {
+
+		auto it = audioBufferList.begin();
+		while (it != audioBufferList.end()) {
+			(*it)->SetPause(p);
+			++it;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	int DirectSoundAudioManager::GetMasterVolume() const {
+		return masterVolume;
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::SetMasterVolume(int v) {
+		if (v > 100) { v = 100;}
+		else if (v < 0) {v=0;}
+		masterVolume = v;
+
+		auto it = audioBufferList.begin();
+		while (it != audioBufferList.end()) {
+			(*it)->SetVolume(v);
+			++it;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::GetAudioBuffer(size_t index) {
+		if (index >= audioBufferList.size()) return NULL;
+
+		return audioBufferList[index];
+	}
 	//---------------------------------------------------------------------------------------
 	//
 	bool DirectSoundAudioManager::Load(const std::wstring fileName, SoundBufferType bufferType) {
@@ -81,7 +202,7 @@ namespace Nyx {
 	//
 	bool DirectSoundAudioManager::LoadFromPackedFile(const std::wstring fileName, SoundBufferType bufferType)
 	{
-		AudioBuffer* audio = nullptr;
+		std::shared_ptr<AudioBuffer> audio = nullptr;
 		unique_ptr<PackedFile> pack = unique_ptr<PackedFile>(new PackedFile(fileName.c_str()));
 		int num = pack->GetFileNum();//パッキングされたファイルの数を取得
 		for (int i=0; i< num; i++) {//一括で読んでまえ
@@ -90,13 +211,13 @@ namespace Nyx {
 			switch(bufferType)
 			{
 			case Static:
-				audio=new DirectSoundAudioBuffer(dsound, pack->GetFileData(i));
+				audio=std::make_shared<DirectSoundAudioBuffer>(dsound, pack->GetFileData(i));
 				break;
 			case Static3D:
-				audio=new DirectSound3DAudioBuffer(dsound, pack->GetFileData(i));
+				audio=std::make_shared<DirectSound3DAudioBuffer>(dsound, pack->GetFileData(i));
 				break;
 			case Streaming:
-				audio=new DirectSoundStreamingAudioBuffer(dsound, pack->GetFileData(i));
+				audio=std::make_shared<DirectSoundStreamingAudioBuffer>(dsound, pack->GetFileData(i));
 				break;
 			case Streaming3D:
 				//audio=new DirectSound3DAudioBuffer(dsound, hwnd, fileName);
@@ -115,26 +236,23 @@ namespace Nyx {
 	//---------------------------------------------------------------------------------------
 	//
 	bool DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, SoundBufferType bufferType){
-		AudioBuffer* audio = nullptr;
+		std::shared_ptr<AudioBuffer> audio = nullptr;
 		switch(bufferType)
 		{
 		case Static:
-			audio=new DirectSoundAudioBuffer(dsound, fileName);
+			audio=std::make_shared<DirectSoundAudioBuffer>(dsound, fileName);
 			break;
 		case Static3D:
-			audio=new DirectSound3DAudioBuffer(dsound, fileName);
+			audio=std::make_shared<DirectSound3DAudioBuffer>(dsound, fileName);
 			break;
 		case Streaming:
-			audio=new DirectSoundStreamingAudioBuffer(dsound, fileName);
+			audio=std::make_shared<DirectSoundStreamingAudioBuffer>(dsound, fileName);
 			break;
 		case Streaming3D:
 			//audio=new DirectSound3DAudioBuffer(dsound, hwnd, fileName);
 			break;
 		default:
 			DebugOutput::DebugMessage("生成失敗");
-			if (audio != nullptr) {
-				SafeDelete(audio);
-			}
 			return false;
 		}
 

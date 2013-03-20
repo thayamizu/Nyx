@@ -15,143 +15,138 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
+#include "Debug/Assert.h"
 #include "Sound/AudioManager.h"
 #include "Sound/AudioBuffer.h"
-
+#include "detail/DirectSoundAudioManager.h"
 namespace Nyx {
-	//-------------------------------------------------------------------------------------------------------
+
+	struct AudioManager::PImpl{
+		std::unique_ptr<DirectSoundAudioManager> manager;
+	};
+
+	AudioManager::AudioManager() 
+		: pimpl_( new PImpl())	
+	{
+
+	}
+	//--------------------------------------------------------------------------------------
 	//
-	AudioManager::~AudioManager() {
-		SetPauseAll(false);//ポーズ解除
-		//StopAll();		   //すべての音を停止
+	AudioManager::AudioManager(HWND hwnd, int volume) 
+		: pimpl_( new PImpl())	
+	{
+		Assert(pimpl_ != nullptr);
+		pimpl_->manager = std::unique_ptr<DirectSoundAudioManager>( new DirectSoundAudioManager(hwnd, volume));
 
-		AudioBufferListIterator it  = audioBufferList.begin();
-		AudioBufferListIterator end = audioBufferList.end();
-
-		while (it != end) {
-			SafeDelete(*it);
-			it++;
-		}
-		audioBufferList.clear();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Play(uint index) {
-		if (index >= audioBufferList.size()) return;
+	AudioManager::~AudioManager() {
 
-		audioBufferList[index]->Play();
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioManager::Create(HWND hwnd, int volume) {
+		Assert(pimpl_ != nullptr);
+		pimpl_->manager = std::unique_ptr<DirectSoundAudioManager>( new DirectSoundAudioManager(hwnd, volume));
+
+	}
+	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioManager::Play(size_t index) {
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->Play(index);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::PlayAll() {
-
-		AudioBufferListIterator it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Play();
-			++it;
-		}
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->PlayAll();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Stop(uint index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Stop();
-
-
+	void AudioManager::Stop(size_t index) {
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->Stop(index);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::StopAll() {
-		AudioBufferListIterator it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Stop();
-			++it;
-		}
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->StopAll();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Resume(uint index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Resume();
+	void AudioManager::Resume(size_t index) {
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->Resume(index);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::ResumeAll() {
-		AudioBufferListIterator it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Resume();
-			++it;
-		}
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->ResumeAll();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Reset(uint index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Reset();
+	void AudioManager::Reset(size_t index) {
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->Reset(index);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::ResetAll() {
-		AudioBufferListIterator it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Reset();
-			++it;
-		}
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->ResetAll();
 	}
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::SetPause(uint index, bool p) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->SetPause(p);
+	void AudioManager::SetPause(size_t index, bool p) {
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->SetPause(index, p);
 	}
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::SetPauseAll(bool p) {
-
-		AudioBufferListIterator it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->SetPause(p);
-			++it;
-		}
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->SetPauseAll(p);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	int AudioManager::GetMasterVolume() const {
-		return masterVolume;
+		Assert(pimpl_->manager != nullptr);
+		return pimpl_->manager->GetMasterVolume();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::SetMasterVolume(int v) {
-		if (v > 100) { v = 100;}
-		else if (v < 0) {v=0;}
-		masterVolume = v;
-
-		AudioBufferListIterator it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->SetVolume(v);
-			++it;
-		}
+		Assert(pimpl_->manager != nullptr);
+		pimpl_->manager->SetMasterVolume(v);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioBuffer* AudioManager::GetAudioBuffer(uint index) {
-		if (index >= audioBufferList.size()) return NULL;
-
-		return audioBufferList[index];
+	std::shared_ptr<IAudioBuffer> AudioManager::GetAudioBuffer(size_t index) {
+		Assert(pimpl_->manager != nullptr);
+		return pimpl_->manager->GetAudioBuffer(index);
 	}
+
+	//---------------------------------------------------------------------------------------
+	//
+	bool AudioManager::Load(const std::wstring fileName, SoundBufferType bufferType) {
+		Assert(pimpl_->manager != nullptr);
+		return pimpl_->manager->Load(fileName, bufferType);
+	}	
 }

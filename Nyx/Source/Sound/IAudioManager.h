@@ -31,7 +31,7 @@ namespace Nyx {
 		* 指定したインデックスの曲を再生
 		* @param bool インデックス
 		*/
-		virtual void Play(uint index) = 0;
+		virtual void Play(size_t index) = 0;
 
 		/**
 		* すべての曲を再生
@@ -42,7 +42,7 @@ namespace Nyx {
 		* 指定したインデックスの曲を停止
 		* @param bool インデックス
 		*/
-		virtual void Stop(uint index) = 0;
+		virtual void Stop(size_t index) = 0;
 
 		/**
 		* すべての曲を停止
@@ -53,7 +53,7 @@ namespace Nyx {
 		* 指定したインデックスの曲をレジュームする
 		* @param bool インデックス
 		*/
-		virtual void Resume(uint index) = 0;
+		virtual void Resume(size_t index) = 0;
 
 		/**
 		* すべての曲をレジューム
@@ -65,7 +65,7 @@ namespace Nyx {
 		* 再生中の曲を止めたうえで、先頭まで巻戻します
 		* @param bool インデックス
 		*/
-		virtual void Reset(uint index) = 0;
+		virtual void Reset(size_t index) = 0;
 
 		/**
 		* すべての曲をリセット.
@@ -75,10 +75,10 @@ namespace Nyx {
 
 		/**
 		* 指定したインデックスの曲をポーズさせる
-		* @param uint インデックス
+		* @param size_t インデックス
 		* @param bool ポーズするならtrue
 		*/
-		virtual void SetPause(uint index, bool) = 0;
+		virtual void SetPause(size_t index, bool) = 0;
 
 		/**
 		* すべての曲をポーズ
