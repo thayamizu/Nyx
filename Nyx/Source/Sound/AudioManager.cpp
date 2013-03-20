@@ -18,7 +18,7 @@
 #include "Debug/Assert.h"
 #include "Sound/AudioManager.h"
 #include "Sound/AudioBuffer.h"
-#include "detail/DirectSoundAudioManager.h"
+#include "detail/DirectSound/DirectSoundAudioManager.h"
 namespace Nyx {
 
 	struct AudioManager::PImpl{
