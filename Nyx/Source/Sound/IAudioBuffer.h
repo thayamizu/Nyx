@@ -40,61 +40,73 @@ namespace Nyx {
 		virtual void Reset()  = 0; 
 
 		/**
-		*　ループ中かどうか
+		* ループ再生かどうか判定
+		* @return bool　ループ再生ならtrue
 		*/
-		virtual bool IsLooping() const = 0;
+		bool IsLooping() const {
+			return isLooping;
+		} 
 
 		/**
-		*　再生中かどうか
+		* 再生中かどうか
+		* @return bool 再生中ならtrue
 		*/
-		virtual bool IsPlaying() const = 0;
+		bool IsPlaying() const  {
+			return isPlaying;
+		}
 
 		/**
 		* ポーズ中かどうか
+		* @return bool ポーズ中ならtrue
 		*/
-		virtual bool IsPause() const = 0;
+		bool IsPause() const {
+			return isPause;
+		}
 
 		/**
-		*　ポーズするかどうかを設定
-		* @param　bool ポーズするならtrue
+		* ループ再生するかどうかを設定
+		* @param bool ループ再生ならtrue
 		*/
-		virtual void SetPause(bool) = 0;
+		void SetLooping(bool loop) {
+			isLooping = loop;
+		}
 
 		/**
-		*　ループするかどうかを設定
-		* @param bool ループするならtrue
-		*/
-		virtual void SetLooping(bool loop) = 0;
-
-		/**
-		* 再生中かどうかを設定
+		* 再生中かどうか
 		* @param bool 再生中ならtrue
 		*/
-		virtual void SetPlaying(bool play) = 0;
+		void SetPlaying(bool play) {
+			isPlaying = play;
+		}
 
 		/**
-		* 再生ボリュームを設定する
-		* @param int ボリューム
+		* ポーズ中かどうか
+		* @param bool ポーズ中ならtrue
 		*/
-		virtual void SetVolume(int v)  = 0;
-
-		/**
-		* 再生ボリュームを取得する
-		* @return long ボリューム
-		*/
-		virtual long GetVolume() const    = 0;
+		void SetPause(bool pause) {
+			isPause = pause;
+		}
 
 		/**
 		* パンを設定する
 		* @param int パン
 		*/
-		virtual void SetPan(int pan) = 0;
+		void SetPan(int p) {
+			pan = p;
+		}
 
 		/**
 		* パンを取得する
 		* @return long パン
 		*/
-		virtual long GetPan() const   = 0;
+		int GetPan()  {
+			return pan;
+		}
+	private:
+		long pan;
+		bool isPlaying;///< 再生中
+		bool isLooping;///< ループ
+		bool isPause;///< ポーズ
 	};
 }
 #endif

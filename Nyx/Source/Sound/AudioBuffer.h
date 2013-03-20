@@ -25,7 +25,7 @@ namespace Nyx  {
 		/**
 		* コンストラクタ
 		*/
-		AudioBuffer():isPlaying(false), isLooping(false), isPause(false) {
+		AudioBuffer() {
 		}
 
 		/**
@@ -34,57 +34,28 @@ namespace Nyx  {
 		virtual ~AudioBuffer() {}
 
 		/**
-		* ループ再生かどうか判定
-		* @return bool　ループ再生ならtrue
+		*　再生
 		*/
-		virtual bool IsLooping() const {
-			return isLooping;
-		} 
-
+		virtual void Play();
+		
 		/**
-		* 再生中かどうか
-		* @return bool 再生中ならtrue
+		*　停止
 		*/
-		virtual bool IsPlaying() const  {
-			return isPlaying;
-		}
-
+		virtual void Stop();
+		
 		/**
-		* ポーズ中かどうか
-		* @return bool ポーズ中ならtrue
+		*　レジューム
 		*/
-		virtual bool IsPause() const {
-			return isPause;
-		}
-
+		virtual void Resume();
+	
 		/**
-		* ループ再生するかどうかを設定
-		* @param bool ループ再生ならtrue
+		*　リセット
 		*/
-		virtual void SetLooping(bool loop) {
-			isLooping = loop;
-		}
-
-		/**
-		* 再生中かどうか
-		* @param bool 再生中ならtrue
-		*/
-		virtual void SetPlaying(bool play) {
-			isPlaying = play;
-		}
-
-		/**
-		* ポーズ中かどうか
-		* @param bool ポーズ中ならtrue
-		*/
-		virtual void SetPause(bool pause) {
-			isPause = pause;
-		}
+		virtual void Reset(); 
 
 	private:
-		bool isPlaying;///< 再生中
-		bool isLooping;///< ループ
-		bool isPause;///< ポーズ
+		struct PImpl{};
+		std::unique_ptr<PImpl> pimpl_;
 	};
 }
 #endif
