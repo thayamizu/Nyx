@@ -28,7 +28,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		CheckBox(HWND hWnd,tstring label, int x, int y, int width,int height, int id);
+		CheckBox(HWND hWnd,std::wstring label, int x, int y, int width,int height, int id);
 		/**
 		*
 		*/
@@ -37,7 +37,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool OnCreate(HWND hWnd,tstring label, int x, int y, int width,int height, int id);
+		bool OnCreate(HWND hWnd,std::wstring label, int x, int y, int width,int height, int id);
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
 		//---------------------------------------------------------------------------------------
@@ -149,15 +149,15 @@ namespace Nyx {
 		//----------------------------------------------------------------
 		/**
 		* ラベルの取得
-		* @return tstring& ラベル
+		* @return std::wstring& ラベル
 		*/
-		tstring GetLabel() const;
+		std::wstring GetLabel() const;
 
 		/**
 		* ラベルの設定
-		* @param const tstring& ラベル
+		* @param const std::wstring& ラベル
 		*/
-		void SetLabel(const tstring& label);
+		void SetLabel(const std::wstring& label);
 
 		/**
 		* ボタンがチェック状態かどうか
@@ -168,7 +168,7 @@ namespace Nyx {
 		/// ハンドルインスタンス
 		HWND hwnd;
 		///チェックボックスのラベル
-		tstring label;
+		std::wstring label;
 		///チェックボックスのID
 		int id;
 		///アトム

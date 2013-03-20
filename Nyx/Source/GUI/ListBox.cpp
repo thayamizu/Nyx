@@ -24,7 +24,7 @@ namespace Nyx {
 	//---------------------------------------------------------------------------------------
 	//ê∂ê¨ÅEîjä¸
 	//---------------------------------------------------------------------------------------
-	ListBox::ListBox(HWND _hwnd, tstring _label, int _x, int _y, int _width, int _height, int _id)
+	ListBox::ListBox(HWND _hwnd, std::wstring _label, int _x, int _y, int _width, int _height, int _id)
 		:label(_label), id(_id){
 
 			OnCreate(_hwnd, label, _x, _y, _width, _height, _id);
@@ -33,7 +33,7 @@ namespace Nyx {
 		if (atom) ::UnregisterClass((LPCTSTR)atom, ::GetModuleHandle(NULL));
 	}
 
-	bool ListBox::OnCreate(HWND _hwnd, tstring _label, int _x, int _y, int _width, int _height, int _id) {
+	bool ListBox::OnCreate(HWND _hwnd, std::wstring _label, int _x, int _y, int _width, int _height, int _id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd = CreateWindow(
 			TEXT("LISTBOX"),
@@ -170,7 +170,7 @@ namespace Nyx {
 
 	}
 	//----------------------------------------------------------------
-	void ListBox::AddItem(const tstring& item) {
+	void ListBox::AddItem(const std::wstring& item) {
 		SendMessage(hwnd, LB_ADDSTRING, 0, (LPARAM)item.c_str());
 	}
 
@@ -195,7 +195,7 @@ namespace Nyx {
 
 
 	//----------------------------------------------------------------
-	tstring ListBox::GetSelectedItem() {
+	std::wstring ListBox::GetSelectedItem() {
 		uint index = GetSelectedIndex();
 		
 		SendMessage(hwnd, LB_GETTEXT, index, 0);

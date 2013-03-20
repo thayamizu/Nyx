@@ -111,7 +111,7 @@ namespace Nyx
 	}
 	//----------------------------------------------------------------------------------------------------
 	//
-	bool PackedFile::Open(const tstring&  name, AccessAttribute attr)
+	bool PackedFile::Open(const std::wstring&  name, AccessAttribute attr)
 	{
 		return pimpl_->packedFile_->Open(name, attr);
 	}
@@ -143,7 +143,7 @@ namespace Nyx
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	tstring PackedFile::GetFileName()
+	std::wstring PackedFile::GetFileName()
 		const
 	{
 		return pimpl_->packedFile_->GetFileName();

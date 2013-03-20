@@ -22,9 +22,9 @@ namespace Nyx {
 		//----------------------------------------------------------------
 		/**
 		* リストボックスにアイテムを追加する
-		* param const tstring& アイテム
+		* param const std::wstring& アイテム
 		*/
-		virtual void AddItem(const tstring& item) = 0;
+		virtual void AddItem(const std::wstring& item) = 0;
 
 		/**
 		* リストボックスのアイテムを削除する
@@ -44,9 +44,9 @@ namespace Nyx {
 
 		/**
 		* 現在選択されているアイテム名を取得する
-		* @return tstring アイテム名
+		* @return std::wstring アイテム名
 		*/
-		virtual tstring GetSelectedItem() = 0;
+		virtual std::wstring GetSelectedItem() = 0;
 	};
 }
 #endif

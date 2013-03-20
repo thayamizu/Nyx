@@ -235,7 +235,7 @@ namespace Nyx
 
 	// ƒxƒNƒgƒ‹‚ª“™‚µ‚­‚È‚¢‚©
 	bool  Vector3::operator !=(const Vector3& u) const {
-		return (x != u.x || y != u.y && z != u.z);
+		return (x != u.x || y != u.y || z != u.z);
 	}
 
 }

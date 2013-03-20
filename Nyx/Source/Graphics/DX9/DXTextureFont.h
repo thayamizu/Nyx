@@ -34,7 +34,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Create(DirectGraphicsDevice& device, int size, wchar_t*,tstring fontName);
+			void Create(DirectGraphicsDevice& device, int size, wchar_t*,std::wstring fontName);
 
 			/**
 			*

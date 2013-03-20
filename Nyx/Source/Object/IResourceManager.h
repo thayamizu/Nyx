@@ -26,9 +26,9 @@ namespace Nyx {
 		virtual ~IResourceManager() {}
 		/**
 		* リソースデータをロード
-		* @param tstring リソースデータのパス
+		* @param std::wstring リソースデータのパス
 		*/
-		virtual void Load(tstring path)=0;
+		virtual void Load(std::wstring path)=0;
 		/**
 		* リソースキャッシュに追加
 		*/

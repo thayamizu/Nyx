@@ -23,7 +23,7 @@
 
 namespace Nyx {
 	//------------------------------------------------------------------------------
-	PushButton::PushButton(HWND _hwnd, const tstring& _label, int x, int y, int width, int height, int _id)
+	PushButton::PushButton(HWND _hwnd, const std::wstring& _label, int x, int y, int width, int height, int _id)
 		:label(_label), hwnd(NULL), id(_id), atom(NULL), isShow(false), isActivate(true)
 	{
 
@@ -39,7 +39,7 @@ namespace Nyx {
 	}
 
 	//------------------------------------------------------------------------------
-	bool PushButton::OnCreate(HWND _hwnd, const tstring& _label, int x, int y, int width, int height) {
+	bool PushButton::OnCreate(HWND _hwnd, const std::wstring& _label, int x, int y, int width, int height) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd = CreateWindow(
 			TEXT("BUTTON"),
@@ -198,14 +198,14 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	tstring PushButton::GetLabel() 
+	std::wstring PushButton::GetLabel() 
 		const
 	{
 		return label;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::SetLabel(const tstring& _label)
+	void PushButton::SetLabel(const std::wstring& _label)
 	{
 		label = _label;
 		SetWindowText(hwnd, label.c_str());

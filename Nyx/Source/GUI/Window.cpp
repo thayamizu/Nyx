@@ -22,7 +22,7 @@
 #include "Primitive/Rect2i.h"
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	Window::Window(HWND hWnd, tstring caption_, int x, int y, int width, int height, int id_)
+	Window::Window(HWND hWnd, std::wstring caption_, int x, int y, int width, int height, int id_)
 		:title(caption_), id(id_),hooklist(), guiEventList(NULL), userEventList(NULL)  {
 			//フックリストが初期化されていなければ、初期化する
 			if (guiEventList ==NULL) {
@@ -234,7 +234,7 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void Window::SetIcon(tstring icon) {
+	void Window::SetIcon(std::wstring icon) {
 		Assert(userEventList != NULL);
 		LoadIcon(GetModuleHandle(NULL), icon.c_str());
 	}

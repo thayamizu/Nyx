@@ -37,11 +37,11 @@ namespace Nyx {
 
 		/**
 		* リソースデータをバックアップする
-		* @param tstring　リソース名
+		* @param std::wstring　リソース名
 		* @param uint リソースサイズ
 		* @param uchar* リソースデータ
 		*/
-		virtual void SetResourceData(tstring name, uint size, uchar* data) 
+		virtual void SetResourceData(std::wstring name, uint size, uchar* data) 
 		{
 			resourceName = name;
 			bufferSize   = size;
@@ -69,9 +69,9 @@ namespace Nyx {
 
 		/**
 		* リソース名を取得
-		* @return tstring リソース名
+		* @return std::wstring リソース名
 		*/
-		virtual tstring GerResourceName() {
+		virtual std::wstring GerResourceName() {
 			return resourceName;
 		}
 
@@ -82,7 +82,7 @@ namespace Nyx {
 	private:
 		uint bufferSize;
 		uchar* bufferData;
-		tstring resourceName;
+		std::wstring resourceName;
 	};
 }
 #endif

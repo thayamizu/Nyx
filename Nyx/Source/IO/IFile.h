@@ -19,7 +19,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		virtual bool Open(const tstring & name, AccessAttribute attribute) =  0;
+		virtual bool Open(const std::wstring & name, AccessAttribute attribute) =  0;
 
 		/**
 		*
@@ -39,7 +39,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		virtual tstring GetFileName() const = 0;
+		virtual std::wstring GetFileName() const = 0;
 
 		/**
 		*

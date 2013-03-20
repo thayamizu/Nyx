@@ -24,7 +24,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	Win32File::Win32File(const tstring& name, AccessAttribute attr) 
+	Win32File::Win32File(const std::wstring& name, AccessAttribute attr) 
 		:handle(NULL), attribute(attr), fileName(name) {
 		try {
 			if (!Open(name, attr)) {
@@ -42,7 +42,7 @@ namespace Nyx {
 	}
 	
 	//-----------------------------------------------------------------------------------
-	bool Win32File::Open(const tstring& name, AccessAttribute attr) {
+	bool Win32File::Open(const std::wstring& name, AccessAttribute attr) {
 		if (IsOpened()) { Close();}
 
 		ulong openType = NULL;
@@ -87,7 +87,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	tstring Win32File::GetFileName() const {
+	std::wstring Win32File::GetFileName() const {
 		return fileName;
 	}
 

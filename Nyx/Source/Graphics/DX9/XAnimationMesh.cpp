@@ -206,7 +206,7 @@ namespace Nyx {
 
 		//---------------------------------------------------------------------------------------
 		//
-		XAnimationMesh::XAnimationMesh(tstring fileName, DirectGraphicsDevice& device) {
+		XAnimationMesh::XAnimationMesh(std::wstring fileName, DirectGraphicsDevice& device) {
 			/*position = pos;
 			rotation = Matrix44::Unit;
 			world = Matrix44::Unit;*/
@@ -225,7 +225,7 @@ namespace Nyx {
 
 		//---------------------------------------------------------------------------------------
 		//
-		void XAnimationMesh::LoadFromX(tstring fileName, Direct3DDevice d3dDevice) {
+		void XAnimationMesh::LoadFromX(std::wstring fileName, Direct3DDevice d3dDevice) {
 			D3DXAnimationController animationController = NULL;
 			HRESULT hr = D3DXLoadMeshHierarchyFromX(
 				fileName.c_str(), D3DXMESH_MANAGED, d3dDevice, &hierarchy, 

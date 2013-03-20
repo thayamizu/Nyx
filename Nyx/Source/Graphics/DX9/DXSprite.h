@@ -75,7 +75,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			DXSprite(DirectGraphicsDevice& device, tstring fileName, int w, int h, int cw=0, int ch=0);
+			DXSprite(DirectGraphicsDevice& device, std::wstring fileName, int w, int h, int cw=0, int ch=0);
 			/**
 			*
 			*/

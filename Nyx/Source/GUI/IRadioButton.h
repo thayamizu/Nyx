@@ -18,15 +18,15 @@ namespace Nyx
 		//----------------------------------------------------------------
 		/**
 		* ラベルの取得
-		* @return tstring& ラベル
+		* @return std::wstring& ラベル
 		*/
-		virtual tstring GetLabel() const = 0;
+		virtual std::wstring GetLabel() const = 0;
 
 		/**
 		* ラベルの設定
-		* @param const tstring& ラベル
+		* @param const std::wstring& ラベル
 		*/
-		virtual void SetLabel(const tstring& label) = 0;
+		virtual void SetLabel(const std::wstring& label) = 0;
 
 		/**
 		* ボタンがチェック状態かどうか

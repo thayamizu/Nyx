@@ -62,9 +62,9 @@ namespace Nyx {
 
 		/**
 		* ファイルからWaveファイルを読み込みます
-		* @param tstring wavファイル名
+		* @param std::wstring wavファイル名
 		*/
-		void ReadFromFile(tstring fileName);
+		void ReadFromFile(std::wstring fileName);
 
 		/**
 		* メモリ上のデータからWaveファイルを読み込みます

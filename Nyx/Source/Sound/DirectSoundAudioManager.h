@@ -35,27 +35,27 @@ namespace Nyx {
 
 		/**
 		* Waveファイルをロードしてきます
-		* @param const tstring ファイル名
+		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		*/
-		bool Load(const tstring fileName, SoundBufferType);
+		bool Load(const std::wstring fileName, SoundBufferType);
 	private:
 
 		/**
 		* パッキングされたファイルからデータをまとめて読み込んできます。
-		* @param const tstring ファイル名
+		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		* @return 読み込みに成功すればtrue
 		*/
-		bool LoadFromPackedFile(const tstring fileName, SoundBufferType);
+		bool LoadFromPackedFile(const std::wstring fileName, SoundBufferType);
 
 		/**
 		* Waveファイルからデータを読み込んできます
-		* @param const tstring ファイル名
+		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		* @return bool 読み込みに成功すればtrue
 		*/
-		bool LoadFromWaveFile(const tstring , SoundBufferType);
+		bool LoadFromWaveFile(const std::wstring , SoundBufferType);
 	private:	
 		HWND hWnd;///< ウインドウハンドル
 		DirectSound dsound;///< DirectSoundオブジェクト

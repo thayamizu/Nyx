@@ -52,15 +52,15 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	bool DirectSoundAudioManager::Load(const tstring fileName, SoundBufferType bufferType) {
+	bool DirectSoundAudioManager::Load(const std::wstring fileName, SoundBufferType bufferType) {
 
 		//最後に.が見つかった場所か(ファイル名に.が含まれている場合の対策)
 		int pos = fileName.find_last_of (L".");
-		if (pos == tstring::npos) {
+		if (pos == std::wstring::npos) {
 			return false;//空文字を返す
 		}
 		//拡張子のみを取得する
-		tstring ext = fileName.substr(pos+1, fileName.size());
+		std::wstring ext = fileName.substr(pos+1, fileName.size());
 
 		//ロード
 		if (ext== L"pack") {
@@ -79,7 +79,7 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	bool DirectSoundAudioManager::LoadFromPackedFile(const tstring fileName, SoundBufferType bufferType)
+	bool DirectSoundAudioManager::LoadFromPackedFile(const std::wstring fileName, SoundBufferType bufferType)
 	{
 		AudioBuffer* audio = nullptr;
 		unique_ptr<PackedFile> pack = unique_ptr<PackedFile>(new PackedFile(fileName.c_str()));
@@ -114,7 +114,7 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	bool DirectSoundAudioManager::LoadFromWaveFile(const tstring fileName, SoundBufferType bufferType){
+	bool DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, SoundBufferType bufferType){
 		AudioBuffer* audio = nullptr;
 		switch(bufferType)
 		{

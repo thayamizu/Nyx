@@ -541,6 +541,9 @@
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Sound\OggReader.h">
+      <Filter>Sound\implements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -764,6 +767,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
       <Filter>Movie\implements\detail\DirectShow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\OggReader.cpp">
+      <Filter>Sound\implements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

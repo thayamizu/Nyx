@@ -25,7 +25,7 @@ namespace Nyx {
 	namespace DX9 {
 		//-----------------------------------------------------------------------------------------
 		//
-		XStaticMesh::XStaticMesh(tstring fileName, DirectGraphicsDevice* device) {
+		XStaticMesh::XStaticMesh(std::wstring fileName, DirectGraphicsDevice* device) {
 			LoadFromX(fileName, device);
 		}
 
@@ -49,7 +49,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void XStaticMesh::LoadFromX(tstring fileName, DirectGraphicsDevice* device) {
+		void XStaticMesh::LoadFromX(std::wstring fileName, DirectGraphicsDevice* device) {
 			LPD3DXBUFFER pD3DXMtrlBuffer = NULL;
 			ulong numMaterials;
 

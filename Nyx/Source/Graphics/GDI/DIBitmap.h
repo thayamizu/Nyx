@@ -35,7 +35,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			DIBitmap(const tstring fileName_);
+			DIBitmap(const std::wstring fileName_);
 			/**
 			*
 			*/

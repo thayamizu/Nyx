@@ -32,7 +32,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		File(const tstring&  name, AccessAttribute attr = ReadWriteMode);
+		File(const std::wstring&  name, AccessAttribute attr = ReadWriteMode);
 		/**
 		*
 		*/
@@ -40,7 +40,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool Open(const tstring&, AccessAttribute attr = ReadWriteMode);
+		bool Open(const std::wstring&, AccessAttribute attr = ReadWriteMode);
 		/**
 		*
 		*/
@@ -63,7 +63,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		tstring GetFileName() const;
+		std::wstring GetFileName() const;
 		
 		/**
 		*

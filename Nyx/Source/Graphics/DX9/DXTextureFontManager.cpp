@@ -37,18 +37,18 @@ namespace Nyx {
 			:fontSize(32), fontName(L"ＭＳ 明朝"),fontColor(Color4c::White), textSpeed(10),rowNum(12), columnNum(3),cursorRead(0),
 			transparent(defaultTransparent)
 		{
-			textString.reserve(255);
+			textstring.reserve(255);
 			container.reserve(255);
 			charInfo.reserve(255);
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		DXTextureFontManager::DXTextureFontManager(int capacity, tstring font, int size,Color4c color, int speed)
+		DXTextureFontManager::DXTextureFontManager(int capacity, std::wstring font, int size,Color4c color, int speed)
 			:fontName(font),fontSize(size), fontColor(color), textSpeed(speed),rowNum(12), columnNum(3),cursorRead(0),
 			transparent(defaultTransparent)
 		{
-			textString.reserve(capacity);
+			textstring.reserve(capacity);
 			container.reserve(capacity);
 			charInfo.reserve(capacity);
 		}
@@ -71,10 +71,10 @@ namespace Nyx {
 			uint n = textLength;//rowNum*columnNum; //読み込む文字数
 			uint pos;
 			for (pos=0; pos < n; pos++) {
-				if ((cursorRead + pos) >= textString.size()) {break;}
+				if ((cursorRead + pos) >= textstring.size()) {break;}
 				DXTextureFont * font = new DXTextureFont();
 				Assert(font != NULL);
-				font->Create(device, fontSize, &textString[cursorRead + pos], fontName);
+				font->Create(device, fontSize, &textstring[cursorRead + pos], fontName);
 
 
 				charInfo.push_back(info);
@@ -185,7 +185,7 @@ namespace Nyx {
 			world=Matrix44::Unit;
 			DXTextureFont* font = container[i];
 
-			if (textString[i] == '\n') {
+			if (textstring[i] == '\n') {
 			x = startX- font->GetWidth();
 			y = startY+font->GetHeight();
 			cnt = 0;
@@ -201,13 +201,13 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void DXTextureFontManager::SetText(tstring text) {
-			//textStringをクリア
-			textString = L"";
-			textString.clear();
+		void DXTextureFontManager::SetText(std::wstring text) {
+			//textstringをクリア
+			textstring = L"";
+			textstring.clear();
 
 
-			textString = text;
+			textstring = text;
 			cursorRead = 0;
 		}
 
@@ -220,8 +220,8 @@ namespace Nyx {
 		}
 		//-----------------------------------------------------------------------------------------
 		//
-		tstring DXTextureFontManager::GetText() const {
-			return textString;
+		std::wstring DXTextureFontManager::GetText() const {
+			return textstring;
 		}
 
 		//-----------------------------------------------------------------------------------------

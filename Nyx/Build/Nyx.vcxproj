@@ -175,6 +175,7 @@
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Object\ResourceManager.h" />
+    <ClInclude Include="..\Source\Sound\OggReader.h" />
     <ClInclude Include="..\Source\Sound\WaveReader.h" />
     <ClInclude Include="..\Source\SQLiteDatabase.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
+    <ClCompile Include="..\Source\Sound\OggReader.cpp" />
     <ClCompile Include="..\Source\Sound\WaveReader.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp" />

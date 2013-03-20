@@ -22,7 +22,7 @@
 namespace Nyx
 {
 	/// スレッドクラス
-	class Thread : private NonCopyable
+	DEPRECATED class Thread : private NonCopyable
 	{
 	public:
 

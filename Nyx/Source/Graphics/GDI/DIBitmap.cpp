@@ -24,7 +24,7 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		DIBitmap::DIBitmap(const tstring fileName_){
+		DIBitmap::DIBitmap(const std::wstring fileName_){
 			hMemDC = ::CreateCompatibleDC(NULL);
 			hbitmap = (HBITMAP)LoadImage(GetModuleHandle(NULL), 
 				fileName_.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);

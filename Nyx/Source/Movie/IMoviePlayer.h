@@ -13,7 +13,7 @@ namespace Nyx
 		*
 		*@return 
 		*/
-		virtual bool Open(const tstring& name) = 0;
+		virtual bool Open(const std::wstring& name) = 0;
 			
 		/**
 		*

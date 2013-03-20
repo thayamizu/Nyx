@@ -42,7 +42,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			DXTextureFontManager(int capacity, tstring font, int size, Color4c color, int speed);
+			DXTextureFontManager(int capacity, std::wstring font, int size, Color4c color, int speed);
 
 			/**
 			*
@@ -91,12 +91,12 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void SetText(tstring text);
+			void SetText(std::wstring text);
 
 			/**
 			*
 			*/
-			tstring GetText() const;
+			std::wstring GetText() const;
 
 			/**
 			*
@@ -184,8 +184,8 @@ namespace Nyx {
 			int rowNum;   ///< １行で表示する文字数
 			int columnNum;///< 1列に表示する文字数
 			uint cursorRead;///< すでに作成したものまでの;
-			tstring fontName;///使用するフォントの名前
-			tstring textString;///<ロードしている文字列
+			std::wstring fontName;///使用するフォントの名前
+			std::wstring textstring;///<ロードしている文字列
 			CharInfoContainer charInfo;
 			DXTextureFontContainer container;///< 個々の文字テクスチャを格納してるコンテナ
 		};

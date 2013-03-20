@@ -26,9 +26,9 @@ namespace Nyx {
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
-		* @param tstring ファイル名
+		* @param std::wstring ファイル名
 		*/
-		DirectSoundAudioBuffer(const DirectSound ds, tstring fileName_);
+		DirectSoundAudioBuffer(const DirectSound ds, std::wstring fileName_);
 
 		/**
 		* コンストラクタ

@@ -24,7 +24,7 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		Font::Font(const int height_, const int angle_, const tstring face_) {
+		Font::Font(const int height_, const int angle_, const std::wstring face_) {
 			Set(height_, angle_, face_);   
 
 
@@ -34,7 +34,7 @@ namespace Nyx {
 		//
 		Font::Font(const int height_, const int angle_, const int weight_, 
 			const bool isItalic_, const bool isUnderLine_, const bool isStrike_, 
-			const int charset_, const tstring face_) 
+			const int charset_, const std::wstring face_) 
 		{
 			Set(height_, angle_, weight_, isItalic_, isUnderLine_,isStrike_, charset_ ,face_);
 		}
@@ -63,7 +63,7 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void Font::Set(const int height_,const int angle_, const tstring face_) {
+		void Font::Set(const int height_,const int angle_, const std::wstring face_) {
 			height = height_;                      //文字幅（高さと同じ）
 			angle  = angle_;                  //テキストの角度
 			weight = FW_REGULAR;             //フォントの重さ（太さ）
@@ -96,7 +96,7 @@ namespace Nyx {
 		//
 		void Font::Set(const int height_, const int angle_, const int weight_,
 			const bool isItalic_, const bool isUnderLine_, const bool isStrike_, 
-			const int charset_, const tstring face_) {
+			const int charset_, const std::wstring face_) {
 				height = height_;                      //文字幅（高さと同じ）
 				angle  = angle_;                  //テキストの角度
 				weight = weight_;             //フォントの重さ（太さ）
@@ -135,7 +135,7 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void Font::Draw(HDC hdc, const tstring text_,RECT rect) {
+		void Font::Draw(HDC hdc, const std::wstring text_,RECT rect) {
 			SelectObject(hdc, font);
 			DrawText(hdc, text_.c_str(), -1, &rect, DT_WORDBREAK | DT_LEFT);
 			DeleteObject(hdc);

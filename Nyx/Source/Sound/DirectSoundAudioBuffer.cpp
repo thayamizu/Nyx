@@ -27,7 +27,7 @@ namespace Nyx {
 	using std::unique_ptr;
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSound dsound, tstring fileName)
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSound dsound, std::wstring fileName)
 		:AudioBuffer()
 	{
 		DataChunk dataChunk;
