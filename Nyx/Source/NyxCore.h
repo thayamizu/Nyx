@@ -114,13 +114,9 @@ class SkinMesh;
 ///サウンド
 #include "Sound/IAudioBuffer.h"
 #include "Sound/AudioBuffer.h"
-#include "Sound/DirectSoundAudioBuffer.h"
-#include "Sound/DirectSound3DAudioBuffer.h"
 #include "Sound/IAudioManager.h"
 #include "Sound/AudioManager.h"
-#include "Sound/DirectSoundAudioManager.h"
 #include "Sound/WaveReader.h"
-#include "Sound/DirectSoundStreamingAudioBuffer.h"
 
 ///入力機器 
 #include "Input/IKeyBase.h"

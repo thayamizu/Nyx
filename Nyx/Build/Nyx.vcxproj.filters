@@ -523,26 +523,23 @@
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h">
       <Filter>Thread\implements\detail\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Sound\DirectSound3DAudioBuffer.h">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\DirectSoundAudioBuffer.h">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\DirectSoundAudioManager.h">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.h">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\IO\detail\Win32\Win32File.h">
       <Filter>IO\implements\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Sound\OggReader.h">
-      <Filter>Sound\implements</Filter>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -750,25 +747,25 @@
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp">
       <Filter>Thread\implements\detail\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\DirectSound3DAudioBuffer.cpp">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Sound\DirectSoundAudioBuffer.cpp">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Sound\DirectSoundAudioManager.cpp">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.cpp">
-      <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\IO\detail\Win32\Win32File.cpp">
       <Filter>IO\implements\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\OggReader.cpp">
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\AudioBuffer.cpp">
       <Filter>Sound\implements</Filter>
     </ClCompile>
   </ItemGroup>

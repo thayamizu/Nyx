@@ -18,20 +18,28 @@
 #define NYX_CORE_INCLUDED_AUDIO_BUFFER_H_
 
 #include "Sound/IAudioBuffer.h"
+
 namespace Nyx  {
+	class AudioManager;
+
 	///オーディオバッファ
 	class AudioBuffer : public IAudioBuffer {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		AudioBuffer() {
-		}
+		AudioBuffer();
+		
+		/**
+		*　コピーコンストラクタ
+		* @param const AudioBuffer& other
+		*/
+		AudioBuffer(const AudioBuffer& other); 
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~AudioBuffer() {}
+		virtual ~AudioBuffer();
 
 		/**
 		*　再生
@@ -47,14 +55,21 @@ namespace Nyx  {
 		*　レジューム
 		*/
 		virtual void Resume();
+
 	
 		/**
 		*　リセット
 		*/
 		virtual void Reset(); 
 
+		/**
+		*　代入演算子
+		* @param  const AudioBuffer&
+		* @return AudioBuffer&
+		*/
+		AudioBuffer& operator=(const AudioBuffer&  other);
 	private:
-		struct PImpl{};
+		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;
 	};
 }

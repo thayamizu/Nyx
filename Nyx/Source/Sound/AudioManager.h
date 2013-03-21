@@ -114,12 +114,19 @@ namespace Nyx {
 		* @param int マスターボリューム値
 		*/
 		virtual void SetMasterVolume(int v) ;
-		virtual bool Load(std::wstring fileName, SoundBufferType bufferType);
+		
 		/**
 		* オーディオバッファを取得
 		* @param size_t インデックス
 		*/
-		std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
+		virtual std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
+		
+		/**
+		* オーディオバッファを取得
+		* @param std::wstring ファイル名
+		* @param SoundBufferType バッファタイプ
+		*/
+		virtual bool Load(std::wstring fileName, SoundBufferType bufferType);
 	protected:
 		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;

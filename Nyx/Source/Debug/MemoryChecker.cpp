@@ -77,7 +77,7 @@
 		//----------------------------------------------------------------------------------------------
 		//
 		bool MemoryChecker::LeakCheck(const MemoryState & old) {
-			MemoryState now , diff;
+			MemoryState now, diff;
 			_CrtMemCheckpoint(&now);
 			if (_CrtMemDifference(&diff, &old, &now)) {   
 				DebugOutput::GetInstance()->PrintThickLine();

@@ -102,8 +102,16 @@ namespace Nyx {
 		int GetPan()  {
 			return pan;
 		}
+
+		void SetVolume(int v) {
+			volume = v;
+		}
+		int GetVolume() const {
+			return volume;
+		}
 	private:
 		long pan;
+		int volume;
 		bool isPlaying;///< 再生中
 		bool isLooping;///< ループ
 		bool isPause;///< ポーズ

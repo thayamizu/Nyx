@@ -104,12 +104,14 @@ namespace Nyx {
 		virtual void SetMasterVolume(int v) ;
 
 		std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
+
 		/**
 		* Waveファイルをロードしてきます
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		*/
 		bool Load(const std::wstring fileName, SoundBufferType);
+
 	private:
 
 		/**
