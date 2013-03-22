@@ -173,7 +173,7 @@ namespace Nyx {
 	}
 	//---------------------------------------------------------------------------------------
 	//
-	bool DirectSoundAudioManager::Load(const std::wstring fileName, SoundBufferType bufferType) {
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index) {
 
 		//最後に.が見つかった場所か(ファイル名に.が含まれている場合の対策)
 		int pos = fileName.find_last_of (L".");
@@ -184,81 +184,48 @@ namespace Nyx {
 		std::wstring ext = fileName.substr(pos+1, fileName.size());
 
 		//ロード
-		if (ext== L"pack") {
-			LoadFromPackedFile(fileName, bufferType);
-		}
-		else if (ext == L"wav" || ext == L"wave") {
-			LoadFromWaveFile(fileName, bufferType);
+		std::shared_ptr<IAudioBuffer> buffer = nullptr;
+		if (ext == L"wav" || ext == L"wave") {
+			buffer = LoadFromWaveFile(fileName, bufferType, index);
 		}
 		else if (ext == L"ogg") {
 			//未対応だが、将来的に導入するので、とりあえず確保しておく
-			return false;
 		}
 
-		return true;
+		return buffer;
 	}	
 
-	//---------------------------------------------------------------------------------------
-	//
-	bool DirectSoundAudioManager::LoadFromPackedFile(const std::wstring fileName, SoundBufferType bufferType)
-	{
-		std::shared_ptr<AudioBuffer> audio = nullptr;
-		unique_ptr<PackedFile> pack = unique_ptr<PackedFile>(new PackedFile(fileName.c_str()));
-		int num = pack->GetFileNum();//パッキングされたファイルの数を取得
-		for (int i=0; i< num; i++) {//一括で読んでまえ
-
-			//parameterised fuctoryを導入するべきかな？
-			switch(bufferType)
-			{
-			case Static:
-				audio=std::make_shared<DirectSoundAudioBuffer>(dsound, pack->GetFileData(i));
-				break;
-			case Static3D:
-				audio=std::make_shared<DirectSound3DAudioBuffer>(dsound, pack->GetFileData(i));
-				break;
-			case Streaming:
-				audio=std::make_shared<DirectSoundStreamingAudioBuffer>(dsound, pack->GetFileData(i));
-				break;
-			case Streaming3D:
-				//audio=new DirectSound3DAudioBuffer(dsound, hwnd, fileName);
-				//break;
-			default:
-				return false;
-			}
-			if (audio != nullptr) {
-				audio->SetVolume(GetMasterVolume());
-				audioBufferList.push_back(audio);
-			}
-		}
-		return true;
-	}
+	
 
 	//---------------------------------------------------------------------------------------
 	//
-	bool DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, SoundBufferType bufferType){
-		std::shared_ptr<AudioBuffer> audio = nullptr;
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index){
+		std::shared_ptr<IAudioBuffer> audio = nullptr;
 		switch(bufferType)
 		{
-		case Static:
+		case SoundBufferType::Static:
 			audio=std::make_shared<DirectSoundAudioBuffer>(dsound, fileName);
 			break;
-		case Static3D:
+		case SoundBufferType::Static3D:
 			audio=std::make_shared<DirectSound3DAudioBuffer>(dsound, fileName);
 			break;
-		case Streaming:
+		case SoundBufferType::Streaming:
 			audio=std::make_shared<DirectSoundStreamingAudioBuffer>(dsound, fileName);
 			break;
-		case Streaming3D:
+		case SoundBufferType::Streaming3D:
 			//audio=new DirectSound3DAudioBuffer(dsound, hwnd, fileName);
 			break;
 		default:
 			DebugOutput::DebugMessage("生成失敗");
-			return false;
+			return nullptr;
 		}
 
 		if (audio != nullptr) {
+			audio->SetVolume(GetMasterVolume());
+			index = audioBufferList.size();
 			audioBufferList.push_back(audio);
 		}
-		return true;
+
+		return audio;
 	}
 }

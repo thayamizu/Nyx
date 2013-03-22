@@ -16,12 +16,12 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_BUFFER_H_
-#include "Sound/AudioBuffer.h"
+#include "Sound/IAudioBuffer.h"
 
 namespace Nyx {
 	using std::shared_ptr;
 	///3DオーディオバッファのDirectSoundによる実装
-	class DirectSound3DAudioBuffer : public AudioBuffer {
+	class DirectSound3DAudioBuffer : public IAudioBuffer {
 	public:
 		/**
 		* コンストラクタ

@@ -21,7 +21,7 @@
 namespace Nyx {
 	using std::shared_ptr;
 	///オーディオバッファのDirectSoundによる実装
-	class DirectSoundAudioBuffer : public AudioBuffer {
+	class DirectSoundAudioBuffer : public IAudioBuffer {
 	public:
 		/**
 		* コンストラクタ

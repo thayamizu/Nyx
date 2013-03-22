@@ -25,7 +25,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, std::wstring fileName)
-		: AudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), bufferSize(0), 
+		: IAudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), bufferSize(0), 
 		notifySize(0), nextOffset(0), notifyThreadHandle(NULL)
 	{
 		
@@ -117,7 +117,7 @@ namespace Nyx {
 		SafeRelease(notify);
 	}
 	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, shared_ptr<char> wave)
-		: AudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), 
+		: IAudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), 
 		bufferSize(0), notifySize(0), nextOffset(0), notifyThreadHandle(NULL)
 	{
 		ulong blockSize;

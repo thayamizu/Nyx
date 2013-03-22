@@ -22,19 +22,17 @@ namespace Nyx {
 	//前方宣言
 	class IAudioBuffer;
 
-	enum SoundBufferType
-	{
-		Static,		///< 静的バッファ
-		Static3D,	///< 静的3Dバッファ
-		Streaming,	///< ストリーミングバッファ
-		Streaming3D, ///< ストリーミング3Dバッファ
-		NumSoundBufferType
-	};
-
 	///オーディオマネージャ
 	class AudioManager : public IAudioManager{
 	public:
+		/**
+		 * コンストラクタ
+		 */
 		AudioManager();
+
+		/**
+		 * コンストラクタ
+		 */
 		AudioManager(HWND hwnd, int volume);
 
 
@@ -43,7 +41,13 @@ namespace Nyx {
 		*/
 		virtual ~AudioManager();
 
-		void Create(HWND hwnd, int volume);
+		/**
+		* オーディオマネージャの初期化
+		* @param HWND
+		* @param int
+		* @return bool
+		*/
+		bool Initialize(HWND hwnd, int volume);
 
 		/**
 		* 指定したインデックスの曲を再生する
@@ -114,19 +118,21 @@ namespace Nyx {
 		* @param int マスターボリューム値
 		*/
 		virtual void SetMasterVolume(int v) ;
-		
+
 		/**
 		* オーディオバッファを取得
 		* @param size_t インデックス
 		*/
 		virtual std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
-		
+
 		/**
-		* オーディオバッファを取得
+		* オーディオをロードしてくる
 		* @param std::wstring ファイル名
 		* @param SoundBufferType バッファタイプ
+		* [out] @param int& index 読み込んできたオーディオの管理番号
 		*/
-		virtual bool Load(std::wstring fileName, SoundBufferType bufferType);
+		virtual std::shared_ptr<IAudioBuffer> Load(std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index);
+
 	protected:
 		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;

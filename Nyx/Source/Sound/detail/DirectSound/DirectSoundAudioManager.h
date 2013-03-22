@@ -16,12 +16,12 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
 #define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
-#include "Sound/AudioManager.h"
+#include "Sound/IAudioManager.h"
 
 namespace Nyx {
 	///オーディオマネージャのDirectSoundによる実装
 	class DirectSoundAudioManager : public IAudioManager{
-		typedef std::vector< std::shared_ptr<AudioBuffer> > AudioBufferList;
+		typedef std::vector< std::shared_ptr<IAudioBuffer> > AudioBufferList;
 	public:
 		/**
 		* コンストラクタ
@@ -110,29 +110,19 @@ namespace Nyx {
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		*/
-		bool Load(const std::wstring fileName, SoundBufferType);
-
+		std::shared_ptr<IAudioBuffer> Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index);
 	private:
-
-		/**
-		* パッキングされたファイルからデータをまとめて読み込んできます。
-		* @param const std::wstring ファイル名
-		* @param SoundBufferType バッファの種類
-		* @return 読み込みに成功すればtrue
-		*/
-		bool LoadFromPackedFile(const std::wstring fileName, SoundBufferType);
-
 		/**
 		* Waveファイルからデータを読み込んできます
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		* @return bool 読み込みに成功すればtrue
 		*/
-		bool LoadFromWaveFile(const std::wstring , SoundBufferType);
+		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring , SoundBufferType::enum_t bufferType, size_t& index);
 	private:	
 		HWND hWnd;///< ウインドウハンドル
 		DirectSound dsound;///< DirectSoundオブジェクト
-		int masterVolume;
+		int masterVolume;	///マスターボリューム	
 		AudioBufferList audioBufferList;
 
 	};

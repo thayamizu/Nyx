@@ -21,6 +21,7 @@ namespace Nyx {
 	///オーディオバッファインタフェース
 	class IAudioBuffer {
 	public:
+		IAudioBuffer() :pan(0), volume(0), isLooping(false), isPlaying(false), isPause(false){}
 		virtual ~IAudioBuffer() {}
 		/**
 		*　再生

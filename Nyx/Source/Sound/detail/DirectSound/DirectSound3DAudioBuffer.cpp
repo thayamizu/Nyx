@@ -24,7 +24,8 @@ namespace Nyx {
 	using Nyx::File;
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSound3DAudioBuffer::DirectSound3DAudioBuffer(const DirectSound dsound, const std::wstring fileName):AudioBuffer() {
+	DirectSound3DAudioBuffer::DirectSound3DAudioBuffer(const DirectSound dsound, const std::wstring fileName) 
+		:IAudioBuffer() {
 
 		//DataChunk dataChunk;
 		//FmtChunk fmtChunk;

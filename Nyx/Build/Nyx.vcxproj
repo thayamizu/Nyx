@@ -217,7 +217,6 @@
     <ClInclude Include="..\Source\Thread\CriticalSection.h" />
     <ClInclude Include="..\Source\Thread\LockObject.h" />
     <ClInclude Include="..\Source\Thread\Thread.h" />
-    <ClInclude Include="..\Source\Sound\AudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\AudioManager.h" />
     <ClInclude Include="..\Source\Sound\IAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\IAudioManager.h" />
@@ -263,7 +262,6 @@
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
-    <ClCompile Include="..\Source\Sound\AudioBuffer.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp" />

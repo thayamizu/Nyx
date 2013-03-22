@@ -22,6 +22,8 @@
 namespace Nyx {
 
 	struct AudioManager::PImpl{
+		PImpl():isInitialized(false), manager(nullptr) {}
+		bool isInitialized;
 		std::unique_ptr<DirectSoundAudioManager> manager;
 	};
 
@@ -36,8 +38,15 @@ namespace Nyx {
 		: pimpl_( new PImpl())	
 	{
 		Assert(pimpl_ != nullptr);
-		pimpl_->manager = std::unique_ptr<DirectSoundAudioManager>( new DirectSoundAudioManager(hwnd, volume));
-
+		try {
+			if (Initialize(hwnd, volume) == false) {
+				throw std::exception();
+			}
+		}
+		catch(std::exception e) {
+			pimpl_.reset();//リソースを開放
+			throw;
+		}
 	}
 
 	//-------------------------------------------------------------------------------------------------------
@@ -48,12 +57,22 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Create(HWND hwnd, int volume) {
+	bool AudioManager::Initialize(HWND hwnd, int volume) {
 		Assert(pimpl_ != nullptr);
+		if (pimpl_->isInitialized) { return true;}
+
 		pimpl_->manager = std::unique_ptr<DirectSoundAudioManager>( new DirectSoundAudioManager(hwnd, volume));
 
+		if (pimpl_->manager != nullptr) {
+			pimpl_->isInitialized = true;
+		}
+		else {
+			pimpl_->isInitialized = false;
+		}
+
+		return pimpl_->isInitialized;
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::Play(size_t index) {
@@ -145,8 +164,8 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	bool AudioManager::Load(const std::wstring fileName, SoundBufferType bufferType) {
+	std::shared_ptr<IAudioBuffer> AudioManager::Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index) {
 		Assert(pimpl_->manager != nullptr);
-		return pimpl_->manager->Load(fileName, bufferType);
+		return pimpl_->manager->Load(fileName, bufferType, index);
 	}	
 }

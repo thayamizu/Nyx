@@ -113,7 +113,6 @@ class SkinMesh;
 
 ///ƒTƒEƒ“ƒh
 #include "Sound/IAudioBuffer.h"
-#include "Sound/AudioBuffer.h"
 #include "Sound/IAudioManager.h"
 #include "Sound/AudioManager.h"
 #include "Sound/WaveReader.h"

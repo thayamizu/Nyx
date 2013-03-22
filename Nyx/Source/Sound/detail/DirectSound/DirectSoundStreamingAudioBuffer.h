@@ -17,11 +17,11 @@
 #ifndef NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
 
+#include "Sound/IAudioBuffer.h"
+
 namespace Nyx {
-	using std::shared_ptr;
-	class AudioBuffer;
 	///ストリーミンブオーディオバッファのDirectSoundによる実装
-	class DirectSoundStreamingAudioBuffer : public AudioBuffer
+	class DirectSoundStreamingAudioBuffer : public IAudioBuffer
 	{
 	public:
 		//---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ namespace Nyx {
 		* @param DirectSound DirectSoundオブジェクト
 		* @param shared_ptr<char> waveデータ
 		*/
-		DirectSoundStreamingAudioBuffer(DirectSound, shared_ptr<char> waveData);
+		DirectSoundStreamingAudioBuffer(DirectSound, std::shared_ptr<char> waveData);
 
 		/**
 		* デストラクタ

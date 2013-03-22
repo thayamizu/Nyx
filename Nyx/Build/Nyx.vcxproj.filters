@@ -403,9 +403,6 @@
     <ClInclude Include="..\Source\Sound\IAudioManager.h">
       <Filter>Sound\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Sound\AudioBuffer.h">
-      <Filter>Sound\implements</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Sound\WaveReader.h">
       <Filter>Sound\implements</Filter>
     </ClInclude>
@@ -764,9 +761,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.cpp">
       <Filter>Sound\implements\detail\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Sound\AudioBuffer.cpp">
-      <Filter>Sound\implements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
