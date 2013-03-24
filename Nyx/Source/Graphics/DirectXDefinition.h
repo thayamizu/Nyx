@@ -44,10 +44,7 @@
 //dx guid
 #pragma comment( lib, "dxguid.lib")
 
-//direct sound   
-#define DIRECTSOUND_VERSION 0x0900
-#include <dsound.h> 
-#pragma comment( lib, "dsound.lib")
+
 
 //direct input
 #define DIRECTINPUT_VERSION 0x0800
@@ -79,12 +76,7 @@ typedef	LPD3DXANIMATIONCONTROLLER     D3DXAnimationController;
 //構造体
 #endif
 
-//--------------------------------------------------------------
-//Direct Sound
-typedef LPDIRECTSOUND8 DirectSound;				//DirectSoudオブジェクト
-typedef LPDIRECTSOUNDBUFFER DirectSoundBuffer; //DirectSoundセカンダリーバッファー
-typedef LPDIRECTSOUND3DBUFFER DirectSound3DBuffer; //DirectSound3Dセカンダリーバッファー
-typedef LPDIRECTSOUND3DLISTENER DirectSound3DListener;//DirectSound3D Listener
+
 
 //--------------------------------------------------------------
 //Direct Input

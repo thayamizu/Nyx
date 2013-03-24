@@ -18,6 +18,8 @@
 #define NYX_CORE_INCLUDED_ISOCKET_H_
 
 namespace Nyx {
+
+	///ソケットインタフェース
 	class ISocket {
 	public:
 		//--------------------------------------------------------------------------

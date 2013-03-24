@@ -178,6 +178,7 @@
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h" />
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\WaveReader.h" />
     <ClInclude Include="..\Source\SQLiteDatabase.h" />
