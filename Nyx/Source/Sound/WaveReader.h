@@ -43,7 +43,7 @@ namespace Nyx {
 	///データチャンク構造体
 	struct DataChunk
 	{
-		long           chunkSize;///< チャンクサイズ 
+		long   chunkSize;///< チャンクサイズ 
 		uchar* waveData;///< 波形データ
 	};
 

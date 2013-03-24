@@ -20,7 +20,10 @@
 namespace Nyx {
 	class IAudioBuffer;
 
-	///バッファタイプ
+	/**
+ 	 * サウンドバッファタイプ
+	 * DirectSoundの場合は，3D再生ができません．
+	 */
 	struct SoundBufferType
 	{
 		enum enum_t {

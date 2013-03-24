@@ -178,14 +178,14 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetPan(int pan_) {
-		pan = pan_;
-		soundBuffer->SetPan(pan_);
+	void DirectSoundAudioBuffer::SetPan(long pan) {
+		this->pan = pan;
+		soundBuffer->SetPan(pan);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetVolume(int v) {
+	void DirectSoundAudioBuffer::SetVolume(long v) {
 		if (v > 100) { v = 100;}
 		else if (v < 0) {v=0;}
 

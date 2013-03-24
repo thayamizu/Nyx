@@ -19,7 +19,9 @@
 #include "Debug/DebugOutput.h"
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
+#include "DirectSoundDefinition.h"
 #include "DirectSound3DAudioBuffer.h"
+
 namespace Nyx {
 	using Nyx::File;
 	//-------------------------------------------------------------------------------------------------------
@@ -27,174 +29,249 @@ namespace Nyx {
 	DirectSound3DAudioBuffer::DirectSound3DAudioBuffer(const DirectSound dsound, const std::wstring fileName) 
 		:IAudioBuffer() {
 
-		//DataChunk dataChunk;
-		//FmtChunk fmtChunk;
-		//WAVEFORMATEX wfx;
-		//unique_ptr<WaveReader> reader = unique_ptr<WaveReader>(new WaveReader());
+			DataChunk dataChunk;
+			FmtChunk fmtChunk;
+			WAVEFORMATEX wfx;
+			unique_ptr<WaveReader> reader(new WaveReader());
 
-		////Waveデータの読み取り
-		//reader->ReadFromFile(fileName);
-		//reader->GetDataChunk(&dataChunk);
-		//reader->GetFmtChunk(&fmtChunk);
+			//Waveデータの読み取り
+			reader->ReadFromFile(fileName);
+			reader->GetDataChunk(&dataChunk);
+			reader->GetFmtChunk(&fmtChunk);
 
-		////WAVEフォーマットのセットアップ
-		//memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
-		//wfx.wFormatTag = fmtChunk.formatTag; 
-		//wfx.nChannels = fmtChunk.channelNum; 
-		//wfx.nSamplesPerSec = fmtChunk.samplingRate; 
-		//wfx.nBlockAlign = fmtChunk.blockSize; 
-		//wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
-		//wfx.wBitsPerSample = fmtChunk.bitsRate; 
+			//WAVEフォーマットのセットアップ
+			memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
+			wfx.wFormatTag = fmtChunk.formatTag; 
+			wfx.nChannels = fmtChunk.channelNum; 
+			wfx.nSamplesPerSec = fmtChunk.samplingRate; 
+			wfx.nBlockAlign = fmtChunk.blockSize; 
+			wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
+			wfx.wBitsPerSample = fmtChunk.bitsRate; 
 
-		//// DirectSoundセカンダリーバッファー作成
-		//DSBUFFERDESC dsbd;  
-		//ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
-		//dsbd.dwSize		= sizeof(DSBUFFERDESC);
-		//dsbd.dwFlags	= DSBCAPS_CTRLFX|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLPAN|DSBCAPS_GLOBALFOCUS;
-		//dsbd.dwBufferBytes = dataChunk.chunkSize;
-		//dsbd.guid3DAlgorithm = DS3DALG_DEFAULT;
-		//dsbd.lpwfxFormat = &wfx;
+			//標準リニアPCMの確認。圧縮PCMやマルチチャンネル等は想定外。なお、3Dサウンドの音源はモノラルである必要がある
+			if( wfx.wFormatTag == WAVE_FORMAT_PCM ) {
+				if(wfx.nChannels > 1) {
+					DebugOutput::DebugMessage("3D再生は音源がモノラルである必要があります");
+					return;
+				}  
+			}
+			else {
+				DebugOutput::DebugMessage("PCMフォーマットではありません");
+				return;
+			}
 
-		//DirectSoundBuffer tmpBuffer;
-		//HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &tmpBuffer, NULL ); 
-		//if (FAILED(hr)) {
-		//	DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
-		//}
+			// DirectSoundセカンダリーバッファー作成
+			DSBUFFERDESC dsbd;  
+			ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
+			dsbd.dwSize		= sizeof(DSBUFFERDESC);
+			dsbd.dwFlags	=   DSBCAPS_CTRL3D |  DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLFX;
+			dsbd.dwBufferBytes = dataChunk.chunkSize;
+			dsbd.guid3DAlgorithm = DS3DALG_HRTF_FULL;
+			dsbd.lpwfxFormat = &wfx;
 
-		//hr =tmpBuffer->QueryInterface(IID_IDirectSoundBuffer, reinterpret_cast<void**>(&soundBuffer));
-		//if (FAILED(hr)) {
-		//	DebugOutput::DebugMessage("DirectSoundセカンダリバッファの取得に失敗しました");
-		//}
-		//void* buffer = NULL;
-		//ulong bufferSize=0;
-		////セカンダリバッファに波形データの書き込み
-		//soundBuffer->Lock( 0, dataChunk.chunkSize, &buffer, &bufferSize, NULL, NULL, 0); 
-		//{
-		//	memcpy(buffer, dataChunk.waveData, dataChunk.chunkSize);
-		//}
-		//soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
+			HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &soundBuffer, NULL ); 
+			if (FAILED(hr)) {
+				DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
+			}
 
+			//DirectSound3DBufferの取得
+			hr = soundBuffer->QueryInterface(IID_IDirectSound3DBuffer8, reinterpret_cast<void**>(&sound3DBuffer));
+			if(FAILED(hr)){
+				DebugOutput::DebugMessage("IDirectSound3DBuffer8の取得に失敗しました");
+			}
 
-		////DirectSound3DBufferの取得
-		//hr = tmpBuffer->QueryInterface(IID_IDirectSound3DBuffer8,reinterpret_cast<void**>(&sound3DBuffer));
-		//if(FAILED(hr)){
-		//	DebugOutput::DebugMessage("IDirectSoundBuffer8の取得に失敗しました");
-		//}
-
-		////音源位置の設定
-		//SetPos(0.f, 0.f, 0.f);
-
-		////最小距離と最大距離の設定
-		//SetMinDistance(15.0f);
-		//SetMaxDistance(20.0f);
-		//
-		//パン・ボリュームの設定
-		//soundBuffer->GetPan(&pan);
-		//soundBuffer->GetVolume(&volume);
-		HRESULT hr;
-		//WAVEフォーマット読み込み情報
-		HMMIO hMmio		= NULL;
-		ulong waveSize  = 0;
-		WAVEFORMATEX* waveFmt;
-		//チャンク情報
-		MMCKINFO ckInfo;	//チャンク情報
-		MMCKINFO riffckInfo;//RIFFチャンク保存用
-		//PCMフォーマット
-		PCMWAVEFORMAT pcmWaveFmt;
-
-		//WAVファイル内のヘッダー情報（音データ以外）の確認と読み込み
-		hMmio = mmioOpen( const_cast<wchar_t*>(fileName.c_str()), NULL, MMIO_ALLOCBUF | MMIO_READ );
-		//ファイルポインタをRIFFチャンクの先頭にセットする
-		mmioDescend( hMmio, &riffckInfo, NULL, 0 );
-		// ファイルポインタを'f' 'm' 't' ' ' チャンクにセットする
-		ckInfo.ckid = mmioFOURCC('f', 'm', 't', ' ');
-		mmioDescend( hMmio, &ckInfo, &riffckInfo, MMIO_FINDCHUNK );
-		//フォーマットを読み込む
-		mmioRead( hMmio, (HPSTR) &pcmWaveFmt,sizeof(pcmWaveFmt));  
-		waveFmt = (WAVEFORMATEX*)new char[sizeof(WAVEFORMATEX) ];   
-		memcpy( waveFmt, &pcmWaveFmt, sizeof(pcmWaveFmt) );   
-		waveFmt->cbSize = 0;	
-		mmioAscend( hMmio, &ckInfo, 0 );
-
-		// WAVファイル内の音データの読み込み	
-		ckInfo.ckid = mmioFOURCC('d', 'a', 't', 'a');   
-		mmioDescend( hMmio, &ckInfo, &riffckInfo, MMIO_FINDCHUNK );//データチャンクにセット
-		waveSize = ckInfo.cksize;
-
-		// DirectSoundセカンダリーバッファー作成
-		DSBUFFERDESC dsbd;  
-		ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
-		dsbd.dwSize = sizeof(DSBUFFERDESC);
-		dsbd.dwFlags = DSBCAPS_CTRL3D |  DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLFX;
-		dsbd.dwBufferBytes = waveSize;
-		dsbd.guid3DAlgorithm = DS3DALG_HRTF_FULL;
-		dsbd.lpwfxFormat = waveFmt;
-		DirectSoundBuffer tmpBuffer;
-		hr = dsound->CreateSoundBuffer( &dsbd, &tmpBuffer, NULL ); 
-		if (FAILED(hr)) {
-			DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
-		}
-
-		hr =tmpBuffer->QueryInterface(IID_IDirectSoundBuffer, reinterpret_cast<void**>(&soundBuffer));
-		if (FAILED(hr)) {
-			DebugOutput::DebugMessage("DirectSoundセカンダリバッファの取得に失敗しました");
-		}
-
-		//セカンダリバッファに波形データの書き込み
-		void* buffer = NULL;
-		uchar* wavData = NULL;
-		ulong bufferSize = 0; 
-		soundBuffer->Lock( 0, waveSize,&buffer, &bufferSize, NULL, NULL, 0); 
-		{
-			File file(fileName.c_str(), Nyx::ReadMode);		
-			file.SeekBegin(riffckInfo.dwDataOffset + sizeof(FOURCC));
-
-			wavData=new BYTE[ bufferSize ];
-			file.Read(wavData, bufferSize);
-
-			memcpy(buffer, wavData, bufferSize);		
-		}
-		soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
-
-		//DirectSound3DBufferの取得
-		hr = tmpBuffer->QueryInterface(IID_IDirectSound3DBuffer8,reinterpret_cast<void**>(&sound3DBuffer));
-		if(FAILED(hr)){
-			DebugOutput::DebugMessage("IDirectSoundBuffer8の取得に失敗しました");
-		}
-
-		//最小距離と最大距離の設定
-		sound3DBuffer->SetMinDistance(15,DS3D_IMMEDIATE);
-		sound3DBuffer->SetMaxDistance(20,DS3D_IMMEDIATE);
-
-		//音源の速度を設定しておく。時速40キロメートル
-		sound3DBuffer->SetVelocity(0,0,40,DS3D_IMMEDIATE);  
-
-		//リスナーインターフェイスを取得する  
-		LPDIRECTSOUNDBUFFER	pPrimary;  
-		ZeroMemory(&dsbd, sizeof(DSBUFFERDESC));  
-		dsbd.dwSize = sizeof(DSBUFFERDESC);  
-		dsbd.dwFlags = DSBCAPS_CTRL3D | DSBCAPS_PRIMARYBUFFER;  
-		if (SUCCEEDED(dsound->CreateSoundBuffer(&dsbd, &pPrimary, NULL)))   { 
-			pPrimary->QueryInterface(IID_IDirectSound3DListener8,(LPVOID *)&listener);    
-			pPrimary->Release();  
-		}
-
-		//リスナーインターフェイスによりドップラー効果のかかり具合を設定しておく
-		listener->SetDopplerFactor(100,DS3D_IMMEDIATE);
-
-		//メンバの初期化
-		soundBuffer->GetPan(&pan);
-		soundBuffer->GetVolume(&volume);
+			//セカンダリバッファに波形データの書き込み
+			void* buffer = NULL;
+			ulong bufferSize=0;
+			soundBuffer->Lock( 0, dataChunk.chunkSize, &buffer, &bufferSize, NULL, NULL, 0); 
+			{
+				memcpy(buffer, dataChunk.waveData, dataChunk.chunkSize);
+			}
+			soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
 
 
-		//後始末
-		SafeDelete(wavData);
-		SafeDelete(waveFmt);
+
+			
+
+			//音源位置の設定
+			SetPos(0.f, 0.f, 0.f);
+
+			//最小距離と最大距離の設定
+			SetMinDistance(15.0f);
+			SetMaxDistance(20.0f);
+
+			//パン・ボリュームの設定
+			soundBuffer->GetPan(&pan);
+			soundBuffer->GetVolume(&volume);
+
+			//DataChunk dataChunk;
+			//FmtChunk fmtChunk;
+			//WAVEFORMATEX wfx;
+			//unique_ptr<WaveReader> reader = unique_ptr<WaveReader>(new WaveReader());
+
+			////Waveデータの読み取り
+			//reader->ReadFromFile(fileName);
+			//reader->GetDataChunk(&dataChunk);
+			//reader->GetFmtChunk(&fmtChunk);
+
+			////WAVEフォーマットのセットアップ
+			//memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
+			//wfx.wFormatTag = fmtChunk.formatTag; 
+			//wfx.nChannels = fmtChunk.channelNum; 
+			//wfx.nSamplesPerSec = fmtChunk.samplingRate; 
+			//wfx.nBlockAlign = fmtChunk.blockSize; 
+			//wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
+			//wfx.wBitsPerSample = fmtChunk.bitsRate; 
+
+			//// DirectSoundセカンダリーバッファー作成
+			//DSBUFFERDESC dsbd;  
+			//ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
+			//dsbd.dwSize		= sizeof(DSBUFFERDESC);
+			//dsbd.dwFlags	= DSBCAPS_CTRLFX|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLPAN|DSBCAPS_GLOBALFOCUS;
+			//dsbd.dwBufferBytes = dataChunk.chunkSize;
+			//dsbd.guid3DAlgorithm = DS3DALG_DEFAULT;
+			//dsbd.lpwfxFormat = &wfx;
+
+			//DirectSoundBuffer tmpBuffer;
+			//HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &tmpBuffer, NULL ); 
+			//if (FAILED(hr)) {
+			//	DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
+			//}
+
+			//hr =tmpBuffer->QueryInterface(IID_IDirectSoundBuffer, reinterpret_cast<void**>(&soundBuffer));
+			//if (FAILED(hr)) {
+			//	DebugOutput::DebugMessage("DirectSoundセカンダリバッファの取得に失敗しました");
+			//}
+			//void* buffer = NULL;
+			//ulong bufferSize=0;
+			////セカンダリバッファに波形データの書き込み
+			//soundBuffer->Lock( 0, dataChunk.chunkSize, &buffer, &bufferSize, NULL, NULL, 0); 
+			//{
+			//	memcpy(buffer, dataChunk.waveData, dataChunk.chunkSize);
+			//}
+			//soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
+
+
+			////DirectSound3DBufferの取得
+			//hr = tmpBuffer->QueryInterface(IID_IDirectSound3DBuffer8,reinterpret_cast<void**>(&sound3DBuffer));
+			//if(FAILED(hr)){
+			//	DebugOutput::DebugMessage("IDirectSoundBuffer8の取得に失敗しました");
+			//}
+
+			////音源位置の設定
+			//SetPos(0.f, 0.f, 0.f);
+
+			////最小距離と最大距離の設定
+			//SetMinDistance(15.0f);
+			//SetMaxDistance(20.0f);
+			//
+			//パン・ボリュームの設定
+			//soundBuffer->GetPan(&pan);
+			//soundBuffer->GetVolume(&volume);
+			//HRESULT hr;
+			////WAVEフォーマット読み込み情報
+			//HMMIO hMmio		= NULL;
+			//ulong waveSize  = 0;
+			//WAVEFORMATEX* waveFmt;
+			////チャンク情報
+			//MMCKINFO ckInfo;	//チャンク情報
+			//MMCKINFO riffckInfo;//RIFFチャンク保存用
+			////PCMフォーマット
+			//PCMWAVEFORMAT pcmWaveFmt;
+
+			////WAVファイル内のヘッダー情報（音データ以外）の確認と読み込み
+			//hMmio = mmioOpen( const_cast<wchar_t*>(fileName.c_str()), NULL, MMIO_ALLOCBUF | MMIO_READ );
+			////ファイルポインタをRIFFチャンクの先頭にセットする
+			//mmioDescend( hMmio, &riffckInfo, NULL, 0 );
+			//// ファイルポインタを'f' 'm' 't' ' ' チャンクにセットする
+			//ckInfo.ckid = mmioFOURCC('f', 'm', 't', ' ');
+			//mmioDescend( hMmio, &ckInfo, &riffckInfo, MMIO_FINDCHUNK );
+			////フォーマットを読み込む
+			//mmioRead( hMmio, (HPSTR) &pcmWaveFmt,sizeof(pcmWaveFmt));  
+			//waveFmt = (WAVEFORMATEX*)new char[sizeof(WAVEFORMATEX) ];   
+			//memcpy( waveFmt, &pcmWaveFmt, sizeof(pcmWaveFmt) );   
+			//waveFmt->cbSize = 0;	
+			//mmioAscend( hMmio, &ckInfo, 0 );
+
+			//// WAVファイル内の音データの読み込み	
+			//ckInfo.ckid = mmioFOURCC('d', 'a', 't', 'a');   
+			//mmioDescend( hMmio, &ckInfo, &riffckInfo, MMIO_FINDCHUNK );//データチャンクにセット
+			//waveSize = ckInfo.cksize;
+
+			//// DirectSoundセカンダリーバッファー作成
+			//DSBUFFERDESC dsbd;  
+			//ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
+			//dsbd.dwSize = sizeof(DSBUFFERDESC);
+			//dsbd.dwFlags = DSBCAPS_CTRL3D | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPAN | DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLFX | DSBCAPS_GLOBALFOCUS;
+			//dsbd.dwBufferBytes = waveSize;
+			//dsbd.guid3DAlgorithm = DS3DALG_HRTF_FULL;
+			//dsbd.lpwfxFormat = waveFmt;
+			//DirectSoundBuffer tmpBuffer;
+			//hr = dsound->CreateSoundBuffer( &dsbd, &tmpBuffer, NULL ); 
+			//if (FAILED(hr)) {
+			//	DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
+			//}
+
+			//hr =tmpBuffer->QueryInterface(IID_IDirectSoundBuffer, reinterpret_cast<void**>(&soundBuffer));
+			//if (FAILED(hr)) {
+			//	DebugOutput::DebugMessage("DirectSoundセカンダリバッファの取得に失敗しました");
+			//}
+
+			////セカンダリバッファに波形データの書き込み
+			//void* buffer = NULL;
+			//uchar* wavData = NULL;
+			//ulong bufferSize = 0; 
+			//soundBuffer->Lock( 0, waveSize,&buffer, &bufferSize, NULL, NULL, 0); 
+			//{
+			//	File file(fileName.c_str(), Nyx::ReadMode);		
+			//	file.SeekBegin(riffckInfo.dwDataOffset + sizeof(FOURCC));
+
+			//	wavData=new BYTE[ bufferSize ];
+			//	file.Read(wavData, bufferSize);
+
+			//	memcpy(buffer, wavData, bufferSize);		
+			//}
+			//soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
+
+			////DirectSound3DBufferの取得
+			//hr = tmpBuffer->QueryInterface(IID_IDirectSound3DBuffer8,reinterpret_cast<void**>(&sound3DBuffer));
+			//if(FAILED(hr)){
+			//	DebugOutput::DebugMessage("IDirectSoundBuffer8の取得に失敗しました");
+			//}
+
+			////最小距離と最大距離の設定
+			//sound3DBuffer->SetMinDistance(15,DS3D_IMMEDIATE);
+			//sound3DBuffer->SetMaxDistance(20,DS3D_IMMEDIATE);
+
+			////音源の速度を設定しておく。時速40キロメートル
+			//sound3DBuffer->SetVelocity(0,0,40,DS3D_IMMEDIATE);  
+
+			////リスナーインターフェイスを取得する  
+			//LPDIRECTSOUNDBUFFER	pPrimary;  
+			//ZeroMemory(&dsbd, sizeof(DSBUFFERDESC));  
+			//dsbd.dwSize = sizeof(DSBUFFERDESC);  
+			//dsbd.dwFlags = DSBCAPS_CTRL3D | DSBCAPS_PRIMARYBUFFER;  
+			//if (SUCCEEDED(dsound->CreateSoundBuffer(&dsbd, &pPrimary, NULL)))   { 
+			//	pPrimary->QueryInterface(IID_IDirectSound3DListener8,(LPVOID *)&listener);    
+			//	pPrimary->Release();  
+			//}
+
+			////リスナーインターフェイスによりドップラー効果のかかり具合を設定しておく
+			//listener->SetDopplerFactor(100,DS3D_IMMEDIATE);
+
+			////メンバの初期化
+			//soundBuffer->GetPan(&pan);
+			//soundBuffer->GetVolume(&volume);
+
+
+			////後始末
+			//SafeDelete(wavData);
+			//SafeDelete(waveFmt);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSound3DAudioBuffer::DirectSound3DAudioBuffer(const DirectSound dsound, shared_ptr<char> waveData) {
+	DirectSound3DAudioBuffer::DirectSound3DAudioBuffer(const DirectSound dsound, std::shared_ptr<char> waveData) {
 		DataChunk dataChunk;
 		FmtChunk fmtChunk;
 		WAVEFORMATEX wfx;
@@ -268,6 +345,7 @@ namespace Nyx {
 		soundBuffer->GetPan(&pan);
 		soundBuffer->GetVolume(&volume);
 	}
+
 	//-------------------------------------------------------------------------------------------------------
 	//
 	DirectSound3DAudioBuffer::~DirectSound3DAudioBuffer() {
@@ -331,19 +409,31 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSound3DAudioBuffer::SetPan(int pan_) {
+	void DirectSound3DAudioBuffer::SetPan(long pan_) {
 		pan = pan_;
 		soundBuffer->SetPan(pan_);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSound3DAudioBuffer::SetVolume(int v) {
+	long DirectSound3DAudioBuffer::GetPan() const {
+		return pan;
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSound3DAudioBuffer::SetVolume(long v) {
 		if (v > 100) { v = 100;}
 		else if (v < 0) {v=0;}
 
 		volume = v;
 		soundBuffer->SetVolume(v*100 + DSBVOLUME_MIN);
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	long DirectSound3DAudioBuffer::GetVolume() const {
+		return volume;
 	}
 
 	//-------------------------------------------------------------------------------------------------------

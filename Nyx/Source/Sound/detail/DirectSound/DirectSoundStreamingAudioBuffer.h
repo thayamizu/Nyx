@@ -16,8 +16,8 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
-
 #include "Sound/IAudioBuffer.h"
+#include "DirectSoundDefinition.h"
 
 namespace Nyx {
 	///ストリーミンブオーディオバッファのDirectSoundによる実装
@@ -82,7 +82,7 @@ namespace Nyx {
 		* パンの設定
 		* @param int パン
 		*/
-		void SetPan(int pan_);
+		void SetPan(long pan);
 
 		/**
 		* ボリュームの取得
@@ -94,7 +94,7 @@ namespace Nyx {
 		* ボリュームの設定
 		* @param ボリューム
 		*/
-		void SetVolume(int v);
+		void SetVolume(long v);
 
 		/*
 		* 通知スレッドの起動関数

@@ -279,7 +279,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreamingAudioBuffer::SetPan(int pan_)
+	void DirectSoundStreamingAudioBuffer::SetPan(long pan_)
 	{	
 		pan = pan_;
 		soundBuffer->SetPan(pan_);	
@@ -295,7 +295,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreamingAudioBuffer::SetVolume(int v)
+	void DirectSoundStreamingAudioBuffer::SetVolume(long v)
 	{
 		if (v > 100) { v = 100;}
 		else if (v < 0) {v=0;}

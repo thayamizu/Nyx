@@ -17,6 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
 #define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
 #include "Sound/IAudioManager.h"
+#include "DirectSoundDefinition.h"
 
 namespace Nyx {
 	///オーディオマネージャのDirectSoundによる実装

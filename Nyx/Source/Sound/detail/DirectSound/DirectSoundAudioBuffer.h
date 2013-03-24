@@ -16,10 +16,11 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLDUED_DIRECTSOUND_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLDUED_DIRECTSOUND_AUDIO_BUFFER_H_
-#include "Sound/AudioBuffer.h"
+#include "Sound/IAudioBuffer.h"
+#include "DirectSoundDefinition.h"
 
 namespace Nyx {
-	using std::shared_ptr;
+
 	///オーディオバッファのDirectSoundによる実装
 	class DirectSoundAudioBuffer : public IAudioBuffer {
 	public:
@@ -35,7 +36,7 @@ namespace Nyx {
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param  shared_ptr<char> waveData
 		*/
-		DirectSoundAudioBuffer(const DirectSound ds, shared_ptr<char> waveData);
+		DirectSoundAudioBuffer(const DirectSound ds, std::shared_ptr<char> waveData);
 
 		/**
 		*　デストラクタ
@@ -66,13 +67,13 @@ namespace Nyx {
 		* パンの設定
 		* @param int パン
 		*/
-		void SetPan(int pan_);
+		void SetPan(long pan);
 
 		/**
 		* ボリュームの設定
 		* @param int ボリューム
 		*/
-		void SetVolume(int v);
+		void SetVolume(long v);
 
 		/**
 		* ボリュームの取得

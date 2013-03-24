@@ -21,7 +21,8 @@ namespace Nyx {
 	///オーディオバッファインタフェース
 	class IAudioBuffer {
 	public:
-		IAudioBuffer() :pan(0), volume(0), isLooping(false), isPlaying(false), isPause(false){}
+		IAudioBuffer() :isLooping(false), isPlaying(false), isPause(false){}
+
 		virtual ~IAudioBuffer() {}
 		/**
 		*　再生
@@ -40,11 +41,35 @@ namespace Nyx {
 		*/
 		virtual void Reset()  = 0; 
 
+			/**
+		* パンを設定する
+		* @param int パン
+		*/
+		virtual void SetPan(long p)=0;
+		
+		/**
+		* パンを取得する
+		* @return long パン
+		*/
+		virtual long GetPan() const = 0;
+
+		/**
+		*　ボリュームを設定する
+		* @return int　ボリューム
+		*/
+		virtual void SetVolume(long v) = 0;
+
+		/**
+		* ボリュームを取得する
+		* @return int ボリューム
+		*/
+		virtual long GetVolume() const = 0;
+		
 		/**
 		* ループ再生かどうか判定
 		* @return bool　ループ再生ならtrue
 		*/
-		bool IsLooping() const {
+		virtual bool IsLooping() const {
 			return isLooping;
 		} 
 
@@ -52,7 +77,7 @@ namespace Nyx {
 		* 再生中かどうか
 		* @return bool 再生中ならtrue
 		*/
-		bool IsPlaying() const  {
+		virtual bool IsPlaying() const  {
 			return isPlaying;
 		}
 
@@ -60,7 +85,7 @@ namespace Nyx {
 		* ポーズ中かどうか
 		* @return bool ポーズ中ならtrue
 		*/
-		bool IsPause() const {
+		virtual bool IsPause() const {
 			return isPause;
 		}
 
@@ -68,7 +93,7 @@ namespace Nyx {
 		* ループ再生するかどうかを設定
 		* @param bool ループ再生ならtrue
 		*/
-		void SetLooping(bool loop) {
+		virtual void SetLooping(bool loop) {
 			isLooping = loop;
 		}
 
@@ -76,7 +101,7 @@ namespace Nyx {
 		* 再生中かどうか
 		* @param bool 再生中ならtrue
 		*/
-		void SetPlaying(bool play) {
+		virtual void SetPlaying(bool play) {
 			isPlaying = play;
 		}
 
@@ -84,35 +109,11 @@ namespace Nyx {
 		* ポーズ中かどうか
 		* @param bool ポーズ中ならtrue
 		*/
-		void SetPause(bool pause) {
+		virtual void SetPause(bool pause) {
 			isPause = pause;
 		}
-
-		/**
-		* パンを設定する
-		* @param int パン
-		*/
-		void SetPan(int p) {
-			pan = p;
-		}
-
-		/**
-		* パンを取得する
-		* @return long パン
-		*/
-		int GetPan()  {
-			return pan;
-		}
-
-		void SetVolume(int v) {
-			volume = v;
-		}
-		int GetVolume() const {
-			return volume;
-		}
 	private:
-		long pan;
-		int volume;
+
 		bool isPlaying;///< 再生中
 		bool isLooping;///< ループ
 		bool isPause;///< ポーズ
