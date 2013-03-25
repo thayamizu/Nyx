@@ -20,6 +20,7 @@
 #include "IO/PackedFile.h"
 #include "DirectSoundAudioBuffer.h"
 #include "DirectSound3DAudioBuffer.h"
+#include "DirectSound3DStreamingAudioBuffer.h"
 #include "DirectSoundAudioManager.h"
 #include "DirectSoundStreamingAudioBuffer.h"
 
@@ -213,7 +214,7 @@ namespace Nyx {
 			audio=std::make_shared<DirectSoundStreamingAudioBuffer>(dsound, fileName);
 			break;
 		case SoundBufferType::Streaming3D:
-			//audio=new DirectSound3DAudioBuffer(dsound, hwnd, fileName);
+			audio= std::make_shared<DirectSound3DStreamingAudioBuffer>(dsound, fileName);
 			break;
 		default:
 			DebugOutput::DebugMessage("ê∂ê¨é∏îs");

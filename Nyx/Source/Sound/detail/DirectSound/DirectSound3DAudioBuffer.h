@@ -14,8 +14,8 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_BUFFER_H_
-#define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_BUFFER_H_
+#ifndef NYX_CORE_INCLUDED_DIRECTSOUND_3D_AUDIO_BUFFER_H_
+#define NYX_CORE_INCLUDED_DIRECTSOUND_3D_AUDIO_BUFFER_H_
 #include "Sound/IAudioBuffer.h"
 #include "DirectSoundDefinition.h"
 
