@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_PERFORMANCE_TIMER_H_
 #define NYX_CORE_INCLUDED_PERFORMANCE_TIMER_H_
-
+#include "Object/NonCopyable.h"
 namespace Nyx {
 #ifdef _WIN32
 	/// 時間間隔
@@ -25,7 +25,7 @@ namespace Nyx {
 
 	///高精度タイマー
 	//主にパフォーマンスチェックに使用するとよい
-	class PerformanceTimer {
+	class PerformanceTimer: private NonCopyable {
 	public:
 		//------------------------------------------------------------------------
 		//　公開メンバ変数

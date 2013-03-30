@@ -17,7 +17,6 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Sound/AudioManager.h"
-#include "Sound/AudioBuffer.h"
 #include "detail/DirectSound/DirectSoundAudioManager.h"
 namespace Nyx {
 

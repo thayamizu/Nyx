@@ -541,6 +541,9 @@
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h">
       <Filter>Sound\implements\detail\DirectSound</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DStreamingAudioBuffer.h">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -763,6 +766,9 @@
       <Filter>Sound\implements\detail\DirectSound</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.cpp">
+      <Filter>Sound\implements\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DStreamingAudioBuffer.cpp">
       <Filter>Sound\implements\detail\DirectSound</Filter>
     </ClCompile>
   </ItemGroup>

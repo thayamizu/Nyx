@@ -113,10 +113,10 @@ namespace Nyx {
 			isPause = pause;
 		}
 	private:
-
 		bool isPlaying;///< 再生中
 		bool isLooping;///< ループ
 		bool isPause;///< ポーズ
 	};
+
 }
 #endif

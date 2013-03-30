@@ -105,10 +105,19 @@ namespace Nyx {
 	private:
 		long volume;///< ボリューム
 		long pan;///< パン
+		bool isEOF; ///< Waveデータの終端
+		ulong cursorPlay;///< 再生カーソル
+		ulong cursorRead;///< 読み込みカーソル
+		ulong waveSize;  ///< WAVEデータのサイズ
+		ulong bufferSize;///< バッファサイズ
+		ulong notifySize;///< 通知イベントが発生するサイズ
+		ulong nextOffset;///< 次に書き込むオフセット位置
+		std::shared_ptr<uchar> waveData;///<WAVEデータ
+		std::vector<HANDLE> notifyEvent; ///< 通知イベントのハンドル
+		HANDLE notifyThreadHandle;///< 通知スレッドのハンドル
 		DirectSoundBuffer soundBuffer; ///< サウンドバッファ
 		DirectSound3DBuffer sound3DBuffer;///< 3Dバッファ
 		DirectSound3DListener listener; ///<　リスナー
-
 	};
 }
 #endif

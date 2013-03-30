@@ -20,7 +20,7 @@
 namespace Nyx {
 	class ITimer;
 	///独立タイマー
-	class Timer : public ITimer,  NonCopyable{
+	class Timer : public ITimer,  private NonCopyable{
 	public:
 
 		//------------------------------------------------------------------------

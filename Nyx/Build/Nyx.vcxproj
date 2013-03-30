@@ -176,6 +176,7 @@
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Object\ResourceManager.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DStreamingAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h" />
     <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h" />
@@ -264,6 +265,7 @@
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.cpp" />
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DStreamingAudioBuffer.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.cpp" />
