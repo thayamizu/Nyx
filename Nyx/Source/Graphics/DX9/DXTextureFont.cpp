@@ -59,7 +59,7 @@ namespace Nyx {
 
 		//--------------------------------------------------------------------------------
 		//
-		void DXTextureFont::Create(DirectGraphicsDevice& device, int fontSize, wchar_t *ch, tstring fontName) 
+		void DXTextureFont::Create(DirectGraphicsDevice& device, int fontSize, wchar_t *ch, std::wstring fontName) 
 		{
 			HRESULT hr;
 

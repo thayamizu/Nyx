@@ -29,7 +29,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		ListBox(HWND hwnd,tstring label, int x, int y, int width,int height, int id=0);
+		ListBox(HWND hwnd,std::wstring label, int x, int y, int width,int height, int id=0);
 		/**
 		*
 		*/
@@ -38,7 +38,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool OnCreate(HWND hwnd, tstring label, int x, int y, int width,int height, int id);
+		bool OnCreate(HWND hwnd, std::wstring label, int x, int y, int width,int height, int id);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -150,7 +150,7 @@ namespace Nyx {
 		/**
 		* リストボックスにアイテムを追加する
 		*/
-		void AddItem(const tstring& item);
+		void AddItem(const std::wstring& item);
 
 		/**
 		* リストボックスのアイテムを削除する
@@ -169,15 +169,15 @@ namespace Nyx {
 
 		/**
 		* 現在選択されているアイテム名を取得する
-		* @return tstring
+		* @return std::wstring
 		*/
-		tstring GetSelectedItem();
+		std::wstring GetSelectedItem();
 
 	private:
 		/// ハンドルインスタンス
 		HWND hwnd;
 		///チェックボックスのラベル
-		tstring label;
+		std::wstring label;
 		///チェックボックスのID
 		int id;
 		///ウインドウが表示されているか

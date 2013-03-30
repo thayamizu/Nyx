@@ -22,7 +22,7 @@ namespace Nyx
 {
 
 	/// クリティカルセクション
-	class CriticalSection : private NonCopyable {
+	DEPRECATED class CriticalSection : private NonCopyable {
 	public:
 		/**
 		* コンストラクタ

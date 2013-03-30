@@ -51,7 +51,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		DXSprite::DXSprite(DirectGraphicsDevice& device, tstring fileName, int w, int h, int cw, int ch)
+		DXSprite::DXSprite(DirectGraphicsDevice& device, std::wstring fileName, int w, int h, int cw, int ch)
 			: ISprite(w, h, 0, 0, cw, ch)  {
 				//チップサイズ
 				SetChipSize(cw, ch);

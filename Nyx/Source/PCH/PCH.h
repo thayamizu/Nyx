@@ -17,19 +17,13 @@
 #ifndef NYX_CORE_INCLUDED_PCH_H_ 
 #define NYX_CORE_INCLUDED_PCH_H_
 
-///// define
-//#define WIN32_LEAN_AND_MEAN
-//#define WINVER           0x600
-//#define _WIN32_WINNT     0x600
 
 //Windows
 #ifdef _WIN32
+
 //header
 #include <windows.h>
 #include <mmsystem.h>
-//#include <winsock2.h>
-#pragma warning(disable:4996)
-#pragma warning(disable:4800)
 
 //Windows Library
 #pragma comment( lib, "msimg32.lib" )
@@ -40,7 +34,7 @@
 #pragma comment( lib, "advapi32.lib" )
 #pragma comment( lib, "ws2_32.lib" )
 #pragma comment( lib, "winmm.lib" )
-#pragma comment( lib, "shell32.lib" )
+
 #endif
 
 //ÉCÉìÉâÉCÉìä÷êîÇÃê[Ç≥
@@ -48,21 +42,20 @@
 #pragma inline_recursion ( on )
 
 //warningó}êß
+#pragma warning ( disable : 4101 )
 #pragma warning ( disable : 4201 )
 #pragma warning ( disable : 4995 )
+#pragma warning ( disable : 4996 )
+#pragma warning ( disable : 4800 )
 
 //STL 
 #include <map>
-#include <set>
 #include <unordered_map>
 #include <unordered_set>
 #include <list>
 #include <deque>
-#include <stack>
 #include <vector>
 #include <string>
-#include <iostream>
-#include <fstream>
 #include <algorithm>
 #include <functional>
 #include <memory>

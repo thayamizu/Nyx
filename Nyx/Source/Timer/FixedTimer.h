@@ -16,11 +16,12 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_FIXED_TIMER_H_ 
 #define NYX_CORE_INCLUDED_FIXED_TIMER_H_ 
-
+#include "Object/NonCopyable.h"
+#include "Timer/ITimer.h"
 namespace Nyx {
 
 	///固定タイマー
-	class FixedTimer : public ITimer{
+	class FixedTimer : public ITimer, private NonCopyable{
 	public:
 		/**
 		* コンストラクタ

@@ -30,7 +30,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	File::File(const tstring& name, AccessAttribute attr) 
+	File::File(const std::wstring& name, AccessAttribute attr) 
 		:pimpl_(new PImpl()){
 			pimpl_->file = std::unique_ptr<Win32File>(new Win32File(name, attr));
 	}
@@ -41,7 +41,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool File::Open(const tstring& name, AccessAttribute attr) {
+	bool File::Open(const std::wstring& name, AccessAttribute attr) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->file != nullptr);
 		return pimpl_->file->Open(name, attr);
@@ -69,7 +69,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	tstring File::GetFileName() const {
+	std::wstring File::GetFileName() const {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->file != nullptr);
 		return pimpl_->file->GetFileName();

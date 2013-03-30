@@ -18,6 +18,7 @@
 #define NYX_CORE_INCLUDED_DELEGATE_H_
 
 namespace Nyx {
+	
 	class Delegate0 {
 	public:
 		/**

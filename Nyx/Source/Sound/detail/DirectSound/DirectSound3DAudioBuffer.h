@@ -14,28 +14,29 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_BUFFER_H_
-#define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_BUFFER_H_
-#include "Sound/AudioBuffer.h"
+#ifndef NYX_CORE_INCLUDED_DIRECTSOUND_3D_AUDIO_BUFFER_H_
+#define NYX_CORE_INCLUDED_DIRECTSOUND_3D_AUDIO_BUFFER_H_
+#include "Sound/IAudioBuffer.h"
+#include "DirectSoundDefinition.h"
 
 namespace Nyx {
-	using std::shared_ptr;
+
 	///3DオーディオバッファのDirectSoundによる実装
-	class DirectSound3DAudioBuffer : public AudioBuffer {
+	class DirectSound3DAudioBuffer : public IAudioBuffer {
 	public:
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
-		* @param tstring ファイル名
+		* @param std::wstring ファイル名
 		*/
-		DirectSound3DAudioBuffer(const DirectSound ds, const tstring fileName);
+		DirectSound3DAudioBuffer(const DirectSound ds, const std::wstring fileName);
 
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param  shared_ptr<char> waveData
 		*/
-		DirectSound3DAudioBuffer(const DirectSound ds, shared_ptr<char> wave);
+		DirectSound3DAudioBuffer(const DirectSound ds, std::shared_ptr<char> wave);
 		/**
 		* デストラクタ
 		*/
@@ -63,26 +64,23 @@ namespace Nyx {
 		/**
 		*　パンを設定
 		*/
-		void SetPan(int pan_);
+		void SetPan(long pan);
 
 		/**
 		*　ボリュームを設定
 		*/
-		void SetVolume(int v);
+		void SetVolume(long v);
 
 		/**
 		*　ボリュームの取得
 		*/
-		long GetVolume() const {
-			return volume;
-		}
+		long GetVolume() const ;
 
 		/**
 		*　パンの取得
 		*/
-		long GetPan() const {
-			return pan;
-		}
+		long GetPan() const;
+		
 		/**
 		* 音源位置を設定
 		* @param float x座標

@@ -14,51 +14,86 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
-#define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
-#include "Sound/AudioManager.h"
+#ifndef NYX_CORE_INCLDUED_DIRECTSOUND_AUDIO_BUFFER_H_
+#define NYX_CORE_INCLDUED_DIRECTSOUND_AUDIO_BUFFER_H_
+#include "Sound/IAudioBuffer.h"
+#include "DirectSoundDefinition.h"
 
 namespace Nyx {
-	///オーディオマネージャのDirectSoundによる実装
-	class DirectSoundAudioManager : public AudioManager{
+
+	///オーディオバッファのDirectSoundによる実装
+	class DirectSoundAudioBuffer : public IAudioBuffer {
 	public:
 		/**
 		* コンストラクタ
-		* @param HWND ウインドウハンドル
+		* @param const DirectSound DirectSoundオブジェクト
+		* @param std::wstring ファイル名
 		*/
-		DirectSoundAudioManager(HWND hw, int v);
+		DirectSoundAudioBuffer(const DirectSound ds, std::wstring fileName_);
 
 		/**
-		* デストラクタ
+		* コンストラクタ
+		* @param const DirectSound DirectSoundオブジェクト
+		* @param  shared_ptr<char> waveData
 		*/
-		~DirectSoundAudioManager();
+		DirectSoundAudioBuffer(const DirectSound ds, std::shared_ptr<char> waveData);
 
 		/**
-		* Waveファイルをロードしてきます
-		* @param const tstring ファイル名
-		* @param SoundBufferType バッファの種類
+		*　デストラクタ
 		*/
-		bool Load(const tstring fileName, SoundBufferType);
+		virtual ~DirectSoundAudioBuffer();
+
+		/**
+		* 再生
+		*/
+		void Play();
+
+		/**
+		* 停止
+		*/
+		void Stop();
+
+		/**
+		* レジューム
+		*/
+		void Resume();
+
+		/**
+		* リセット
+		*/
+		void Reset();
+
+		/**
+		* パンの設定
+		* @param int パン
+		*/
+		void SetPan(long pan);
+
+		/**
+		* ボリュームの設定
+		* @param int ボリューム
+		*/
+		void SetVolume(long v);
+
+		/**
+		* ボリュームの取得
+		* @return long
+		*/
+		long GetVolume() const {
+			return volume;
+		}
+
+		/**
+		* パンの取得
+		* @return long
+		*/
+		long GetPan() const {
+			return pan;
+		}
 	private:
-
-		/**
-		* パッキングされたファイルからデータをまとめて読み込んできます。
-		* @param const tstring ファイル名
-		* @param SoundBufferType バッファの種類
-		* @return 読み込みに成功すればtrue
-		*/
-		bool LoadFromPackedFile(const tstring fileName, SoundBufferType);
-
-		/**
-		* Waveファイルからデータを読み込んできます
-		* @param const tstring ファイル名
-		* @param SoundBufferType バッファの種類
-		* @return bool 読み込みに成功すればtrue
-		*/
-		bool LoadFromWaveFile(const tstring , SoundBufferType);
-	private:	
-		HWND hWnd;///< ウインドウハンドル
-		DirectSound dsound;///< DirectSoundオブジェクト
+		long pan;
+		long volume;
+		DirectSoundBuffer soundBuffer;
 	};
 }
 #endif

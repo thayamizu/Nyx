@@ -29,11 +29,11 @@ namespace Nyx {
 			/**
 			*
 			*/
-			Font(const int height_, const int angle_, const tstring face_);
+			Font(const int height_, const int angle_, const std::wstring face_);
 			/**
 			*
 			*/
-			Font(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const tstring face_);
+			Font(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const std::wstring face_);
 			/**
 			*
 			*/
@@ -50,11 +50,11 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Set(const int h, const int angle, const tstring face);
+			void Set(const int h, const int angle, const std::wstring face);
 			/**
 			*
 			*/
-			void Set(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const tstring face);
+			void Set(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const std::wstring face);
 
 
 			//------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Draw(HDC hdc, const tstring text_, RECT rect_);
+			void Draw(HDC hdc, const std::wstring text_, RECT rect_);
 
 			//------------------------------------------------------------------------------
 			//Žæ“¾
@@ -105,7 +105,7 @@ namespace Nyx {
 			bool isItalic;
 			bool isStrike;
 			bool isUnderLine;
-			tstring face;
+			std::wstring face;
 			HFONT font;
 		};
 	}

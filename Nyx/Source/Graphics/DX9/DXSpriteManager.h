@@ -46,7 +46,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			bool Load(DirectGraphicsDevice& device, tstring fileName, int width, int height, int cw=0, int ch=0);
+			bool Load(DirectGraphicsDevice& device, std::wstring fileName, int width, int height, int cw=0, int ch=0);
 			/**
 			*
 			*/
@@ -88,8 +88,8 @@ namespace Nyx {
 			bool OnLostDevice();
 			DXSprite* GetSprite(size_t index);
 		private:
-			bool LoadFromFile(DirectGraphicsDevice& device, tstring fileName, int w, int h, int cw, int ch);
-			bool LoadFromPackedFile(DirectGraphicsDevice& device, tstring fileName, int w, int h, int cw, int ch);
+			bool LoadFromFile(DirectGraphicsDevice& device, std::wstring fileName, int w, int h, int cw, int ch);
+			bool LoadFromPackedFile(DirectGraphicsDevice& device, std::wstring fileName, int w, int h, int cw, int ch);
 
 		private:
 			DXSpriteContainer spriteContainer;

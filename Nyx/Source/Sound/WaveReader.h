@@ -43,7 +43,7 @@ namespace Nyx {
 	///データチャンク構造体
 	struct DataChunk
 	{
-		long           chunkSize;///< チャンクサイズ 
+		long   chunkSize;///< チャンクサイズ 
 		uchar* waveData;///< 波形データ
 	};
 
@@ -62,9 +62,9 @@ namespace Nyx {
 
 		/**
 		* ファイルからWaveファイルを読み込みます
-		* @param tstring wavファイル名
+		* @param std::wstring wavファイル名
 		*/
-		void ReadFromFile(tstring fileName);
+		void ReadFromFile(std::wstring fileName);
 
 		/**
 		* メモリ上のデータからWaveファイルを読み込みます

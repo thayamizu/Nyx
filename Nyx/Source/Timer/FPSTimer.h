@@ -17,10 +17,11 @@
 #ifndef NYX_CORE_INCLUDED_FPS_TIMER_H_ 
 #define NYX_CORE_INCLUDED_FPS_TIMER_H_
 #include "Timer/ITimer.h"
+#include "Object/NonCopyable.h"
 namespace Nyx {
 
 	///FPSタイマー
-	class FPSTimer : public ITimer {
+	class FPSTimer : public ITimer, private NonCopyable {
 	public:
 		//------------------------------------------------------------------------
 		//　公開メンバ変数

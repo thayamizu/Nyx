@@ -58,7 +58,7 @@ namespace Nyx {
 		* アイコンを設定する
 		* @pram HMENU メニュー
 		*/
-		virtual void SetIcon(tstring iconName) = 0;
+		virtual void SetIcon(std::wstring iconName) = 0;
 
 		/**
 		* メッセージ処理

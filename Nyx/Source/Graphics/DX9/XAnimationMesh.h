@@ -65,7 +65,7 @@ namespace Nyx {
 			//---------------------------------------------------------------------------
 			//構築・破壊
 			//---------------------------------------------------------------------------
-			XAnimationMesh(tstring fileName, DirectGraphicsDevice& device);
+			XAnimationMesh(std::wstring fileName, DirectGraphicsDevice& device);
 			~XAnimationMesh();
 			//---------------------------------------------------------------------------
 			//アニメーション
@@ -90,7 +90,7 @@ namespace Nyx {
 			static const float defaultAnimationSpeed;
 
 		private:
-			void LoadFromX(tstring fileName, Direct3DDevice d3dDevice);
+			void LoadFromX(std::wstring fileName, Direct3DDevice d3dDevice);
 			void UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix);
 			void RenderMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
 			void DrawFrame(LPD3DXFRAME pFrame);

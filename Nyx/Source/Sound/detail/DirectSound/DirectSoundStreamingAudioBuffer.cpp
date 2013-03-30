@@ -17,15 +17,14 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
-#include "Sound/AudioBuffer.h"
-#include "Sound/DirectSoundStreamingAudioBuffer.h"
 #include "Sound/WaveReader.h"
+#include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
-	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, tstring fileName)
-		: AudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), bufferSize(0), 
+	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, std::wstring fileName)
+		: IAudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), bufferSize(0), 
 		notifySize(0), nextOffset(0), notifyThreadHandle(NULL)
 	{
 		
@@ -117,7 +116,7 @@ namespace Nyx {
 		SafeRelease(notify);
 	}
 	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, shared_ptr<char> wave)
-		: AudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), 
+		: IAudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), 
 		bufferSize(0), notifySize(0), nextOffset(0), notifyThreadHandle(NULL)
 	{
 		ulong blockSize;
@@ -279,7 +278,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreamingAudioBuffer::SetPan(int pan_)
+	void DirectSoundStreamingAudioBuffer::SetPan(long pan_)
 	{	
 		pan = pan_;
 		soundBuffer->SetPan(pan_);	
@@ -295,7 +294,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreamingAudioBuffer::SetVolume(int v)
+	void DirectSoundStreamingAudioBuffer::SetVolume(long v)
 	{
 		if (v > 100) { v = 100;}
 		else if (v < 0) {v=0;}

@@ -9,7 +9,7 @@ namespace Nyx
 	}
 
 	//-----------------------------------------------------------------------------------
-	DSMoviePlayer::DSMoviePlayer(const tstring & name)
+	DSMoviePlayer::DSMoviePlayer(const std::wstring & name)
 	{
 	}
 
@@ -19,7 +19,7 @@ namespace Nyx
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool DSMoviePlayer::Open(const tstring& name)
+	bool DSMoviePlayer::Open(const std::wstring& name)
 	{
 		return false;
 	}

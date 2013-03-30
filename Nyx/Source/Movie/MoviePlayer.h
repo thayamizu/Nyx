@@ -8,10 +8,10 @@ namespace Nyx
 	{
 	public:
 		MoviePlayer();
-		MoviePlayer(const tstring & name);
+		MoviePlayer(const std::wstring & name);
 		~MoviePlayer();
 
-		bool Open(const tstring& name);
+		bool Open(const std::wstring& name);
 		bool Close();
 
 		bool Play();

@@ -14,41 +14,26 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
-#define NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
+#ifndef NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
+#define NYX_CORE_INCLUDED_DIRECTSOUND_AUDIO_MANAGER_H_
 #include "Sound/IAudioManager.h"
+#include "DirectSoundDefinition.h"
 
 namespace Nyx {
-	//前方宣言
-	class IAudioBuffer;
-
-	///オーディオマネージャ
-	class AudioManager : public IAudioManager{
+	///オーディオマネージャのDirectSoundによる実装
+	class DirectSoundAudioManager : public IAudioManager{
+		typedef std::vector< std::shared_ptr<IAudioBuffer> > AudioBufferList;
 	public:
 		/**
-		 * コンストラクタ
-		 */
-		AudioManager();
-
-		/**
-		 * コンストラクタ
-		 */
-		AudioManager(HWND hwnd, int volume);
-
+		* コンストラクタ
+		* @param HWND ウインドウハンドル
+		*/
+		DirectSoundAudioManager(HWND hw, int v);
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~AudioManager();
-
-		/**
-		* オーディオマネージャの初期化
-		* @param HWND
-		* @param int
-		* @return bool
-		*/
-		bool Initialize(HWND hwnd, int volume);
-
+		~DirectSoundAudioManager();
 		/**
 		* 指定したインデックスの曲を再生する
 		* @param size_t インデックス
@@ -119,23 +104,28 @@ namespace Nyx {
 		*/
 		virtual void SetMasterVolume(int v) ;
 
-		/**
-		* オーディオバッファを取得
-		* @param size_t インデックス
-		*/
-		virtual std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
+		std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
 
 		/**
-		* オーディオをロードしてくる
-		* @param std::wstring ファイル名
-		* @param SoundBufferType バッファタイプ
-		* [out] @param int& index 読み込んできたオーディオの管理番号
+		* Waveファイルをロードしてきます
+		* @param const std::wstring ファイル名
+		* @param SoundBufferType バッファの種類
 		*/
-		virtual std::shared_ptr<IAudioBuffer> Load(std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index);
+		std::shared_ptr<IAudioBuffer> Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index);
+	private:
+		/**
+		* Waveファイルからデータを読み込んできます
+		* @param const std::wstring ファイル名
+		* @param SoundBufferType バッファの種類
+		* @return bool 読み込みに成功すればtrue
+		*/
+		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring , SoundBufferType::enum_t bufferType, size_t& index);
+	private:	
+		HWND hWnd;///< ウインドウハンドル
+		DirectSound dsound;///< DirectSoundオブジェクト
+		int masterVolume;	///マスターボリューム	
+		AudioBufferList audioBufferList;
 
-	protected:
-		struct PImpl;
-		std::unique_ptr<PImpl> pimpl_;
 	};
 }
 #endif

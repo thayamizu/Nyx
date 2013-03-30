@@ -19,7 +19,7 @@
 #include "Debug/DebugOutput.h"
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
-#include "Sound/DirectSoundAudioBuffer.h"
+#include "DirectSoundAudioBuffer.h"
 
 namespace Nyx {
 	using Nyx::File;
@@ -27,8 +27,8 @@ namespace Nyx {
 	using std::unique_ptr;
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSound dsound, tstring fileName)
-		:AudioBuffer()
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSound dsound, std::wstring fileName)
+		: IAudioBuffer()
 	{
 		DataChunk dataChunk;
 		FmtChunk fmtChunk;
@@ -178,14 +178,14 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetPan(int pan_) {
-		pan = pan_;
-		soundBuffer->SetPan(pan_);
+	void DirectSoundAudioBuffer::SetPan(long pan) {
+		this->pan = pan;
+		soundBuffer->SetPan(pan);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetVolume(int v) {
+	void DirectSoundAudioBuffer::SetVolume(long v) {
 		if (v > 100) { v = 100;}
 		else if (v < 0) {v=0;}
 

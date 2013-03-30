@@ -21,6 +21,8 @@ namespace Nyx {
 	///オーディオバッファインタフェース
 	class IAudioBuffer {
 	public:
+		IAudioBuffer() :isLooping(false), isPlaying(false), isPause(false){}
+
 		virtual ~IAudioBuffer() {}
 		/**
 		*　再生
@@ -39,62 +41,82 @@ namespace Nyx {
 		*/
 		virtual void Reset()  = 0; 
 
-		/**
-		*　ループ中かどうか
-		*/
-		virtual bool IsLooping() const = 0;
-
-		/**
-		*　再生中かどうか
-		*/
-		virtual bool IsPlaying() const = 0;
-
-		/**
-		* ポーズ中かどうか
-		*/
-		virtual bool IsPause() const = 0;
-
-		/**
-		*　ポーズするかどうかを設定
-		* @param　bool ポーズするならtrue
-		*/
-		virtual void SetPause(bool) = 0;
-
-		/**
-		*　ループするかどうかを設定
-		* @param bool ループするならtrue
-		*/
-		virtual void SetLooping(bool loop) = 0;
-
-		/**
-		* 再生中かどうかを設定
-		* @param bool 再生中ならtrue
-		*/
-		virtual void SetPlaying(bool play) = 0;
-
-		/**
-		* 再生ボリュームを設定する
-		* @param int ボリューム
-		*/
-		virtual void SetVolume(int v)  = 0;
-
-		/**
-		* 再生ボリュームを取得する
-		* @return long ボリューム
-		*/
-		virtual long GetVolume() const    = 0;
-
-		/**
+			/**
 		* パンを設定する
 		* @param int パン
 		*/
-		virtual void SetPan(int pan) = 0;
-
+		virtual void SetPan(long p)=0;
+		
 		/**
 		* パンを取得する
 		* @return long パン
 		*/
-		virtual long GetPan() const   = 0;
+		virtual long GetPan() const = 0;
+
+		/**
+		*　ボリュームを設定する
+		* @return int　ボリューム
+		*/
+		virtual void SetVolume(long v) = 0;
+
+		/**
+		* ボリュームを取得する
+		* @return int ボリューム
+		*/
+		virtual long GetVolume() const = 0;
+		
+		/**
+		* ループ再生かどうか判定
+		* @return bool　ループ再生ならtrue
+		*/
+		virtual bool IsLooping() const {
+			return isLooping;
+		} 
+
+		/**
+		* 再生中かどうか
+		* @return bool 再生中ならtrue
+		*/
+		virtual bool IsPlaying() const  {
+			return isPlaying;
+		}
+
+		/**
+		* ポーズ中かどうか
+		* @return bool ポーズ中ならtrue
+		*/
+		virtual bool IsPause() const {
+			return isPause;
+		}
+
+		/**
+		* ループ再生するかどうかを設定
+		* @param bool ループ再生ならtrue
+		*/
+		virtual void SetLooping(bool loop) {
+			isLooping = loop;
+		}
+
+		/**
+		* 再生中かどうか
+		* @param bool 再生中ならtrue
+		*/
+		virtual void SetPlaying(bool play) {
+			isPlaying = play;
+		}
+
+		/**
+		* ポーズ中かどうか
+		* @param bool ポーズ中ならtrue
+		*/
+		virtual void SetPause(bool pause) {
+			isPause = pause;
+		}
+	private:
+		bool isPlaying;///< 再生中
+		bool isLooping;///< ループ
+		bool isPause;///< ポーズ
 	};
+
 }
 #endif

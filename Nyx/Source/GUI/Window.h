@@ -37,7 +37,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Window(HWND hWnd, tstring caption, int x=0,int y=0, int width=800, int height=600,int id=0);
+		Window(HWND hWnd, std::wstring caption, int x=0,int y=0, int width=800, int height=600,int id=0);
 		/**
 		*
 		*/
@@ -222,7 +222,7 @@ namespace Nyx {
 		* メニューを設定する
 		* 
 		*/
-		void SetIcon(tstring iconName);
+		void SetIcon(std::wstring iconName);
 
 		/**
 		* メッセージ処理
@@ -255,7 +255,7 @@ namespace Nyx {
 		///アトム
 		ATOM atom;
 		///タイトル
-		tstring title;
+		std::wstring title;
 		///ユーザーデータ
 		void* userData;
 		///ウインドウに結びつけらている子コントロールのリスト

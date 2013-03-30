@@ -19,7 +19,7 @@
 
 namespace Nyx {
 	/// Mersenne Twister–@‚É‚æ‚é—”¶¬
-	class Random {
+	DEPRECATED class Random {
 	public:
 		/* Period parameters */  
 		static const uint N = (624);
@@ -54,9 +54,9 @@ namespace Nyx {
 
 		/**
 		* •¶š—ñ‚É‚æ‚é—”‚Ì‰Šú‰»
-		* @param tstring ‰Šú‰»•¶š—ñ
+		* @param std::wstring ‰Šú‰»•¶š—ñ
 		*/
-		void Init(tstring s);
+		void Init(std::wstring s);
 
 		//------------------------------------------------------------------------
 		//@—”¶¬

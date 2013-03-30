@@ -1,8 +1,17 @@
 #pragma once
 #include "Utility/Type.h"
 
-namespace Nyx {
+//機能廃止宣言
+#if defined(_MSC_VER)
+#define DEPRECATED __declspec(deprecated) 
+#elif defined(__GNUC__)
+#define DEPRECATED 
+#define DEPRECATED __attribute__((deprecated))
+#else
+#pragma message("DEPRECATEDはサポートされていません")
+#endif
 
+namespace Nyx {
 	///----------------------------------------------------------------------------------
 	/// 安全な解放処理
 	///----------------------------------------------------------------------------------
@@ -50,8 +59,8 @@ namespace Nyx {
 	* @return 文字列された数値
 	*/
 	template <typename T> 
-	inline tstring ToString(T value) {
-		tstringstream ss;
+	inline std::wstring ToString(T value) {
+		std::wstringstream ss;
 		ss<<value;
 
 		return ss.str();

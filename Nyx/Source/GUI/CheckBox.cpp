@@ -22,14 +22,14 @@
 
 namespace Nyx {
 	//---------------------------------------------------------------------------------------
-	CheckBox::CheckBox(HWND _hwnd, tstring _label, int _x, int _y, int _width, int _height, int _id) 
+	CheckBox::CheckBox(HWND _hwnd, std::wstring _label, int _x, int _y, int _width, int _height, int _id) 
 		:hwnd(NULL), label(_label), id(_id), atom(NULL), isShow(false), userData(NULL)
 	{
 		OnCreate(_hwnd, _label, _x, _y, _width, _height, _id);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool CheckBox::OnCreate(HWND _hwnd, tstring _label, int _x, int _y, int _width, int _height, int _id) {
+	bool CheckBox::OnCreate(HWND _hwnd, std::wstring _label, int _x, int _y, int _width, int _height, int _id) {
 
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd = CreateWindow(
@@ -171,12 +171,12 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	tstring CheckBox::GetLabel() const {
+	std::wstring CheckBox::GetLabel() const {
 		return label;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::SetLabel(const tstring& _label) {
+	void CheckBox::SetLabel(const std::wstring& _label) {
 		Assert(hwnd != NULL);
 		label = _label;
 		SetWindowText(hwnd, label.c_str());

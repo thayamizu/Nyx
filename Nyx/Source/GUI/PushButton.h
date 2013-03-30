@@ -30,7 +30,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		PushButton(HWND hwnd, const tstring& label, int x, int y, int width,int height, int id=0);
+		PushButton(HWND hwnd, const std::wstring& label, int x, int y, int width,int height, int id=0);
 
 		/**
 		*
@@ -39,7 +39,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool OnCreate(HWND hwnd, const tstring& label, int x, int y, int width, int height);
+		bool OnCreate(HWND hwnd, const std::wstring& label, int x, int y, int width, int height);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -150,18 +150,18 @@ namespace Nyx {
 		//-----------------------------------------------------------------
 		/**
 		* ラベルの取得
-		* @return tstring& ラベル
+		* @return std::wstring& ラベル
 		*/
-		tstring GetLabel() const ;
+		std::wstring GetLabel() const ;
 
 		/**
 		* ラベルの設定
-		* @param const tstring& ラベル
+		* @param const std::wstring& ラベル
 		*/
-		void SetLabel(const tstring& label) ;
+		void SetLabel(const std::wstring& label) ;
 	private:
 		///ボタンの表示ラベル
-		tstring label;
+		std::wstring label;
 		/// ハンドルインスタンス
 		HWND hwnd;
 		///ボタンID

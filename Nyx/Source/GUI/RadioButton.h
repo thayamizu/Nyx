@@ -30,7 +30,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		RadioButton(HWND hwnd,tstring label, int x, int y, int width,int height, int id);
+		RadioButton(HWND hwnd,std::wstring label, int x, int y, int width,int height, int id);
 		/**
 		*
 		*/
@@ -39,7 +39,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool OnCreate(HWND hwnd, tstring label, int x, int y, int width,int height, int id);
+		bool OnCreate(HWND hwnd, std::wstring label, int x, int y, int width,int height, int id);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -150,15 +150,15 @@ namespace Nyx {
 		//----------------------------------------------------------------
 		/**
 		* ラベルの取得
-		* @return tstring& ラベル
+		* @return std::wstring& ラベル
 		*/
-		tstring GetLabel() const ;
+		std::wstring GetLabel() const ;
 
 		/**
 		* ラベルの設定
-		* @param const tstring& ラベル
+		* @param const std::wstring& ラベル
 		*/
-		void SetLabel(const tstring& label) ;
+		void SetLabel(const std::wstring& label) ;
 
 		/**
 		* ボタンがチェック状態かどうか
@@ -168,7 +168,7 @@ namespace Nyx {
 
 	private:
 		///ボタンの表示ラベル
-		tstring label;
+		std::wstring label;
 		/// ハンドルインスタンス
 		HWND hwnd;
 		///ボタンID

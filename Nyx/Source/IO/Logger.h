@@ -32,7 +32,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Logger(const tstring& name);
+		Logger(const std::wstring& name);
 		
 		/**
 		*
@@ -42,7 +42,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool Open(const tstring&, AccessAttribute attr = ReadWriteMode);
+		bool Open(const std::wstring&, AccessAttribute attr = ReadWriteMode);
 		/**
 		*
 		*/
@@ -65,7 +65,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		tstring GetFileName() const;
+		std::wstring GetFileName() const;
 		
 		/**
 		*

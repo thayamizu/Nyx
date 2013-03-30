@@ -21,7 +21,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::ReadFromFile(tstring fileName) {
+	void WaveReader::ReadFromFile(std::wstring fileName) {
 		char buffer[4] = {};
 		unique_ptr<File> file = unique_ptr<File>(new File(fileName, Nyx::ReadMode));
 

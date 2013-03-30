@@ -50,14 +50,14 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		bool DXSpriteManager::Load(DirectGraphicsDevice& device, tstring fileName, int width, int height, int cw, int ch) {
+		bool DXSpriteManager::Load(DirectGraphicsDevice& device, std::wstring fileName, int width, int height, int cw, int ch) {
 			//最後に.が見つかった場所を探す(ファイル名に.が含まれている場合の対策)
 			int pos = fileName.find_last_of (L".");
-			if (pos == tstring::npos) {
+			if (pos == std::wstring::npos) {
 				return false;
 			}
 			//拡張子のみを取得する
-			tstring ext = fileName.substr(pos+1, fileName.size());
+			std::wstring ext = fileName.substr(pos+1, fileName.size());
 
 			//ロード
 			if (ext== L"pack") {
@@ -145,7 +145,7 @@ namespace Nyx {
 		}
 		//-----------------------------------------------------------------------------------------
 		//
-		bool DXSpriteManager::LoadFromFile(DirectGraphicsDevice& device, tstring fileName, int w, int h, int cw, int ch) {
+		bool DXSpriteManager::LoadFromFile(DirectGraphicsDevice& device, std::wstring fileName, int w, int h, int cw, int ch) {
 			spriteContainer.push_back(new DXSprite(device, fileName, w, h, cw, ch ));
 
 			return true;
@@ -153,7 +153,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		bool DXSpriteManager::LoadFromPackedFile(DirectGraphicsDevice& device, tstring fileName, int w, int h, int cw, int ch) {
+		bool DXSpriteManager::LoadFromPackedFile(DirectGraphicsDevice& device, std::wstring fileName, int w, int h, int cw, int ch) {
 			unique_ptr<PackedFile> pack = unique_ptr<PackedFile>(new PackedFile(fileName.c_str()));
 			int n = pack->GetFileNum();//パッキングされたファイルの数を取得
 			for (int i=0; i < n; i++) {//一括で読んでまえ

@@ -64,7 +64,7 @@ namespace Nyx
 		/**
 		*
 		*/
-		bool Open(const tstring&  name, AccessAttribute attr=ReadMode);
+		bool Open(const std::wstring&  name, AccessAttribute attr=ReadMode);
 		bool Close();
 		bool Flush();
 
@@ -80,7 +80,7 @@ namespace Nyx
 		/**
 		*
 		*/
-		tstring GetFileName() const;
+		std::wstring GetFileName() const;
 
 
 		/**

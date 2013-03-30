@@ -34,7 +34,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	Logger::Logger(const tstring& name)
+	Logger::Logger(const std::wstring& name)
 		:pimpl_(new PImpl())
 	{
 		pimpl_->logger = std::unique_ptr<Win32File>(new Win32File(name));
@@ -46,7 +46,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool Logger::Open(const tstring& name, AccessAttribute attr) {
+	bool Logger::Open(const std::wstring& name, AccessAttribute attr) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->logger != nullptr);
 		return pimpl_->logger->Open(name, attr);
@@ -82,7 +82,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	tstring Logger::GetFileName() const {
+	std::wstring Logger::GetFileName() const {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->logger != nullptr);
 		return pimpl_->logger->GetFileName();

@@ -34,7 +34,7 @@ namespace Nyx {
 
 		void ToString() = 0;
 
-		tstring address; ///< 接続先データベースのアドレス情報
+		std::wstring address; ///< 接続先データベースのアドレス情報
 
 	};
 
@@ -62,7 +62,7 @@ namespace Nyx {
 
 		}
 
-		IDatabaseQuery MakeQuery(tstring ) = 0;
+		IDatabaseQuery MakeQuery(std::wstring ) = 0;
 	};
 
 	///<

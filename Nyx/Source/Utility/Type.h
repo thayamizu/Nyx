@@ -27,16 +27,7 @@ namespace Nyx
 	* unsigned long‚Ì•Ê–¼’è‹`
 	*/
 	typedef unsigned long ulong;
-	
-	/**
-	* std::basic_string<TCHAR>‚Ì•Ê–¼’è‹`
-	*/
-	typedef std::basic_string<TCHAR> tstring;
 
-	/**
-	* std::basic_stringstream<TCHAR>‚Ì•Ê–¼’è‹`
-	*/
-	typedef std::basic_stringstream<TCHAR> tstringstream;
 }
 
 #endif

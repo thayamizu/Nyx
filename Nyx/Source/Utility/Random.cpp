@@ -63,7 +63,7 @@ namespace Nyx
 {
 
 	// •¶š—ñ‚ğg‚Á‚½‰Šú‰»
-	void Random::Init(tstring s) 
+	void Random::Init(std::wstring s) 
 	{
 		Init((ulong*)s.c_str(), (s.length()+1)/4);
 	}

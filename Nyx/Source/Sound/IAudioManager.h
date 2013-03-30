@@ -18,6 +18,22 @@
 #define NYX_CORE_INCLUDED_IAUDIO_MANAGER_H_
 
 namespace Nyx {
+	class IAudioBuffer;
+
+	/**
+ 	 * サウンドバッファタイプ
+	 * DirectSoundの場合は，3D再生ができません．
+	 */
+	struct SoundBufferType
+	{
+		enum enum_t {
+			Static,		///< 静的バッファ
+			Static3D,	///< 静的3Dバッファ
+			Streaming,	///< ストリーミングバッファ
+			Streaming3D, ///< ストリーミング3Dバッファ
+			NumSoundBufferType
+		};
+	};
 
 	///オーディオマネージャインタフェース
 	class IAudioManager {
@@ -28,21 +44,9 @@ namespace Nyx {
 		virtual ~IAudioManager() {}
 
 		/**
-		* 指定したインデックスの曲を再生
-		* @param bool インデックス
-		*/
-		virtual void Play(uint index) = 0;
-
-		/**
 		* すべての曲を再生
 		*/
 		virtual void PlayAll() = 0;
-
-		/**
-		* 指定したインデックスの曲を停止
-		* @param bool インデックス
-		*/
-		virtual void Stop(uint index) = 0;
 
 		/**
 		* すべての曲を停止
@@ -50,35 +54,15 @@ namespace Nyx {
 		virtual void StopAll() = 0;
 
 		/**
-		* 指定したインデックスの曲をレジュームする
-		* @param bool インデックス
-		*/
-		virtual void Resume(uint index) = 0;
-
-		/**
 		* すべての曲をレジューム
 		*/
 		virtual void ResumeAll() = 0;
-
-		/**
-		*指定したインデックスの曲をリセット
-		* 再生中の曲を止めたうえで、先頭まで巻戻します
-		* @param bool インデックス
-		*/
-		virtual void Reset(uint index) = 0;
 
 		/**
 		* すべての曲をリセット.
 		* 再生中の曲を止めたうえで、先頭まで巻戻します
 		*/
 		virtual void ResetAll() = 0;
-
-		/**
-		* 指定したインデックスの曲をポーズさせる
-		* @param uint インデックス
-		* @param bool ポーズするならtrue
-		*/
-		virtual void SetPause(uint index, bool) = 0;
 
 		/**
 		* すべての曲をポーズ

@@ -22,7 +22,7 @@
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	RadioButton::RadioButton(HWND _hwnd, tstring _label, int _x, int _y, int _width, int _height, int _id)
+	RadioButton::RadioButton(HWND _hwnd, std::wstring _label, int _x, int _y, int _width, int _height, int _id)
 		:label(_label), hwnd(NULL), id(_id), atom(NULL), isShow(false), userData(NULL) {
 
 			OnCreate(_hwnd, _label, _x, _y, _width, _height, _id);
@@ -34,7 +34,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	bool RadioButton::OnCreate(HWND _hwnd, tstring _label, int _x, int _y, int _width, int _height, int _id) {
+	bool RadioButton::OnCreate(HWND _hwnd, std::wstring _label, int _x, int _y, int _width, int _height, int _id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd = CreateWindow(
 			TEXT("BUTTON"),
@@ -174,12 +174,12 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	tstring RadioButton::GetLabel() const  {
+	std::wstring RadioButton::GetLabel() const  {
 		return label;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::SetLabel(const tstring& _label) {
+	void RadioButton::SetLabel(const std::wstring& _label) {
 		label = _label;
 		SetWindowText(hwnd, label.c_str());
 	}

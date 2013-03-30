@@ -9,9 +9,9 @@ namespace Nyx
 	{
 	public:
 		DSMoviePlayer(); 
-		DSMoviePlayer(const tstring & name);
+		DSMoviePlayer(const std::wstring & name);
 		~DSMoviePlayer();
-		bool Open(const tstring& name);
+		bool Open(const std::wstring& name);
 	bool Close();
 		
 		bool Play();

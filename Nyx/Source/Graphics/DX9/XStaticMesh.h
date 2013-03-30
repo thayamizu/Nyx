@@ -28,7 +28,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			XStaticMesh(tstring fileName, DirectGraphicsDevice*);
+			XStaticMesh(std::wstring fileName, DirectGraphicsDevice*);
 
 			/**
 			*
@@ -45,7 +45,7 @@ namespace Nyx {
 			*/
 			void Render(DirectGraphicsDevice *device, Matrix44* world);
 		private:
-			void LoadFromX(tstring fileName, DirectGraphicsDevice*);
+			void LoadFromX(std::wstring fileName, DirectGraphicsDevice*);
 			D3DMesh mesh;
 		};
 	}
