@@ -175,13 +175,6 @@
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Object\ResourceManager.h" />
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.h" />
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSound3DStreamingAudioBuffer.h" />
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h" />
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h" />
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h" />
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.h" />
-    <ClInclude Include="..\Source\Sound\WaveReader.h" />
     <ClInclude Include="..\Source\SQLiteDatabase.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h" />
@@ -219,9 +212,6 @@
     <ClInclude Include="..\Source\Thread\CriticalSection.h" />
     <ClInclude Include="..\Source\Thread\LockObject.h" />
     <ClInclude Include="..\Source\Thread\Thread.h" />
-    <ClInclude Include="..\Source\Sound\AudioManager.h" />
-    <ClInclude Include="..\Source\Sound\IAudioBuffer.h" />
-    <ClInclude Include="..\Source\Sound\IAudioManager.h" />
     <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\Utility\Type.h" />
   </ItemGroup>
@@ -264,12 +254,6 @@
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DAudioBuffer.cpp" />
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSound3DStreamingAudioBuffer.cpp" />
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp" />
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp" />
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundStreamingAudioBuffer.cpp" />
-    <ClCompile Include="..\Source\Sound\WaveReader.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp" />
     <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp" />
@@ -303,7 +287,9 @@
     <ClCompile Include="..\Source\Primitive\Vector4.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />
-    <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Source\Sound\spec.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
