@@ -48,9 +48,9 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Lib/Debug/</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../Bin/Debug/</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../Debug/</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Lib/Release/</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../Bin/Release/</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../Release/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Nyx_MT</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Nyx_MTd</TargetName>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\dev\mockpp-1.16\Incude\;$(IncludePath)</IncludePath>
@@ -176,6 +176,8 @@
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Object\ResourceManager.h" />
     <ClInclude Include="..\Source\Sound\AudioCache.h" />
+    <ClInclude Include="..\Source\Sound\AudioUtility.h" />
+    <ClInclude Include="..\Source\Sound\WaveReader.h" />
     <ClInclude Include="..\Source\SQLiteDatabase.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h" />
@@ -256,6 +258,7 @@
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
+    <ClCompile Include="..\Source\Sound\WaveReader.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp" />
     <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp" />

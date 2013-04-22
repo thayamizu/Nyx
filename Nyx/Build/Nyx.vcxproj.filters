@@ -514,6 +514,12 @@
     <ClInclude Include="..\Source\Sound\AudioCache.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioUtility.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\WaveReader.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -721,6 +727,9 @@
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sound\AudioCache.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\WaveReader.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>

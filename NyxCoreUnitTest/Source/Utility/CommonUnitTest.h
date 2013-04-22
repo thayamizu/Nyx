@@ -43,14 +43,14 @@ END_TEST
 
 	BEGIN_TEST(Common004)
 {
-	tstring str = ToString(1234);
+	std::wstring str = ToString(1234);
 	WIN_ASSERT_TRUE(str == TEXT("1234"));
 }
 END_TEST
 
 	BEGIN_TEST(Common005)
 {
-	tstring str = ToString(1234.1f);
+	std::wstring str = ToString(1234.1f);
 	WIN_ASSERT_TRUE(str == TEXT("1234.1"));
 }
 END_TEST
