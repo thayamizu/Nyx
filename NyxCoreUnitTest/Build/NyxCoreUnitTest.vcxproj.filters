@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{f163e169-ce06-4520-a625-365afa0b5bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitive">
+      <UniqueIdentifier>{b7d8e03d-4f5b-4a8a-a605-b8f5aefb484b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\PCH\PCH.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\NyxCoreUnitTestAll.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\PCH\PCH.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\NyxCoreUnitTestAll.h" />
+    <ClInclude Include="..\Source\Utility\CommonUnitTest.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\LimitsUnitTest.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\RandomUnitTest.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\UnitTestAll.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\MathUnitTest.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color3cUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color3fUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color4cUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color4fUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Matrix33UnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Matrix44UnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\PlaneUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point2fUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point2iUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point3fUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Point3iUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\QuaternionUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Rect2fUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Rect2iUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Vector3UnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Vector4UnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\UnitTestAll.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

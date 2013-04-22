@@ -100,12 +100,6 @@
     <Filter Include="Timer\implements">
       <UniqueIdentifier>{c3e86ca3-627d-4a3b-92e1-cdbc136b3854}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound\interfaces">
-      <UniqueIdentifier>{2147cc52-54e3-4150-bdc9-a4ef183880ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sound\implements">
-      <UniqueIdentifier>{cd6c930d-2b9f-4d57-b92a-8e9f409415ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\interfaces">
       <UniqueIdentifier>{ecc3c118-72ee-497a-9cda-59fbf5b570b5}</UniqueIdentifier>
     </Filter>
@@ -166,12 +160,6 @@
     <Filter Include="Thread\implements\detail\Win32">
       <UniqueIdentifier>{4a2751ed-13f3-436d-a1bb-2a5ccb0c6012}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound\implements\detail">
-      <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sound\implements\detail\DirectSound">
-      <UniqueIdentifier>{68a21d74-612a-4e5f-97b6-863aa8ed9ca2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI\implements\detail">
       <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
     </Filter>
@@ -204,6 +192,15 @@
     </Filter>
     <Filter Include="IO\implements\detail\Win32">
       <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\spec">
+      <UniqueIdentifier>{c9b5ac4e-edc5-4315-9e18-4008ed14d0aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\detail">
+      <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\detail\DirectSound">
+      <UniqueIdentifier>{68a21d74-612a-4e5f-97b6-863aa8ed9ca2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +511,9 @@
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioCache.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -720,10 +720,13 @@
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Sound\AudioCache.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\Sound\spec.txt">
-      <Filter>Sound\interfaces</Filter>
+      <Filter>Sound\spec</Filter>
     </None>
   </ItemGroup>
 </Project>
