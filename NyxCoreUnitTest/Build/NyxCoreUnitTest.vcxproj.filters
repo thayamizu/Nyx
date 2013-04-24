@@ -11,6 +11,9 @@
     <Filter Include="Primitive">
       <UniqueIdentifier>{b7d8e03d-4f5b-4a8a-a605-b8f5aefb484b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{9dcb3e0e-8865-4fe3-8863-a853f7419fa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\PCH\PCH.cpp">

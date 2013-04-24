@@ -19,8 +19,6 @@
 #define NYX_CORE_INCLUDED_WAVE_READER_H_
 
 namespace Nyx {
-	using std::unique_ptr;
-	using std::shared_ptr;
 
 	///RIFFチャンク構造体
 	struct RIFFChunk
@@ -64,20 +62,13 @@ namespace Nyx {
 		* ファイルからWaveファイルを読み込みます
 		* @param std::wstring wavファイル名
 		*/
-		void ReadFromFile(std::wstring fileName);
+		void ReadFromFile(const std::wstring& fileName);
 
 		/**
 		* メモリ上のデータからWaveファイルを読み込みます
 		* @param shared_ptr<char> Waveファイルデータ
 		*/
-		void ReadFromMem(shared_ptr<char> waveData);
-
-		/**
-		* Waveファイルのヘッダ情報を出力
-		* @note 
-		* 文字列で返す方がいいかなぁー
-		*/
-		void PrintHeaderInfo();
+		void ReadFromMem(std::shared_ptr<uchar> waveData);
 
 		/**
 		* RIFFチャンクを取得します。

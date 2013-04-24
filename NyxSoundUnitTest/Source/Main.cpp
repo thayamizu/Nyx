@@ -1,3 +1,5 @@
+#include "PCH.h"
+#include "WaveReaderTest.h"
 ////#include <NyxCore.h>
 ////#include <iostream>
 ////#include <string>
@@ -322,11 +324,3 @@
 ////{
 ////}
 
-int main()
-{
-	//DirectSoundStaticAudioBufferTest();
-	//getchar();
-	//DirectSoundStreamingAudioBufferTest();
-
-	return 0;
-}

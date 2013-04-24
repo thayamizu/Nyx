@@ -12,7 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{1E4C4F
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxCoreUnitTest", "NyxCoreUnitTest\Build\NyxCoreUnitTest.vcxproj", "{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxSoundUnitTest", "NyxSoundUnitTest\Build\NyxSoundUnitTest.vcxproj", "{BA456B7C-746B-45D7-BBC5-0BFA5FD91D37}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxSoundUnitTest", "NyxSoundUnitTest\Build\NyxSoundUnitTest.vcxproj", "{1387C1E2-A757-44DA-A05F-098D42462E04}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1B75596E-EBDA-47BD-A1FD-7E865274F809} = {1B75596E-EBDA-47BD-A1FD-7E865274F809}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +31,10 @@ Global
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Debug|Win32.Build.0 = Debug|Win32
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Release|Win32.ActiveCfg = Release|Win32
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Release|Win32.Build.0 = Release|Win32
-		{BA456B7C-746B-45D7-BBC5-0BFA5FD91D37}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BA456B7C-746B-45D7-BBC5-0BFA5FD91D37}.Debug|Win32.Build.0 = Debug|Win32
-		{BA456B7C-746B-45D7-BBC5-0BFA5FD91D37}.Release|Win32.ActiveCfg = Release|Win32
-		{BA456B7C-746B-45D7-BBC5-0BFA5FD91D37}.Release|Win32.Build.0 = Release|Win32
+		{1387C1E2-A757-44DA-A05F-098D42462E04}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1387C1E2-A757-44DA-A05F-098D42462E04}.Debug|Win32.Build.0 = Debug|Win32
+		{1387C1E2-A757-44DA-A05F-098D42462E04}.Release|Win32.ActiveCfg = Release|Win32
+		{1387C1E2-A757-44DA-A05F-098D42462E04}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

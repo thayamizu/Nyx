@@ -2,13 +2,13 @@
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
 namespace Nyx {
-	using std::unique_ptr;
-	using std::shared_ptr;
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	WaveReader::WaveReader() {
-
+		::ZeroMemory((void*)&riffChunk_, sizeof(RIFFChunk));
+		::ZeroMemory((void*)&fmtChunk_,  sizeof(FmtChunk));
+		::ZeroMemory((void*)&dataChunk_, sizeof(DataChunk));
 	}
 
 	//-------------------------------------------------------------------------------------------------------
@@ -21,9 +21,9 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::ReadFromFile(std::wstring fileName) {
+	void WaveReader::ReadFromFile(const std::wstring& fileName) {
 		char buffer[4] = {};
-		unique_ptr<File> file = unique_ptr<File>(new File(fileName, Nyx::ReadMode));
+		std::unique_ptr<File> file(new File(fileName, Nyx::ReadMode));
 
 		//RIFFヘッダ(4byte) 読み取り
 		file->Read(&buffer, 4); 
@@ -59,7 +59,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::ReadFromMem(shared_ptr<char> waveData) {
+	void WaveReader::ReadFromMem(std::shared_ptr<uchar> waveData) {
 		ulong offset = 0;
 		char buffer[4]={};
 
@@ -94,23 +94,6 @@ namespace Nyx {
 				offset += 4;
 			}
 		}
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void WaveReader::PrintHeaderInfo()
-	{
-		printf("[RIFF] (%ld)\n", riffChunk_.fileSize);
-		printf("[WAVE]\n");
-		printf("<fmt>\n");
-		printf("\t\tfmtチャンクサイズ  = %ld\n", fmtChunk_.chunkSize);
-		printf("\t\tフォーマットタグ   = %hd\n", fmtChunk_.formatTag);
-		printf("\t\tチャンネル数       = %d\n", fmtChunk_.channelNum);
-		printf("\t\tサンプリングレート = %d\n", fmtChunk_.samplingRate);
-		printf("\t\tデータ速度         = %d\n", fmtChunk_.bytesPerSec);
-		printf("\t\tビットレート       = %d\n", fmtChunk_.bitsRate);
-		printf("<data>\n");
-		printf("Dataチャンクサイズ     = %d\n", dataChunk_.chunkSize);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
