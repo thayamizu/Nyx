@@ -20,29 +20,35 @@
 
 namespace Nyx {
 
-	///RIFFチャンク構造体
-	struct RIFFChunk
-	{
-		ulong fileSize;///< ファイルサイズ
-	};
-
 	///Formatチャンク構造体
-	struct FmtChunk
+	struct FormatChunk
 	{
-		long chunkSize; ///<チャンクサイズ
-		short formatTag; ///<フォーマットID
+		uchar formatChunkID[4];  ///FMTチャンクID
+		uint chunkSize; ///<チャンクサイズ
+		ushort formatTag; ///<フォーマットID
 		ushort channelNum;///<チャンネル数
-		ulong  samplingRate; ///<サンプリングレート
-		ulong  bytesPerSec;//<データ速度
+		uint   samplingRate; ///<サンプリングレート
+		uint   bytesPerSec;//<データ速度
 		ushort blockSize; ///<ブロックサイズ
 		ushort bitsRate;///< サンプルあたりのビット数
+		
 	};
 
 	///データチャンク構造体
 	struct DataChunk
 	{
-		long   chunkSize;///< チャンクサイズ 
-		uchar* waveData;///< 波形データ
+		uchar dataChunkID[4];///< データチャンクID
+		uint chunkSize;  ///< チャンクサイズ 
+	};
+
+	///Waveファイルヘッダ構造体
+	struct WaveFileHeader
+	{
+		uchar riffID[4];  ///< RIFFフォーマットID
+		uint fileSize;///< ファイルサイズ
+		uchar waveID[4];  ///< WaveファイルID
+		FormatChunk formatChunk; ///<フォーマットチャンク
+		DataChunk   dataChunk;   ///<データチャンク
 	};
 
 	///wavファイルリーダ
@@ -52,6 +58,7 @@ namespace Nyx {
 		* コンストラクタ
 		*/
 		WaveReader();
+		WaveReader(const std::wstring& fileName);
 
 		/**
 		* デストラクタ
@@ -68,30 +75,13 @@ namespace Nyx {
 		* メモリ上のデータからWaveファイルを読み込みます
 		* @param shared_ptr<char> Waveファイルデータ
 		*/
-		void ReadFromMem(std::shared_ptr<uchar> waveData);
+		void ReadFromMem(char* waveData);
 
-		/**
-		* RIFFチャンクを取得します。
-		* @param RIFFChunk* Riffチャンク構造体へのポインタ
-		*/
-		void GetRiffChunk(RIFFChunk* riff);
-
-		/**
-		* フォーマットチャンクを取得
-		* @param FmtChunk* Fmtチャンク構造体へのポインタ
-		*/
-		void GetFmtChunk(FmtChunk* fmt);
-
-		/**
-		*　データチャンクを取得
-		* @param DataChunk* データチャンク構造体へのポインタ
-		*/
-		void GetDataChunk(DataChunk* data);
-
+		const WaveFileHeader& GetFileHeader();
+		const std::shared_ptr<char> GetWaveData();
 	private:
-		RIFFChunk riffChunk_; ///< RIFFチャンク
-		FmtChunk fmtChunk_;///< fmtチャンク
-		DataChunk dataChunk_; ///< dataチャンク
+		WaveFileHeader waveHeader_;
+		std::shared_ptr<char> waveData_;
 	};
 }
 #endif

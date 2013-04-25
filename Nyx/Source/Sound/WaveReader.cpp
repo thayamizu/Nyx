@@ -1,116 +1,91 @@
 #include "PCH/PCH.h"
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
+
+class format_error : public std::domain_error
+{
+public:
+	format_error(const char* message) 
+		: std::domain_error(message) {}
+};
+
+class com_error : public std::runtime_error
+{
+public:
+	com_error(const char* message, HRESULT hr)
+		:std::runtime_error(message), hResult(hr) {}
+	HRESULT get_status() {
+		return hResult;
+	}
+private:
+	HRESULT hResult;
+};
+
 namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	WaveReader::WaveReader() {
-		::ZeroMemory((void*)&riffChunk_, sizeof(RIFFChunk));
-		::ZeroMemory((void*)&fmtChunk_,  sizeof(FmtChunk));
-		::ZeroMemory((void*)&dataChunk_, sizeof(DataChunk));
+	WaveReader::WaveReader() 
+		:waveData_(nullptr)
+	{
+		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
+	}
+
+	WaveReader::WaveReader(const std::wstring& fileName) 
+		:waveData_(nullptr)
+	{
+		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
+
+		ReadFromFile(fileName);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	WaveReader::~WaveReader() {
-		if (dataChunk_.waveData !=NULL) { 
-			SafeDelete(dataChunk_.waveData);
-		}
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void WaveReader::ReadFromFile(const std::wstring& fileName) {
-		char buffer[4] = {};
 		std::unique_ptr<File> file(new File(fileName, Nyx::ReadMode));
+	
+		//Waveファイルヘッダ読み取り
+		file->Read(&waveHeader_, sizeof(WaveFileHeader)); 
+		//フォーマットチェック
 
-		//RIFFヘッダ(4byte) 読み取り
-		file->Read(&buffer, 4); 
-		//				Assert(buffer == "RIFF");
-		if (strncmp(buffer, "RIFF", 4) == 0) {
-			file->Read(&riffChunk_, sizeof(RIFFChunk)); 
-		}
+		const int waveDataSize = waveHeader_.dataChunk.chunkSize;
+		char * buffer = new char[waveDataSize];
+		file->Read(buffer, waveDataSize); 
 
-		//WAVEヘッダ(4byte) 読み取り
-		file->Read(&buffer, 4);
-		if (strncmp(buffer, "WAVE", 4) != 0 ) {
-			exit(-1);
-		}
-
-		//チャンク情報の読み取り
-		while (file->GetCurrentPosition() < riffChunk_.fileSize) {
-			file->Read(&buffer, 4);
-			if (strncmp(buffer, "fmt ",4) == 0) {
-				file->Read(&fmtChunk_, sizeof(FmtChunk));
-			}
-			else if (strncmp(buffer, "data", 4) ==0) {
-				//データチャンクのサイズを取得
-				file->Read(&dataChunk_.chunkSize, 4); 
-				dataChunk_.waveData = new uchar[dataChunk_.chunkSize];
-				file->Read(dataChunk_.waveData, dataChunk_.chunkSize);
-			}
-			else {
-				file->Seek(4);
-			}
-		}
-
+		waveData_ = std::shared_ptr<char>(
+			buffer, std::default_delete<char[]>());
+		
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::ReadFromMem(std::shared_ptr<uchar> waveData) {
-		ulong offset = 0;
-		char buffer[4]={};
+	void WaveReader::ReadFromMem(char* waveData) {
+		::memcpy(&waveHeader_, waveData, sizeof(WaveFileHeader));
 
-		//RIFFヘッダ(4byte) 読み取り
-		memcpy(buffer, &*waveData, 4); offset += 4;
-		//				Assert(buffer == "RIFF");
-		if (strncmp(buffer, "RIFF", 4) == 0) {
-			memcpy(&riffChunk_, (void*)(&*waveData + offset), sizeof(RIFFChunk)); 
-			offset += sizeof(RIFFChunk); 
-		}
+		const int waveDataSize = waveHeader_.dataChunk.chunkSize;
+		char * buffer = new char[waveDataSize];
+		memcpy(buffer,(waveData + sizeof(WaveFileHeader)), waveDataSize); 
 
-		//WAVEヘッダ(4byte) 読み取り
-		memcpy(buffer, (void*)(&*waveData + offset), 4); offset += 4;
-		//		Assert(buffer == "WAVE");
-		//チャンク情報の読み取り
-		while (offset < riffChunk_.fileSize) {
-			memcpy(buffer, (void*)(&*waveData + offset), 4); offset += 4;
-			if (strncmp(buffer, "fmt ",4) == 0) {
-				memcpy(&fmtChunk_, (void*)(&*waveData + offset), sizeof(FmtChunk));
-				offset += sizeof(FmtChunk);
-			}
-			else if (strncmp(buffer, "data", 4) ==0) {
-				//データチャンクのサイズを取得
-				memcpy(&dataChunk_.chunkSize, (void*)(&*waveData + offset), 4); offset += 4;
-				dataChunk_.waveData = new uchar[dataChunk_.chunkSize];
-				memcpy(dataChunk_.waveData, (void*)(&*waveData + offset), dataChunk_.chunkSize);
-				offset += dataChunk_.chunkSize;
+		waveData_ = std::shared_ptr<char>(
+			buffer, std::default_delete<char[]>());
+	}
 
-			}
-			else {
-				//fmt, data以外のチャンク情報を読み飛ばす
-				offset += 4;
-			}
-		}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	const WaveFileHeader& WaveReader::GetFileHeader() {
+		return waveHeader_;
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::GetRiffChunk(RIFFChunk* riff) {
-		*riff= riffChunk_;
+	const std::shared_ptr<char> WaveReader::GetWaveData() {
+		return waveData_;
 	}
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void  WaveReader::GetFmtChunk(FmtChunk* fmt) {
-		*fmt = fmtChunk_;
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void  WaveReader::GetDataChunk(DataChunk* data) {
-		*data = dataChunk_;
-	}
 }

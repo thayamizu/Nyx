@@ -59,6 +59,8 @@
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <fstream>
+#include <sstream>
 
 //Common
 #include "Utility/Common.h"
@@ -70,4 +72,6 @@
 //DirectX
 #include "Graphics/DirectXDefinition.h"
 
+#define private public
+#define protected public
 #endif
