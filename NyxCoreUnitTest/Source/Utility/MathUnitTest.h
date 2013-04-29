@@ -294,3 +294,62 @@ END_TEST
 	WIN_ASSERT_TRUE(EQ(exp, value));
 }
 END_TEST
+
+
+	BEGIN_TEST(Math035)
+{
+	const int value = 10;
+	const int upper = 5;
+	const int result = Math::UpperClamp(value, upper);
+	WIN_ASSERT_TRUE(result == upper);
+}
+END_TEST
+
+
+	BEGIN_TEST(Math036)
+{
+	const int value = 5;
+	const int upper = 5;
+	const int result = Math::UpperClamp(value, upper);
+	WIN_ASSERT_TRUE(result == upper);
+}
+END_TEST
+
+
+	BEGIN_TEST(Math037)
+{
+	const int value = 5;
+	const int  upper = 4;
+	const int result = Math::UpperClamp(value, upper);
+	WIN_ASSERT_TRUE(result == upper);
+}
+END_TEST
+
+	BEGIN_TEST(Math038)
+{
+	const int value = -5;
+	const int lower = 0;
+	const int result = Math::LowerClamp(value, lower);
+	WIN_ASSERT_TRUE(result == lower);
+}
+END_TEST
+
+
+	BEGIN_TEST(Math039)
+{
+	const int value = -5;
+	const int lower = -5;
+	const int result = Math::LowerClamp(value, lower);
+	WIN_ASSERT_TRUE(result == lower);
+}
+END_TEST
+
+
+	BEGIN_TEST(Math040)
+{
+	const int value = -5;
+	const int lower = -10;
+	const int result = Math::LowerClamp(value, lower);
+	WIN_ASSERT_TRUE(result == value);
+}
+END_TEST
