@@ -25,6 +25,7 @@ namespace Nyx
 		explicit AudioCache();
 		explicit AudioCache(size_t cacheSize);
 		~AudioCache();
+		std::shared_ptr<AudioBufer> operator[](const std::wstring& fileName);
 		void Add(const std::shared_ptr<AudioBuffer>& audioBuffer);
 		void Remove(const std::shared_ptr<AudioBuffer>& audioBuffer);
 		void Clear();

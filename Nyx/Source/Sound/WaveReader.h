@@ -58,6 +58,11 @@ namespace Nyx {
 		* コンストラクタ
 		*/
 		WaveReader();
+
+		/**
+		* コンストラクタ
+		* @param const std::wstring& ファイル名
+		*/
 		WaveReader(const std::wstring& fileName);
 
 		/**
@@ -77,7 +82,16 @@ namespace Nyx {
 		*/
 		void ReadFromMem(char* waveData);
 
+		/**
+		* Waveファイルヘッダの取得します
+		* @return const WaveFileHeader& WAVEファイルヘッダ
+		*/
 		const WaveFileHeader& GetFileHeader();
+		
+		/**
+		* Waveデータを取得します
+		* @return std::shared_ptr<char> WAVEデータ
+		*/
 		const std::shared_ptr<char> GetWaveData();
 	private:
 		WaveFileHeader waveHeader_;

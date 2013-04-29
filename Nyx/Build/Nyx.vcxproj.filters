@@ -94,12 +94,6 @@
     <Filter Include="Network\implements">
       <UniqueIdentifier>{82ab8ad3-76b9-408c-99e5-13d8bdb462d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Timer\interfaces">
-      <UniqueIdentifier>{cfd202c5-8faf-4297-afda-cd259f4851e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Timer\implements">
-      <UniqueIdentifier>{c3e86ca3-627d-4a3b-92e1-cdbc136b3854}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\interfaces">
       <UniqueIdentifier>{ecc3c118-72ee-497a-9cda-59fbf5b570b5}</UniqueIdentifier>
     </Filter>
@@ -111,12 +105,6 @@
     </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Thread\interfaces">
-      <UniqueIdentifier>{f0399042-c09b-4372-9125-ff011890382f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Thread\implements">
-      <UniqueIdentifier>{a99ce0b2-fa29-4951-8307-7f0154891332}</UniqueIdentifier>
     </Filter>
     <Filter Include="Input\interfaces">
       <UniqueIdentifier>{b80130c6-a483-4aa5-ab42-a3e2cce40342}</UniqueIdentifier>
@@ -147,18 +135,6 @@
     </Filter>
     <Filter Include="Database\base">
       <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Timer\implements\detail">
-      <UniqueIdentifier>{8ff13dc7-7e0b-472e-b3a2-06e8e6171667}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Timer\implements\detail\Win32">
-      <UniqueIdentifier>{99c37ccf-a8af-474b-ae85-c34036b3b27a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Thread\implements\detail">
-      <UniqueIdentifier>{52f37c69-278f-45a3-a880-9ef2c3eb3eed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Thread\implements\detail\Win32">
-      <UniqueIdentifier>{4a2751ed-13f3-436d-a1bb-2a5ccb0c6012}</UniqueIdentifier>
     </Filter>
     <Filter Include="GUI\implements\detail">
       <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
@@ -201,6 +177,18 @@
     </Filter>
     <Filter Include="Sound\detail\DirectSound">
       <UniqueIdentifier>{68a21d74-612a-4e5f-97b6-863aa8ed9ca2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread\detail">
+      <UniqueIdentifier>{52f37c69-278f-45a3-a880-9ef2c3eb3eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread\detail\Win32">
+      <UniqueIdentifier>{4a2751ed-13f3-436d-a1bb-2a5ccb0c6012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\detail">
+      <UniqueIdentifier>{8ff13dc7-7e0b-472e-b3a2-06e8e6171667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer\detail\Win32">
+      <UniqueIdentifier>{99c37ccf-a8af-474b-ae85-c34036b3b27a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -370,30 +358,6 @@
     <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
       <Filter>Network\implements</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Timer\ITimer.h">
-      <Filter>Timer\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Timer\Timer.h">
-      <Filter>Timer\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Timer\FixedTimer.h">
-      <Filter>Timer\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Timer\FPSTimer.h">
-      <Filter>Timer\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Timer\PerformanceTimer.h">
-      <Filter>Timer\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Thread\Thread.h">
-      <Filter>Thread\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Thread\CriticalSection.h">
-      <Filter>Thread\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Thread\LockObject.h">
-      <Filter>Thread\implements</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Object\Delegate.h">
       <Filter>Object\utility</Filter>
     </ClInclude>
@@ -497,13 +461,13 @@
       <Filter>GUI\implements</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Timer\detail\Win32\Win32Timer.h">
-      <Filter>Timer\implements\detail\Win32</Filter>
+      <Filter>Timer\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h">
-      <Filter>Thread\implements\detail\Win32</Filter>
+      <Filter>Thread\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h">
-      <Filter>Thread\implements\detail\Win32</Filter>
+      <Filter>Thread\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\IO\detail\Win32\Win32File.h">
       <Filter>IO\implements\detail\Win32</Filter>
@@ -519,6 +483,33 @@
     </ClInclude>
     <ClInclude Include="..\Source\Sound\WaveReader.h">
       <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\CriticalSection.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\LockObject.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Thread\Thread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\FixedTimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\FPSTimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\PerformanceTimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\Timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Timer\ITimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Exception.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -651,24 +642,6 @@
     <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp">
       <Filter>Network\implements</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Timer\FPSTimer.cpp">
-      <Filter>Timer\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Timer\PerformanceTimer.cpp">
-      <Filter>Timer\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Timer\Timer.cpp">
-      <Filter>Timer\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Timer\FixedTimer.cpp">
-      <Filter>Timer\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Thread\CriticalSection.cpp">
-      <Filter>Thread\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Thread\Thread.cpp">
-      <Filter>Thread\implements</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Input\Joystick.cpp">
       <Filter>Input\implements</Filter>
     </ClCompile>
@@ -712,13 +685,13 @@
       <Filter>GUI\implements</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp">
-      <Filter>Timer\implements\detail\Win32</Filter>
+      <Filter>Timer\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp">
-      <Filter>Thread\implements\detail\Win32</Filter>
+      <Filter>Thread\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp">
-      <Filter>Thread\implements\detail\Win32</Filter>
+      <Filter>Thread\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\IO\detail\Win32\Win32File.cpp">
       <Filter>IO\implements\detail\Win32</Filter>
@@ -730,6 +703,27 @@
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sound\WaveReader.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\CriticalSection.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Thread\Thread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\FixedTimer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\FPSTimer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\PerformanceTimer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Timer\Timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\AudioUtility.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>

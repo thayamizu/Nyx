@@ -64,6 +64,7 @@
 
 //Common
 #include "Utility/Common.h"
+#include "Utility/Exception.h"
 #include "Utility/Type.h"
 #include "Utility/Limits.h"
 #include "Utility/Math.h"

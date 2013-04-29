@@ -2,38 +2,19 @@
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
 
-class format_error : public std::domain_error
-{
-public:
-	format_error(const char* message) 
-		: std::domain_error(message) {}
-};
 
-class com_error : public std::runtime_error
-{
-public:
-	com_error(const char* message, HRESULT hr)
-		:std::runtime_error(message), hResult(hr) {}
-	HRESULT get_status() {
-		return hResult;
-	}
-private:
-	HRESULT hResult;
-};
 
 namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	WaveReader::WaveReader() 
-		:waveData_(nullptr)
-	{
+		:waveData_(nullptr) {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
 	}
 
 	WaveReader::WaveReader(const std::wstring& fileName) 
-		:waveData_(nullptr)
-	{
+		:waveData_(nullptr) {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
 
 		ReadFromFile(fileName);

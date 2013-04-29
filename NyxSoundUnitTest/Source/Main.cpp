@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "WaveReaderTest.h"
+#include "AudioUtilityTest.h"
 ////#include <NyxCore.h>
 ////#include <iostream>
 ////#include <string>

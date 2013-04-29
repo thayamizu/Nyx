@@ -92,5 +92,8 @@
     <ClInclude Include="..\Source\Primitive\UnitTestAll.h">
       <Filter>Primitive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Utility\ExceptionUnitTest.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

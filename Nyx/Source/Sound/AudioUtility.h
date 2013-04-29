@@ -37,8 +37,8 @@ namespace Nyx
 			StickyFocus,
 		};
 
-		static double DefaultSamplingRate;
-		static double DefaultBitrate;
+		static const double DefaultBitRate;
+		static const double DefaultSamplingRate;
 	
 		static double VolumeToDecibel(double volume);
 		static double DecibelToVolume(double decibel);
@@ -46,16 +46,7 @@ namespace Nyx
 		AudioUtility();//ê∂ê¨ã÷é~
 	};
 
-	double AudioUtiltiy::DefaultBitrate      = 16;
-	double AudioUtility::DefaultSamplingRate = 44100;
 
-	double AudioUtility::VolumeToDecibel(const double volume) {
-		return 1.0;
-	}
-	
-	double AudioUtility::DecibelToVolume(const double decibel) {
-		return 1.0;
-	}
 }
 
 #endif
