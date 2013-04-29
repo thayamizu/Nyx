@@ -62,6 +62,10 @@
 #include <fstream>
 #include <sstream>
 
+//boost
+#include <boost/format.hpp>
+#include <boost/intrusive_ptr.hpp>
+
 //Common
 #include "Utility/Common.h"
 #include "Utility/Exception.h"

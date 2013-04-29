@@ -59,7 +59,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include/;../Source/;../../SDKs/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(DXSDK_DIR)Include/;../Source/;../../SDKs/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;DEBUG;</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -86,7 +86,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include\;..\Source;..\..\Common;..\..\SDKs\boost;..\..\SDKs\fbx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(DXSDK_DIR)Include\;..\Source;..\..\Common;..\..\SDKs\boost;..\..\SDKs\fbx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UNICODE;WIN32;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -175,8 +175,15 @@
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Object\ResourceManager.h" />
+    <ClInclude Include="..\Source\Sound\AudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\AudioCache.h" />
+    <ClInclude Include="..\Source\Sound\AudioManager.h" />
     <ClInclude Include="..\Source\Sound\AudioUtility.h" />
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h" />
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h" />
+    <ClInclude Include="..\Source\Sound\IAudioBuffer.h" />
+    <ClInclude Include="..\Source\Sound\IAudioManager.h" />
     <ClInclude Include="..\Source\Sound\WaveReader.h" />
     <ClInclude Include="..\Source\SQLiteDatabase.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h" />
@@ -259,7 +266,10 @@
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
+    <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp" />
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp" />
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\WaveReader.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\detail\Win32\Win32Thread.cpp" />
@@ -294,11 +304,6 @@
     <ClCompile Include="..\Source\Primitive\Vector4.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Source\Sound\spec.txt">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

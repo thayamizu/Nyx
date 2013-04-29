@@ -31,7 +31,6 @@ namespace Nyx {
 		uint   bytesPerSec;//<データ速度
 		ushort blockSize; ///<ブロックサイズ
 		ushort bitsRate;///< サンプルあたりのビット数
-		
 	};
 
 	///データチャンク構造体
@@ -59,16 +58,13 @@ namespace Nyx {
 		*/
 		WaveReader();
 
+
 		/**
 		* コンストラクタ
 		* @param const std::wstring& ファイル名
 		*/
 		WaveReader(const std::wstring& fileName);
 
-		/**
-		* デストラクタ
-		*/
-		~WaveReader();
 
 		/**
 		* ファイルからWaveファイルを読み込みます
@@ -76,11 +72,6 @@ namespace Nyx {
 		*/
 		void ReadFromFile(const std::wstring& fileName);
 
-		/**
-		* メモリ上のデータからWaveファイルを読み込みます
-		* @param shared_ptr<char> Waveファイルデータ
-		*/
-		void ReadFromMem(char* waveData);
 
 		/**
 		* Waveファイルヘッダの取得します
@@ -88,6 +79,7 @@ namespace Nyx {
 		*/
 		const WaveFileHeader& GetFileHeader();
 		
+
 		/**
 		* Waveデータを取得します
 		* @return std::shared_ptr<char> WAVEデータ

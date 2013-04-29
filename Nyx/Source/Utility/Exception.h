@@ -44,7 +44,7 @@ namespace Nyx
 		LRESULT GetStatus() {
 			return lResult_;
 		}
-		
+
 		/**
 		* 例外メッセージを取得します
 		* @return const char* メッセージ
@@ -60,7 +60,7 @@ namespace Nyx
 	class COMException : public std::domain_error
 	{
 	public:
-			/**
+		/**
 		* コンストラクタ
 		* @param const char* メッセージ
 		* @param HRESULT ステータスコード

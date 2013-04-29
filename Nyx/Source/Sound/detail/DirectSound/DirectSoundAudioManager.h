@@ -22,96 +22,23 @@
 namespace Nyx {
 	///オーディオマネージャのDirectSoundによる実装
 	class DirectSoundAudioManager : public IAudioManager{
-		typedef std::vector< std::shared_ptr<IAudioBuffer> > AudioBufferList;
 	public:
 		/**
 		* コンストラクタ
 		* @param HWND ウインドウハンドル
 		*/
-		DirectSoundAudioManager(HWND hw, int v);
+		DirectSoundAudioManager(const AudioDesc& desc);
 
-		/**
-		* デストラクタ
-		*/
-		~DirectSoundAudioManager();
-		/**
-		* 指定したインデックスの曲を再生する
-		* @param size_t インデックス
-		*/
-		virtual void Play(size_t index);
-
-		/**
-		* すべての曲を再生する
-		*/
-		virtual void PlayAll();
-
-		/**
-		* 指定したインデックスの曲を停止
-		* @param size_t インデックス
-		*/
-		virtual void Stop(size_t index);
-
-		/**
-		*すべての曲を停止
-		*/
-		virtual void StopAll();
-
-		/**
-		* 指定したインデックスの曲をレジュームする
-		* @param size_t インデックス
-		*/
-		virtual void Resume(size_t index);
-
-		/**
-		* すべての曲をレジュームする
-		*/
-		virtual void ResumeAll();
-
-		/**
-		* 指定したインデックスの曲をリセット
-		* つまり、オーディオをいったん止めて、先頭まで巻戻します。
-		* @param size_t インデックス
-		*/
-		virtual void Reset(size_t index);
-
-		/**
-		* すべての曲をリセットする
-		*/
-		virtual void ResetAll();
-
-		/**
-		*　指定したインデックスをポーズさせる
-		* @param size_t インデックス
-		* @param bool ポーズするならtrue
-		*/
-		virtual void SetPause(size_t index, bool);
-
-		/**
-		* すべての曲をポーズさせる
-		* @param bool ポーズするならtrue  
-		*/
-		virtual void SetPauseAll(bool) ;
-
-		/**
-		* マスターボリュームを取得
-		* @return int マスターボリューム値
-		*/
-		virtual int GetMasterVolume() const ;
-
-		/**
-		* マスターボリュームを設定
-		* @param int マスターボリューム値
-		*/
-		virtual void SetMasterVolume(int v) ;
-
-		std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
 
 		/**
 		* Waveファイルをロードしてきます
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
 		*/
-		std::shared_ptr<IAudioBuffer> Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index);
+		void Load(const std::wstring fileName, AudioUtility::AudioBufferType bufferType, size_t& index);
+		
+		
+		const DirectSoundPtr GetHandle();
 	private:
 		/**
 		* Waveファイルからデータを読み込んできます
@@ -119,13 +46,11 @@ namespace Nyx {
 		* @param SoundBufferType バッファの種類
 		* @return bool 読み込みに成功すればtrue
 		*/
-		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring , SoundBufferType::enum_t bufferType, size_t& index);
-	private:	
-		HWND hWnd;///< ウインドウハンドル
-		DirectSound dsound;///< DirectSoundオブジェクト
-		int masterVolume;	///マスターボリューム	
-		AudioBufferList audioBufferList;
+		void LoadFromWaveFile(const std::wstring , AudioUtility::AudioBufferType  bufferType, size_t& index);
 
+	private:	
+		int masterVolume;	///マスターボリューム
+		DirectSoundPtr directSound_;///< DirectSoundオブジェクト
 	};
 }
 #endif

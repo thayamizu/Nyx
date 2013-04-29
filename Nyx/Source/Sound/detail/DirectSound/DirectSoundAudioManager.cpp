@@ -17,216 +17,47 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
-#include "IO/PackedFile.h"
+#include "Sound/AudioUtility.h"
 #include "DirectSoundAudioBuffer.h"
-#include "DirectSound3DAudioBuffer.h"
-#include "DirectSound3DStreamingAudioBuffer.h"
 #include "DirectSoundAudioManager.h"
-#include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
-	using Nyx::PackedFile;
-
 	//--------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioManager::DirectSoundAudioManager(HWND hwnd, int volume) 
-		:hWnd(hwnd)
+	DirectSoundAudioManager::DirectSoundAudioManager(const AudioDesc& desc) 
 	{
-
-
-		HRESULT hr = DirectSoundCreate8(NULL,&dsound,NULL);
-		Assert(hr == DS_OK);
+		//DirectSoundの初期化
+		LPDIRECTSOUND directSound;
+		HRESULT hr = ::DirectSoundCreate(NULL, &directSound ,NULL);
 		if (FAILED(hr)) {
-			DebugOutput::DebugMessage("DirectSoundの初期化に失敗しました");
+			DebugOutput::Trace("DirectSoundの初期化に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundの初期化に失敗しました。", hr);
 		}
-		dsound->AddRef();
-		// 協調レベルの設定
-		dsound->SetCooperativeLevel(hwnd,DSSCL_EXCLUSIVE);
 
-		SetMasterVolume(volume);
-
-	}
-	
-	//--------------------------------------------------------------------------------------
-	//
-	DirectSoundAudioManager::~DirectSoundAudioManager() {
-		SafeRelease(dsound);
-	}
-	
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::Play(size_t index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Play();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::PlayAll() {
-
-		auto it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Play();
-			++it;
+		auto hwnd = desc.handle;
+		hr = directSound->SetCooperativeLevel(hwnd, DSSCL_EXCLUSIVE|DSSCL_PRIORITY ) ;
+		if (FAILED(hr)){
+			DebugOutput::Trace("DirectSoundの協調レベルが設定出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundの協調レベルが設定出来ませんでした。", hr);
 		}
+
+		//スマートポインタの管理下に置く
+		directSound_ = DirectSoundPtr(directSound, true);
 	}
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::Stop(size_t index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Stop();
-
-
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::StopAll() {
-		auto it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Stop();
-			++it;
-		}
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::Resume(size_t index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Resume();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::ResumeAll() {
-		auto it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Resume();
-			++it;
-		}
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::Reset(size_t index) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->Reset();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::ResetAll() {
-		auto it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->Reset();
-			++it;
-		}
-	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::SetPause(size_t index, bool p) {
-		if (index >= audioBufferList.size()) return;
-
-		audioBufferList[index]->SetPause(p);
-	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::SetPauseAll(bool p) {
-
-		auto it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->SetPause(p);
-			++it;
-		}
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	int DirectSoundAudioManager::GetMasterVolume() const {
-		return masterVolume;
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioManager::SetMasterVolume(int v) {
-		if (v > 100) { v = 100;}
-		else if (v < 0) {v=0;}
-		masterVolume = v;
-
-		auto it = audioBufferList.begin();
-		while (it != audioBufferList.end()) {
-			(*it)->SetVolume(v);
-			++it;
-		}
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::GetAudioBuffer(size_t index) {
-		if (index >= audioBufferList.size()) return NULL;
-
-		return audioBufferList[index];
-	}
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index) {
-
-		//最後に.が見つかった場所か(ファイル名に.が含まれている場合の対策)
-		int pos = fileName.find_last_of (L".");
-		if (pos == std::wstring::npos) {
-			return false;//空文字を返す
-		}
-		//拡張子のみを取得する
-		std::wstring ext = fileName.substr(pos+1, fileName.size());
-
-		//ロード
-		std::shared_ptr<IAudioBuffer> buffer = nullptr;
-		if (ext == L"wav" || ext == L"wave") {
-			buffer = LoadFromWaveFile(fileName, bufferType, index);
-		}
-		else if (ext == L"ogg") {
-			//未対応だが、将来的に導入するので、とりあえず確保しておく
-		}
-
-		return buffer;
+	void DirectSoundAudioManager::Load(const std::wstring fileName, AudioUtility::AudioBufferType bufferType, size_t& index) {
 	}	
 
 	
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index){
-		std::shared_ptr<IAudioBuffer> audio = nullptr;
-		switch(bufferType)
-		{
-		case SoundBufferType::Static:
-			audio=std::make_shared<DirectSoundAudioBuffer>(dsound, fileName);
-			break;
-		case SoundBufferType::Static3D:
-			audio=std::make_shared<DirectSound3DAudioBuffer>(dsound, fileName);
-			break;
-		case SoundBufferType::Streaming:
-			audio=std::make_shared<DirectSoundStreamingAudioBuffer>(dsound, fileName);
-			break;
-		case SoundBufferType::Streaming3D:
-			audio= std::make_shared<DirectSound3DStreamingAudioBuffer>(dsound, fileName);
-			break;
-		default:
-			DebugOutput::DebugMessage("生成失敗");
-			return nullptr;
-		}
+	void DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, AudioUtility::AudioBufferType bufferType, size_t& index){
+	}
 
-		if (audio != nullptr) {
-			audio->SetVolume(GetMasterVolume());
-			index = audioBufferList.size();
-			audioBufferList.push_back(audio);
-		}
-
-		return audio;
+	const DirectSoundPtr DirectSoundAudioManager::GetHandle() {
+		return directSound_;
 	}
 }

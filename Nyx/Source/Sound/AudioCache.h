@@ -16,18 +16,20 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_AUDIO_CACHE_H_
 #define NYX_CORE_INCLUDED_AUDIO_CACHE_H_
+#include "Object/NonCopyable.h"
 
 namespace Nyx
 {
-	class AudioBuffer;
+	class IAudioBuffer;
 	///オーディオキャッシュ
-	class AudioCache {
+	class AudioCache : NonCopyable {
+	public:
 		explicit AudioCache();
 		explicit AudioCache(size_t cacheSize);
 		~AudioCache();
-		std::shared_ptr<AudioBufer> operator[](const std::wstring& fileName);
-		void Add(const std::shared_ptr<AudioBuffer>& audioBuffer);
-		void Remove(const std::shared_ptr<AudioBuffer>& audioBuffer);
+		std::shared_ptr<IAudioBuffer> operator[](const std::wstring& fileName);
+		void Add(const std::shared_ptr<IAudioBuffer>& audioBuffer);
+		void Remove(const std::shared_ptr<IAudioBuffer>& audioBuffer);
 		void Clear();
 		bool Play(const std::wstring& fileName);
 		bool PlayAll();
@@ -37,65 +39,11 @@ namespace Nyx
 		bool ResumeAll();
 		bool Pause(const std::wstring& fileName);
 		bool PauseAll();
-		const std::shared_ptr<AudioBuffer> GetAudioBuffer(const std::wstring& fileName);
+		const std::shared_ptr<IAudioBuffer> GetAudioBuffer(const std::wstring& fileName);
 	private :
 		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;
 	};
-
-	AudioCache::AudioCache(){
-
-	}
-	AudioCache::AudioCache(size_t cacheSize) {
-
-	}
-	AudioCache::~AudioCache() {
-
-	}
-
-	void AudioCache::Add(const std::shared_ptr<AudioBuffer>& audioBuffer) {
-
-	}
-	
-	void AudioCache::Remove(const std::shared_ptr<AudioBuffer>& audioBuffer) {
-
-	}
-	
-	void AudioCache::Play(const std::wstring& fileName) {
-
-	}
-	
-	bool AudioCache::PlayAll() {
-		return false;
-	}
-	
-	bool AudioCache::Stop(const std::wstring& fileName) {
-		return false;
-	}
-	
-	bool AudioCache::StopAll() {
-		return false;
-	}
-	
-	bool AudioCache::Resume(const std::wstring& fileName) {
-		return false;
-	}
-	
-	bool AudioCache::ResumeAll() {
-		return false;
-	}
-	
-	bool AudioCache::Pause(const std::wstring& fileName) {
-		return false;
-	}
-
-	bool AudioCache::PauseAll() {
-		return false;
-	}
-
-	const std::shared_ptr<AudioBuffer> GetAudioBuffer(const std::wstring& fileName) {
-		return nullptr;
-	}
 }
 
 

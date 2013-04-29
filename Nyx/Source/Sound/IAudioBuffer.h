@@ -21,102 +21,89 @@ namespace Nyx {
 	///オーディオバッファインタフェース
 	class IAudioBuffer {
 	public:
-		IAudioBuffer() :isLooping(false), isPlaying(false), isPause(false){}
-
 		virtual ~IAudioBuffer() {}
+
 		/**
-		*　再生
+		*　オーディオバッファを再生します
 		*/
 		virtual void Play() = 0;
+
+
 		/**
-		*　停止
+		*　オーディオバッファを停止します
 		*/
 		virtual void Stop() = 0;
+		
+		
 		/**
-		*　レジューム
+		*　オーディオバッファをレジュームします
 		*/
 		virtual void Resume() = 0;
+		
+		
 		/**
-		*　リセット
+		*　オーディオバッファをリセットします
 		*/
 		virtual void Reset()  = 0; 
 
-			/**
-		* パンを設定する
-		* @param int パン
+		/**
+		*　オーディオバッファをフェードインします
 		*/
-		virtual void SetPan(long p)=0;
+		virtual void FadeIn()  = 0; 
+
+		/**
+		*　オーディオバッファをフェードアウトします
+		*/
+		virtual void FadeOut()  = 0; 
+		
 		
 		/**
-		* パンを取得する
-		* @return long パン
+		* オーディオバッファのパン値を設定します
+		* @param long パン
+		*/
+		virtual void SetPan(long p)=0;
+
+
+		/**
+		* オーディオバッファのパン値を取得します
+		* @return long 
 		*/
 		virtual long GetPan() const = 0;
 
-		/**
-		*　ボリュームを設定する
-		* @return int　ボリューム
-		*/
-		virtual void SetVolume(long v) = 0;
 
 		/**
-		* ボリュームを取得する
+		* オーディオバッファのボリューム値を設定します
+		* @return int　ボリューム
+		*/
+		virtual void SetVolume(long volume) = 0;
+
+		
+		/**
+		* オーディオバッファのボリュームを取得します
 		* @return int ボリューム
 		*/
 		virtual long GetVolume() const = 0;
-		
+
+
 		/**
-		* ループ再生かどうか判定
+		* オーディオバッファがループ再生中かどうか判定します
 		* @return bool　ループ再生ならtrue
 		*/
-		virtual bool IsLooping() const {
-			return isLooping;
-		} 
+		virtual bool IsLooping() = 0;
 
+		
 		/**
-		* 再生中かどうか
+		* オーディオバッファが再生中かどうかを判定します
 		* @return bool 再生中ならtrue
 		*/
-		virtual bool IsPlaying() const  {
-			return isPlaying;
-		}
+		virtual bool IsPlaying() = 0;
+
 
 		/**
-		* ポーズ中かどうか
+		* オーディオバッファがポーズ中かどうかを判定します
 		* @return bool ポーズ中ならtrue
 		*/
-		virtual bool IsPause() const {
-			return isPause;
-		}
-
-		/**
-		* ループ再生するかどうかを設定
-		* @param bool ループ再生ならtrue
-		*/
-		virtual void SetLooping(bool loop) {
-			isLooping = loop;
-		}
-
-		/**
-		* 再生中かどうか
-		* @param bool 再生中ならtrue
-		*/
-		virtual void SetPlaying(bool play) {
-			isPlaying = play;
-		}
-
-		/**
-		* ポーズ中かどうか
-		* @param bool ポーズ中ならtrue
-		*/
-		virtual void SetPause(bool pause) {
-			isPause = pause;
-		}
-	private:
-		bool isPlaying;///< 再生中
-		bool isLooping;///< ループ
-		bool isPause;///< ポーズ
+		virtual bool IsPause() const = 0;
 	};
-
 }
 #endif

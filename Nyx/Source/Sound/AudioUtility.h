@@ -15,8 +15,8 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_AUDIO_CACHE_H_
-#define NYX_CORE_INCLUDED_AUDIO_CACHE_H_
+#ifndef NYX_CORE_INCLUDED_AUDIO_UTILITY_H_
+#define NYX_CORE_INCLUDED_AUDIO_UTILITY_H_
 
 namespace Nyx
 {
@@ -30,6 +30,7 @@ namespace Nyx
 			MinPriority,
 		};
 
+
 		///フォーカスタイプ
 		enum Focus {
 			DefaultFoucus = 0,
@@ -37,16 +38,53 @@ namespace Nyx
 			StickyFocus,
 		};
 
+
+		///オーディオバッファタイプ
+		enum AudioBufferType{
+			StaticAudioBuffer,
+			Static3DAudioBufer,
+			StreamingAudioBuffer,
+			Streaming3DAudioBuffer,
+		};
+
+
+		///利用可能API
+		enum APIType {
+			DirectSound
+		};
+
+
+		///デフォルトビットレート
 		static const double DefaultBitRate;
+
+
+		///デフォルトサンプリングレート
 		static const double DefaultSamplingRate;
-	
-		static double VolumeToDecibel(double volume);
-		static double DecibelToVolume(double decibel);
+
+
+		/**
+		* ボリュームをデシベルに変換します
+		* @param int ボリューム（0 ~ 1.0)
+		* @return double デシベル
+		*/
+		static float VolumeToDecibel(float volume);
+
+
+		/**
+		* デシベルをボリュームに変換します
+		* @param double ボリューム
+		* @return int デシベル
+		*/
+		static float DecibelToVolume(float decibel);
 	private:
 		AudioUtility();//生成禁止
 	};
 
-
+	///オーディオ初期化記述子
+	struct AudioDesc {
+		HWND handle;
+		AudioUtility::APIType apiType;
+	};
 }
 
 #endif

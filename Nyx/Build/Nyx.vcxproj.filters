@@ -169,9 +169,6 @@
     <Filter Include="IO\implements\detail\Win32">
       <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound\spec">
-      <UniqueIdentifier>{c9b5ac4e-edc5-4315-9e18-4008ed14d0aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sound\detail">
       <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
     </Filter>
@@ -511,6 +508,27 @@
     <ClInclude Include="..\Source\Utility\Exception.h">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioBuffer.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioBuffer.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioManager.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -726,10 +744,14 @@
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Source\Sound\spec.txt">
-      <Filter>Sound\spec</Filter>
-    </None>
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\AudioManager.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

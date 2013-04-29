@@ -16,33 +16,30 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLDUED_DIRECTSOUND_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLDUED_DIRECTSOUND_AUDIO_BUFFER_H_
-#include "Sound/IAudioBuffer.h"
 #include "DirectSoundDefinition.h"
+#include "Sound/IAudioBuffer.h"
 
 namespace Nyx {
 
 	///オーディオバッファのDirectSoundによる実装
 	class DirectSoundAudioBuffer : public IAudioBuffer {
 	public:
+		explicit DirectSoundAudioBuffer();
+		
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		DirectSoundAudioBuffer(const DirectSound ds, std::wstring fileName_);
+		explicit DirectSoundAudioBuffer(const DirectSoundPtr ds, const std::wstring& fileName);
 
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
-		* @param  shared_ptr<char> waveData
+		* @param std::wstring ファイル名
 		*/
-		DirectSoundAudioBuffer(const DirectSound ds, std::shared_ptr<char> waveData);
-
-		/**
-		*　デストラクタ
-		*/
-		virtual ~DirectSoundAudioBuffer();
-
+		void Load(const DirectSoundPtr ds, const std::wstring& fileName);
+		
 		/**
 		* 再生
 		*/
@@ -65,13 +62,13 @@ namespace Nyx {
 
 		/**
 		* パンの設定
-		* @param int パン
+		* @param long パン
 		*/
 		void SetPan(long pan);
 
 		/**
 		* ボリュームの設定
-		* @param int ボリューム
+		* @param long ボリューム
 		*/
 		void SetVolume(long v);
 
@@ -79,21 +76,15 @@ namespace Nyx {
 		* ボリュームの取得
 		* @return long
 		*/
-		long GetVolume() const {
-			return volume;
-		}
+		long GetVolume() const;
 
 		/**
 		* パンの取得
 		* @return long
 		*/
-		long GetPan() const {
-			return pan;
-		}
+		long GetPan() const;
 	private:
-		long pan;
-		long volume;
-		DirectSoundBuffer soundBuffer;
+		DirectSoundBufferPtr soundBuffer_;
 	};
 }
 #endif

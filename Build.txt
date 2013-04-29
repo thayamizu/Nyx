@@ -5,10 +5,13 @@
 
 ・DirectX SDK(feburary 2010) およびDirect 9.0c以上のランタイム
 ・Windows SDK(DirectShow) 
-■環境変数
-ビルドするときは，いかの環境変数を設定してください
+・Boost v.1.53
 
-$(DXSDK_DIR) = DirectX SDKのパス
+■環境変数
+ビルドするときは，以下の環境変数を設定してください
+
+$(DXSDK_DIR)  = DirectX SDKのパス
+$(BOOST_ROOT) = Boostライブラリのパス
 
 ■単体テストについて
 単体テストフレームワークに利用しています

@@ -13,6 +13,9 @@ namespace Nyx {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
 	}
 
+
+	//-------------------------------------------------------------------------------------------------------
+	//
 	WaveReader::WaveReader(const std::wstring& fileName) 
 		:waveData_(nullptr) {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
@@ -20,10 +23,6 @@ namespace Nyx {
 		ReadFromFile(fileName);
 	}
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	WaveReader::~WaveReader() {
-	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
@@ -32,28 +31,15 @@ namespace Nyx {
 	
 		//Waveファイルヘッダ読み取り
 		file->Read(&waveHeader_, sizeof(WaveFileHeader)); 
-		//フォーマットチェック
 
 		const int waveDataSize = waveHeader_.dataChunk.chunkSize;
 		char * buffer = new char[waveDataSize];
 		file->Read(buffer, waveDataSize); 
 
+		//スマートポインタの管理下に置く
 		waveData_ = std::shared_ptr<char>(
 			buffer, std::default_delete<char[]>());
 		
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void WaveReader::ReadFromMem(char* waveData) {
-		::memcpy(&waveHeader_, waveData, sizeof(WaveFileHeader));
-
-		const int waveDataSize = waveHeader_.dataChunk.chunkSize;
-		char * buffer = new char[waveDataSize];
-		memcpy(buffer,(waveData + sizeof(WaveFileHeader)), waveDataSize); 
-
-		waveData_ = std::shared_ptr<char>(
-			buffer, std::default_delete<char[]>());
 	}
 
 
@@ -62,6 +48,7 @@ namespace Nyx {
 	const WaveFileHeader& WaveReader::GetFileHeader() {
 		return waveHeader_;
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//

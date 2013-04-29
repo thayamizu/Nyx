@@ -17,181 +17,74 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
-#include "IO/File.h"
 #include "Sound/WaveReader.h"
 #include "DirectSoundAudioBuffer.h"
 
 namespace Nyx {
-	using Nyx::File;
-	using std::shared_ptr;
-	using std::unique_ptr;
-	//-------------------------------------------------------------------------------------------------------
-	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSound dsound, std::wstring fileName)
-		: IAudioBuffer()
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer()
 	{
-		DataChunk dataChunk;
-		FmtChunk fmtChunk;
-		WAVEFORMATEX wfx;
-		unique_ptr<WaveReader> reader = unique_ptr<WaveReader>(new WaveReader());
-
-		//Waveデータの読み取り
-		reader->ReadFromFile(fileName);
-		reader->GetDataChunk(&dataChunk);
-		reader->GetFmtChunk(&fmtChunk);
-
-		//WAVEフォーマットのセットアップ
-		memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
-		wfx.wFormatTag = fmtChunk.formatTag; 
-		wfx.nChannels = fmtChunk.channelNum; 
-		wfx.nSamplesPerSec = fmtChunk.samplingRate; 
-		wfx.nBlockAlign = fmtChunk.blockSize; 
-		wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
-		wfx.wBitsPerSample = fmtChunk.bitsRate; 
-
-		// DirectSoundセカンダリーバッファー作成
-		DSBUFFERDESC dsbd;  
-		ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
-		dsbd.dwSize		= sizeof(DSBUFFERDESC);
-		dsbd.dwFlags	= DSBCAPS_CTRLFX|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLPAN|DSBCAPS_GLOBALFOCUS;
-		dsbd.dwBufferBytes = dataChunk.chunkSize;
-		dsbd.guid3DAlgorithm = DS3DALG_DEFAULT;
-		dsbd.lpwfxFormat = &wfx;
-
-		HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &soundBuffer, NULL ); 
-		Assert(hr == S_OK);
-		if (FAILED(hr)) {
-			DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
-		}
-
-		//セカンダリバッファに波形データの書き込み
-		void* buffer = NULL;
-		ulong bufferSize=0;
-		soundBuffer->Lock( 0, dataChunk.chunkSize, &buffer, &bufferSize, NULL, NULL, 0); 
-		{
-			memcpy(buffer, dataChunk.waveData, dataChunk.chunkSize);
-		}
-		soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
 
 	}
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSound dsound, shared_ptr<char> waveData) {
-		DataChunk dataChunk;
-		FmtChunk fmtChunk;
-		WAVEFORMATEX wfx;
-		unique_ptr<WaveReader> reader = unique_ptr<WaveReader>(new WaveReader());
-
-		//Waveデータの読み取り
-		reader->ReadFromMem(waveData);
-		reader->GetDataChunk(&dataChunk);
-		reader->GetFmtChunk(&fmtChunk);
-
-		//WAVEフォーマットのセットアップ
-		memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
-		wfx.wFormatTag = fmtChunk.formatTag; 
-		wfx.nChannels = fmtChunk.channelNum; 
-		wfx.nSamplesPerSec = fmtChunk.samplingRate; 
-		wfx.nBlockAlign = fmtChunk.blockSize; 
-		wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
-		wfx.wBitsPerSample = fmtChunk.bitsRate; 
-
-		// DirectSoundセカンダリーバッファー作成
-		DSBUFFERDESC dsbd;  
-		ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
-		dsbd.dwSize		= sizeof(DSBUFFERDESC);
-		dsbd.dwFlags	= DSBCAPS_CTRLFX|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLPAN|DSBCAPS_GLOBALFOCUS;
-		dsbd.dwBufferBytes = dataChunk.chunkSize;
-		dsbd.guid3DAlgorithm = DS3DALG_DEFAULT;
-		dsbd.lpwfxFormat = &wfx;
-
-		HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &soundBuffer, NULL ); 
-		Assert(hr == S_OK);
-		if (FAILED(hr)) {
-			DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
-		}
-
-		void* buffer = NULL;
-		ulong bufferSize=0;
-		//セカンダリバッファに波形データの書き込み
-		soundBuffer->Lock( 0, dataChunk.chunkSize, &buffer, &bufferSize, NULL, NULL, 0); 
-		{
-			memcpy(buffer, dataChunk.waveData, dataChunk.chunkSize);
-		}
-		soundBuffer->Unlock( buffer, bufferSize, NULL, 0 );
 
 
-	}
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioBuffer::~DirectSoundAudioBuffer() {
-		SafeRelease(soundBuffer);
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSoundPtr dsound, const std::wstring& fileName)
+	{
+
 	}
 
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioBuffer::Load(const DirectSoundPtr ds, const std::wstring& fileName)
+	{
+
+	}
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::Play() {
-		if (soundBuffer == NULL) return;
-		if (IsPause()) return;
-
-		HRESULT hr = soundBuffer->Play(0, 0, IsLooping() ? DSBPLAY_LOOPING : NULL);
-		if (hr == DSERR_BUFFERLOST) {
-			soundBuffer->Restore();//メモリ復元(内容は復元されない)
+		HRESULT hr = soundBuffer_->Play(0, 0, 0);
+		if (FAILED(hr)) {
+			throw COMException("DirectSoundAudioBufferを再生出来ませんでした。", hr);
 		}
-		SetPlaying(true);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::Stop() {
-		if (soundBuffer == NULL) return;
-		if (IsPause()) return;
-
-
-		HRESULT hr = soundBuffer->Stop();
-		SetPlaying(false);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::Resume() {
-		if (soundBuffer == NULL) return;
-		if (IsPause()) return;
-
-		HRESULT hr = soundBuffer->Play( 0, 0, IsLooping() ? DSBPLAY_LOOPING : NULL);
-		if ( hr == DSERR_BUFFERLOST) {
-			soundBuffer->Restore();
-		}
-
-		SetPlaying(true);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Reset() {
-		if (soundBuffer == NULL ) return;
-		if (IsPause()) return;
 
-		if (IsPlaying()) {
-			soundBuffer->Stop();
-		}
-		soundBuffer->SetCurrentPosition(0);
+	void DirectSoundAudioBuffer::Reset() {
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetPan(long pan) {
-		this->pan = pan;
-		soundBuffer->SetPan(pan);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetVolume(long v) {
-		if (v > 100) { v = 100;}
-		else if (v < 0) {v=0;}
-
-		volume = v;
-		soundBuffer->SetVolume(v*100 + DSBVOLUME_MIN);
 	}
 
+	//-------------------------------------------------------------------------------------------------------
+	//
+	long DirectSoundAudioBuffer::GetPan() const {
+		return 1;
+	}
 
+	//-------------------------------------------------------------------------------------------------------
+	//
+	long DirectSoundAudioBuffer::GetVolume() const {
+		return 1;
+	}
 }
