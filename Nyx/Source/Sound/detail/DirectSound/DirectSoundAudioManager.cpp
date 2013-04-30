@@ -17,15 +17,30 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
+#include "IO/File.h"
 #include "Sound/AudioUtility.h"
+#include "Sound/AudioCache.h"
 #include "DirectSoundAudioBuffer.h"
 #include "DirectSoundAudioManager.h"
 
 namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioManager::DirectSoundAudioManager(const AudioDesc& desc) 
-	{
+	DirectSoundAudioManager::DirectSoundAudioManager() {
+	
+	}
+
+
+	//--------------------------------------------------------------------------------------
+	//
+	DirectSoundAudioManager::DirectSoundAudioManager(const AudioDesc& desc) {
+			Initialize(desc);
+	}
+
+
+	//--------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioManager::Initialize(const AudioDesc& desc) {
 		//DirectSoundÇÃèâä˙âª
 		LPDIRECTSOUND directSound;
 		HRESULT hr = ::DirectSoundCreate(NULL, &directSound ,NULL);
@@ -45,18 +60,50 @@ namespace Nyx {
 		directSound_ = DirectSoundPtr(directSound, true);
 	}
 
+
 	//---------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioManager::Load(const std::wstring fileName, AudioUtility::AudioBufferType bufferType, size_t& index) {
+	std::shared_ptr<AudioCache> DirectSoundAudioManager::Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType) {
+		std::wstring line(L"");
+		std::wifstream file(fileName);
+		std::shared_ptr<AudioCache> audioCache(std::make_shared<AudioCache>());
+
+		while (std::getline(file, line)) {
+			std::shared_ptr<IAudioBuffer> buffer = LoadFromWaveFile(line, bufferType);
+			//audioCache->Add(line, buffer);
+		}
+
+		return audioCache;
 	}	
 
 	
 
 	//---------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, AudioUtility::AudioBufferType bufferType, size_t& index){
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, AudioUtility::AudioBufferType bufferType){
+		std::shared_ptr<IAudioBuffer> audio;
+
+		switch(bufferType) {
+		case AudioUtility::StaticAudioBuffer:
+			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
+			break;
+		case AudioUtility::Static3DAudioBufer:
+			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
+			break;
+		case AudioUtility::StreamingAudioBuffer:
+			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
+			break;
+		case AudioUtility::Streaming3DAudioBuffer:
+			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
+			break;
+		}
+
+		return audio;
 	}
 
+
+	//---------------------------------------------------------------------------------------
+	//
 	const DirectSoundPtr DirectSoundAudioManager::GetHandle() {
 		return directSound_;
 	}

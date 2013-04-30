@@ -1,4 +1,3 @@
-
 /********************************************************************************
 *
 *  The MIT License
@@ -77,14 +76,14 @@ namespace Nyx {
 		* Waveファイルヘッダの取得します
 		* @return const WaveFileHeader& WAVEファイルヘッダ
 		*/
-		const WaveFileHeader& GetFileHeader();
+		const WaveFileHeader& GetFileHeader() const;
 		
 
 		/**
 		* Waveデータを取得します
 		* @return std::shared_ptr<char> WAVEデータ
 		*/
-		const std::shared_ptr<char> GetWaveData();
+		const std::shared_ptr<char> GetWaveData() const;
 	private:
 		WaveFileHeader waveHeader_;
 		std::shared_ptr<char> waveData_;

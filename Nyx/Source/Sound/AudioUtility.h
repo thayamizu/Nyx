@@ -64,10 +64,10 @@ namespace Nyx
 
 		/**
 		* ボリュームをデシベルに変換します
-		* @param int ボリューム（0 ~ 1.0)
+		* @param int ボリューム（1 ~ 100)
 		* @return double デシベル
 		*/
-		static float VolumeToDecibel(float volume);
+		static long VolumeToDecibel(long volume);
 
 
 		/**
@@ -75,15 +75,25 @@ namespace Nyx
 		* @param double ボリューム
 		* @return int デシベル
 		*/
-		static float DecibelToVolume(float decibel);
+		static long DecibelToVolume(long decibel);
 	private:
 		AudioUtility();//生成禁止
 	};
 
+
 	///オーディオ初期化記述子
 	struct AudioDesc {
-		HWND handle;
-		AudioUtility::APIType apiType;
+		HWND handle;                    ///< 初期化ハンドル
+		AudioUtility::APIType apiType;  ///< APIの種類
+	};
+
+
+	///オーディオバッファ記述子
+	struct AudioBufferDesc {
+		ulong				   flag;	  ///< オーディオバッファのフラグ
+		ulong                  priority;  ///< 再生プライオリティ
+		AudioUtility::APIType  apiType;   ///< APIの種類
+		AudioUtility::Focus    focusType; ///< オーディオバッファのフォーカスモード
 	};
 }
 

@@ -5,132 +5,129 @@
 
 namespace Nyx
 {
-	template<typename T>
+	struct AudioBufferDesc;
+
+	///オーディオバッファ
 	class AudioBuffer {
-		static_assert(std::is_base_of<IAudioBuffer, T>::value, "T is base of IAudioBuffer");
 	public:
-		AudioBuffer() 
-			:isLoop(false), isPause(false), isPlay_(false),
-			pan_(0), volume_(100) {
-		}
-
 		/**
-		*　再生
+		* コンストラクタ
 		*/
-		void Play()  {
-			buffer_->Play();
-		}
-
+		AudioBuffer();
+		
 
 		/**
-		*　停止
+		* コンストラクタ
+		* @param const AudioBuffer& オーディオバッファ記述子
 		*/
-		void Stop()  {
-			buffer->Stop();
-		}
+		AudioBuffer(const AudioBufferDesc& bufferDesc);
 
 
 		/**
-		*　レジューム
+		* バッファの生成
+		* @param const AudioBuffer& オーディオバッファ記述子
 		*/
-		void Resume()  {
-			buffer->Resume();
-		}
+		void CreateBuffer(const AudioBufferDesc& bufferDesc);
 
 
 		/**
-		*　リセット
+		*　オーディオバッファを再生します
 		*/
-		void Reset()   {
-			buffer->Reset();
-		} 
+		void Play();
+
 
 		/**
-		* パンを設定する
+		*　オーディオバッファを停止します
+		*/
+		void Stop();
+
+
+		/**
+		*　オーディオバッファをレジュームします
+		*/
+		void Resume();
+
+
+		/**
+		*　オーディオバッファをリセットします
+		*/
+		void Reset();
+
+		/**
+		* オーディオバッファのパン値を設定します
 		* @param int パン
 		*/
-		void SetPan(long pan) {
-			pan_ = pan;
-		}
+		void SetPan(long pan);
+
 
 		/**
-		* パンを取得する
+		* オーディオバッファのパン値を取得します
 		* @return long パン
 		*/
-		long GetPan() const  {
-			return pan_;
-		}
+		long GetPan() const;
+
 
 		/**
-		*　ボリュームを設定する
+		* オーディオバッファのボリューム値を設定します
 		* @return int　ボリューム
 		*/
-		void SetVolume(long volume)  {
-			volume_ = volume;
-		}
+		void SetVolume(long volume);
+
 
 		/**
-		* ボリュームを取得する
+		* オーディオバッファのボリューム値を取得します
 		* @return int ボリューム
 		*/
-		long GetVolume() const  {
-			return volume_;
-		}
+		long GetVolume() const;
+
 
 		/**
-		* ループ再生かどうか判定
+		* オーディオバッファがループ再生かどうか判定します
 		* @return bool　ループ再生ならtrue
 		*/
-		bool IsLooping()  {
-			return isLoop_;
-		}
+		bool IsLooping();
 
+		
 		/**
-		* 再生中かどうか
-		* @return bool 再生中ならtrue
-		*/
-		bool IsPlaying()  const {
-			return isPlay_
-		}
-
-		/**
-		* ポーズ中かどうか
-		* @return bool ポーズ中ならtrue
-		*/
-		bool IsPause() const  {
-			return isPause_;
-		}
-
-		/**
-		* ループ再生するかどうかを設定
+		* オーディオバッファをループ再生するかどうかを設定します
 		* @param bool ループ再生ならtrue
 		*/
-		void SetLooping(bool loop)  {
-			isLoop = loop;
-		}
+		void SetLooping(bool loop);
 
+		
 		/**
-		* 再生中かどうか
-		* @param bool 再生中ならtrue
+		* オーディオバッファが再生中かどうか判定します
+		* @return bool 再生中ならtrue
 		*/
-		void SetPlaying(bool play)  {
-			isPlay_ = play;
-		}
+		bool IsPlaying() const;
+
 
 		/**
-		* ポーズ中かどうか
+		* オーディオバッファがポーズ中かどうか判定します
+		* @return bool ポーズ中ならtrue
+		*/
+		bool IsPause() const;
+	
+
+		/**
+		* オーディオバッファをポーズします
 		* @param bool ポーズ中ならtrue
 		*/
-		void SetPause(bool pause)   {
-			isPause = pause;
-		}
+		void SetPause(bool pause);
+	
+
+		/**
+		* ファイル名を取得します
+		* @return const std::wstring& ファイル名
+		*/
+		const std::wstring& GetName() const;
+
 	private:
 		bool isLoop_;
 		bool isPause_;
 		bool isPlay_;
-		long volume_;
-		long pan_;
-		std::shared_ptr<T> buffer_;
+		std::wstring fileName;
+		std::shared_ptr<IAudioBuffer> audio_;
 	};
 }
 

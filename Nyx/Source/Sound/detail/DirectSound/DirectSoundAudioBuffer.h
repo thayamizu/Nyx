@@ -43,7 +43,7 @@ namespace Nyx {
 		/**
 		* 再生
 		*/
-		void Play();
+		void Play(bool isLoop);
 
 		/**
 		* 停止
@@ -70,7 +70,7 @@ namespace Nyx {
 		* ボリュームの設定
 		* @param long ボリューム
 		*/
-		void SetVolume(long v);
+		void SetVolume(long volume);
 
 		/**
 		* ボリュームの取得
@@ -83,6 +83,13 @@ namespace Nyx {
 		* @return long
 		*/
 		long GetPan() const;
+
+
+		/**
+		* ステータスコードの取得
+		* @return ulong
+		*/
+		ulong GetStatus() const;
 	private:
 		DirectSoundBufferPtr soundBuffer_;
 	};

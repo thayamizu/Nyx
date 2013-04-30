@@ -265,6 +265,7 @@
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Object\ResourceManager.cpp" />
+    <ClCompile Include="..\Source\Sound\AudioBuffer.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
     <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp" />

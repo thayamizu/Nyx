@@ -80,10 +80,10 @@ namespace Nyx
 		* @param T lower ‰ºŒÀ
 		*/
 		template <typename T>
-		static T Clamp(T value, T upper, T lower) {
+		static T Clamp(T value, T lower, T upper) {
 			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
-			value = UpperClamp(value, upper);
 			value = LowerClamp(value, lower);
+			value = UpperClamp(value, upper);
 			return value;
 		}
 

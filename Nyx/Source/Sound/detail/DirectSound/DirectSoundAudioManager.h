@@ -25,31 +25,48 @@ namespace Nyx {
 	public:
 		/**
 		* コンストラクタ
-		* @param HWND ウインドウハンドル
+		*/
+		DirectSoundAudioManager();
+		
+		
+		/**
+		* コンストラクタ
+		* @param AudioDesc オーディオ初期化記述子
 		*/
 		DirectSoundAudioManager(const AudioDesc& desc);
-
-
+		
+		
+		/**
+		* オーディオマネージャの初期化します
+		*/
+		void Initialize(const AudioDesc& desc);
+		
+			
 		/**
 		* Waveファイルをロードしてきます
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
+		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
 		*/
-		void Load(const std::wstring fileName, AudioUtility::AudioBufferType bufferType, size_t& index);
+		std::shared_ptr<AudioCache> Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType);
 		
-		
+
+		/**
+		* DirectSoundオブジェクトを返します
+		* @return const DirectSoundPtr 
+		*/
 		const DirectSoundPtr GetHandle();
 	private:
 		/**
 		* Waveファイルからデータを読み込んできます
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
-		* @return bool 読み込みに成功すればtrue
+		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		void LoadFromWaveFile(const std::wstring , AudioUtility::AudioBufferType  bufferType, size_t& index);
+		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring, AudioUtility::AudioBufferType  bufferType);
 
 	private:	
-		int masterVolume;	///マスターボリューム
+		int masterVolume_;	///マスターボリューム
 		DirectSoundPtr directSound_;///< DirectSoundオブジェクト
 	};
 }

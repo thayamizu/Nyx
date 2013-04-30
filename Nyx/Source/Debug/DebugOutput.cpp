@@ -42,9 +42,10 @@ namespace Nyx {
 		static const int length = 1024;
 		static char tmp[length];
 		vsprintf_s(tmp, length, format, list);
-		logger->PrintLn(tmp);
+		GetInstance()->PrintLn(tmp);
 		va_end(list);
 	}
+
 	//----------------------------------------------------------------------------------------------
 	//
 	void DebugOutput::DebugMessage(char* format, ...) {

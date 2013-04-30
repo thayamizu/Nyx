@@ -753,5 +753,8 @@
     <ClCompile Include="..\Source\Sound\AudioManager.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Sound\AudioBuffer.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

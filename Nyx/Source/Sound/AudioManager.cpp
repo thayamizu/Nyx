@@ -28,11 +28,13 @@ namespace Nyx {
 	}
 
 	void AudioManager::Initialize(const AudioDesc& desc) {
-	
+		audioManager_ = std::make_shared<DirectSoundAudioManager>();
+		audioManager_->Initialize(desc);
 	}
 
 
-	void Load(const std::wstring& fileName,  AudioUtility::AudioBufferType bufferType, std::shared_ptr<AudioCache> audioCache) {
-	
+	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  AudioUtility::AudioBufferType bufferType) {
+		Assert(audioManager_ != nullptr);
+		audioManager_->Load(fileName, bufferType);
 	}
 }

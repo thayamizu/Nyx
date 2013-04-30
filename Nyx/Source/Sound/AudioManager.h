@@ -42,9 +42,9 @@ namespace Nyx {
 		* オーディオデータををロードしてきます
 		* @param const std::wstring& ファイル名
 		* @param SoundBufferType バッファタイプ
-		* [out] @param int& index 読み込んできたオーディオの管理番号
+		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
 		*/
-		void Load(const std::wstring& fileName,  AudioUtility::AudioBufferType bufferType, std::shared_ptr<AudioCache> audioCache);
+		std::shared_ptr<AudioCache> Load(const std::wstring& fileName,  AudioUtility::AudioBufferType bufferType);
 	private:
 		std::shared_ptr<IAudioManager> audioManager_;
 	};

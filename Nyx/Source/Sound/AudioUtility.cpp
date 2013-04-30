@@ -10,15 +10,16 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	float AudioUtility::VolumeToDecibel(const float volume) {
-		const double v = Math::Clamp(volume, 1.0f, 0.02f);
-		return 33.2 * Math::Log10(v) * 100;
+	long AudioUtility::VolumeToDecibel(long volume) {
+		volume  = Math::Clamp(volume, 1L, 100L);
+		return 33.2 * Math::Log10(volume) * 100;
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	float AudioUtility::DecibelToVolume(const float decibel) {
+	long AudioUtility::DecibelToVolume(long decibel) {
+		decibel = Math::Clamp(decibel, -10000L, 10000L);
 		return Math::Pow(10, (decibel / 100 / 33.2));
 	}
 }

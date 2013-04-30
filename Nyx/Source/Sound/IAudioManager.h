@@ -43,21 +43,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @param std::int& index 読み込んできたオーディオの管理番号
 		*/
-		virtual void Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType, std::shared_ptr<AudioCache> audioCache) = 0;
-		
-
-		/**
-		* マスターボリューム値取得します
-		* @return float マスターボリューム値
-		*/
-		virtual float GetMasterVolume() const = 0;
-
-
-		/**
-		* マスターボリューム値を設定します
-		* @param float マスターボリューム値
-		*/
-		virtual  void SetMasterVolume(float volume) = 0;
+		virtual std::shared_ptr<AudioCache> Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType) = 0;
 	};
 }
 #endif

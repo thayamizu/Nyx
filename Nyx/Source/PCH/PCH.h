@@ -41,12 +41,6 @@
 #pragma inline_depth ( 16 )
 #pragma inline_recursion ( on )
 
-//warningó}êß
-#pragma warning ( disable : 4101 )
-#pragma warning ( disable : 4201 )
-#pragma warning ( disable : 4995 )
-#pragma warning ( disable : 4996 )
-#pragma warning ( disable : 4800 )
 
 //STL 
 #include <map>
@@ -63,7 +57,6 @@
 #include <sstream>
 
 //boost
-#include <boost/format.hpp>
 #include <boost/intrusive_ptr.hpp>
 
 //Common

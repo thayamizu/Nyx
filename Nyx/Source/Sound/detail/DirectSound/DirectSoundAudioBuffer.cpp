@@ -17,74 +17,208 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
+#include "Sound/AudioUtility.h"
 #include "Sound/WaveReader.h"
 #include "DirectSoundAudioBuffer.h"
 
 namespace Nyx {
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer()
-	{
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
+		: soundBuffer_(nullptr) {
 
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSoundPtr dsound, const std::wstring& fileName)
-	{
-
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSoundPtr dsound, const std::wstring& fileName){
+		Load(dsound, fileName);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Load(const DirectSoundPtr ds, const std::wstring& fileName)
-	{
+	void DirectSoundAudioBuffer::Load(const DirectSoundPtr ds, const std::wstring& fileName) {
+		std::unique_ptr<WaveReader> waveReader(new WaveReader(fileName));
+		const auto waveHeader = waveReader->GetFileHeader();
 
-	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioBuffer::Play() {
-		HRESULT hr = soundBuffer_->Play(0, 0, 0);
+		//Waveフォーマットのセットアップ
+		WAVEFORMATEX wfx;
+		ZeroMemory(&wfx, sizeof(WAVEFORMATEX));
+		wfx.wFormatTag      = waveHeader.formatChunk.formatTag;
+		wfx.nChannels       = waveHeader.formatChunk.channelNum;
+		wfx.wBitsPerSample  = waveHeader.formatChunk.bitsRate;
+		wfx.nSamplesPerSec  = waveHeader.formatChunk.samplingRate;
+		wfx.nBlockAlign     = waveHeader.formatChunk.blockSize;
+		wfx.nAvgBytesPerSec = waveHeader.formatChunk.bytesPerSec;
+		wfx.cbSize          = sizeof(WAVEFORMATEX);
+		
+		//DSBufferDescのセットアップ
+		DSBUFFERDESC bufferDesc;
+		ZeroMemory(&bufferDesc, sizeof(DSBUFFERDESC));
+		bufferDesc.dwBufferBytes   = waveHeader.dataChunk.chunkSize;
+		bufferDesc.dwFlags         = DSBCAPS_CTRLVOLUME;
+		bufferDesc.dwSize          = sizeof(DSBUFFERDESC);
+		bufferDesc.lpwfxFormat     = &wfx;
+		bufferDesc.guid3DAlgorithm = DS3DALG_DEFAULT;
+
+		//サウンドバッファの生成
+		LPDIRECTSOUNDBUFFER soundBuffer;
+		HRESULT hr = ds->CreateSoundBuffer(&bufferDesc, &soundBuffer, NULL);
 		if (FAILED(hr)) {
-			throw COMException("DirectSoundAudioBufferを再生出来ませんでした。", hr);
+			DebugOutput::Trace("DirectSoundオーディオバッファの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファの作成に失敗しました。", hr);
+		}
+
+		//バッファに波形データの書き込み
+		void* waveData = nullptr;
+		ulong waveSize = 0;
+		hr = soundBuffer->Lock(0, waveHeader.dataChunk.chunkSize, &waveData, &waveSize, NULL, NULL, 0);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
+		}
+		
+		auto waveDataSource = waveReader->GetWaveData();
+		memcpy(waveData, waveDataSource.get(), waveHeader.dataChunk.chunkSize);
+
+		hr = soundBuffer->Unlock(waveData, waveSize, NULL, NULL);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
+		}
+		
+		//スマートポインタの管理下に置く
+		soundBuffer_ = DirectSoundBufferPtr(soundBuffer);
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioBuffer::Play(bool isLoop) {
+		Assert(soundBuffer_ != nullptr);
+		HRESULT hr = soundBuffer_->Play(0, 0, isLoop);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファを再生出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファを再生出来ませんでした。", hr);
 		}
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::Stop() {
+		Assert(soundBuffer_ != nullptr);
+		HRESULT hr = soundBuffer_->Stop();
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファを停止出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファを停止出来ませんでした。", hr);
+		}
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::Resume() {
+		Assert(soundBuffer_ != nullptr);
+		//再生中なら処理しない
+		ulong status = GetStatus();
+		if (!(status & DSBSTATUS_PLAYING)) {
+			return;
+		} 
+			
+		//レジュームする
+		HRESULT hr = soundBuffer_->Play(0, 0, true);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
+		}
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-
 	void DirectSoundAudioBuffer::Reset() {
+		Assert(soundBuffer_ != nullptr);
+		//再生中なら停止する
+		ulong status = GetStatus();
+		if (status & DSBSTATUS_PLAYING) {
+			Stop();
+		} 
+
+		HRESULT hr = soundBuffer_->SetCurrentPosition(0);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。", hr);
+		}
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetPan(long pan) {
+		Assert(soundBuffer_ != nullptr);
+		HRESULT hr = soundBuffer_->SetPan(pan);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのパン値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのパン値の設定に失敗しました。", hr);
+		}
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetVolume(long v) {
+	void DirectSoundAudioBuffer::SetVolume(long volume) {
+		Assert(soundBuffer_ != nullptr);
+		long decibel = AudioUtility::VolumeToDecibel(volume);
+		HRESULT hr = soundBuffer_->SetVolume(decibel);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。", hr);
+		}
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	long DirectSoundAudioBuffer::GetPan() const {
-		return 1;
+		Assert(soundBuffer_ != nullptr);
+		long pan;
+		HRESULT hr = soundBuffer_->GetPan(&pan);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのパン値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのパン値の取得に失敗しました。", hr);
+		}
+
+		return pan;
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	long DirectSoundAudioBuffer::GetVolume() const {
-		return 1;
+		Assert(soundBuffer_ != nullptr);
+		long decibel;
+		HRESULT hr = soundBuffer_->GetVolume(&decibel);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。", hr);
+		}
+		
+		return AudioUtility::DecibelToVolume(decibel);
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	ulong DirectSoundAudioBuffer::GetStatus() const {
+		Assert(soundBuffer_ != nullptr);
+		ulong status;
+		HRESULT hr = soundBuffer_->GetStatus(&status);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。", hr);
+		}
+
+		return status;
 	}
 }

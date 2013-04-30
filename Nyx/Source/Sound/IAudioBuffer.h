@@ -26,7 +26,7 @@ namespace Nyx {
 		/**
 		*　オーディオバッファを再生します
 		*/
-		virtual void Play() = 0;
+		virtual void Play(bool isLoop) = 0;
 
 
 		/**
@@ -46,17 +46,6 @@ namespace Nyx {
 		*/
 		virtual void Reset()  = 0; 
 
-		/**
-		*　オーディオバッファをフェードインします
-		*/
-		virtual void FadeIn()  = 0; 
-
-		/**
-		*　オーディオバッファをフェードアウトします
-		*/
-		virtual void FadeOut()  = 0; 
-		
-		
 		/**
 		* オーディオバッファのパン値を設定します
 		* @param long パン
@@ -84,26 +73,6 @@ namespace Nyx {
 		*/
 		virtual long GetVolume() const = 0;
 
-
-		/**
-		* オーディオバッファがループ再生中かどうか判定します
-		* @return bool　ループ再生ならtrue
-		*/
-		virtual bool IsLooping() = 0;
-
-		
-		/**
-		* オーディオバッファが再生中かどうかを判定します
-		* @return bool 再生中ならtrue
-		*/
-		virtual bool IsPlaying() = 0;
-
-
-		/**
-		* オーディオバッファがポーズ中かどうかを判定します
-		* @return bool ポーズ中ならtrue
-		*/
-		virtual bool IsPause() const = 0;
 	};
 }
 #endif
