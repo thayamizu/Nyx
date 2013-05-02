@@ -25,7 +25,7 @@ namespace Nyx {
 	class DirectSoundAudioBuffer : public IAudioBuffer {
 	public:
 		explicit DirectSoundAudioBuffer();
-		
+
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
@@ -39,7 +39,7 @@ namespace Nyx {
 		* @param std::wstring ファイル名
 		*/
 		void Load(const DirectSoundPtr ds, const std::wstring& fileName);
-		
+
 		/**
 		* 再生
 		*/
@@ -83,6 +83,73 @@ namespace Nyx {
 		* @return long
 		*/
 		long GetPan() const;
+
+		/**
+		* オーディオバッファの状態の取得
+		* @return AudioState
+		*/
+		AudioState GetState() const;
+
+
+		/**
+		*　オーディオバッファにエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetEffect(const AudioEffectDesc& effectDesc);
+		
+		
+		/**
+		*　オーディオバッファのエフェクトをリセットします
+		*/
+		void ResetEffect();
+	private:
+		/**
+		*　オーディオバッファにコーラスエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetChorusEffect(const AudioEffectDesc& effectDesc);
+		
+		
+		/**
+		*　オーディオバッファにディストーションエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetDistortionEffect(const AudioEffectDesc& effectDesc);
+
+
+		/**
+		*　オーディオバッファにエコーエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetEchoEffect(const AudioEffectDesc& effectDesc);
+
+
+		/**
+		*　オーディオバッファにフランジャーエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetFlangerEffect(const AudioEffectDesc& effectDesc);
+
+
+		/**
+		*　オーディオバッファにガーグルエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetGargleEffect(const AudioEffectDesc& effectDesc);
+
+
+		/**
+		*　オーディオバッファにパラメトリックイコライザーエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetParametricEqualizerEffect(const AudioEffectDesc& effectDesc);
+		
+		
+		/**
+		*　オーディオバッファにリバーブエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetReverbEffect(const AudioEffectDesc& effectDesc);
 
 
 		/**

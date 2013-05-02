@@ -23,34 +23,43 @@ namespace Nyx
 	///オーディオユーティリティ
 	class AudioUtility {
 	public:
-		///プライオリティ
-		enum Priority {
-			DefaultPriority = 0,
-			MaxPriority,
-			MinPriority,
-		};
-
 
 		///フォーカスタイプ
-		enum Focus {
-			DefaultFoucus = 0,
-			GlobalFocus,
-			StickyFocus,
+		enum FocusType {
+			FocusType_DefaultFoucus,
+			FocusType_GlobalFocus,
+			FocusType_StickyFocus,
+			FocusType_FocusTypeNum,
 		};
 
 
 		///オーディオバッファタイプ
-		enum AudioBufferType{
-			StaticAudioBuffer,
-			Static3DAudioBufer,
-			StreamingAudioBuffer,
-			Streaming3DAudioBuffer,
+		enum BufferType{
+			BufferType_StaticAudioBuffer,
+			BufferType_Static3DAudioBufer,
+			BufferType_StreamingAudioBuffer,
+			BufferType_Streaming3DAudioBuffer,
+			BufferType_BufferTypeNum,
 		};
 
 
+		///オーディオエフェクトタイプ
+		enum EffectType {
+			EffectType_Chorus,
+			EffectType_Distortion,
+			EffectType_Echo,
+			EffectType_Flanger,
+			EffectType_Gargle,
+			EffectType_ParametricEqualizer,
+			EffectType_Reverb,
+			EffectType_Reset,
+			EffectType_EffectTypeNum
+		};
+
 		///利用可能API
 		enum APIType {
-			DirectSound
+			APIType_DirectSound,
+			APIType_APITypeNum
 		};
 
 
@@ -61,6 +70,17 @@ namespace Nyx
 		///デフォルトサンプリングレート
 		static const double DefaultSamplingRate;
 
+		
+		///デフォルトプライオリティ
+		static const long DefaultPriority;
+		
+
+		///最高プライオリティ
+		static const long MaxPriority;
+
+
+		///最低プライオリティ
+		static const long MinPriority;
 
 		/**
 		* ボリュームをデシベルに変換します
@@ -90,10 +110,31 @@ namespace Nyx
 
 	///オーディオバッファ記述子
 	struct AudioBufferDesc {
-		ulong				   flag;	  ///< オーディオバッファのフラグ
-		ulong                  priority;  ///< 再生プライオリティ
-		AudioUtility::APIType  apiType;   ///< APIの種類
-		AudioUtility::Focus    focusType; ///< オーディオバッファのフォーカスモード
+		ulong				flag;	  ///< オーディオバッファのフラグ
+		ulong               priority;  ///< 再生プライオリティ
+		ulong				bufferSize;  ///ストリーミング再生する際に一度に読み込むバッファサイズ
+		AudioUtility::BufferType bufferType;
+		AudioUtility::FocusType  focusType; ///< オーディオバッファのフォーカスモード
+	};
+
+	///オーディオエフェクト記述子
+	struct AudioEffectDesc {
+		ulong reserved1;
+		ulong reserved2;
+		AudioUtility::EffectType effectType;
+	};
+
+	///オーディオステータス
+	struct AudioState {
+		bool isPlaying;
+		bool isLooping;
+		bool isBufferLost;
+	};
+
+	///オーディオデバイス情報
+	struct AudioDeviceInfo {
+		std::wstring deviceName;
+
 	};
 }
 

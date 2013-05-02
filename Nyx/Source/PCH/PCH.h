@@ -41,6 +41,7 @@
 #pragma inline_depth ( 16 )
 #pragma inline_recursion ( on )
 
+#pragma warning(disable:4201)
 
 //STL 
 #include <map>

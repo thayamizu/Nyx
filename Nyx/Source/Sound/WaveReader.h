@@ -55,14 +55,14 @@ namespace Nyx {
 		/**
 		* コンストラクタ
 		*/
-		WaveReader();
+		explicit WaveReader();
 
 
 		/**
 		* コンストラクタ
 		* @param const std::wstring& ファイル名
 		*/
-		WaveReader(const std::wstring& fileName);
+		explicit WaveReader(const std::wstring& fileName);
 
 
 		/**
@@ -85,8 +85,22 @@ namespace Nyx {
 		*/
 		const std::shared_ptr<char> GetWaveData() const;
 	private:
-		WaveFileHeader waveHeader_;
-		std::shared_ptr<char> waveData_;
+		/**
+		* WaveファイルからWaveデータを読み込みます
+		* @param std::wstring wavファイル名
+		*/
+		void LoadFromWaveFile(const std::wstring& fileName, size_t bufferSize);
+	
+		/**
+		* OggファイルからWaveデータを読み込みます
+		* @param std::wstring wavファイル名
+		*/
+		void LoadFromOggFile(const std::wstring& fileName, size_t bufferSize);
+	
+	private:
+		std::wstring   fileName_;        ///< ファイル名
+		WaveFileHeader waveHeader_;      ///<Waveファイルヘッダ
+		std::shared_ptr<char> waveData_; ///<Waveデータ
 	};
 }
 #endif

@@ -1,10 +1,10 @@
 #ifndef NYX_CORE_INCLUDED_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_AUDIO_BUFFER_H_
 
-#include "IAudioBuffer.h"
-
 namespace Nyx
 {
+	class IAudioBuffer;
+	struct AudioState;
 	struct AudioBufferDesc;
 
 	///オーディオバッファ
@@ -13,27 +13,13 @@ namespace Nyx
 		/**
 		* コンストラクタ
 		*/
-		AudioBuffer();
+		explicit AudioBuffer(std::shared_ptr<IAudioBuffer> audioBuffer);
 		
-
-		/**
-		* コンストラクタ
-		* @param const AudioBuffer& オーディオバッファ記述子
-		*/
-		AudioBuffer(const AudioBufferDesc& bufferDesc);
-
-
-		/**
-		* バッファの生成
-		* @param const AudioBuffer& オーディオバッファ記述子
-		*/
-		void CreateBuffer(const AudioBufferDesc& bufferDesc);
-
 
 		/**
 		*　オーディオバッファを再生します
 		*/
-		void Play();
+		void Play(bool isLoop = false);
 
 
 		/**
@@ -80,42 +66,11 @@ namespace Nyx
 		*/
 		long GetVolume() const;
 
-
 		/**
-		* オーディオバッファがループ再生かどうか判定します
-		* @return bool　ループ再生ならtrue
+		*
 		*/
-		bool IsLooping();
-
+		AudioState GetState() const;
 		
-		/**
-		* オーディオバッファをループ再生するかどうかを設定します
-		* @param bool ループ再生ならtrue
-		*/
-		void SetLooping(bool loop);
-
-		
-		/**
-		* オーディオバッファが再生中かどうか判定します
-		* @return bool 再生中ならtrue
-		*/
-		bool IsPlaying() const;
-
-
-		/**
-		* オーディオバッファがポーズ中かどうか判定します
-		* @return bool ポーズ中ならtrue
-		*/
-		bool IsPause() const;
-	
-
-		/**
-		* オーディオバッファをポーズします
-		* @param bool ポーズ中ならtrue
-		*/
-		void SetPause(bool pause);
-	
-
 		/**
 		* ファイル名を取得します
 		* @return const std::wstring& ファイル名
@@ -123,10 +78,7 @@ namespace Nyx
 		const std::wstring& GetName() const;
 
 	private:
-		bool isLoop_;
-		bool isPause_;
-		bool isPlay_;
-		std::wstring fileName;
+		std::wstring fileName_;
 		std::shared_ptr<IAudioBuffer> audio_;
 	};
 }

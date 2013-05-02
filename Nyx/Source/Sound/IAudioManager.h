@@ -43,7 +43,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @param std::int& index 読み込んできたオーディオの管理番号
 		*/
-		virtual std::shared_ptr<AudioCache> Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType) = 0;
+		virtual std::shared_ptr<AudioCache> Load(const std::wstring& fileName, const AudioBufferDesc& desc) = 0;
 	};
 }
 #endif

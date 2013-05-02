@@ -23,18 +23,48 @@
 #include "detail/DirectSound/DirectSoundAudioManager.h"
 
 namespace Nyx {
-	AudioManager::AudioManager() {
-	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	AudioManager::AudioManager()
+		: isInitialized_(false) {
+
 	}
 
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	AudioManager::AudioManager(const AudioDesc& desc)
+		: isInitialized_(false) {
+			if (!isInitialized_) { 
+				Initialize(desc);
+			}
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
 	void AudioManager::Initialize(const AudioDesc& desc) {
+		if (isInitialized_) {
+			return ;
+		}
 		audioManager_ = std::make_shared<DirectSoundAudioManager>();
 		audioManager_->Initialize(desc);
+
+		//èâä˙âªÉtÉâÉO
+		isInitialized_ = true;
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioBuffer> AudioManager::CreateAudioBuffer(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
+		Assert(audioManager_ != nullptr);
+		//audioManager_->Load(fileName, bufferType)
 	}
 
 
-	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  AudioUtility::AudioBufferType bufferType) {
+	//-------------------------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
 		Assert(audioManager_ != nullptr);
-		audioManager_->Load(fileName, bufferType);
+		audioManager_->Load(fileName, bufferDesc);
 	}
 }

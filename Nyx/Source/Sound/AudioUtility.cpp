@@ -5,7 +5,14 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	const double AudioUtility::DefaultBitRate      = 16;
+
 	const double AudioUtility::DefaultSamplingRate = 44100;
+
+	const long AudioUtility::DefaultPriority  = 0;
+
+	const long AudioUtility::MaxPriority = 1;
+
+	const long AudioUtility::MinPriority = 2;
 
 
 	//-------------------------------------------------------------------------------------------------------

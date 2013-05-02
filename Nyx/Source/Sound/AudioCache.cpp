@@ -23,8 +23,10 @@ namespace Nyx {
 //-------------------------------------------------------------------------------------------------------
 	//
 	struct AudioCache::PImpl {
-		typedef std::map<std::wstring,  std::shared_ptr<IAudioBuffer>> AudioBufferList;
+		typedef std::list<std::shared_ptr<IAudioBuffer> > AudioBufferList;
+		typedef std::map<std::wstring,  std::shared_ptr<IAudioBuffer>> AudioBufferMap;
 		AudioBufferList audioBufferList_;
+		AudioBufferMap  audioBufferMap_;
 	};
 
 

@@ -8,8 +8,8 @@
 #include <dsound.h> 
 #pragma comment( lib, "dsound.lib")
 
-typedef boost::intrusive_ptr< IDirectSound >           DirectSoundPtr;          ///< DirectSoudオブジェクト
-typedef boost::intrusive_ptr< IDirectSoundBuffer >     DirectSoundBufferPtr;    ///< DirectSoundセカンダリーバッファー
+typedef boost::intrusive_ptr< IDirectSound8 >          DirectSoundPtr;          ///< DirectSoudオブジェクト
+typedef boost::intrusive_ptr< IDirectSoundBuffer8 >     DirectSoundBufferPtr;    ///< DirectSoundセカンダリーバッファー
 typedef boost::intrusive_ptr< IDirectSound3DBuffer >   DirectSound3DBufferPtr;  ///< DirectSound3Dセカンダリーバッファー
 typedef boost::intrusive_ptr< IDirectSound3DListener > DirectSound3DListenerPtr;///< DirectSound3D Listener
 

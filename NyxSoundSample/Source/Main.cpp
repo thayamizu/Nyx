@@ -18,7 +18,7 @@ public:
 
 		AudioDesc desc;
 		desc.handle = hwnd_;
-		desc.apiType = AudioUtility::APIType::DirectSound;
+		desc.apiType = AudioUtility::APIType_DirectSound;
 		manager_ = std::shared_ptr<DirectSoundAudioManager>(new DirectSoundAudioManager(desc));
 	}
 	~DirectSoundStaticAudioBufferTest() {
@@ -28,16 +28,14 @@ public:
 	void TestCase1() {
 		Load();
 		Play();
+		audio_->SetChorusEffect(AudioEffectDesc());
 		::Sleep(2000);
 		Stop();
 		::Sleep(1000);
+		
+		Play();
+		getchar();
 
-		Resume();
-		Play();
-		::Sleep(2000);
-		Reset();
-		Play();
-		::Sleep(2000);
 	}
 	void TestCase2() {
 		Load();
@@ -89,13 +87,7 @@ public:
 		::Sleep(2000);
 		Stop();
 		::Sleep(1000);
-
-		Resume();
-		Play();
-		::Sleep(2000);
-		Reset();
-		Play();
-		::Sleep(2000);
+		
 	}
 	void Load() {
 		audio_ = std::make_shared<DirectSoundAudioBuffer>();
@@ -105,7 +97,7 @@ public:
 
 	void Play() {
 		DebugOutput::Trace("オーディオバッファを再生します...");
-		audio_->Play(false);
+		audio_->Play(true);
 	}
 
 	void Stop() {
@@ -157,8 +149,8 @@ int main()
 		std::shared_ptr<DirectSoundStaticAudioBufferTest> test(std::make_shared<DirectSoundStaticAudioBufferTest>());
 		std::cout <<"テストケース1を開始します" << std::endl;
 		test->TestCase1();
-
-		std::cout <<"テストケース2を開始します" << std::endl;
+		getchar();
+	/*	std::cout <<"テストケース2を開始します" << std::endl;
 		test->TestCase2();
 		
 		std::cout <<"テストケース3を開始します" << std::endl;
@@ -168,7 +160,7 @@ int main()
 		test->TestCase4();
 		
 		std::cout <<"テストケース5を開始します" << std::endl;
-		test->TestCase5();
+		test->TestCase5();*/
 	}
 	catch(std::exception& e) {
 		std::cerr << e.what() << std::endl;

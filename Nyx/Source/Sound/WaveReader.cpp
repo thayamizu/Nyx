@@ -31,7 +31,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	WaveReader::WaveReader(const std::wstring& fileName) 
-		:waveData_(nullptr) {
+		:waveData_(nullptr), fileName_(fileName) {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
 
 		ReadFromFile(fileName);

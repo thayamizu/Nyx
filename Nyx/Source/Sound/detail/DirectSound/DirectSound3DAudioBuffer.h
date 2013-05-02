@@ -29,14 +29,14 @@ namespace Nyx {
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		DirectSound3DAudioBuffer(const DirectSound ds, const std::wstring fileName);
+		DirectSound3DAudioBuffer(const DirectSoundPtr ds, const std::wstring fileName);
 
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param  shared_ptr<char> waveData
 		*/
-		DirectSound3DAudioBuffer(const DirectSound ds, std::shared_ptr<char> wave);
+		DirectSound3DAudioBuffer(const DirectSoundPtr ds, std::shared_ptr<char> wave);
 		/**
 		* デストラクタ
 		*/
@@ -104,9 +104,9 @@ namespace Nyx {
 	private:
 		long volume;///< ボリューム
 		long pan;///< パン
-		DirectSoundBuffer soundBuffer; ///< サウンドバッファ
-		DirectSound3DBuffer sound3DBuffer;///< 3Dバッファ
-		DirectSound3DListener listener; ///<　リスナー
+		DirectSoundBufferPtr soundBuffer; ///< サウンドバッファ
+		DirectSound3DBufferPtr sound3DBuffer;///< 3Dバッファ
+		DirectSound3DListenerPtr listener; ///<　リスナー
 
 	};
 }

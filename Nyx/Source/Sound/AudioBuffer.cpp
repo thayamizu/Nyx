@@ -24,34 +24,16 @@ namespace Nyx
 {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioBuffer::AudioBuffer() 
-		:isLoop_(false), isPause_(false), isPlay_(false), audio_(nullptr) {
+	AudioBuffer::AudioBuffer(std::shared_ptr<IAudioBuffer> audioBuffer) 
+		:audio_(audioBuffer) {
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioBuffer::AudioBuffer(const AudioBufferDesc& bufferDesc) 
-		:isLoop_(false), isPause_(false), isPlay_(false), audio_(nullptr) {
-			CreateBuffer(bufferDesc);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioBuffer::CreateBuffer(const AudioBufferDesc& bufferDesc) {
-		
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioBuffer::Play()  {
+	void AudioBuffer::Play(bool isLoop)  {
 		Assert(audio_ != nullptr);
-		if (isPause_) {
-			return;
-		}
-		audio_->Play(isLoop_);
+		audio_->Play(isLoop);
 	}
 
 
@@ -59,9 +41,6 @@ namespace Nyx
 	//
 	void AudioBuffer::Stop()  {
 		Assert(audio_ != nullptr);
-		if (isPause_) {
-			return;
-		}
 		audio_->Stop();
 	}
 
@@ -70,9 +49,6 @@ namespace Nyx
 	//
 	void AudioBuffer::Resume()  {
 		Assert(audio_ != nullptr);
-		if (isPause_) {
-			return;
-		}
 		audio_->Resume();
 
 	}
@@ -82,9 +58,6 @@ namespace Nyx
 	//
 	void AudioBuffer::Reset()   {
 		Assert(audio_ != nullptr);
-		if (isPause_) {
-			return;
-		}
 		audio_->Reset();
 	} 
 
@@ -123,35 +96,15 @@ namespace Nyx
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioBuffer::IsLooping()  {
-		return isLoop_;
+	AudioState AudioBuffer::GetState() const {
+		Assert(audio_ != nullptr);
+		return audio_->GetState();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioBuffer::IsPlaying()  const {
-		return isPlay_;
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	bool AudioBuffer::IsPause() const  {
-		return isPause_;
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioBuffer::SetLooping(const bool loop)  {
-		isLoop_ = loop;
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioBuffer::SetPause(const bool pause)   {
-		isPause_ = pause;
+	const std::wstring& AudioBuffer::GetName() const {
+		return fileName_;
 	}
 }

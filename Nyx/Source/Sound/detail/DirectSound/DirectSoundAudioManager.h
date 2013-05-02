@@ -48,7 +48,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファの種類
 		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
 		*/
-		std::shared_ptr<AudioCache> Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType);
+		std::shared_ptr<AudioCache> Load(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
 		
 
 		/**
@@ -63,7 +63,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファの種類
 		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring, AudioUtility::AudioBufferType  bufferType);
+		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring, const AudioBufferDesc& bufferDesc);
 
 	private:	
 		int masterVolume_;	///マスターボリューム

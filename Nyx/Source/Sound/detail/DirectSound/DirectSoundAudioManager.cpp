@@ -42,8 +42,8 @@ namespace Nyx {
 	//
 	void DirectSoundAudioManager::Initialize(const AudioDesc& desc) {
 		//DirectSoundÇÃèâä˙âª
-		LPDIRECTSOUND directSound;
-		HRESULT hr = ::DirectSoundCreate(NULL, &directSound ,NULL);
+		LPDIRECTSOUND8 directSound;
+		HRESULT hr = ::DirectSoundCreate8(NULL, &directSound ,NULL);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("DirectSoundÇÃèâä˙âªÇ…é∏îsÇµÇ‹ÇµÇΩÅB[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundÇÃèâä˙âªÇ…é∏îsÇµÇ‹ÇµÇΩÅB", hr);
@@ -63,13 +63,13 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<AudioCache> DirectSoundAudioManager::Load(const std::wstring& fileName, AudioUtility::AudioBufferType bufferType) {
+	std::shared_ptr<AudioCache> DirectSoundAudioManager::Load(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
 		std::wstring line(L"");
 		std::wifstream file(fileName);
 		std::shared_ptr<AudioCache> audioCache(std::make_shared<AudioCache>());
 
 		while (std::getline(file, line)) {
-			std::shared_ptr<IAudioBuffer> buffer = LoadFromWaveFile(line, bufferType);
+			std::shared_ptr<IAudioBuffer> buffer = LoadFromWaveFile(line, bufferDesc);
 			//audioCache->Add(line, buffer);
 		}
 
@@ -80,20 +80,20 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, AudioUtility::AudioBufferType bufferType){
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
 		std::shared_ptr<IAudioBuffer> audio;
 
-		switch(bufferType) {
-		case AudioUtility::StaticAudioBuffer:
+		switch(bufferDesc.bufferType) {
+		case AudioUtility::BufferType_StaticAudioBuffer:
 			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
 			break;
-		case AudioUtility::Static3DAudioBufer:
+		case AudioUtility::BufferType_Static3DAudioBufer:
 			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
 			break;
-		case AudioUtility::StreamingAudioBuffer:
+		case AudioUtility::BufferType_StreamingAudioBuffer:
 			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
 			break;
-		case AudioUtility::Streaming3DAudioBuffer:
+		case AudioUtility::BufferType_Streaming3DAudioBuffer:
 			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
 			break;
 		}

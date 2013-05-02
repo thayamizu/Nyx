@@ -22,6 +22,8 @@
 namespace Nyx {
 	//前方宣言
 	class IAudioManager;
+	class AudioBuffer;
+	class AudioCache;
 
 	///オーディオマネージャ
 	class AudioManager : NonCopyable{
@@ -29,14 +31,27 @@ namespace Nyx {
 		/**
 		 * コンストラクタ
 		 */
-		AudioManager();
+		explicit AudioManager();
 
+		/**
+		 * コンストラクタ
+		 * @param const const AudioDesc& オーディオバッファ
+		 */
+		explicit AudioManager(const AudioDesc& desc);
+		
 		/**
 		* オーディオマネージャの初期化
 		* @return bool
 		*/
 		void Initialize(const AudioDesc& desc);
 
+		/**
+		* オーディオバッファを生成します
+		* @param const std::wstring& ファイル名
+		* @param SoundBufferType バッファタイプ
+		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
+		*/
+		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
 
 		/**
 		* オーディオデータををロードしてきます
@@ -44,8 +59,9 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
 		*/
-		std::shared_ptr<AudioCache> Load(const std::wstring& fileName,  AudioUtility::AudioBufferType bufferType);
+		std::shared_ptr<AudioCache> Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc);
 	private:
+		bool isInitialized_;
 		std::shared_ptr<IAudioManager> audioManager_;
 	};
 }
