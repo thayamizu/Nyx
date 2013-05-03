@@ -20,7 +20,8 @@
 #include "Sound/IAudioBuffer.h"
 
 namespace Nyx {
-
+	struct AudioBufferDesc;
+	class WaveReader;
 	///オーディオバッファのDirectSoundによる実装
 	class DirectSoundAudioBuffer : public IAudioBuffer {
 	public:
@@ -31,14 +32,14 @@ namespace Nyx {
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		explicit DirectSoundAudioBuffer(const DirectSoundPtr ds, const std::wstring& fileName);
+		explicit DirectSoundAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
 
 		/**
 		* コンストラクタ
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		void Load(const DirectSoundPtr ds, const std::wstring& fileName);
+		void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
 
 		/**
 		* 再生
@@ -104,6 +105,24 @@ namespace Nyx {
 		void ResetEffect();
 	private:
 		/**
+		* WaveファイルヘッダからWaveフォーマット情報を構築します
+		* @param[out] WAVEFORMATEX    Waveファイルフォーマット
+		* @param const WaveFileHeader Waveファイルヘッダ
+		*/
+		void BuildWaveFormatEx(WAVEFORMATEX& wfx);
+		
+
+		/**
+		* AudioBufferDescからDSBUFFERDESCを構築します
+		* @param [out] DSBUFFERDESC
+		* @param const AudioBufferDesc&
+		*/
+		void BuildDirectSoundBufferDesc(DSBUFFERDESC& desc, WAVEFORMATEX& wfx);
+		
+		void WriteWaveData();
+
+
+		/**
 		*　オーディオバッファにコーラスエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
@@ -158,7 +177,9 @@ namespace Nyx {
 		*/
 		ulong GetStatus() const;
 	private:
+		AudioBufferDesc bufferDesc_;
 		DirectSoundBufferPtr soundBuffer_;
+		std::shared_ptr<WaveReader> waveReader_;
 	};
 }
 #endif

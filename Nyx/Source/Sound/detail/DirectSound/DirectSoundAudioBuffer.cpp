@@ -23,43 +23,29 @@
 
 namespace Nyx {
 	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
-		: soundBuffer_(nullptr) {
+		: soundBuffer_(nullptr), bufferDesc_(), waveReader_(nullptr) {
 
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const DirectSoundPtr dsound, const std::wstring& fileName){
-		Load(dsound, fileName);
+	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName)
+		: soundBuffer_(nullptr), bufferDesc_(bufferDesc), waveReader_(new WaveReader(fileName)){
+			
+			Load(bufferDesc, dsound, fileName);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Load(const DirectSoundPtr ds, const std::wstring& fileName) {
-		std::unique_ptr<WaveReader> waveReader(new WaveReader(fileName));
-		const auto waveHeader = waveReader->GetFileHeader();
-
-		//Waveフォーマットのセットアップ
+	void DirectSoundAudioBuffer::Load(const AudioBufferDesc& desc, const DirectSoundPtr ds, const std::wstring& fileName) {
 		WAVEFORMATEX wfx;
-		ZeroMemory(&wfx, sizeof(WAVEFORMATEX));
-		wfx.wFormatTag      = waveHeader.formatChunk.formatTag;
-		wfx.nChannels       = waveHeader.formatChunk.channelNum;
-		wfx.wBitsPerSample  = waveHeader.formatChunk.bitsRate;
-		wfx.nSamplesPerSec  = waveHeader.formatChunk.samplingRate;
-		wfx.nBlockAlign     = waveHeader.formatChunk.blockSize;
-		wfx.nAvgBytesPerSec = waveHeader.formatChunk.bytesPerSec;
-		wfx.cbSize          = sizeof(WAVEFORMATEX);
+		BuildWaveFormatEx(wfx);
 
-		//DSBufferDescのセットアップ
 		DSBUFFERDESC bufferDesc;
-		ZeroMemory(&bufferDesc, sizeof(DSBUFFERDESC));
-		bufferDesc.dwBufferBytes   = waveHeader.dataChunk.chunkSize;
-		bufferDesc.dwFlags         = DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPAN | DSBCAPS_CTRLFX;
-		bufferDesc.dwSize          = sizeof(DSBUFFERDESC);
-		bufferDesc.lpwfxFormat     = &wfx;
-		bufferDesc.guid3DAlgorithm = DS3DALG_DEFAULT;
+		BuildDirectSoundBufferDesc(bufferDesc, wfx);
+
 		//フォーカスモード
 		//サウンドバッファの生成
 		LPDIRECTSOUNDBUFFER primaryBuffer;
@@ -76,26 +62,11 @@ namespace Nyx {
 			throw COMException("DirectSoundオーディオのセカンダリバッファの作成に失敗しました。", hr);
 		}
 
-		//バッファに波形データの書き込み
-		void* waveData = nullptr;
-		ulong waveSize = 0;
-		hr = soundBuffer->Lock(0, waveHeader.dataChunk.chunkSize, &waveData, &waveSize, NULL, NULL, 0);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
-		}
-
-		auto waveDataSource = waveReader->GetWaveData();
-		memcpy(waveData, waveDataSource.get(), waveHeader.dataChunk.chunkSize);
-
-		hr = soundBuffer->Unlock(waveData, waveSize, NULL, NULL);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
-		}
-
 		//スマートポインタの管理下に置く
 		soundBuffer_ = DirectSoundBufferPtr(soundBuffer);
+
+		//バッファに書き込み
+		WriteWaveData();
 	}
 
 
@@ -222,9 +193,9 @@ namespace Nyx {
 		ulong status = GetStatus();
 
 		AudioState state;
-		state.isBufferLost = status & DSBSTATUS_BUFFERLOST;
-		state.isLooping    = status & DSBSTATUS_LOOPING;
-		state.isPlaying    = status & DSBSTATUS_PLAYING;
+		state.isBufferLost = static_cast<bool>(status & DSBSTATUS_BUFFERLOST);
+		state.isLooping    = static_cast<bool>(status & DSBSTATUS_LOOPING);
+		state.isPlaying    = static_cast<bool>(status & DSBSTATUS_PLAYING);
 
 		return state;
 	}
@@ -274,6 +245,94 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
+	void DirectSoundAudioBuffer::BuildWaveFormatEx(WAVEFORMATEX& wfx) {
+		//ヘッダ情報
+		const auto waveHeader = waveReader_->GetFileHeader();
+
+		//Waveフォーマットのセットアップ
+		ZeroMemory(&wfx, sizeof(WAVEFORMATEX));
+		wfx.wFormatTag      = waveHeader.formatChunk.formatTag;
+		wfx.nChannels       = waveHeader.formatChunk.channelNum;
+		wfx.wBitsPerSample  = waveHeader.formatChunk.bitsRate;
+		wfx.nSamplesPerSec  = waveHeader.formatChunk.samplingRate;
+		wfx.nBlockAlign     = waveHeader.formatChunk.blockSize;
+		wfx.nAvgBytesPerSec = waveHeader.formatChunk.bytesPerSec;
+		wfx.cbSize          = sizeof(WAVEFORMATEX);
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioBuffer::BuildDirectSoundBufferDesc(DSBUFFERDESC& dsBufferDesc, WAVEFORMATEX& wfx) {
+		//ヘッダ情報
+		const auto waveHeader = waveReader_->GetFileHeader();
+
+		//フラグの設定
+		DWORD flag;
+		switch(bufferDesc_.bufferType)
+		{
+		case AudioUtility::BufferType_StaticAudioBuffer:
+			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME;
+			break;
+		case AudioUtility::BufferType_Static3DAudioBufer:
+			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME;
+			break;
+		case AudioUtility::BufferType_StreamingAudioBuffer:
+			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY;
+			break;
+		case AudioUtility::BufferType_Streaming3DAudioBuffer:
+			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY;
+			break;
+		}
+
+		//フォーカスモードの設定
+		if ( bufferDesc_.focusType == AudioUtility::FocusType_GlobalFocus) {
+			flag |= DSBCAPS_GLOBALFOCUS;
+		}
+		else {
+			flag |= DSBCAPS_STICKYFOCUS;
+
+		}
+
+		//DSBufferDescのセットアップ
+		ZeroMemory(&dsBufferDesc, sizeof(DSBUFFERDESC));
+		dsBufferDesc.lpwfxFormat     = &wfx;
+		dsBufferDesc.dwBufferBytes   = bufferDesc_.bufferSize;
+		dsBufferDesc.dwFlags         = flag;
+		dsBufferDesc.dwSize          = sizeof(DSBUFFERDESC);
+		dsBufferDesc.guid3DAlgorithm = bufferDesc_.algorithm;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioBuffer::WriteWaveData() {
+		Assert(waveReader_ != nullptr);
+		const auto waveHeader = waveReader_->GetFileHeader();
+
+		//バッファに波形データの書き込み
+		void* waveData  = nullptr;
+		ulong waveSize  = 0;
+		ulong chunkSize = waveHeader.dataChunk.chunkSize; 
+		HRESULT hr = soundBuffer_->Lock(0, chunkSize, &waveData, &waveSize, NULL, NULL, 0);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
+		}
+
+		auto waveDataSource = waveReader_->GetWaveData();
+		memcpy(waveData, waveDataSource.get(), chunkSize);
+
+		hr = soundBuffer_->Unlock(waveData, waveSize, NULL, NULL);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
+		}
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
 	void DirectSoundAudioBuffer::SetChorusEffect(const AudioEffectDesc& effectDesc) {
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
@@ -317,7 +376,6 @@ namespace Nyx {
 			DebugOutput::Trace("ディストーションエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("ディストーションエフェクトの設定に失敗しました。", hr);
 		}
-
 		Resume();
 	}
 
@@ -342,7 +400,6 @@ namespace Nyx {
 			DebugOutput::Trace("エコーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("エコーエフェクトの設定に失敗しました。", hr);
 		}
-
 		Resume();
 	}
 	//-------------------------------------------------------------------------------------------------------
@@ -365,7 +422,6 @@ namespace Nyx {
 			DebugOutput::Trace("フランジャーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("フランジャーエフェクトの設定に失敗しました。", hr);
 		}
-
 		Resume();
 	}
 
@@ -390,7 +446,6 @@ namespace Nyx {
 			DebugOutput::Trace("ガーグルエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("ガーグルエフェクトの設定に失敗しました。", hr);
 		}
-
 		Resume();
 	}
 
@@ -414,7 +469,6 @@ namespace Nyx {
 			DebugOutput::Trace("パラメトリックイコライザーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("パラメトリックイコライザースエフェクトの設定に失敗しました。", hr);
 		}
-
 		Resume();
 	}
 
@@ -438,7 +492,6 @@ namespace Nyx {
 			DebugOutput::Trace("リバーブエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("リバーブスエフェクトの設定に失敗しました。", hr);
 		}
-
 		Resume();
 	}
 
@@ -453,7 +506,6 @@ namespace Nyx {
 			DebugOutput::Trace("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。", hr);
 		}
-
 		return status;
 	}
 }

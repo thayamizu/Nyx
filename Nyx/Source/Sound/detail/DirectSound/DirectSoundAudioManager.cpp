@@ -81,22 +81,7 @@ namespace Nyx {
 	//---------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
-		std::shared_ptr<IAudioBuffer> audio;
-
-		switch(bufferDesc.bufferType) {
-		case AudioUtility::BufferType_StaticAudioBuffer:
-			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
-			break;
-		case AudioUtility::BufferType_Static3DAudioBufer:
-			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
-			break;
-		case AudioUtility::BufferType_StreamingAudioBuffer:
-			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
-			break;
-		case AudioUtility::BufferType_Streaming3DAudioBuffer:
-			audio = std::make_shared<DirectSoundAudioBuffer>(directSound_, fileName);
-			break;
-		}
+		std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
 
 		return audio;
 	}
