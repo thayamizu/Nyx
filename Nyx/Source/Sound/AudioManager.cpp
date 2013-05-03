@@ -20,7 +20,7 @@
 #include "AudioCache.h"
 #include "AudioManager.h"
 #include "AudioUtility.h"
-#include "detail/DirectSound/DirectSoundAudioManager.h"
+#include "DirectSoundAudioManager.h"
 
 namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------

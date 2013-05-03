@@ -187,6 +187,15 @@
     <Filter Include="Timer\detail\Win32">
       <UniqueIdentifier>{99c37ccf-a8af-474b-ae85-c34036b3b27a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound\Reader">
+      <UniqueIdentifier>{292915de-cd33-4926-a080-fdb602e49446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\System">
+      <UniqueIdentifier>{603442bf-163b-4ee1-b712-015402874ced}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Utility">
+      <UniqueIdentifier>{927099e4-1590-4415-9ec2-f9f28ecafdeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -472,15 +481,6 @@
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Sound\AudioCache.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\AudioUtility.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\WaveReader.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Thread\CriticalSection.h">
       <Filter>Thread</Filter>
     </ClInclude>
@@ -508,26 +508,47 @@
     <ClInclude Include="..\Source\Utility\Exception.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Sound\IAudioBuffer.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\AudioManager.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\AudioBuffer.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.h">
-      <Filter>Sound\detail\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundDefinition.h">
-      <Filter>Sound\detail\DirectSound</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.h">
-      <Filter>Sound\detail\DirectSound</Filter>
+    <ClInclude Include="..\Source\Sound\WaveReader.h">
+      <Filter>Sound\Reader</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Sound\IAudioManager.h">
-      <Filter>Sound</Filter>
+      <Filter>Sound\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioCache.h">
+      <Filter>Sound\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioManager.h">
+      <Filter>Sound\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioBuffer.h">
+      <Filter>Sound\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\AudioUtility.h">
+      <Filter>Sound\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\SoundReader.h">
+      <Filter>Sound\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioListener.h">
+      <Filter>Sound\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioManager.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundDefinition.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioBuffer.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundAudioBuffer3D.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer3D.h">
+      <Filter>Sound\detail\DirectSound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -717,12 +738,6 @@
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
       <Filter>Movie\implements\detail\DirectShow</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\AudioCache.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Sound\WaveReader.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
@@ -741,20 +756,35 @@
     <ClCompile Include="..\Source\Timer\Timer.cpp">
       <Filter>Timer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\AudioUtility.cpp">
-      <Filter>Sound</Filter>
+    <ClCompile Include="..\Source\Sound\WaveReader.cpp">
+      <Filter>Sound\Reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioBuffer.cpp">
-      <Filter>Sound\detail\DirectSound</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Sound\detail\DirectSound\DirectSoundAudioManager.cpp">
-      <Filter>Sound\detail\DirectSound</Filter>
+    <ClCompile Include="..\Source\Sound\AudioCache.cpp">
+      <Filter>Sound\System</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sound\AudioManager.cpp">
-      <Filter>Sound</Filter>
+      <Filter>Sound\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\AudioBuffer.cpp">
-      <Filter>Sound</Filter>
+    <ClCompile Include="..\Source\Sound\AudioUtility.cpp">
+      <Filter>Sound\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\SoundReader.cpp">
+      <Filter>Sound\Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioManager.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioBuffer.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundAudioBuffer3D.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundStreamingAudioBuffer3D.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

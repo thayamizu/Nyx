@@ -49,11 +49,12 @@ namespace Nyx {
 		*/
 		virtual void Reset()  = 0; 
 
+
 		/**
 		* オーディオバッファのパン値を設定します
 		* @param long パン
 		*/
-		virtual void SetPan(long p)=0;
+		virtual void SetPan(long pan) = 0;
 
 
 		/**

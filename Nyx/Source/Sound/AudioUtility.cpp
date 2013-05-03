@@ -8,13 +8,6 @@ namespace Nyx {
 
 	const double AudioUtility::DefaultSamplingRate = 44100;
 
-	const long AudioUtility::DefaultPriority  = 0;
-
-	const long AudioUtility::MaxPriority = 1;
-
-	const long AudioUtility::MinPriority = 2;
-
-
 	//-------------------------------------------------------------------------------------------------------
 	//
 	long AudioUtility::VolumeToDecibel(long volume) {
@@ -27,6 +20,6 @@ namespace Nyx {
 	//
 	long AudioUtility::DecibelToVolume(long decibel) {
 		decibel = Math::Clamp(decibel, -10000L, 10000L);
-		return Math::Pow(10, (decibel / 100 / 33.2));
+		return Math::Pow(10, (decibel/ 33.2));
 	}
 }

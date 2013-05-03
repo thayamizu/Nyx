@@ -53,6 +53,7 @@ namespace Nyx {
 		*/
 		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
 
+		
 		/**
 		* オーディオデータををロードしてきます
 		* @param const std::wstring& ファイル名

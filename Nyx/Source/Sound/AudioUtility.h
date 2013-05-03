@@ -36,7 +36,7 @@ namespace Nyx
 		///オーディオバッファタイプ
 		enum BufferType{
 			BufferType_StaticAudioBuffer,
-			BufferType_Static3DAudioBufer,
+			BufferType_Static3DAudioBuffer,
 			BufferType_StreamingAudioBuffer,
 			BufferType_Streaming3DAudioBuffer,
 			BufferType_BufferTypeNum,
@@ -71,29 +71,18 @@ namespace Nyx
 		static const double DefaultSamplingRate;
 
 		
-		///デフォルトプライオリティ
-		static const long DefaultPriority;
-		
-
-		///最高プライオリティ
-		static const long MaxPriority;
-
-
-		///最低プライオリティ
-		static const long MinPriority;
-
 		/**
 		* ボリュームをデシベルに変換します
-		* @param int ボリューム（1 ~ 100)
-		* @return double デシベル
+		* @param long ボリューム（1 ~ 100)
+		* @return long デシベル
 		*/
 		static long VolumeToDecibel(long volume);
 
 
 		/**
 		* デシベルをボリュームに変換します
-		* @param double ボリューム
-		* @return int デシベル
+		* @param  long ボリューム
+		* @return long デシベル
 		*/
 		static long DecibelToVolume(long decibel);
 	private:
@@ -110,32 +99,27 @@ namespace Nyx
 
 	///オーディオバッファ記述子
 	struct AudioBufferDesc {
-		ulong				flag;	  ///< オーディオバッファのフラグ
-		ulong               priority;  ///< 再生プライオリティ
-		ulong				bufferSize;  ///ストリーミング再生する際に一度に読み込むバッファサイズ
-		AudioUtility::BufferType bufferType;
-		AudioUtility::FocusType  focusType; ///< オーディオバッファのフォーカスモード
+		ulong                    reserved;  ///< 予約領域（未使用）
+		ulong				     bufferSize;///<ストリーミング再生する際に一度に読み込むバッファサイズ
+		GUID                     algorithm; ///< 3Dバッファの再生アルゴリズム
+		AudioUtility::BufferType bufferType;///< オーディオバッファのバッファタイプ
+		AudioUtility::FocusType  focusType; ///< オーディオバッファのフォーカスタイプ
 	};
+
 
 	///オーディオエフェクト記述子
 	struct AudioEffectDesc {
-		ulong reserved1;
-		ulong reserved2;
-		AudioUtility::EffectType effectType;
+		ulong reserved;///< 予約領域（未使用）
+		AudioUtility::EffectType effectType;///< エフェクトの種類
 	};
 
 	///オーディオステータス
 	struct AudioState {
-		bool isPlaying;
-		bool isLooping;
-		bool isBufferLost;
+		bool isPlaying;  ///< 再生しているかどうか
+		bool isLooping;  ///< ループ再生かどうか
+		bool isBufferLost;///< オーディオバッファがロストしてるか
 	};
 
-	///オーディオデバイス情報
-	struct AudioDeviceInfo {
-		std::wstring deviceName;
-
-	};
 }
 
 #endif

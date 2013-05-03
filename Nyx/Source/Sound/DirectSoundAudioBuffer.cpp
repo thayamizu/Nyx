@@ -22,6 +22,8 @@
 #include "DirectSoundAudioBuffer.h"
 
 namespace Nyx {
+	class AudioBuffer3D;
+
 	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
 		: soundBuffer_(nullptr), bufferDesc_(), waveReader_(nullptr) {
 
@@ -274,14 +276,14 @@ namespace Nyx {
 		case AudioUtility::BufferType_StaticAudioBuffer:
 			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME;
 			break;
-		case AudioUtility::BufferType_Static3DAudioBufer:
+		case AudioUtility::BufferType_Static3DAudioBuffer:
 			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME;
 			break;
 		case AudioUtility::BufferType_StreamingAudioBuffer:
-			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY;
+			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
 			break;
 		case AudioUtility::BufferType_Streaming3DAudioBuffer:
-			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY;
+			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
 			break;
 		}
 
@@ -313,7 +315,7 @@ namespace Nyx {
 		//バッファに波形データの書き込み
 		void* waveData  = nullptr;
 		ulong waveSize  = 0;
-		ulong chunkSize = waveHeader.dataChunk.chunkSize; 
+		ulong chunkSize = bufferDesc_.bufferSize; 
 		HRESULT hr = soundBuffer_->Lock(0, chunkSize, &waveData, &waveSize, NULL, NULL, 0);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);

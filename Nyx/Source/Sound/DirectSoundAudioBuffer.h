@@ -111,7 +111,6 @@ namespace Nyx {
 		*/
 		void BuildWaveFormatEx(WAVEFORMATEX& wfx);
 		
-
 		/**
 		* AudioBufferDescÇ©ÇÁDSBUFFERDESCÇç\ízÇµÇ‹Ç∑
 		* @param [out] DSBUFFERDESC
