@@ -27,14 +27,14 @@ namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	//
 	DirectSoundAudioManager::DirectSoundAudioManager() {
-	
+
 	}
 
 
 	//--------------------------------------------------------------------------------------
 	//
 	DirectSoundAudioManager::DirectSoundAudioManager(const AudioDesc& desc) {
-			Initialize(desc);
+		Initialize(desc);
 	}
 
 
@@ -63,6 +63,13 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
+		return nullptr;
+	}
+
+
+	//---------------------------------------------------------------------------------------
+	//
 	std::shared_ptr<AudioCache> DirectSoundAudioManager::Load(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
 		std::wstring line(L"");
 		std::wifstream file(fileName);
@@ -76,17 +83,25 @@ namespace Nyx {
 		return audioCache;
 	}	
 
-	
 
 	//---------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
-		std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
+		//std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
 
-		return audio;
+		return nullptr;
 	}
 
 
+	//---------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromOggFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
+		//std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
+
+		return nullptr;
+	}
+	
+	
 	//---------------------------------------------------------------------------------------
 	//
 	const DirectSoundPtr DirectSoundAudioManager::GetHandle() {

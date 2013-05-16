@@ -21,28 +21,139 @@
 namespace Nyx
 {
 	class IAudioBuffer;
+	struct AudioEffectDesc;
 	///オーディオキャッシュ
 	class AudioCache : NonCopyable {
 	public:
+		/**
+		* デフォルトコンストラクタ
+		*/
 		explicit AudioCache();
+
+
+		/**
+		* コンストラクタ
+		* @param size_t キャッシュサイズ
+		*/
 		explicit AudioCache(size_t cacheSize);
-		~AudioCache();
+
+
+		/**
+		* 添字演算子
+		* @param const std::wstring& ファイル名
+		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
+		*/
 		std::shared_ptr<IAudioBuffer> operator[](const std::wstring& fileName);
-		void Add(const std::shared_ptr<IAudioBuffer>& audioBuffer);
-		void Remove(const std::shared_ptr<IAudioBuffer>& audioBuffer);
+
+
+		/**
+		* キャッシュにバッファを追加します
+		* @param const std::wstring& ファイル名
+		* @param std::shared_ptr<IAudioBuffer> オーディオバッファ
+		*/
+		void Add(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer);
+
+
+		/**
+		* キャシュからバッファを削除します
+		* @param const std::wstring& ファイル名
+		* @param std::shared_ptr<IAudioBuffer> オーディオバッファ
+		*/
+		void Remove(const std::wstring& fileName,  std::shared_ptr<IAudioBuffer> audioBuffer);
+
+
+		/**
+		* キャシュをクリアします
+		*/
 		void Clear();
-		bool Play(const std::wstring& fileName);
-		bool PlayAll();
-		bool Stop(const std::wstring& fileName);
-		bool StopAll();
-		bool Resume(const std::wstring& fileName);
-		bool ResumeAll();
-		bool Pause(const std::wstring& fileName);
-		bool PauseAll();
-		const std::shared_ptr<IAudioBuffer> GetAudioBuffer(const std::wstring& fileName);
+		
+		
+		/**
+		* 指定したオーディオバッファを再生します
+		* @param const std::wstring& ファイル名
+		*/
+		void Play(const std::wstring& fileName, bool isLoop=true);
+
+
+		/**
+		* 全てのオーディオバッファを再生します
+		*/
+		void PlayAll(bool isLoop=true);
+		
+		
+		/**
+		* 指定したオーディオバッファを停止します
+		* @param const std::wstring& ファイル名
+		*/
+		void Stop(const std::wstring& fileName);
+		
+		
+		/**
+		* 全てのオーディオバッファを停止します
+		*/
+		void StopAll();
+
+		/**
+		* 指定したオーディオバッファをレジュームします
+		*/
+		void Resume(const std::wstring& fileName);
+		
+		
+		/**
+		* 全てのオーディオバッファをレジュームします
+		*/
+		void ResumeAll();
+		
+		
+		/**
+		* 指定したオーディオバッファを一時停止します
+		*/
+		void Reset(const std::wstring& fileName);
+		
+		
+		/**
+		* 全てのオーディオバッファを一時停止します
+		*/
+		void ResetAll();
+		
+
+		/**
+		* 指定したオーディオバッファにエフェクトを設定します
+		* @param const std::wstring& ファイル名
+		* @param const const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetEffect(const std::wstring& fileName, const AudioEffectDesc& effectDesc);
+
+
+		/**
+		* 全てのオーディオバッファにエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetEffectAll(const AudioEffectDesc& effectDesc);
+
+
+		/**
+		* 指定したオーディオバッファのエフェクトを削除します
+		* @param const std::wstring& ファイル名
+		*/
+		void ResetEffect(const std::wstring& fileName);
+
+
+		/**
+		* 全てのオーディオバッファのエフェクトを削除します
+		*/
+		void ResetEffectAll();
+
+		
+		/**
+		* 指定したオーディオバッファを取得します
+		* @param const std::wstring& ファイル名
+		* @return const std::shared_ptr<IAudioBffer>& オーディオaバッファ
+		*/
+		const std::shared_ptr<IAudioBuffer>& GetAudioBuffer(const std::wstring& fileName);
 	private :
 		struct PImpl;
-		std::unique_ptr<PImpl> pimpl_;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 

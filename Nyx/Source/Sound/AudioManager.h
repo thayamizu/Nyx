@@ -17,21 +17,23 @@
 #ifndef NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
 #define NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
 #include "Object/NonCopyable.h"
-#include "AudioUtility.h"
+#include "IAudioManager.h"
 
 namespace Nyx {
 	//前方宣言
-	class IAudioManager;
 	class AudioBuffer;
 	class AudioCache;
+	struct AudioBufferDesc;
+	struct AudioDesc;
 
 	///オーディオマネージャ
-	class AudioManager : NonCopyable{
+	class AudioManager : NonCopyable, public IAudioManager{
 	public:
 		/**
 		 * コンストラクタ
 		 */
 		explicit AudioManager();
+
 
 		/**
 		 * コンストラクタ
@@ -39,11 +41,13 @@ namespace Nyx {
 		 */
 		explicit AudioManager(const AudioDesc& desc);
 		
+
 		/**
 		* オーディオマネージャの初期化
 		* @return bool
 		*/
 		void Initialize(const AudioDesc& desc);
+
 
 		/**
 		* オーディオバッファを生成します
@@ -62,8 +66,8 @@ namespace Nyx {
 		*/
 		std::shared_ptr<AudioCache> Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc);
 	private:
-		bool isInitialized_;
-		std::shared_ptr<IAudioManager> audioManager_;
+		struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 #endif

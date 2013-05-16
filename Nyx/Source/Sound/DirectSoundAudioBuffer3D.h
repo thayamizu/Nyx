@@ -20,94 +20,76 @@
 #include "DirectSoundDefinition.h"
 
 namespace Nyx {
+	class Vector3f;
 
-	/////3DオーディオバッファのDirectSoundによる実装
-	//class DirectSound3DAudioBuffer : public IAudioBuffer {
+	///DirectSound3DAuioBufferのラッパ
+	//class DirectSound3DAudioBuffer {
 	//public:
 	//	/**
 	//	* コンストラクタ
-	//	* @param const DirectSound DirectSoundオブジェクト
-	//	* @param std::wstring ファイル名
 	//	*/
-	//	DirectSound3DAudioBuffer(const DirectSoundPtr ds, const std::wstring fileName);
-
-	//	/**
-	//	* コンストラクタ
-	//	* @param const DirectSound DirectSoundオブジェクト
-	//	* @param  shared_ptr<char> waveData
-	//	*/
-	//	DirectSound3DAudioBuffer(const DirectSoundPtr ds, std::shared_ptr<char> wave);
-	//	/**
-	//	* デストラクタ
-	//	*/
-	//	virtual ~DirectSound3DAudioBuffer();
-
-	//	/**
-	//	*　再生
-	//	*/
-	//	void Play();
-	//	/**
-	//	*　停止
-	//	*/
-	//	void Stop();
-
-	//	/**
-	//	*　レジューム
-	//	*/
-	//	void Resume();
-
-	//	/**
-	//	*　リセット
-	//	*/
-	//	void Reset();
-
-	//	/**
-	//	*　パンを設定
-	//	*/
-	//	void SetPan(long pan);
-
-	//	/**
-	//	*　ボリュームを設定
-	//	*/
-	//	void SetVolume(long v);
-
-	//	/**
-	//	*　ボリュームの取得
-	//	*/
-	//	long GetVolume() const ;
-
-	//	/**
-	//	*　パンの取得
-	//	*/
-	//	long GetPan() const;
+	//	DirectSound3DAudioBuffer();
 	//	
 	//	/**
-	//	* 音源位置を設定
-	//	* @param float x座標
-	//	* @param float y座標
-	//	* @param float z座標
+	//	* 
+	//	DirectSound3DAudioBuffer();
+	//	/**
+	//	* リスナーの位置を取得します
+	//	* @return Vecto3f リスナーの位置ベクトル
 	//	*/
-	//	void SetPos(float x, float y, float z);
+	//	Vector3f GetPosition() const ;
+
 
 	//	/**
-	//	* サウンドソースの最小距離を設定
-	//	* @param float 最小距離
+	//	*　リスナーの位置を設定します
+	//	* @param const Vector3f&　リスナーの位置ベクトル
 	//	*/
-	//	void SetMinDistance(float min);
+	//	void SetPosition(const Vector3f& pos) ;
+
 
 	//	/**
-	//	* サウンドソースの最大距離を設定
-	//	* @param float 最大距離
+	//	* 速度ベクトルを取得します
+	//	* @return Vector3f　リスナーの速度ベクトル
 	//	*/
-	//	void SetMaxDistance(float max);
+	//	Vector3f GetVelocity() const ;
+
+
+	//	/**
+	//	*　速度ベクトルを設定します
+	//	* @param const Vector3f& リスナーの速度ベクトル
+	//	*/
+	//	void SetVelocity(const Vector3f& velocity) ;
+
+
+	//	/**
+	//	* ドップラー係数を取得します
+	//	* @return float ドップラー係数
+	//	*/
+	//	float GetDopplerFactor() const ;
+
+
+	//	/**
+	//	* ドップラー係数を設定します
+	//	* @param float ドップラー係数
+	//	*/
+	//	void SetDopplerFactor(float dopplerFactor) ;
+
+
+	//	/**
+	//	* ロールオフ係数を取得します
+	//	* @return ロールオフ係数
+	//	*/
+	//	float GetRolloffFactor() const ;
+
+
+	//	/**
+	//	* ロールオフ係数を設定します
+	//	* @param float ロールオフ係数
+	//	*/
+	//	void SetRolloffFactor(float rolloffFactor) ;
 
 	//private:
-	//	long volume;///< ボリューム
-	//	long pan;///< パン
-	//	DirectSoundBufferPtr soundBuffer; ///< サウンドバッファ
-	//	DirectSound3DBufferPtr sound3DBuffer;///< 3Dバッファ
-	//	DirectSound3DListenerPtr listener; ///<　リスナー
-
+	//	DirectSoundBufferPtr soundBuffer; ///< 3Dサウンドバッファ
 	//};
 }
 #endif

@@ -17,13 +17,14 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "AudioCache.h"
+#include "AudioUtility.h"
 #include "IAudioBuffer.h"
 
 namespace Nyx {
 //-------------------------------------------------------------------------------------------------------
 	//
 	struct AudioCache::PImpl {
-		typedef std::list<std::shared_ptr<IAudioBuffer> > AudioBufferList;
+		typedef std::vector<std::shared_ptr<IAudioBuffer> > AudioBufferList;
 		typedef std::map<std::wstring,  std::shared_ptr<IAudioBuffer>> AudioBufferMap;
 		AudioBufferList audioBufferList_;
 		AudioBufferMap  audioBufferMap_;
@@ -33,8 +34,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	AudioCache::AudioCache()
-		:pimpl_(new PImpl())
-	{
+		:pimpl_(new PImpl()) {
 
 	}
 
@@ -42,110 +42,193 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	AudioCache::AudioCache(size_t cacheSize) 
-		:pimpl_(new PImpl())
-	{
+		:pimpl_(new PImpl()) {
+		pimpl_->audioBufferList_.resize(cacheSize);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioCache::~AudioCache() {
-
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioCache::Add(const std::shared_ptr<IAudioBuffer>& audioBuffer) {
+	void AudioCache::Add(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer) {
 		Assert(pimpl_ != nullptr);
+		
+		pimpl_->audioBufferList_.push_back(audioBuffer);
+		pimpl_->audioBufferMap_.insert(PImpl::AudioBufferMap::value_type(fileName, audioBuffer));
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Remove(const std::shared_ptr<IAudioBuffer>& audioBuffer) {
+	void AudioCache::Remove(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer) {
 		Assert(pimpl_ != nullptr);
+		auto listIter = std::find(
+			pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end()  , audioBuffer);
+		if (listIter != pimpl_->audioBufferList_.end()) {
+			pimpl_->audioBufferList_.erase(listIter);
+		}
 
+		auto mapIter = pimpl_->audioBufferMap_.find(fileName);
+		if (mapIter != pimpl_->audioBufferMap_.end()) {
+			pimpl_->audioBufferMap_.erase(mapIter);
+		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::Play(const std::wstring& fileName) {
+	void AudioCache::Clear() {
 		Assert(pimpl_ != nullptr);
+		pimpl_->audioBufferList_.clear();
+		pimpl_->audioBufferMap_.clear();
+	}
 
-		return false;	
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioCache::Play(const std::wstring& fileName, const bool isLoop) {
+		Assert(pimpl_ != nullptr);
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			it->second->Play(isLoop);
+		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::PlayAll() {
+	void AudioCache::PlayAll(const bool isLoop) {
 		Assert(pimpl_ != nullptr);
-
-		return false;
+		std::for_each(pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end(), 
+			[&isLoop](std::shared_ptr<IAudioBuffer> buffer) {
+				buffer->Play(isLoop);
+		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::Stop(const std::wstring& fileName) {
+	void AudioCache::Stop(const std::wstring& fileName) {
 		Assert(pimpl_ != nullptr);
-
-		return false;
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			it->second->Stop();
+		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::StopAll() {
+	void AudioCache::StopAll() {
 		Assert(pimpl_ != nullptr);
-
-		return false;
+		std::for_each(pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end(), 
+			[](std::shared_ptr<IAudioBuffer> buffer) {
+				buffer->Stop();
+		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::Resume(const std::wstring& fileName) {
+	void AudioCache::Resume(const std::wstring& fileName) {
 		Assert(pimpl_ != nullptr);
-
-		return false;
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			it->second->Resume();
+		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::ResumeAll() {
+	void AudioCache::ResumeAll() {
 		Assert(pimpl_ != nullptr);
-
-		return false;
+		std::for_each(pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end(), 
+			[](std::shared_ptr<IAudioBuffer> buffer) {
+				buffer->Resume();
+		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::Pause(const std::wstring& fileName) {
+	void AudioCache::Reset(const std::wstring& fileName) {
 		Assert(pimpl_ != nullptr);
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			it->second->Reset();
+		}
 
-		return false;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool AudioCache::PauseAll() {
+	void AudioCache::ResetAll() {
 		Assert(pimpl_ != nullptr);
-
-		return false;
+		std::for_each(pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end(), 
+			[](std::shared_ptr<IAudioBuffer> buffer) {
+				buffer->Reset();
+		});
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const std::shared_ptr<IAudioBuffer> AudioCache::GetAudioBuffer(const std::wstring& fileName) {
+	void AudioCache::SetEffect(const std::wstring& fileName, const AudioEffectDesc& effectDesc) {
 		Assert(pimpl_ != nullptr);
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			it->second->SetEffect(effectDesc);
+		}
+	}
+	
 
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioCache::SetEffectAll(const AudioEffectDesc& effectDesc) {
+		Assert(pimpl_ != nullptr);
+		std::for_each(pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end(), 
+			[&effectDesc](std::shared_ptr<IAudioBuffer> buffer) {
+				buffer->SetEffect(effectDesc);
+		});
+	}
+	
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioCache::ResetEffect(const std::wstring& fileName) {
+		Assert(pimpl_ != nullptr);
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			it->second->ResetEffect();
+		}
+
+	}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioCache::ResetEffectAll() {
+		Assert(pimpl_ != nullptr);
+		std::for_each(pimpl_->audioBufferList_.begin(), 
+			pimpl_->audioBufferList_.end(), 
+			[](std::shared_ptr<IAudioBuffer> buffer) {
+				buffer->ResetEffect();
+		});
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	const std::shared_ptr<IAudioBuffer>& AudioCache::GetAudioBuffer(const std::wstring& fileName) {
+		Assert(pimpl_ != nullptr);
+		auto it = pimpl_->audioBufferMap_.find(fileName);
+		if (it != pimpl_->audioBufferMap_.end()) {
+			return it->second;
+		}
 		return nullptr;
 	}
 }

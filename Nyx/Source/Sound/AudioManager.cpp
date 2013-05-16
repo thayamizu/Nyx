@@ -23,48 +23,65 @@
 #include "DirectSoundAudioManager.h"
 
 namespace Nyx {
+	
+	//-------------------------------------------------------------------------------------------------------
+	//Pimpl
+	struct AudioManager::PImpl {
+		PImpl()
+			:isInitialized_(false), audioManager_(nullptr) {
+		}
+		
+		bool isInitialized_;
+		
+		std::shared_ptr<IAudioManager> audioManager_;
+	};
+
+
 	//-------------------------------------------------------------------------------------------------------
 	//
 	AudioManager::AudioManager()
-		: isInitialized_(false) {
-
+		: pimpl_(new PImpl()){
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	AudioManager::AudioManager(const AudioDesc& desc)
-		: isInitialized_(false) {
-			if (!isInitialized_) { 
-				Initialize(desc);
-			}
+		: pimpl_(new PImpl()) {
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void AudioManager::Initialize(const AudioDesc& desc) {
-		if (isInitialized_) {
+		Assert(pimpl_ != nullptr);
+		if (pimpl_->isInitialized_) {
 			return ;
 		}
-		audioManager_ = std::make_shared<DirectSoundAudioManager>();
-		audioManager_->Initialize(desc);
+		
+		//オーディオマネージャを初期化
+		pimpl_->audioManager_ = std::make_shared<DirectSoundAudioManager>();
+		pimpl_->audioManager_->Initialize(desc);
 
 		//初期化フラグ
-		isInitialized_ = true;
+		pimpl_->isInitialized_ = true;
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> AudioManager::CreateAudioBuffer(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
-		Assert(audioManager_ != nullptr);
-		//audioManager_->Load(fileName, bufferType)
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->CreateAudioBuffer(fileName, bufferDesc);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
-		Assert(audioManager_ != nullptr);
-		audioManager_->Load(fileName, bufferDesc);
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->Load(fileName, bufferDesc);
 	}
 }

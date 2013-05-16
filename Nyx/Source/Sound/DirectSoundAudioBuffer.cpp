@@ -24,6 +24,8 @@
 namespace Nyx {
 	class AudioBuffer3D;
 
+	//-------------------------------------------------------------------------------------------------------
+	//
 	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
 		: soundBuffer_(nullptr), bufferDesc_(), waveReader_(nullptr) {
 
@@ -48,7 +50,6 @@ namespace Nyx {
 		DSBUFFERDESC bufferDesc;
 		BuildDirectSoundBufferDesc(bufferDesc, wfx);
 
-		//フォーカスモード
 		//サウンドバッファの生成
 		LPDIRECTSOUNDBUFFER primaryBuffer;
 		HRESULT hr = ds->CreateSoundBuffer(&bufferDesc, &primaryBuffer, NULL);
@@ -66,9 +67,6 @@ namespace Nyx {
 
 		//スマートポインタの管理下に置く
 		soundBuffer_ = DirectSoundBufferPtr(soundBuffer);
-
-		//バッファに書き込み
-		WriteWaveData();
 	}
 
 
@@ -205,43 +203,8 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::ResetEffect() {
-		HRESULT hr = soundBuffer_->SetFX(0, NULL, NULL);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("エフェクトのリセットに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("エフェクトのリセットに失敗しました。", hr);
-		}
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioBuffer::SetEffect(const AudioEffectDesc& effectDesc) {
-		switch(effectDesc.effectType) {
-		case AudioUtility::EffectType_Chorus:
-			SetChorusEffect(effectDesc);
-			break;
-		case AudioUtility::EffectType_Distortion:
-			SetDistortionEffect(effectDesc);
-			break;
-		case AudioUtility::EffectType_Echo:
-			SetEchoEffect(effectDesc);
-			break;
-		case AudioUtility::EffectType_Flanger:
-			SetFlangerEffect(effectDesc);
-			break;
-		case AudioUtility::EffectType_Gargle:
-			SetFlangerEffect(effectDesc);
-			break;
-		case AudioUtility::EffectType_ParametricEqualizer:
-			SetParametricEqualizerEffect(effectDesc);
-			break;
-		case AudioUtility::EffectType_Reverb:
-			SetReverbEffect(effectDesc);
-			break;
-		default:
-			DebugOutput::Trace("EffectTypeの値が違います。");
-		}
+	const DirectSoundBufferPtr& DirectSoundAudioBuffer::GetHandle() {
+		return soundBuffer_;
 	}
 
 
@@ -249,7 +212,7 @@ namespace Nyx {
 	//
 	void DirectSoundAudioBuffer::BuildWaveFormatEx(WAVEFORMATEX& wfx) {
 		//ヘッダ情報
-		const auto waveHeader = waveReader_->GetFileHeader();
+		const auto waveHeader = waveReader_->ReadHeader();
 
 		//Waveフォーマットのセットアップ
 		ZeroMemory(&wfx, sizeof(WAVEFORMATEX));
@@ -263,54 +226,12 @@ namespace Nyx {
 	}
 
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioBuffer::BuildDirectSoundBufferDesc(DSBUFFERDESC& dsBufferDesc, WAVEFORMATEX& wfx) {
-		//ヘッダ情報
-		const auto waveHeader = waveReader_->GetFileHeader();
-
-		//フラグの設定
-		DWORD flag;
-		switch(bufferDesc_.bufferType)
-		{
-		case AudioUtility::BufferType_StaticAudioBuffer:
-			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME;
-			break;
-		case AudioUtility::BufferType_Static3DAudioBuffer:
-			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME;
-			break;
-		case AudioUtility::BufferType_StreamingAudioBuffer:
-			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
-			break;
-		case AudioUtility::BufferType_Streaming3DAudioBuffer:
-			flag = DSBCAPS_CTRLFX | DSBCAPS_CTRL3D  | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
-			break;
-		}
-
-		//フォーカスモードの設定
-		if ( bufferDesc_.focusType == AudioUtility::FocusType_GlobalFocus) {
-			flag |= DSBCAPS_GLOBALFOCUS;
-		}
-		else {
-			flag |= DSBCAPS_STICKYFOCUS;
-
-		}
-
-		//DSBufferDescのセットアップ
-		ZeroMemory(&dsBufferDesc, sizeof(DSBUFFERDESC));
-		dsBufferDesc.lpwfxFormat     = &wfx;
-		dsBufferDesc.dwBufferBytes   = bufferDesc_.bufferSize;
-		dsBufferDesc.dwFlags         = flag;
-		dsBufferDesc.dwSize          = sizeof(DSBUFFERDESC);
-		dsBufferDesc.guid3DAlgorithm = bufferDesc_.algorithm;
-	}
-
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::WriteWaveData() {
+	void DirectSoundAudioBuffer::WriteWaveData(size_t bufferSize) {
 		Assert(waveReader_ != nullptr);
-		const auto waveHeader = waveReader_->GetFileHeader();
+		const auto waveHeader = waveReader_->ReadHeader();
 
 		//バッファに波形データの書き込み
 		void* waveData  = nullptr;
@@ -322,8 +243,8 @@ namespace Nyx {
 			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
 		}
 
-		auto waveDataSource = waveReader_->GetWaveData();
-		memcpy(waveData, waveDataSource.get(), chunkSize);
+		auto waveDataSource = waveReader_->Read(bufferSize);
+		memcpy(waveData, waveDataSource.get(), bufferSize);
 
 		hr = soundBuffer_->Unlock(waveData, waveSize, NULL, NULL);
 		if (FAILED(hr)) {
@@ -390,13 +311,14 @@ namespace Nyx {
 			Stop();
 		}
 
-		ulong result;
+		
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
 		desc.dwFlags = NULL;
 		desc.guidDSFXClass = GUID_DSFX_STANDARD_ECHO;
 
+		ulong result;
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("エコーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
@@ -404,6 +326,8 @@ namespace Nyx {
 		}
 		Resume();
 	}
+
+
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetFlangerEffect(const AudioEffectDesc& effectDesc) {
@@ -451,6 +375,7 @@ namespace Nyx {
 		Resume();
 	}
 
+
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetParametricEqualizerEffect(const AudioEffectDesc& effectDesc) {
@@ -473,6 +398,7 @@ namespace Nyx {
 		}
 		Resume();
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//

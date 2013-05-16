@@ -23,6 +23,7 @@ namespace Nyx {
 		:handle(INVALID_HANDLE_VALUE),attribute(None), fileName(TEXT("")) {
 	}
 
+
 	//-----------------------------------------------------------------------------------
 	Win32File::Win32File(const std::wstring& name, AccessAttribute attr) 
 		:handle(NULL), attribute(attr), fileName(name) {
@@ -36,11 +37,13 @@ namespace Nyx {
 		}
 	}
 
+
 	//-----------------------------------------------------------------------------------
 	Win32File::~Win32File() {
 		if (IsOpened()) { Close();}
 	}
 	
+
 	//-----------------------------------------------------------------------------------
 	bool Win32File::Open(const std::wstring& name, AccessAttribute attr) {
 		if (IsOpened()) { Close();}

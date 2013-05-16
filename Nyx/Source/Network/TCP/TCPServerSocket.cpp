@@ -23,10 +23,10 @@ namespace Nyx {
 	//
 	const int TCPServerSocket::MaxConnectNum = 5;
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPServerSocket::TCPServerSocket(int port)
-	{
+	TCPServerSocket::TCPServerSocket(int port) {
 		// winsock2の初期化
 		WSAStartup(MAKEWORD(2,0), &wsaData);
 
@@ -51,10 +51,11 @@ namespace Nyx {
 			exit(-1);
 		}
 	}
+
+
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPServerSocket::~TCPServerSocket()
-	{
+	TCPServerSocket::~TCPServerSocket() {
 		// TCPセッションの終了
 		closesocket(srcSock);
 		closesocket(dstSock);
@@ -63,28 +64,27 @@ namespace Nyx {
 		WSACleanup();
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	bool TCPServerSocket::Accept()
-	{
+	bool TCPServerSocket::Accept() {
 		// TCPクライアントからの接続要求を受け付ける
 		dstSock = accept(srcSock, (struct sockaddr *)&dstAddr, &dstAddrSize);
 
 		return dstSock != INVALID_SOCKET;
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	int TCPServerSocket::Send(char *buf, int buf_len)
-	{
+	int TCPServerSocket::Send(char *buf, int buf_len) {
 		return send(dstSock, buf, buf_len, 0);
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	int TCPServerSocket::Recieve(char *buf, int buf_len)
-	{
+	int TCPServerSocket::Recieve(char *buf, int buf_len) {
 		return recv(dstSock, buf, buf_len, 0);
 	}
-
 }

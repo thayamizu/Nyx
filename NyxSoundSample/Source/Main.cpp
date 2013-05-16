@@ -1,6 +1,8 @@
 #include "PCH.h"
-#include "Sound/detail/DirectSound/DirectSoundAudioManager.h"
-#include "Sound/detail/DirectSound/DirectSoundAudioBuffer.h"
+#include "Sound/DirectSoundAudioManager.h"
+#include "Sound/DirectSoundAudioBuffer.h"
+#include "Sound/DirectSoundStaticAudioBuffer.h"
+#include "Sound/DirectSoundStreamingAudioBuffer.h"
 
 using namespace std;
 using namespace Nyx;
@@ -28,11 +30,11 @@ public:
 	void TestCase1() {
 		Load();
 		Play();
-		audio_->SetChorusEffect(AudioEffectDesc());
+		audio_->SetEffect(AudioEffectDesc());
 		::Sleep(2000);
 		Stop();
 		::Sleep(1000);
-		
+
 		Play();
 		getchar();
 
@@ -87,11 +89,16 @@ public:
 		::Sleep(2000);
 		Stop();
 		::Sleep(1000);
-		
+
 	}
 	void Load() {
-		audio_ = std::make_shared<DirectSoundAudioBuffer>();
-		audio_->Load(manager_->GetHandle(), g_WavFile);
+		audio_ = std::make_shared<DirectSoundStaticAudioBuffer>();
+		AudioBufferDesc desc;
+		desc.bufferSize = 100000;
+		desc.focusType  = AudioUtility::FocusType_GlobalFocus;
+		desc.bufferType = AudioUtility::BufferType_StaticAudioBuffer;
+		desc.algorithm = DS3DALG_HRTF_FULL;
+		audio_ = std::make_shared<DirectSoundStaticAudioBuffer>(desc,manager_->GetHandle(), g_WavFile);
 		Assert(audio_ != nullptr);
 	}
 
@@ -115,7 +122,7 @@ public:
 
 	void GetStatus() {
 		DebugOutput::Trace("オーディオバッファのステータスコードを取得します...");
-		ulong status = audio_->GetStatus();
+		//ulong status = audio_->GetStatus();
 	}
 
 	void GetPan() {
@@ -137,7 +144,7 @@ public:
 	}
 private:
 	HWND hwnd_;
-	std::shared_ptr<DirectSoundAudioBuffer>  audio_;
+	std::shared_ptr<DirectSoundStaticAudioBuffer>  audio_;
 	std::shared_ptr<DirectSoundAudioManager> manager_;
 };
 
@@ -150,19 +157,19 @@ int main()
 		std::cout <<"テストケース1を開始します" << std::endl;
 		test->TestCase1();
 		getchar();
-	/*	std::cout <<"テストケース2を開始します" << std::endl;
+		/*	std::cout <<"テストケース2を開始します" << std::endl;
 		test->TestCase2();
-		
+
 		std::cout <<"テストケース3を開始します" << std::endl;
 		test->TestCase3();
-		
+
 		std::cout <<"テストケース4を開始します" << std::endl;
 		test->TestCase4();
-		
+
 		std::cout <<"テストケース5を開始します" << std::endl;
 		test->TestCase5();*/
 	}
-	catch(std::exception& e) {
-		std::cerr << e.what() << std::endl;
+	catch(COMException e) {
+		getchar();
 	}
 }

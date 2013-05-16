@@ -70,12 +70,6 @@
     <Filter Include="Movie">
       <UniqueIdentifier>{2b9a50a9-e9ec-411d-a61b-e814cc5af50e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IO\interfaces">
-      <UniqueIdentifier>{d1a77aa0-533c-4f5d-9915-85b00bbed86a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IO\implements">
-      <UniqueIdentifier>{4b796fee-324a-42df-8eb6-8a18ee5b46ea}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Database\interfaces">
       <UniqueIdentifier>{abbda38a-d885-4e15-8d18-f79c78692d42}</UniqueIdentifier>
     </Filter>
@@ -88,35 +82,8 @@
     <Filter Include="Movie\implements">
       <UniqueIdentifier>{4a3c7e11-70dc-48cb-b953-e0600214da1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Network\interfaces">
-      <UniqueIdentifier>{a9de89d7-b7b6-4051-9a53-238f71b6d3ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\implements">
-      <UniqueIdentifier>{82ab8ad3-76b9-408c-99e5-13d8bdb462d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\interfaces">
-      <UniqueIdentifier>{ecc3c118-72ee-497a-9cda-59fbf5b570b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\implements">
-      <UniqueIdentifier>{291a375b-eff5-4d8f-9966-b0a0fdb9a3e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Object\utility">
-      <UniqueIdentifier>{1fd55d7b-546d-44c9-9135-ed35f46f3b1c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\interfaces">
-      <UniqueIdentifier>{b80130c6-a483-4aa5-ab42-a3e2cce40342}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\implements">
-      <UniqueIdentifier>{6c7d297d-29be-44fc-81eb-aba4ee6c9508}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\interfaces">
-      <UniqueIdentifier>{a1e15a38-4392-4663-9df7-f9e5e5934b56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\implements">
-      <UniqueIdentifier>{ae7d808e-9097-45c5-aa5b-fabef661bda9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Animation\interfaces">
       <UniqueIdentifier>{250f46ad-ae63-4e62-ae11-eaa1c1044edf}</UniqueIdentifier>
@@ -136,38 +103,11 @@
     <Filter Include="Database\base">
       <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\implements\detail">
-      <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\implements\detail\Win32">
-      <UniqueIdentifier>{38cec03a-1066-4e4e-aca1-f54708ac01f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\implements\detail">
-      <UniqueIdentifier>{e69bb2af-99fb-4f15-9c53-6726a2ad4fc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\implements\detail\DirectInput">
-      <UniqueIdentifier>{dbbe5706-7d19-41e2-bacc-abcfe3fa50c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Movie\implements\detail">
       <UniqueIdentifier>{0967790e-47d9-426b-a457-9af07c03716e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Movie\implements\detail\DirectShow">
       <UniqueIdentifier>{06cb3258-e262-4523-8ecc-ef5614c50d75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\implements\detail">
-      <UniqueIdentifier>{17aa248f-8304-4cea-b2b3-e889e8c06d4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\implements\detail\WinSock">
-      <UniqueIdentifier>{751bde4c-ee10-491f-894c-766a528bf5e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\implements\detail\Asio">
-      <UniqueIdentifier>{f2bcf752-6816-4b01-a0a8-be88b2022910}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IO\implements\detail">
-      <UniqueIdentifier>{52ef462b-3300-4ff7-b46d-89cfd0c43727}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IO\implements\detail\Win32">
-      <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sound\detail">
       <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
@@ -195,6 +135,33 @@
     </Filter>
     <Filter Include="Sound\Utility">
       <UniqueIdentifier>{927099e4-1590-4415-9ec2-f9f28ecafdeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\detail">
+      <UniqueIdentifier>{17aa248f-8304-4cea-b2b3-e889e8c06d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\detail\Asio">
+      <UniqueIdentifier>{f2bcf752-6816-4b01-a0a8-be88b2022910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\detail\WinSock">
+      <UniqueIdentifier>{751bde4c-ee10-491f-894c-766a528bf5e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\detail">
+      <UniqueIdentifier>{52ef462b-3300-4ff7-b46d-89cfd0c43727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\detail\Win32">
+      <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\detail">
+      <UniqueIdentifier>{e69bb2af-99fb-4f15-9c53-6726a2ad4fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\detail\DirectInput">
+      <UniqueIdentifier>{dbbe5706-7d19-41e2-bacc-abcfe3fa50c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\detail">
+      <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\detail\Win32">
+      <UniqueIdentifier>{38cec03a-1066-4e4e-aca1-f54708ac01f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -334,56 +301,11 @@
     <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
       <Filter>Graphics\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\IO\IFile.h">
-      <Filter>IO\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\IO\PackedFile.h">
-      <Filter>IO\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\IO\File.h">
-      <Filter>IO\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\IO\Logger.h">
-      <Filter>IO\implements</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Movie\IMoviePlayer.h">
       <Filter>Movie\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Movie\MoviePlayer.h">
       <Filter>Movie\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\ISocket.h">
-      <Filter>Network\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h">
-      <Filter>Network\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h">
-      <Filter>Network\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
-      <Filter>Network\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\Delegate.h">
-      <Filter>Object\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\NonCopyable.h">
-      <Filter>Object\utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResource.h">
-      <Filter>Object\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Input\Mouse.h">
-      <Filter>Input\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Input\Joystick.h">
-      <Filter>Input\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Input\Keyboard.h">
-      <Filter>Input\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Input\IKeyBase.h">
-      <Filter>Input\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\IAnimationController.h">
       <Filter>Graphics\Animation\interfaces</Filter>
@@ -406,66 +328,6 @@
     <ClInclude Include="..\Source\Utility\Common.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Object\IResourceCache.h">
-      <Filter>Object\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResourceHandle.h">
-      <Filter>Object\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResourceManager.h">
-      <Filter>Object\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\ResourceCache.h">
-      <Filter>Object\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\ResourceHandle.h">
-      <Filter>Object\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\ResourceManager.h">
-      <Filter>Object\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\CheckBox.h">
-      <Filter>GUI\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\ListBox.h">
-      <Filter>GUI\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\RadioButton.h">
-      <Filter>GUI\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\Window.h">
-      <Filter>GUI\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IWindow.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IPushButton.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IControl.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\PushButton.h">
-      <Filter>GUI\implements</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IRadioButton.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\ICheckBox.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IListBox.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IComboBox.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IDispatcher.h">
-      <Filter>GUI\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\Dispatcher.h">
-      <Filter>GUI\implements</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Timer\detail\Win32\Win32Timer.h">
       <Filter>Timer\detail\Win32</Filter>
     </ClInclude>
@@ -476,7 +338,7 @@
       <Filter>Thread\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\IO\detail\Win32\Win32File.h">
-      <Filter>IO\implements\detail\Win32</Filter>
+      <Filter>IO\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
       <Filter>Movie\implements\detail\DirectShow</Filter>
@@ -549,6 +411,126 @@
     </ClInclude>
     <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer3D.h">
       <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\ResourceCache.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\ResourceHandle.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\ResourceManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResource.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResourceCache.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResourceHandle.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\IResourceManager.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\Delegate.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Object\NonCopyable.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\ISocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\IFile.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\File.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\Logger.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\IO\PackedFile.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\IKeyBase.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Joystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Keyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Mouse.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\ICheckBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IComboBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IControl.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IDispatcher.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IListBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IPushButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IRadioButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\CheckBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\Dispatcher.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\ListBox.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\PushButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\RadioButton.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\Window.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\IAudioBuffer3D.h">
+      <Filter>Sound\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundStaticAudioBuffer.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\DirectSoundStaticAudioBuffer3D.h">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\OggReader.h">
+      <Filter>Sound\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Sound\WaveFileHeader.h">
+      <Filter>Sound\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -660,68 +642,14 @@
     <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
       <Filter>Graphics\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\IO\File.cpp">
-      <Filter>IO\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\IO\Logger.cpp">
-      <Filter>IO\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\IO\PackedFile.cpp">
-      <Filter>IO\implements</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
       <Filter>Movie\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp">
-      <Filter>Network\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp">
-      <Filter>Network\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp">
-      <Filter>Network\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Input\Joystick.cpp">
-      <Filter>Input\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Input\Keyboard.cpp">
-      <Filter>Input\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Input\Mouse.cpp">
-      <Filter>Input\implements</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Math.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Limits.cpp">
       <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Object\ResourceCache.cpp">
-      <Filter>Object\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
-      <Filter>Object\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Object\ResourceManager.cpp">
-      <Filter>Object\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\CheckBox.cpp">
-      <Filter>GUI\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\ListBox.cpp">
-      <Filter>GUI\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\RadioButton.cpp">
-      <Filter>GUI\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\Window.cpp">
-      <Filter>GUI\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\PushButton.cpp">
-      <Filter>GUI\implements</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
-      <Filter>GUI\implements</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp">
       <Filter>Timer\detail\Win32</Filter>
@@ -733,7 +661,7 @@
       <Filter>Thread\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\IO\detail\Win32\Win32File.cpp">
-      <Filter>IO\implements\detail\Win32</Filter>
+      <Filter>IO\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
       <Filter>Movie\implements\detail\DirectShow</Filter>
@@ -768,9 +696,6 @@
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp">
       <Filter>Sound\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Sound\SoundReader.cpp">
-      <Filter>Sound\Reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Sound\DirectSoundAudioManager.cpp">
       <Filter>Sound\detail\DirectSound</Filter>
     </ClCompile>
@@ -785,6 +710,69 @@
     </ClCompile>
     <ClCompile Include="..\Source\Sound\DirectSoundStreamingAudioBuffer3D.cpp">
       <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Object\ResourceCache.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Object\ResourceManager.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\File.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\Logger.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\IO\PackedFile.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Joystick.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Keyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Mouse.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\CheckBox.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\ListBox.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\PushButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\RadioButton.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\Window.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundStaticAudioBuffer.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\DirectSoundStaticAudioBuffer3D.cpp">
+      <Filter>Sound\detail\DirectSound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Sound\OggReader.cpp">
+      <Filter>Sound\Reader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

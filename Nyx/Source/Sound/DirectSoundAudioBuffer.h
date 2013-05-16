@@ -23,8 +23,11 @@ namespace Nyx {
 	struct AudioBufferDesc;
 	class WaveReader;
 	///オーディオバッファのDirectSoundによる実装
-	class DirectSoundAudioBuffer : public IAudioBuffer {
+	class DirectSoundAudioBuffer {
 	public:
+		/**
+		* コンストラクタ
+		*/
 		explicit DirectSoundAudioBuffer();
 
 		/**
@@ -36,30 +39,36 @@ namespace Nyx {
 
 		/**
 		* コンストラクタ
+		* @param const AudioBufferDesc オーディオバッファ記述子
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
 		void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
+
 
 		/**
 		* 再生
 		*/
 		void Play(bool isLoop);
 
+
 		/**
 		* 停止
 		*/
 		void Stop();
+
 
 		/**
 		* レジューム
 		*/
 		void Resume();
 
+
 		/**
 		* リセット
 		*/
 		void Reset();
+
 
 		/**
 		* パンの設定
@@ -67,11 +76,13 @@ namespace Nyx {
 		*/
 		void SetPan(long pan);
 
+
 		/**
 		* ボリュームの設定
 		* @param long ボリューム
 		*/
 		void SetVolume(long volume);
+
 
 		/**
 		* ボリュームの取得
@@ -79,55 +90,48 @@ namespace Nyx {
 		*/
 		long GetVolume() const;
 
+
 		/**
 		* パンの取得
 		* @return long
 		*/
 		long GetPan() const;
 
+
 		/**
-		* オーディオバッファの状態の取得
-		* @return AudioState
+		* ステータスコードの取得
+		* @return ulong
 		*/
+		ulong GetStatus() const;
+
+		void SetEffect(AudioEffectDesc desc){}
+		void ResetEffect() {}
+		/**
+		* DirectSoundBufferのポインタを返します
+		* @return const DirectSoundBufferPtr& DirectSoundBufferのポインタ
+		*/
+		const DirectSoundBufferPtr& GetHandle();
+
 		AudioState GetState() const;
 
-
-		/**
-		*　オーディオバッファにエフェクトを設定します
-		* @param const AudioEffectDesc& オーディオエフェクト記述子
-		*/
-		void SetEffect(const AudioEffectDesc& effectDesc);
-		
 		
 		/**
-		*　オーディオバッファのエフェクトをリセットします
+		* バッファにWaveデータを書き込みます
+		* @param size_t バッファサイズ
 		*/
-		void ResetEffect();
-	private:
-		/**
-		* WaveファイルヘッダからWaveフォーマット情報を構築します
-		* @param[out] WAVEFORMATEX    Waveファイルフォーマット
-		* @param const WaveFileHeader Waveファイルヘッダ
-		*/
+		void WriteWaveData(size_t bufferSize);
+		
+	protected:
+		void BuildDirectSoundBufferDesc(DSBUFFERDESC bufferDesc, WAVEFORMATEX wfx) {}
 		void BuildWaveFormatEx(WAVEFORMATEX& wfx);
 		
-		/**
-		* AudioBufferDescからDSBUFFERDESCを構築します
-		* @param [out] DSBUFFERDESC
-		* @param const AudioBufferDesc&
-		*/
-		void BuildDirectSoundBufferDesc(DSBUFFERDESC& desc, WAVEFORMATEX& wfx);
-		
-		void WriteWaveData();
-
-
 		/**
 		*　オーディオバッファにコーラスエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
 		void SetChorusEffect(const AudioEffectDesc& effectDesc);
-		
-		
+
+
 		/**
 		*　オーディオバッファにディストーションエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
@@ -161,20 +165,13 @@ namespace Nyx {
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
 		void SetParametricEqualizerEffect(const AudioEffectDesc& effectDesc);
-		
-		
+
+
 		/**
 		*　オーディオバッファにリバーブエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
 		void SetReverbEffect(const AudioEffectDesc& effectDesc);
-
-
-		/**
-		* ステータスコードの取得
-		* @return ulong
-		*/
-		ulong GetStatus() const;
 	private:
 		AudioBufferDesc bufferDesc_;
 		DirectSoundBufferPtr soundBuffer_;

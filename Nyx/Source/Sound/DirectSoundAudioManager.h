@@ -38,10 +38,20 @@ namespace Nyx {
 		
 		/**
 		* オーディオマネージャの初期化します
+		* @param AudioDesc オーディオ初期化記述子
 		*/
 		void Initialize(const AudioDesc& desc);
 		
-			
+
+		/**
+		* オーディオバッファを生成します
+		* @param const std::wstring& ファイル名
+		* @param SoundBufferType バッファタイプ
+		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
+		*/
+		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);	
+
+
 		/**
 		* Waveファイルをロードしてきます
 		* @param const std::wstring ファイル名
@@ -60,14 +70,24 @@ namespace Nyx {
 		/**
 		* Waveファイルからデータを読み込んできます
 		* @param const std::wstring ファイル名
-		* @param SoundBufferType バッファの種類
+		* @param AudioBufferDesc バッファの種類
 		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
 		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring, const AudioBufferDesc& bufferDesc);
 
+
+		/**
+		* Oggファイルからデータを読み込んできます
+		* @param const std::wstring ファイル名
+		* @param AudioBufferDesc バッファの種類
+		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
+		*/
+		std::shared_ptr<IAudioBuffer> LoadFromOggFile(const std::wstring, const AudioBufferDesc& bufferDesc);
 	private:	
-		int masterVolume_;	///マスターボリューム
+		int masterVolume_;	///< マスターボリューム
+		bool align_[3];     ///< アライメント調整
 		DirectSoundPtr directSound_;///< DirectSoundオブジェクト
+		DirectSoundPrimaryBufferPtr primaryBuffer_;
 	};
 }
 #endif

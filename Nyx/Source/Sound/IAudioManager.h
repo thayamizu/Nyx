@@ -33,8 +33,18 @@ namespace Nyx {
 
 		/**
 		* オーディオマネージャの初期化します
+		* const AudioDesc& オーディオ初期化記述子
 		*/
 		virtual void Initialize(const AudioDesc& desc) = 0;
+
+
+		/**
+		* オーディオバッファを生成します
+		* @param const std::wstring& ファイル名
+		* @param AudioBufferDesc バッファタイプ
+		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
+		*/
+		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
 
 
 		/**

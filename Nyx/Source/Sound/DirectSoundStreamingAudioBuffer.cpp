@@ -18,383 +18,127 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "Sound/WaveReader.h"
+#include "DirectSoundAudioBuffer.h"
 #include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
 
-	////-----------------------------------------------------------------------------------------
-	//DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, std::wstring fileName)
-	//	: IAudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), bufferSize(0), 
-	//	notifySize(0), nextOffset(0), notifyThreadHandle(NULL)
-	//{
-	//	
-	//	DataChunk dataChunk;
-	//	FmtChunk fmtChunk;
-	//	WAVEFORMATEX wfx;
-	//	unique_ptr<WaveReader> reader = unique_ptr<WaveReader>(new WaveReader());
-
-	//	//Waveデータの読み取り
-	//	reader->ReadFromFile(fileName);
-	//	reader->GetDataChunk(&dataChunk);
-	//	reader->GetFmtChunk(&fmtChunk);
-
-	//	//WAVEデータをコピー
-	//	waveSize = dataChunk.chunkSize;
-	//	waveData = shared_ptr<uchar>(new uchar[waveSize]);
-	//	memcpy(&*waveData, dataChunk.waveData, dataChunk.chunkSize);
-
-	//	//WAVEフォーマットのセットアップ
-	//	memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
-	//	wfx.wFormatTag      = fmtChunk.formatTag; 
-	//	wfx.nChannels       = fmtChunk.channelNum; 
-	//	wfx.nSamplesPerSec  = fmtChunk.samplingRate; 
-	//	wfx.nBlockAlign     = fmtChunk.blockSize; 
-	//	wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
-	//	wfx.wBitsPerSample  = fmtChunk.bitsRate; 
-
-	//	//１度の書き込みでセカンダリバッファに収めるブロックの大きさを計算
-	//	int samplingRate = wfx.nSamplesPerSec;   
-	//	ulong blockAlign = (ulong)wfx.nBlockAlign;  
-	//	ulong size = samplingRate * 2 * blockAlign / NotifyEventNums;	
-	//	size -= size % blockAlign; 
-	//	notifySize = size;
-
-	//	// DirectSoundセカンダリーバッファー作成
-	//	DSBUFFERDESC dsbd;  
-	//	ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
-	//	dsbd.dwSize		= sizeof(DSBUFFERDESC);
-	//	dsbd.dwFlags	= DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_CTRLPOSITIONNOTIFY 
-	//		| DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPAN | DSBCAPS_GLOBALFOCUS;
-	//	dsbd.dwBufferBytes = notifySize * NotifyEventNums;
-	//	dsbd.guid3DAlgorithm = DS3DALG_DEFAULT;
-	//	dsbd.lpwfxFormat = &wfx;
-
-	//	HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &soundBuffer, NULL ); 
-	//	Assert(hr == DS_OK);
-	//	if (FAILED(hr)) {
-	//		DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
-	//	}
-
-	//	//セカンダリバッファに波形データの書き込み
-	//	void* buf = NULL;
-	//	ulong bufSize=0;
-	//	soundBuffer->Lock( 0, dsbd.dwBufferBytes, &buf, &bufSize, NULL, NULL, 0); 
-	//	{
-	//		memcpy(buf, dataChunk.waveData, bufSize);
-	//		bufferSize = bufSize;
-	//		cursorRead += bufSize;
-	//	}
-	//	soundBuffer->Unlock( buf, bufferSize, NULL, 0 );
-
-	//	//通知イベスレッドの生成
-	//	notifyThreadHandle = CreateThread( NULL,0, NotifyThreadProc, (void*)this, 0, 0);
-
-	//	//通知イベントの設定
-	//	LPDIRECTSOUNDNOTIFY notify;
-	//	DSBPOSITIONNOTIFY  dspn[NotifyEventNums];
-	//	hr = soundBuffer->QueryInterface(IID_IDirectSoundNotify, reinterpret_cast<void**>(&notify));
-	//	Assert(hr == DS_OK);
-	//	if ( FAILED(hr)) {
-	//		DebugOutput::DebugMessage("IDirectSoundNotifyの取得に失敗しました");
-	//	}
-
-	//	// イベントとシグナルになる位置を取得
-	//	for( int i = 0 ; i < NotifyEventNums ; i++ ) {
-	//		notifyEvent[i] =CreateEvent(NULL, false, false, NULL);
-	//		dspn[i].dwOffset = (notifySize * i) +notifySize-1; // シグナルになる位置を計算
-	//		dspn[i].hEventNotify = notifyEvent[i];
-	//	}
-
-	//	// イベントをセット
-	//	hr = notify->SetNotificationPositions(NotifyEventNums, dspn);
-	//	Assert(hr == DS_OK);
-	//	if( FAILED(hr)) {
-	//		SafeRelease(notify);
-	//		DebugOutput::DebugMessage("IDirectSoundNotifyの設定に失敗しました");
-	//	}
-
-	//	SafeRelease(notify);
-	//}
-	//DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(DirectSound dsound, shared_ptr<char> wave)
-	//	: IAudioBuffer(), pan(0), volume(0), isEOF(false), cursorPlay(0), cursorRead(0), waveSize(0), 
-	//	bufferSize(0), notifySize(0), nextOffset(0), notifyThreadHandle(NULL)
-	//{
-	//	ulong blockSize;
-	//	DataChunk dataChunk;
-	//	FmtChunk fmtChunk;
-	//	WAVEFORMATEX wfx;
-	//	unique_ptr<WaveReader> reader = unique_ptr<WaveReader>(new WaveReader());
-
-	//	//Waveデータの読み取り
-	//	reader->ReadFromMem(wave);
-	//	reader->GetDataChunk(&dataChunk);
-	//	reader->GetFmtChunk(&fmtChunk);
-
-	//	//WAVEデータをコピー
-	//	waveSize = dataChunk.chunkSize;
-	//	waveData = shared_ptr<uchar>(new uchar[waveSize]);
-	//	memcpy(&*waveData, dataChunk.waveData, dataChunk.chunkSize);
-
-	//	//WAVEフォーマットのセットアップ
-	//	memset(&wfx, 0, sizeof(WAVEFORMATEX)); 
-	//	wfx.wFormatTag      = fmtChunk.formatTag; 
-	//	wfx.nChannels       = fmtChunk.channelNum; 
-	//	wfx.nSamplesPerSec  = fmtChunk.samplingRate; 
-	//	wfx.nBlockAlign     = fmtChunk.blockSize; 
-	//	wfx.nAvgBytesPerSec = fmtChunk.bytesPerSec; 
-	//	wfx.wBitsPerSample  = fmtChunk.bitsRate; 
-
-	//	//１度の書き込みでセカンダリバッファに収めるブロックの大きさを計算
-	//	int samplingRate = wfx.nSamplesPerSec;   
-	//	ulong blockAlign = (ulong)wfx.nBlockAlign;  
-	//	ulong size = samplingRate * 2 * blockAlign / NotifyEventNums;	
-	//	size -= size % blockAlign; 
-	//	notifySize = size;
-
-	//	// DirectSoundセカンダリーバッファー作成
-	//	DSBUFFERDESC dsbd;  
-	//	ZeroMemory( &dsbd, sizeof(DSBUFFERDESC) );
-	//	dsbd.dwSize		= sizeof(DSBUFFERDESC);
-	//	dsbd.dwFlags	= DSBCAPS_GETCURRENTPOSITION2 | DSBCAPS_CTRLPOSITIONNOTIFY 
-	//		| DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPAN | DSBCAPS_GLOBALFOCUS;
-	//	dsbd.dwBufferBytes = notifySize * NotifyEventNums;
-	//	dsbd.guid3DAlgorithm = DS3DALG_DEFAULT;
-	//	dsbd.lpwfxFormat = &wfx;
-
-	//	HRESULT hr = dsound->CreateSoundBuffer( &dsbd, &soundBuffer, NULL ); 
-	//	Assert(hr == DS_OK);
-	//	if (FAILED(hr)) {
-	//		DebugOutput::DebugMessage("DirectSoundセカンダリバッファの作成に失敗しました");
-	//	}
-
-	//	//セカンダリバッファに波形データの書き込み
-	//	void* buf = NULL;
-	//	ulong bufSize=0;
-	//	soundBuffer->Lock( 0, dsbd.dwBufferBytes, &buf, &bufSize, NULL, NULL, 0); 
-	//	{
-	//		memcpy(buf, dataChunk.waveData, bufSize);
-	//		bufferSize = bufSize;
-	//		cursorRead += bufSize;
-	//	}
-	//	soundBuffer->Unlock( buf, bufferSize, NULL, 0 );
-
-	//	//通知イベスレッドの生成
-	//	notifyThreadHandle = CreateThread( NULL,0, NotifyThreadProc, (void*)this, 0, 0);
-
-	//	//通知イベントの設定
-	//	LPDIRECTSOUNDNOTIFY notify;
-	//	DSBPOSITIONNOTIFY  dspn[NotifyEventNums];
-	//	hr = soundBuffer->QueryInterface(IID_IDirectSoundNotify, reinterpret_cast<void**>(&notify));
-	//	Assert(hr == DS_OK);
-	//	if ( FAILED(hr)) {
-	//		DebugOutput::DebugMessage("IDirectSoundNotifyの取得に失敗しました");
-	//	}
-
-	//	// イベントとシグナルになる位置を取得
-	//	for( int i = 0 ; i < NotifyEventNums ; i++ ) {
-	//		notifyEvent[i] =CreateEvent(NULL, false, false, NULL);
-	//		dspn[i].dwOffset = (notifySize * i) +notifySize-1; // シグナルになる位置を計算
-	//		dspn[i].hEventNotify = notifyEvent[i];
-	//	}
-
-	//	// イベントをセット
-	//	hr = notify->SetNotificationPositions(NotifyEventNums, dspn);
-	//	Assert(hr == DS_OK);
-	//	if( FAILED(hr)) {
-	//		SafeRelease(notify);
-	//		DebugOutput::DebugMessage("IDirectSoundNotifyの設定に失敗しました");
-	//	}
-
-	//	SafeRelease(notify);
-	//}
-
-	////-----------------------------------------------------------------------------------------
-	//DirectSoundStreamingAudioBuffer::~DirectSoundStreamingAudioBuffer()
-	//{
-	//	SafeRelease(soundBuffer);
-	//}
-
-	//void DirectSoundStreamingAudioBuffer::Play()
-	//{
-	//	Assert(soundBuffer != nullptr);
-	//	if (IsPause()) return;
-
-	//	HRESULT hr = soundBuffer->Play(0, 0, DSBPLAY_LOOPING);
-	//	if (hr == DSERR_BUFFERLOST) {
-	//		soundBuffer->Restore();//メモリ復元(内容は復元されない)
-	//	}
-	//	SetPlaying(true);
+	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer() 
+		: audio_(nullptr) {
+	}
 
 
-	//}
-	////-----------------------------------------------------------------------------------------
-	////
-	//void DirectSoundStreamingAudioBuffer::Stop()
-	//{
-	//	Assert(soundBuffer != nullptr);
-	//	if (IsPause()) return;
+	//-------------------------------------------------------------------------------------------------------
+	//
+	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName)
+		: audio_(new DirectSoundAudioBuffer(bufferDesc, dsound, fileName)){
 
-	//	HRESULT hr = soundBuffer->Stop();
-	//	SetPlaying(false);
-	//}
 
-	////-----------------------------------------------------------------------------------------
-	////
-	//void DirectSoundStreamingAudioBuffer::Resume()
-	//{
-	//	Assert(soundBuffer != nullptr);
-	//	Play();
-	//}
+			audio_->WriteWaveData(bufferDesc.bufferSize);
+	}
 
-	////-----------------------------------------------------------------------------------------
-	////
-	//void DirectSoundStreamingAudioBuffer::Reset()
-	//{
-	//	Assert(soundBuffer != nullptr);
-	//	bool isPlay = IsPlaying();
-	//	//再生中なら一度止めておく
-	//	if (isPlay) {
-	//		Stop();
-	//	}
 
-	//	//サウンドバッファを先頭から読み直す
-	//	nextOffset = 0;
-	//	cursorRead = 0;
-	//	WriteToBuffer(nextOffset);
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName) {
+		if (audio_== nullptr) {
+			audio_ = std::make_shared<DirectSoundAudioBuffer>();
+		}
+		audio_->Load(bufferDesc, ds, fileName);
+		audio_->WriteWaveData(bufferDesc.bufferSize);
+	}
 
-	//	//再生中だったのなら演奏再開
-	//	if (isPlay) {
-	//		Play();
-	//	}
-	//}
 
-	////-----------------------------------------------------------------------------------------
-	////
-	//long DirectSoundStreamingAudioBuffer::GetPan()
-	//	const 
-	//{
-	//	return pan;
-	//}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::Play(bool isLoop) {
+		Assert(audio_ != nullptr);
+		audio_->Play(isLoop);
+	}
 
-	////-----------------------------------------------------------------------------------------
-	////
-	//void DirectSoundStreamingAudioBuffer::SetPan(long pan_)
-	//{	
-	//	pan = pan_;
-	//	soundBuffer->SetPan(pan_);	
-	//}
 
-	////-----------------------------------------------------------------------------------------
-	////
-	//long DirectSoundStreamingAudioBuffer::GetVolume()
-	//	const 
-	//{
-	//	return volume;
-	//}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::Stop() {
+		Assert(audio_ != nullptr);
+		audio_->Stop();
+	}
 
-	////-----------------------------------------------------------------------------------------
-	////
-	//void DirectSoundStreamingAudioBuffer::SetVolume(long v)
-	//{
-	//	if (v > 100) { v = 100;}
-	//	else if (v < 0) {v=0;}
 
-	//	volume = v;
-	//	soundBuffer->SetVolume(v*100 + DSBVOLUME_MIN);
-	//}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::Resume() {
+		Assert(audio_ != nullptr);
+		audio_->Resume();
+	}
 
-	////----------------------------------------------------------------------------------------
-	////
-	//void DirectSoundStreamingAudioBuffer::NotifyThread()
-	//{
-	//	MSG msg;
-	//	bool isDone = false;
-	//	while( !isDone ) 
-	//	{ 
-	//		ulong dwResult = MsgWaitForMultipleObjects(NotifyEventNums, notifyEvent, 
-	//			false, INFINITE, QS_ALLEVENTS );
-	//		switch( dwResult )
-	//		{
-	//			//シグナル状態にある。（つまり、再生カーソルが通知位置を通過した）
-	//		case WAIT_OBJECT_0: 
-	//		case WAIT_OBJECT_0+1:
-	//		case WAIT_OBJECT_0+2:
-	//		case WAIT_OBJECT_0+3://再生シグナル
-	//			WriteToBuffer(nextOffset);
-	//			break;
-	//		case WAIT_OBJECT_0+NotifyEventNums:	 
-	//			while( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) { 
-	//				if( msg.message == WM_QUIT ){
-	//					isDone=true;
-	//				}
-	//			}
-	//			break;
-	//		}
-	//	}
-	//}
-	//HRESULT DirectSoundStreamingAudioBuffer::WriteToBuffer(ulong offset)
-	//{
-	//	HRESULT hr=E_FAIL;
-	//	void* buf = NULL;//書き込みバッファ
-	//	ulong bufSize=0;//バッファサイズ
 
-	//	//読み込みカーソルが全WAVの最後に到達した（これ以上読み込むとクラッシュ）
-	//	if(cursorRead + notifySize >= waveSize) {	
-	//		if (IsLooping()) {
-	//			//通知イベントをリセット
-	//			for (int i=0; i< NotifyEventNums;i++) {
-	//				ResetEvent(notifyEvent[i]);
-	//			} 
-	//			//読み込み位置をリセット
-	//			cursorRead = 0;
-	//			cursorPlay = 0;
-	//			nextOffset = 0;
-	//		}
-	//		else {
-	//			isEOF = true;
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::Reset() {
+		Assert(audio_ != nullptr);
+		audio_->Reset();
+	}
 
-	//			//読み込まずに、単に無音データをコピーしておく
-	//			soundBuffer->Lock(offset, notifySize,&buf, &bufSize,NULL,NULL,0);
-	//			{
-	//				memset(buf,0,bufSize);//無音（0)にするだけ
-	//			}
-	//			soundBuffer->Unlock(buf, bufSize, NULL,NULL);
-	//			nextOffset += bufSize;
-	//			nextOffset %= bufferSize;	
 
-	//			return E_FAIL;
-	//		}
-	//	}
-	//	///データの読み込み
-	//	hr = soundBuffer->Lock(offset, notifySize, &buf,&bufSize, NULL, NULL, 0);
-	//	Assert(hr == DS_OK);
-	//	if(FAILED(hr)) {
-	//		DebugOutput::DebugMessage("ロック失敗");
-	//		return hr;
-	//	}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::SetPan(long pan) {
+		Assert(audio_ != nullptr);
+		audio_->SetPan(pan);
+	}
 
-	//	//バッファへコピー
-	//	memcpy(buf, (void*)(&*waveData+cursorRead), bufSize);
-	//	nextOffset += bufSize;
-	//	nextOffset %= bufferSize;
 
-	//	//読み込みカーソルを進める
-	//	cursorRead += bufSize;	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::SetVolume(long volume) {
+		Assert(audio_ != nullptr);
+		audio_->SetVolume(volume);
+	}
 
-	//	hr = soundBuffer->Unlock(buf,bufSize,NULL,NULL);
-	//	Assert(hr == DS_OK);
-	//	if(FAILED(hr)) {
-	//		DebugOutput::DebugMessage("アンロック失敗");
-	//		return hr;
-	//	}	
 
-	//	return DS_OK;
-	//}
-	////----------------------------------------------------------------------------------------
-	////
-	//ulong __stdcall NotifyThreadProc(void* param) {
-	//	DirectSoundStreamingAudioBuffer* streamingBuffer = reinterpret_cast<DirectSoundStreamingAudioBuffer*>(param);
-	//	streamingBuffer->NotifyThread();
-	//	return 0;
-	//}
+	//-------------------------------------------------------------------------------------------------------
+	//
+	long DirectSoundStreamingAudioBuffer::GetPan() const {
+		Assert(audio_ != nullptr);
+		return audio_->GetPan();
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	long DirectSoundStreamingAudioBuffer::GetVolume() const {
+		Assert(audio_ != nullptr);
+		return audio_->GetVolume();
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	AudioState DirectSoundStreamingAudioBuffer::GetState() const {
+		Assert(audio_ != nullptr);
+		return audio_->GetState();
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::ResetEffect() {
+		Assert(audio_ != nullptr);
+		audio_->ResetEffect();
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::SetEffect(const AudioEffectDesc& effectDesc) {
+		Assert(audio_ != nullptr);
+		audio_->SetEffect(effectDesc);
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	AudioUtility::BufferType DirectSoundStreamingAudioBuffer::GetBufferType() const {
+		return AudioUtility::BufferType_StreamingAudioBuffer;
+	}
 }

@@ -16,11 +16,9 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IAUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_IAUDIO_BUFFER_H_
+#include "AudioUtility.h"
 
 namespace Nyx {
-	struct AudioState;
-	struct AudioEffectDesc;
-
 	///オーディオバッファインタフェース
 	class IAudioBuffer {
 	public:
@@ -79,12 +77,12 @@ namespace Nyx {
 
 		
 		/**
-		* オーディオバッファのボ状態を取得します
+		* オーディオバッファの状態を取得します
 		* @return int ボリューム
 		*/
 		virtual AudioState GetState() const = 0;
-
 		
+
 		/**
 		*　オーディオバッファのエフェクトをリセットします
 		*/
@@ -96,6 +94,13 @@ namespace Nyx {
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
 		virtual void SetEffect(const AudioEffectDesc& effectDesc) = 0;
+
+
+		/**
+		* オーディオバッファの状態の取得します
+		* @return AudioUtility::BufferType
+		*/
+		virtual AudioUtility::BufferType GetBufferType() const =0;
 	};
 }
 #endif

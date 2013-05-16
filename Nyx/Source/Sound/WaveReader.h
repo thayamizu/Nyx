@@ -16,38 +16,10 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_WAVE_READER_H_
 #define NYX_CORE_INCLUDED_WAVE_READER_H_
+#include "WaveFileHeader.h"
 
 namespace Nyx {
-
-	///Formatチャンク構造体
-	struct FormatChunk
-	{
-		uchar formatChunkID[4];  ///FMTチャンクID
-		uint chunkSize; ///<チャンクサイズ
-		ushort formatTag; ///<フォーマットID
-		ushort channelNum;///<チャンネル数
-		uint   samplingRate; ///<サンプリングレート
-		uint   bytesPerSec;//<データ速度
-		ushort blockSize; ///<ブロックサイズ
-		ushort bitsRate;///< サンプルあたりのビット数
-	};
-
-	///データチャンク構造体
-	struct DataChunk
-	{
-		uchar dataChunkID[4];///< データチャンクID
-		uint chunkSize;  ///< チャンクサイズ 
-	};
-
-	///Waveファイルヘッダ構造体
-	struct WaveFileHeader
-	{
-		uchar riffID[4];  ///< RIFFフォーマットID
-		uint fileSize;///< ファイルサイズ
-		uchar waveID[4];  ///< WaveファイルID
-		FormatChunk formatChunk; ///<フォーマットチャンク
-		DataChunk   dataChunk;   ///<データチャンク
-	};
+	class File;
 
 	///wavファイルリーダ
 	class WaveReader {
@@ -55,41 +27,63 @@ namespace Nyx {
 		/**
 		* コンストラクタ
 		*/
-		explicit WaveReader();
+		WaveReader();
 
 
 		/**
 		* コンストラクタ
 		* @param const std::wstring& ファイル名
 		*/
-		explicit WaveReader(const std::wstring& fileName);
+		WaveReader(const std::wstring& fileName);
 
-	
+
+		/**
+		* WAVファイルを開く
+		* @param const std::wstring& ファイル名
+		*/
+		void Open(const std::wstring& fileName);
+		
+
+		/**
+		* 読み込みカーソルを指定した位置にセットする
+		* @param ulong 読み込みカーソル位置
+		*/
+		void SetCursor(ulong cursor);
+
+
+		/**
+		* 読み込みカーソルを取得する
+		* @return ulong 読み込みカーソル位置
+		*/
+		ulong GetCursor() const;
+		
 		
 		/**
 		* ファイルからWaveファイルを読み込みます
 		* @param std::wstring wavファイル名
 		*/
-		void ReadFromFile(const std::wstring& fileName);
+		//void ReadFromFile(const std::wstring& fileName);
 
 
 		/**
 		* Waveファイルヘッダの取得します
 		* @return const WaveFileHeader& WAVEファイルヘッダ
 		*/
-		const WaveFileHeader& GetFileHeader() const;
-		
+		const WaveFileHeader& ReadHeader();
+
 
 		/**
 		* Waveデータを取得します
 		* @return std::shared_ptr<char> WAVEデータ
 		*/
-		const std::shared_ptr<char> GetWaveData() const;
+		std::shared_ptr<char> Read(size_t bufferSize);
 	private:
-		ulong cursorPos_;
-		std::wstring   fileName_;        ///< ファイル名
-		WaveFileHeader waveHeader_;      ///<Waveファイルヘッダ
-		std::shared_ptr<char> waveData_; ///<Waveデータ
+		bool isReadHeader_;             ///< ヘッダを読み込んでいるか
+		char align_[3];                 ///< アライメント調整
+		ulong cursor_;                  ///< カーソル
+		std::wstring   fileName_;       ///< ファイル名
+		std::shared_ptr<File> waveFile_;///< Waveファイル
+		WaveFileHeader waveHeader_;     ///< Waveファイルヘッダ
 	};
 }
 #endif

@@ -15,15 +15,17 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
+#include "Debug/Assert.h"
+#include "Debug/DebugOutput.h"
 #include "IO/File.h"
-#include "Sound/WaveReader.h"
+#include "WaveFileHeader.h"
+#include "WaveReader.h"
 
 namespace Nyx {
-
 	//-------------------------------------------------------------------------------------------------------
 	//
 	WaveReader::WaveReader() 
-		:waveData_(nullptr) {
+		: isReadHeader_(false), waveFile_(nullptr), cursor_(0), fileName_(L"") {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
 	}
 
@@ -31,43 +33,101 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	WaveReader::WaveReader(const std::wstring& fileName) 
-		:waveData_(nullptr), fileName_(fileName) {
+		: isReadHeader_(false), waveFile_(nullptr), cursor_(0), fileName_(fileName) {
 		::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
 
-		ReadFromFile(fileName);
+		Open(fileName);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::ReadFromFile(const std::wstring& fileName) {
-		std::unique_ptr<File> file(new File(fileName, Nyx::ReadMode));
-	
+	void WaveReader::Open(const std::wstring& fileName) {
+		fileName_ = fileName;
+		waveFile_ = std::make_shared<File>(fileName);
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void WaveReader::SetCursor(ulong cursor) {
+		cursor_ = cursor;
+		const auto waveSize = waveHeader_.dataChunk.chunkSize;
+		if (waveSize <= cursor_) {
+			cursor_ = 0;
+		} 
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	ulong WaveReader::GetCursor() const {
+		return cursor_;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	//void WaveReader::ReadFromFile(const std::wstring& fileName) {
+	//	std::unique_ptr<File> file(new File(fileName, Nyx::ReadMode));
+	//
+	//	//Waveファイルヘッダ読み取り
+	//	file->Read(&waveHeader_, sizeof(WaveFileHeader)); 
+
+	//	//Waveデータの読み取り
+	//	const int waveDataSize = waveHeader_.dataChunk.chunkSize;
+	//	char * buffer = new char[waveDataSize];
+	//	file->Read(buffer, waveDataSize); 
+
+	//	//スマートポインタの管理下に置く
+	//	waveData_ = std::shared_ptr<char>(
+	//		buffer, std::default_delete<char[]>());
+	//}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	const WaveFileHeader& WaveReader::ReadHeader() {
+		Assert(waveFile_->IsOpened());
+		if (isReadHeader_) {
+			return waveHeader_;
+		}
 		//Waveファイルヘッダ読み取り
-		file->Read(&waveHeader_, sizeof(WaveFileHeader)); 
+		waveFile_->Read(&waveHeader_, sizeof(WaveFileHeader)); 
 
-		//Waveデータの読み取り
-		const int waveDataSize = waveHeader_.dataChunk.chunkSize;
-		char * buffer = new char[waveDataSize];
-		file->Read(buffer, waveDataSize); 
-
-		//スマートポインタの管理下に置く
-		waveData_ = std::shared_ptr<char>(
-			buffer, std::default_delete<char[]>());
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	const WaveFileHeader& WaveReader::GetFileHeader() const {
 		return waveHeader_;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const std::shared_ptr<char> WaveReader::GetWaveData() const {
-		return waveData_;
-	}
+	std::shared_ptr<char> WaveReader::Read(const size_t bufferSize){
+		Assert(waveFile_->IsOpened());
+		if (!isReadHeader_) {
+			ReadHeader();
+		} 
+		//バッファ初期化
+		char * buffer = new char[bufferSize];
+		ZeroMemory(buffer, bufferSize);
 
+		//現在のカーソル位置から実際に読み込むサイズを決定する
+		const auto waveSize = waveHeader_.dataChunk.chunkSize;
+		size_t readSize;
+		if (waveSize <= (cursor_ + bufferSize)) {
+			readSize = waveSize - cursor_;
+		}
+		else {
+			readSize = bufferSize;
+		}
+		waveFile_->Read(buffer, readSize); 
+		
+		//カーソル位置を実際に読み込んだサイズ分進める
+		SetCursor(cursor_ + readSize);
+	
+		//スマートポインタの管理下に置く
+		auto waveData = std::shared_ptr<char>(
+			buffer, std::default_delete<char[]>());
+	
+		return waveData;
+	}
 }
