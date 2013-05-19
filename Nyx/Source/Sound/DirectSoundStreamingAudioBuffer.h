@@ -18,114 +18,67 @@
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
 #include "Sound/IAudioBuffer.h"
 #include "DirectSoundDefinition.h"
+#include "AudioUtility.h"
 
 namespace Nyx {
-	class AudioBuffer;
-	struct AudioBufferDesc;
-	class DirectSoundAudioBuffer;
+	class WaveReader;
 
-	class DirectSoundStreamingAudioBuffer : public IAudioBuffer {
+	class DirectSoundStreamingAudioBuffer : public DirectSoundAudioBuffer {
 	public:
 		/**
 		* コンストラクタ
+		* @param const AudioBufferDesc& bufferDesc
+		* @param const DirectSoundPtr 
+		* @param const std::wstring& fileName
 		*/
-		explicit DirectSoundStreamingAudioBuffer();
-
+		explicit DirectSoundStreamingAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName);
+		
+		
 		/**
-		* コンストラクタ
-		* @param const DirectSound DirectSoundオブジェクト
-		* @param std::wstring ファイル名
+		* デストラクタ
 		*/
-		explicit DirectSoundStreamingAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
-
-		/**
-		* コンストラクタ
-		* @param const AudioBufferDesc オーディオバッファ記述子
-		* @param const DirectSound DirectSoundオブジェクト
-		* @param std::wstring ファイル名
-		*/
-		virtual void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
-
-
-		/**
-		* オーディオバッファを再生します
-		*/
-		virtual void Play(bool isLoop);
-
-
-		/**
-		* オーディオバッファを停止します
-		*/
-		virtual void Stop();
-
-
-		/**
-		* オーディオバッファをレジュームします
-		*/
-		virtual void Resume();
-
-
-		/**
-		* オーディオバッファをリセットします
-		*/
-		virtual void Reset();
-
-
-		/**
-		* パンの値を設定します
-		* @param long パン
-		*/
-		virtual void SetPan(long pan);
-
-
-		/**
-		* ボリュームの値を設定します
-		* @param long ボリューム
-		*/
-		virtual void SetVolume(long volume);
-
-
-		/**
-		* ボリュームの値を取得します
-		* @return long
-		*/
-		virtual long GetVolume() const;
-
-
-		/**
-		* パンの値を取得します
-		* @return long
-		*/
-		virtual long GetPan() const;
-
-
-		/**
-		* オーディオバッファの状態の取得
-		* @return AudioState
-		*/
-		virtual AudioState GetState() const;
-
-
+		~DirectSoundStreamingAudioBuffer();
+		
+		
 		/**
 		* オーディオバッファの状態の取得します
 		* @return AudioUtility::BufferType
 		*/
-		virtual AudioUtility::BufferType GetBufferType() const = 0;
-
-
-		/**
-		*　オーディオバッファにエフェクトを設定します
-		* @param const AudioEffectDesc& オーディオエフェクト記述子
-		*/
-		virtual void SetEffect(const AudioEffectDesc& effectDesc);
-		
-		
-		/**
-		*　オーディオバッファのエフェクトをリセットします
-		*/
-		virtual void ResetEffect();
+		AudioUtility::BufferType GetBufferType() const;
 	private:
-		std::shared_ptr<DirectSoundAudioBuffer> audio_;
+		/**
+		* DirectSoundのセカンダリバッファにwaveデータを書き込みます
+		* @param size_t バッファサイズ
+		*/
+		void WriteWaveData(size_t bufferSize);
+
+		/**
+		* DirectSoundセカンダリバッファ記述子を作成します
+		* @param DSBUFFERDESC*
+		* @param WAVEFORMATEX& wfx
+		*/
+		void BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
+
+
+		/**
+		* 通知スレッド用プロシージャ
+		* @param void* 
+		*/
+		friend ulong _stdcall NotifyProc(void* parameter);
+
+
+		/**
+		* 通知スレッド
+		*/
+		void NotifyThread();
+	private:
+		HANDLE notifyThreadHandle_;
+		static const int NotifyEventNum = 4;
+		ulong notifySize_;
+		ulong offset_;
+		HANDLE notifyEventList_[NotifyEventNum];
+		AudioBufferDesc bufferDesc_;
+		std::shared_ptr<WaveReader> waveReader_;
 	};
 }
 #endif

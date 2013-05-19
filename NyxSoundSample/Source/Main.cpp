@@ -8,13 +8,14 @@ using namespace std;
 using namespace Nyx;
 
 
-static const std::wstring g_WavFile = L"..\\..\\TestData\\Sound\\test.wav";
+static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\test.wav";
+static const std::wstring g_WavFile2 = L"..\\..\\TestData\\Sound\\test3.wav";
 
 class DirectSoundStaticAudioBufferTest
 {
 public:
 	DirectSoundStaticAudioBufferTest()
-		: hwnd_(nullptr), audio_(nullptr), manager_(nullptr)
+		: hwnd_(nullptr), audio2_(nullptr), manager_(nullptr)
 	{
 		hwnd_ = ::GetConsoleWindow();
 
@@ -29,95 +30,54 @@ public:
 
 	void TestCase1() {
 		Load();
-		Play();
-		audio_->SetEffect(AudioEffectDesc());
+		Play1();
 		::Sleep(2000);
-		Stop();
-		::Sleep(1000);
-
-		Play();
-		getchar();
-
+		Play2();
 	}
 	void TestCase2() {
 		Load();
-		Play();
+		Play1();
 		::Sleep(2000);
 		Stop();
 		::Sleep(1000);
 
 		Resume();
-		Play();
+		Play1();
 		::Sleep(2000);
 		Reset();
-		Play();
+		Play1();
 		::Sleep(2000);
-	}
-
-	void TestCase3() {
-		Load();
-		Play();
-		::Sleep(2000);
-		Stop();
-		::Sleep(1000);
-
-		Resume();
-		Play();
-		::Sleep(2000);
-		Reset();
-		Play();
-		::Sleep(2000);
-	}
-	void TestCase4() {
-		Load();
-		Play();
-		::Sleep(2000);
-		Stop();
-		::Sleep(1000);
-
-		Resume();
-		Play();
-		::Sleep(2000);
-		Reset();
-		Play();
-		::Sleep(2000);
-	}
-
-	void TestCase5() {
-		Load();
-		Play();
-		::Sleep(2000);
-		Stop();
-		::Sleep(1000);
-
 	}
 	void Load() {
-		audio_ = std::make_shared<DirectSoundStaticAudioBuffer>();
 		AudioBufferDesc desc;
-		desc.bufferSize = 100000;
 		desc.focusType  = AudioUtility::FocusType_GlobalFocus;
 		desc.bufferType = AudioUtility::BufferType_StaticAudioBuffer;
-		desc.algorithm = DS3DALG_HRTF_FULL;
-		audio_ = std::make_shared<DirectSoundStaticAudioBuffer>(desc,manager_->GetHandle(), g_WavFile);
-		Assert(audio_ != nullptr);
+		desc.algorithm = DS3DALG_DEFAULT;
+		audio1_ = std::make_shared<DirectSoundStreamingAudioBuffer>(desc,manager_->GetHandle(), g_WavFile1);
+		Assert(audio1_ != nullptr);
+		audio2_ = std::make_shared<DirectSoundStaticAudioBuffer>(desc,manager_->GetHandle(), g_WavFile1);
+		Assert(audio2_ != nullptr);
 	}
-
-	void Play() {
+void Play1() {
 		DebugOutput::Trace("オーディオバッファを再生します...");
-		audio_->Play(true);
+		audio1_->Play(true);
 	}
-
+	void Play2() {
+		DebugOutput::Trace("オーディオバッファを再生します...");
+		audio2_->Play(true);
+	}
+	
 	void Stop() {
 		DebugOutput::Trace("オーディオバッファを停止します...");
-		audio_->Stop();
+		audio2_->Stop();
 	}
 	void Resume() {
 		DebugOutput::Trace("オーディオバッファをレジュームします...");
-		audio_->Resume();
+		audio2_->Resume();
 	}
 	void Reset() {
 		DebugOutput::Trace("オーディオバッファをリセットします...");
-		audio_->Reset();
+		audio2_->Reset();
 	}
 
 	void GetStatus() {
@@ -127,27 +87,27 @@ public:
 
 	void GetPan() {
 		DebugOutput::Trace("オーディオバッファの相対ボリュームを取得します...");
-		long pan = audio_->GetPan();
+		long pan = audio2_->GetPan();
 
 	}	
 	void GetVolume() {
 		DebugOutput::Trace("オーディオバッファのボリュームを取得します...");
-		long volume  = audio_->GetVolume();
+		long volume  = audio2_->GetVolume();
 	}		
 	void SetPan() {
 		DebugOutput::Trace("オーディオバッファの相対ボリュームを設定します...");
-		audio_->SetPan(100);
+		audio2_->SetPan(100);
 	}	
 	void SetVolume() {
 		DebugOutput::Trace("オーディオバッファのボリュームを設定します...");
-		audio_->SetVolume(100);
+		audio2_->SetVolume(100);
 	}
 private:
 	HWND hwnd_;
-	std::shared_ptr<DirectSoundStaticAudioBuffer>  audio_;
+	std::shared_ptr<DirectSoundStreamingAudioBuffer>  audio1_;
+	std::shared_ptr<DirectSoundStaticAudioBuffer>  audio2_;
 	std::shared_ptr<DirectSoundAudioManager> manager_;
 };
-
 
 
 int main()
@@ -170,6 +130,7 @@ int main()
 		test->TestCase5();*/
 	}
 	catch(COMException e) {
+		std::cout << e.GetMessage() << std::endl;
 		getchar();
 	}
 }

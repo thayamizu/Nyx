@@ -22,31 +22,33 @@ namespace Nyx {
 	///Formatチャンク構造体
 	struct FormatChunk
 	{
-		uchar formatChunkID[4];  ///FMTチャンクID
-		uint chunkSize; ///<チャンクサイズ
-		ushort formatTag; ///<フォーマットID
-		ushort channelNum;///<チャンネル数
-		uint   samplingRate; ///<サンプリングレート
-		uint   bytesPerSec;//<データ速度
-		ushort blockSize; ///<ブロックサイズ
-		ushort bitsRate;///< サンプルあたりのビット数
+		uchar	formatChunkID[4]; ///FMTチャンクID
+		uint	chunkSize;        ///<チャンクサイズ
+		ushort	formatTag;        ///<フォーマットID
+		ushort	channelNum;       ///<チャンネル数
+		uint	samplingRate;     ///<サンプリングレート
+		uint	bytesPerSec;      ///<データ速度
+		ushort	blockSize;        ///<ブロックサイズ
+		ushort	bitsRate;         ///< サンプルあたりのビット数
 	};
+
 
 	///データチャンク構造体
 	struct DataChunk
 	{
-		uchar dataChunkID[4];///< データチャンクID
-		uint chunkSize;  ///< チャンクサイズ 
+		uchar dataChunkID[4]; ///< データチャンクID
+		uint  chunkSize;      ///< チャンクサイズ 
 	};
+
 
 	///Waveファイルヘッダ構造体
 	struct WaveFileHeader
 	{
-		uchar riffID[4];  ///< RIFFフォーマットID
-		uint fileSize;///< ファイルサイズ
-		uchar waveID[4];  ///< WaveファイルID
-		FormatChunk formatChunk; ///<フォーマットチャンク
-		DataChunk   dataChunk;   ///<データチャンク
+		uchar        riffID[4];  ///< RIFFフォーマットID
+		uint         fileSize;   ///< ファイルサイズ
+		uchar        waveID[4];  ///< WaveファイルID
+		FormatChunk  formatChunk;///<フォーマットチャンク
+		DataChunk    dataChunk;  ///<データチャンク
 	};
 }
 

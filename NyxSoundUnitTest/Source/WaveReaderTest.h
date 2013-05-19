@@ -21,8 +21,8 @@ END_TEST
 BEGIN_TEST(WaveReader002)
 {
 	Nyx::WaveReader wave_reader;
-	wave_reader.ReadFromFile(L"../../TestData/Sound/test.wav");
-
+	wave_reader.Open(L"../../TestData/Sound/test.wav");
+	wave_reader.ReadHeader();
 	std::ofstream ofs("wave_file.txt");
 	
 	ofs << wave_reader.waveHeader_.riffID << "\n";
@@ -37,15 +37,14 @@ BEGIN_TEST(WaveReader002)
 	ofs << wave_reader.waveHeader_.formatChunk.blockSize << "\n";
 	ofs << wave_reader.waveHeader_.dataChunk.dataChunkID << "\n";
 	ofs << wave_reader.waveHeader_.dataChunk.chunkSize << "\n";
-	ofs << wave_reader.waveData_ << "\n";
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.fileSize == 264674);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.bitsRate == 16);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.blockSize == 2);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.bytesPerSec == 44100);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.channelNum == 1);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.chunkSize == 16);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.formatTag == 1);
-	//WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.samplingRate == 22050);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.fileSize == 264674);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.bitsRate == 16);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.blockSize == 2);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.bytesPerSec == 44100);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.channelNum == 1);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.chunkSize == 16);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.formatTag == 1);
+	WIN_ASSERT_TRUE(wave_reader.waveHeader_.formatChunk.samplingRate == 22050);
 }
 END_TEST
 

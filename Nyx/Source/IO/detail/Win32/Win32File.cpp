@@ -106,7 +106,6 @@ namespace Nyx {
 		}
 		ulong readBytes;
 		::ReadFile(handle, buffer, size, &readBytes, NULL); 
-
 		return readBytes;
 	}
 

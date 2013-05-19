@@ -17,9 +17,9 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_AUDIO_UTILITY_H_
 #define NYX_CORE_INCLUDED_AUDIO_UTILITY_H_
+#include "WaveFileHeader.h"
 
-namespace Nyx
-{
+namespace Nyx {
 	///オーディオユーティリティ
 	class AudioUtility {
 	public:
@@ -85,6 +85,14 @@ namespace Nyx
 		* @return long デシベル
 		*/
 		static long DecibelToVolume(long decibel);
+
+
+		/**
+		* WaveファイルヘッダからWaveフォーマット情報を構築します
+		* @param[out] WAVEFORMATEX    Waveファイルフォーマット
+		* @param const WaveFileHeader Waveファイルヘッダ
+		*/
+		static void BuildWaveFormatEx(WAVEFORMATEX* wfx, const WaveFileHeader& waveHeader);
 	private:
 		AudioUtility();//生成禁止
 	};
@@ -92,26 +100,28 @@ namespace Nyx
 
 	///オーディオ初期化記述子
 	struct AudioDesc {
-		HWND handle;                    ///< 初期化ハンドル
+		ulong                 reserved; ///< 予約領域
+		HWND				  handle;   ///< 初期化ハンドル
 		AudioUtility::APIType apiType;  ///< APIの種類
 	};
 
 
 	///オーディオバッファ記述子
 	struct AudioBufferDesc {
-		ulong                    reserved;  ///< 予約領域（未使用）
-		ulong				     bufferSize;///<ストリーミング再生する際に一度に読み込むバッファサイズ
+		ulong                    reserved;  ///< 予約領域
 		GUID                     algorithm; ///< 3Dバッファの再生アルゴリズム
 		AudioUtility::BufferType bufferType;///< オーディオバッファのバッファタイプ
 		AudioUtility::FocusType  focusType; ///< オーディオバッファのフォーカスタイプ
+		WaveFileHeader           waveFormat;
 	};
 
 
 	///オーディオエフェクト記述子
 	struct AudioEffectDesc {
-		ulong reserved;///< 予約領域（未使用）
+		ulong reserved;///< 予約領域
 		AudioUtility::EffectType effectType;///< エフェクトの種類
 	};
+
 
 	///オーディオステータス
 	struct AudioState {
@@ -119,7 +129,6 @@ namespace Nyx
 		bool isLooping;  ///< ループ再生かどうか
 		bool isBufferLost;///< オーディオバッファがロストしてるか
 	};
-
 }
 
 #endif

@@ -27,28 +27,19 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
-		: soundBuffer_(nullptr), bufferDesc_(), waveReader_(nullptr) {
+		: soundBuffer_(nullptr){
 
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName)
-		: soundBuffer_(nullptr), bufferDesc_(bufferDesc), waveReader_(new WaveReader(fileName)){
-			
-			Load(bufferDesc, dsound, fileName);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::Load(const AudioBufferDesc& desc, const DirectSoundPtr ds, const std::wstring& fileName) {
-		WAVEFORMATEX wfx;
-		BuildWaveFormatEx(wfx);
+		WAVEFORMATEX wfx={};
+		AudioUtility::BuildWaveFormatEx(&wfx, desc.waveFormat);
 
-		DSBUFFERDESC bufferDesc;
-		BuildDirectSoundBufferDesc(bufferDesc, wfx);
+		DSBUFFERDESC bufferDesc = {};
+		BuildDirectSoundBufferDesc(&bufferDesc, wfx);
 
 		//サウンドバッファの生成
 		LPDIRECTSOUNDBUFFER primaryBuffer;
@@ -188,6 +179,48 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
+	void DirectSoundAudioBuffer::SetEffect(const AudioEffectDesc & effectDesc) {
+		switch(effectDesc.effectType) {
+		case AudioUtility::EffectType_Chorus:
+			SetChorusEffect(effectDesc);
+			break;
+		case AudioUtility::EffectType_Distortion:
+			SetDistortionEffect(effectDesc);
+			break;
+		case AudioUtility::EffectType_Echo:
+			SetEchoEffect(effectDesc);
+			break;
+		case AudioUtility::EffectType_Flanger:
+			SetFlangerEffect(effectDesc);
+			break;
+		case AudioUtility::EffectType_Gargle:
+			SetFlangerEffect(effectDesc);
+			break;
+		case AudioUtility::EffectType_ParametricEqualizer:
+			SetParametricEqualizerEffect(effectDesc);
+			break;
+		case AudioUtility::EffectType_Reverb:
+			SetReverbEffect(effectDesc);
+			break;
+		default:
+			DebugOutput::Trace("EffectTypeの値が違います。");
+		}
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundAudioBuffer::ResetEffect() {
+		HRESULT hr = soundBuffer_->SetFX(0, NULL, NULL);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("エフェクトのリセットに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("エフェクトのリセットに失敗しました。", hr);
+		}
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
 	AudioState DirectSoundAudioBuffer::GetState() const {
 		Assert(soundBuffer_ != nullptr);
 		ulong status = GetStatus();
@@ -205,52 +238,6 @@ namespace Nyx {
 	//
 	const DirectSoundBufferPtr& DirectSoundAudioBuffer::GetHandle() {
 		return soundBuffer_;
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioBuffer::BuildWaveFormatEx(WAVEFORMATEX& wfx) {
-		//ヘッダ情報
-		const auto waveHeader = waveReader_->ReadHeader();
-
-		//Waveフォーマットのセットアップ
-		ZeroMemory(&wfx, sizeof(WAVEFORMATEX));
-		wfx.wFormatTag      = waveHeader.formatChunk.formatTag;
-		wfx.nChannels       = waveHeader.formatChunk.channelNum;
-		wfx.wBitsPerSample  = waveHeader.formatChunk.bitsRate;
-		wfx.nSamplesPerSec  = waveHeader.formatChunk.samplingRate;
-		wfx.nBlockAlign     = waveHeader.formatChunk.blockSize;
-		wfx.nAvgBytesPerSec = waveHeader.formatChunk.bytesPerSec;
-		wfx.cbSize          = sizeof(WAVEFORMATEX);
-	}
-
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioBuffer::WriteWaveData(size_t bufferSize) {
-		Assert(waveReader_ != nullptr);
-		const auto waveHeader = waveReader_->ReadHeader();
-
-		//バッファに波形データの書き込み
-		void* waveData  = nullptr;
-		ulong waveSize  = 0;
-		ulong chunkSize = bufferDesc_.bufferSize; 
-		HRESULT hr = soundBuffer_->Lock(0, chunkSize, &waveData, &waveSize, NULL, NULL, 0);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
-		}
-
-		auto waveDataSource = waveReader_->Read(bufferSize);
-		memcpy(waveData, waveDataSource.get(), bufferSize);
-
-		hr = soundBuffer_->Unlock(waveData, waveSize, NULL, NULL);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
-		}
 	}
 
 
@@ -311,7 +298,7 @@ namespace Nyx {
 			Stop();
 		}
 
-		
+
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);

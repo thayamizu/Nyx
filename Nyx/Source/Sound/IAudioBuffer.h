@@ -100,7 +100,7 @@ namespace Nyx {
 		* オーディオバッファの状態の取得します
 		* @return AudioUtility::BufferType
 		*/
-		virtual AudioUtility::BufferType GetBufferType() const =0;
+		virtual AudioUtility::BufferType GetBufferType() const = 0;
 	};
 }
 #endif

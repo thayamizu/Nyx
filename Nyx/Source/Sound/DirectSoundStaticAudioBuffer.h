@@ -4,111 +4,42 @@
 #include "DirectSoundAudioBuffer.h"
 
 namespace Nyx {
-	class AudioBuffer;
-	struct AudioBufferDesc;
-	
-	class DirectSoundStaticAudioBuffer : public IAudioBuffer {
+	struct AudioBuffeDesc;
+	class WaveReader;
+
+	class DirectSoundStaticAudioBuffer : public DirectSoundAudioBuffer {
 	public:
 		/**
 		* コンストラクタ
+		* @param const AudioBufferDesc& bufferDesc
+		* @param const DirectSoundPtr 
+		* @param const std::wstring& fileName
 		*/
-		explicit DirectSoundStaticAudioBuffer();
-
-		/**
-		* コンストラクタ
-		* @param const DirectSound DirectSoundオブジェクト
-		* @param std::wstring ファイル名
-		*/
-		explicit DirectSoundStaticAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
-
-		/**
-		* コンストラクタ
-		* @param const AudioBufferDesc オーディオバッファ記述子
-		* @param const DirectSound DirectSoundオブジェクト
-		* @param std::wstring ファイル名
-		*/
-		virtual void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
-
-
-		/**
-		* オーディオバッファを再生します
-		*/
-		virtual void Play(bool isLoop);
-
-
-		/**
-		* オーディオバッファを停止します
-		*/
-		virtual void Stop();
-
-
-		/**
-		* オーディオバッファをレジュームします
-		*/
-		virtual void Resume();
-
-
-		/**
-		* オーディオバッファをリセットします
-		*/
-		virtual void Reset();
-
-
-		/**
-		* パンの値を設定します
-		* @param long パン
-		*/
-		virtual void SetPan(long pan);
-
-
-		/**
-		* ボリュームの値を設定します
-		* @param long ボリューム
-		*/
-		virtual void SetVolume(long volume);
-
-
-		/**
-		* ボリュームの値を取得します
-		* @return long
-		*/
-		virtual long GetVolume() const;
-
-
-		/**
-		* パンの値を取得します
-		* @return long
-		*/
-		virtual long GetPan() const;
-
-
-		/**
-		* オーディオバッファの状態の取得
-		* @return AudioState
-		*/
-		virtual AudioState GetState() const;
-
+		DirectSoundStaticAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName);
+		
 
 		/**
 		* オーディオバッファの状態の取得します
 		* @return AudioUtility::BufferType
 		*/
-		virtual AudioUtility::BufferType GetBufferType() const;
-
-
-		/**
-		*　オーディオバッファにエフェクトを設定します
-		* @param const AudioEffectDesc& オーディオエフェクト記述子
-		*/
-		virtual void SetEffect(const AudioEffectDesc& effectDesc);
-		
-		
-		/**
-		*　オーディオバッファのエフェクトをリセットします
-		*/
-		virtual void ResetEffect();
+		AudioUtility::BufferType GetBufferType() const;
 	private:
-		std::shared_ptr<DirectSoundAudioBuffer> audio_;
+		/**
+		* DirectSoundのセカンダリバッファにwaveデータを書き込みます
+		* @param size_t バッファサイズ
+		*/
+		void WriteWaveData(size_t bufferSize);
+
+
+		/**
+		* 静的なDirectSoundセカンダリバッファ記述子を作成します
+		* @param DSBUFFERDESC*
+		* @param WAVEFORMATEX& wfx
+		*/
+		void BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
+	private:
+		AudioBufferDesc bufferDesc_;
+		std::shared_ptr<WaveReader> waveReader_;
 	};
 }
 #endif

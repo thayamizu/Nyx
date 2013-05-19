@@ -19,124 +19,78 @@
 #include "AudioUtility.h"
 #include "DirectSoundAudioBuffer.h"
 #include "DirectSoundStaticAudioBuffer.h"
-
+#include "WaveReader.h"
 namespace Nyx {
-	DirectSoundStaticAudioBuffer::DirectSoundStaticAudioBuffer() 
-		: audio_(nullptr) {
-	}
-
-
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStaticAudioBuffer::DirectSoundStaticAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName)
-		: audio_(new DirectSoundAudioBuffer(bufferDesc, dsound, fileName)){
+	DirectSoundStaticAudioBuffer::DirectSoundStaticAudioBuffer(
+		const AudioBufferDesc& bufferDesc, 
+		const DirectSoundPtr dsound, const std::wstring& fileName)
+		: DirectSoundAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc){
 
+			bufferDesc_.waveFormat = waveReader_->ReadHeader();
 
-			audio_->WriteWaveData(bufferDesc.bufferSize);
+			Load(bufferDesc_, dsound, fileName);
+
+			WriteWaveData(bufferDesc_.waveFormat.dataChunk.chunkSize);
 	}
 
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName) {
-		if (audio_== nullptr) {
-			audio_ = std::make_shared<DirectSoundAudioBuffer>();
-		}
-		audio_->Load(bufferDesc, ds, fileName);
-		audio_->WriteWaveData(bufferDesc.bufferSize);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::Play(bool isLoop) {
-		Assert(audio_ != nullptr);
-		audio_->Play(isLoop);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::Stop() {
-		Assert(audio_ != nullptr);
-		audio_->Stop();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::Resume() {
-		Assert(audio_ != nullptr);
-		audio_->Resume();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::Reset() {
-		Assert(audio_ != nullptr);
-		audio_->Reset();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::SetPan(long pan) {
-		Assert(audio_ != nullptr);
-		audio_->SetPan(pan);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::SetVolume(long volume) {
-		Assert(audio_ != nullptr);
-		audio_->SetVolume(volume);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	long DirectSoundStaticAudioBuffer::GetPan() const {
-		Assert(audio_ != nullptr);
-		return audio_->GetPan();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	long DirectSoundStaticAudioBuffer::GetVolume() const {
-		Assert(audio_ != nullptr);
-		return audio_->GetVolume();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	AudioState DirectSoundStaticAudioBuffer::GetState() const {
-		Assert(audio_ != nullptr);
-		return audio_->GetState();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::ResetEffect() {
-		Assert(audio_ != nullptr);
-		audio_->ResetEffect();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStaticAudioBuffer::SetEffect(const AudioEffectDesc& effectDesc) {
-		Assert(audio_ != nullptr);
-		audio_->SetEffect(effectDesc);
-	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	AudioUtility::BufferType DirectSoundStaticAudioBuffer::GetBufferType() const {
 		return AudioUtility::BufferType_StaticAudioBuffer;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStaticAudioBuffer::WriteWaveData(size_t bufferSize){
+		//バッファに波形データの書き込み
+		void* waveData  = nullptr;
+		ulong waveSize  = 0;
+		HRESULT hr = GetHandle()->Lock(0, 0, &waveData, &waveSize, NULL, NULL, DSBLOCK_ENTIREBUFFER);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
+		}
+		
+		ulong readBytes;
+		auto buffer= waveReader_->Read(waveSize, &readBytes);
+		CopyMemory(waveData, buffer.get(), readBytes);
+
+		hr = GetHandle()->Unlock(waveData, waveSize, NULL, NULL);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
+		}
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStaticAudioBuffer::BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx){
+		Assert(waveReader_ != nullptr);
+		const auto waveHeader = waveReader_->ReadHeader();
+
+		//フラグの設定
+		DWORD flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME;
+
+		//フォーカスモードの設定
+		if ( bufferDesc_.focusType == AudioUtility::FocusType_GlobalFocus) {
+			flag |= DSBCAPS_GLOBALFOCUS;
+		}
+		else {
+			flag |= DSBCAPS_STICKYFOCUS;
+
+		}
+
+		//DSBufferDescのセットアップ
+		ZeroMemory(dsBufferDesc, sizeof(DSBUFFERDESC));
+		dsBufferDesc->lpwfxFormat     = &wfx;
+		dsBufferDesc->dwBufferBytes   = waveHeader.dataChunk.chunkSize;
+		dsBufferDesc->dwFlags         = flag;
+		dsBufferDesc->dwSize          = sizeof(DSBUFFERDESC);
+		dsBufferDesc->guid3DAlgorithm = bufferDesc_.algorithm;
 	}
 }

@@ -71,6 +71,6 @@
 //DirectX
 #include "Graphics/DirectXDefinition.h"
 
-#define private public
 #define protected public
+#define private   public
 #endif

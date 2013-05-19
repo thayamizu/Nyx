@@ -22,91 +22,92 @@ BEGIN_TEST(AudioUtilityTest03)
 }
 END_TEST
 
-BEGIN_TEST(AudioUtilityTest04)
-{
-	//WIN_ASSERT_TRUE(AudioUtility::Priority::DefaultPriority == 0);
-	//WIN_ASSERT_TRUE(AudioUtility::Priority::MaxPriority     == 1);
-	//WIN_ASSERT_TRUE(AudioUtility::Priority::MinPriority     == 2);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest05)
-{
-	const auto volume = 0;
-	const auto expect = 0;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest06)
-{
-	const auto volume = 50;
-	const auto expect = 50;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest07)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest08)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-BEGIN_TEST(AudioUtilityTest09)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest10)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest11)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest12)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-
-BEGIN_TEST(AudioUtilityTest13)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
-
-BEGIN_TEST(AudioUtilityTest14)
-{
-	const auto volume = 100;
-	const auto expect = 100;
-	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
-}
-END_TEST
+//BEGIN_TEST(AudioUtilityTest04)
+//{
+//	//WIN_ASSERT_TRUE(AudioUtility::Priority::DefaultPriority == 0);
+//	//WIN_ASSERT_TRUE(AudioUtility::Priority::MaxPriority     == 1);
+//	//WIN_ASSERT_TRUE(AudioUtility::Priority::MinPriority     == 2);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest05)
+//{
+//	const auto volume = 0;
+//	const auto expect = 0;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest06)
+//{
+//	const auto volume = 50;
+//	const auto expect = 50;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest07)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest08)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//BEGIN_TEST(AudioUtilityTest09)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest10)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest11)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest12)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//
+//BEGIN_TEST(AudioUtilityTest13)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//
+//BEGIN_TEST(AudioUtilityTest14)
+//{
+//	const auto volume = 100;
+//	const auto expect = 100;
+//	WIN_ASSERT_TRUE(AudioUtility::VolumeToDecibel(volume) == expect);
+//}
+//END_TEST
+//

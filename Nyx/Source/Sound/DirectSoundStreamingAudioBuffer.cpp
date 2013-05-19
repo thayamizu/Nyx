@@ -22,123 +22,174 @@
 #include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
-
-	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer() 
-		: audio_(nullptr) {
-	}
-
+	//-------------------------------------------------------------------------------------------------------
+	//
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName)
-		: audio_(new DirectSoundAudioBuffer(bufferDesc, dsound, fileName)){
+	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(
+		const AudioBufferDesc& bufferDesc, 
+		const DirectSoundPtr dsound, const std::wstring& fileName)
+		: DirectSoundAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc), offset_(0){
 
+			//バッファを作成
 
-			audio_->WriteWaveData(bufferDesc.bufferSize);
+			bufferDesc_.waveFormat = waveReader_->ReadHeader();
+
+			//バッファに再生データを書き込む
+			const ulong samplingRate = bufferDesc_.waveFormat.formatChunk.samplingRate;   
+			const ulong blockAlign   = bufferDesc_.waveFormat.formatChunk.blockSize;  
+			const ulong size         = samplingRate * 2 * blockAlign / NotifyEventNum;   
+			notifySize_  = size;
+
+			Load(bufferDesc_, dsound, fileName);
+			WriteWaveData(notifySize_);
+
+			//通知スレッドの生成
+			notifyThreadHandle_ = CreateThread( NULL,0, NotifyProc, (void*)this, 0, 0);
+
+			//通知イベントの設定
+			LPDIRECTSOUNDNOTIFY notify;
+			DSBPOSITIONNOTIFY  positionNotify[NotifyEventNum] = {};
+			HRESULT hr = GetHandle()->QueryInterface(IID_IDirectSoundNotify, reinterpret_cast<void**>(&notify));
+			if ( FAILED(hr)) {
+				DebugOutput::Trace("IDirectSoundNotifyの取得に失敗しました。", hr);
+				throw COMException("IDirectSoundNotifyの取得に失敗しました。", hr);
+			}
+
+			// イベントとシグナルになる位置を取得
+			for( int i = 0 ; i < NotifyEventNum ; i++ ) {
+				notifyEventList_[i] = CreateEvent(NULL, false, false, NULL);
+				positionNotify[i].dwOffset     = (notifySize_ * i) + notifySize_-1; 
+				positionNotify[i].hEventNotify = notifyEventList_[i];
+			}
+
+			// イベントをセット
+			hr = notify->SetNotificationPositions(NotifyEventNum, positionNotify);
+			if( FAILED(hr)) {
+				DebugOutput::Trace("IDirectSoundNotify通知イベントの設定が失敗しました。", hr);
+				throw COMException("IDirectSoundNotify通知イベントの設定が失敗しました。", hr);
+			}
+
+			SafeRelease(notify);
 	}
 
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName) {
-		if (audio_== nullptr) {
-			audio_ = std::make_shared<DirectSoundAudioBuffer>();
+	DirectSoundStreamingAudioBuffer::~DirectSoundStreamingAudioBuffer() {
+		for (auto var : notifyEventList_) {
+			CloseHandle(var);
 		}
-		audio_->Load(bufferDesc, ds, fileName);
-		audio_->WriteWaveData(bufferDesc.bufferSize);
 	}
 
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::Play(bool isLoop) {
-		Assert(audio_ != nullptr);
-		audio_->Play(isLoop);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::Stop() {
-		Assert(audio_ != nullptr);
-		audio_->Stop();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::Resume() {
-		Assert(audio_ != nullptr);
-		audio_->Resume();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::Reset() {
-		Assert(audio_ != nullptr);
-		audio_->Reset();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::SetPan(long pan) {
-		Assert(audio_ != nullptr);
-		audio_->SetPan(pan);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::SetVolume(long volume) {
-		Assert(audio_ != nullptr);
-		audio_->SetVolume(volume);
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	long DirectSoundStreamingAudioBuffer::GetPan() const {
-		Assert(audio_ != nullptr);
-		return audio_->GetPan();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	long DirectSoundStreamingAudioBuffer::GetVolume() const {
-		Assert(audio_ != nullptr);
-		return audio_->GetVolume();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	AudioState DirectSoundStreamingAudioBuffer::GetState() const {
-		Assert(audio_ != nullptr);
-		return audio_->GetState();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::ResetEffect() {
-		Assert(audio_ != nullptr);
-		audio_->ResetEffect();
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundStreamingAudioBuffer::SetEffect(const AudioEffectDesc& effectDesc) {
-		Assert(audio_ != nullptr);
-		audio_->SetEffect(effectDesc);
-	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	AudioUtility::BufferType DirectSoundStreamingAudioBuffer::GetBufferType() const {
 		return AudioUtility::BufferType_StreamingAudioBuffer;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::WriteWaveData(size_t bufferSize){
+		const auto handle = GetHandle();
+		const auto size   = bufferDesc_.waveFormat.dataChunk.chunkSize;
+		
+		if (size <= offset_ + notifySize_) {
+			offset_ = 0;
+			waveReader_->SetCursor(0);
+		}
+
+		//バッファをロック
+		void* readData1 = nullptr;
+		void* readData2 = nullptr;
+		ulong readSize1  = 0;
+		ulong readSize2  = 0;
+		HRESULT hr = handle->Lock(0, notifySize_, &readData1, &readSize1, &readData2, &readSize2, DSBLOCK_FROMWRITECURSOR);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
+		}
+
+		//バッファに書き込み
+		ulong readBytes;
+		const auto buffer = waveReader_->Read(readSize1, &readBytes);
+		CopyMemory(readData1, buffer.get(), readBytes);
+		offset_ += readSize1;
+		if (readData2 != nullptr) {
+			const auto buffer = waveReader_->Read(readSize2, &readBytes);
+			CopyMemory(readData2, buffer.get(), readBytes);
+			offset_ += readSize2;
+		}
+		
+		//バッファをアンロック
+		hr = handle->Unlock(readData1, readSize1, readData2, readSize2);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
+		}
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx){
+		//フラグの設定
+		DWORD flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
+
+		//フォーカスモードの設定
+		if ( bufferDesc_.focusType == AudioUtility::FocusType_GlobalFocus) {
+			flag |= DSBCAPS_GLOBALFOCUS;
+		}
+		else {
+			flag |= DSBCAPS_STICKYFOCUS;
+
+		}
+
+		//DSBufferDescのセットアップ
+		ZeroMemory(dsBufferDesc, sizeof(DSBUFFERDESC));
+		dsBufferDesc->lpwfxFormat     = &wfx;
+		dsBufferDesc->dwBufferBytes   = notifySize_ * NotifyEventNum;
+		dsBufferDesc->dwFlags         = flag;
+		dsBufferDesc->dwSize          = sizeof(DSBUFFERDESC);
+		dsBufferDesc->guid3DAlgorithm = bufferDesc_.algorithm;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	ulong _stdcall NotifyProc(void* parameter) {
+		Assert(parameter != nullptr)
+			auto audio = reinterpret_cast<DirectSoundStreamingAudioBuffer*>(parameter);
+		audio->NotifyThread();
+		return 0L;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void DirectSoundStreamingAudioBuffer::NotifyThread() {
+		bool isDone = false;
+		while( !isDone ) { 
+			ulong signal = MsgWaitForMultipleObjects(NotifyEventNum, notifyEventList_, 
+				FALSE, INFINITE, QS_ALLEVENTS );
+
+			switch( signal ) {
+			case WAIT_OBJECT_0: 
+			case WAIT_OBJECT_0+1:
+			case WAIT_OBJECT_0+2:
+			case WAIT_OBJECT_0+3:
+				WriteWaveData(0);
+				break;
+			case WAIT_OBJECT_0+NotifyEventNum:
+				MSG msg;
+				while( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) { 
+					if( msg.message == WM_QUIT ){
+						isDone=true;
+					}
+				}
+				break;
+			}
+		}
 	}
 }

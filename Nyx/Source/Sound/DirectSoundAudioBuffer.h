@@ -20,22 +20,13 @@
 #include "Sound/IAudioBuffer.h"
 
 namespace Nyx {
-	struct AudioBufferDesc;
-	class WaveReader;
 	///オーディオバッファのDirectSoundによる実装
-	class DirectSoundAudioBuffer {
+	class DirectSoundAudioBuffer : public IAudioBuffer{
 	public:
 		/**
 		* コンストラクタ
 		*/
 		explicit DirectSoundAudioBuffer();
-
-		/**
-		* コンストラクタ
-		* @param const DirectSound DirectSoundオブジェクト
-		* @param std::wstring ファイル名
-		*/
-		explicit DirectSoundAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
 
 		/**
 		* コンストラクタ
@@ -104,27 +95,49 @@ namespace Nyx {
 		*/
 		ulong GetStatus() const;
 
-		void SetEffect(AudioEffectDesc desc){}
-		void ResetEffect() {}
+
+		/**
+		*　オーディオバッファにエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		void SetEffect(const AudioEffectDesc& effectDesc);
+
+
+		/**
+		*　オーディオバッファのエフェクトをリセットします
+		*/
+		void ResetEffect();
+
+
 		/**
 		* DirectSoundBufferのポインタを返します
 		* @return const DirectSoundBufferPtr& DirectSoundBufferのポインタ
 		*/
 		const DirectSoundBufferPtr& GetHandle();
 
+
+		/**
+		* オーディオバッファの状態の取得
+		* @return AudioState
+		*/
 		AudioState GetState() const;
 
-		
+
+	protected:
+		/**
+		* AudioBufferDescからDSBUFFERDESCを構築します
+		* @param [out] DSBUFFERDESC
+		* @param const AudioBufferDesc&
+		*/
+		virtual void BuildDirectSoundBufferDesc(DSBUFFERDESC* bufferDesc, WAVEFORMATEX& wfx) = 0;
+
+
 		/**
 		* バッファにWaveデータを書き込みます
 		* @param size_t バッファサイズ
 		*/
-		void WriteWaveData(size_t bufferSize);
-		
-	protected:
-		void BuildDirectSoundBufferDesc(DSBUFFERDESC bufferDesc, WAVEFORMATEX wfx) {}
-		void BuildWaveFormatEx(WAVEFORMATEX& wfx);
-		
+		virtual void WriteWaveData(size_t bufferSize) = 0;
+	private:	
 		/**
 		*　オーディオバッファにコーラスエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
@@ -173,9 +186,7 @@ namespace Nyx {
 		*/
 		void SetReverbEffect(const AudioEffectDesc& effectDesc);
 	private:
-		AudioBufferDesc bufferDesc_;
 		DirectSoundBufferPtr soundBuffer_;
-		std::shared_ptr<WaveReader> waveReader_;
 	};
 }
 #endif

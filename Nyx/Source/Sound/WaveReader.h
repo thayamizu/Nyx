@@ -76,7 +76,7 @@ namespace Nyx {
 		* Waveデータを取得します
 		* @return std::shared_ptr<char> WAVEデータ
 		*/
-		std::shared_ptr<char> Read(size_t bufferSize);
+		std::shared_ptr<char> Read(size_t bufferSize, ulong* readSize=nullptr);
 	private:
 		bool isReadHeader_;             ///< ヘッダを読み込んでいるか
 		char align_[3];                 ///< アライメント調整
