@@ -29,7 +29,7 @@ namespace Nyx {
 		:handle(NULL), attribute(attr), fileName(name) {
 		try {
 			if (!Open(name, attr)) {
-				throw std::exception("file can't open!");
+				throw std::domain_error("file can't open!");
 			}
 		}
 		catch(std::exception e) {

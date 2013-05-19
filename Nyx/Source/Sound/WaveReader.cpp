@@ -95,6 +95,25 @@ namespace Nyx {
 		}
 		//Waveファイルヘッダ読み取り
 		waveFile_->Read(&waveHeader_, sizeof(WaveFileHeader)); 
+
+		//フォーマットチェック
+		if (strncmp(waveHeader_.riffID, "RIFF", 4) != 0) {
+			DebugOutput::Trace("Waveファイルのフォーマットが不正です。RIFFチャンクが正しくありません。");
+			throw FormatException("Waveファイルのフォーマットが不正です。RIFFチャンクが正しくありません。");
+		}
+		else if (strncmp(waveHeader_.waveID, "WAVE", 4) != 0) {
+			DebugOutput::Trace("Waveファイルのフォーマットが不正です。WAVEタグが正しくありません。");
+			throw FormatException("Waveファイルのフォーマットが不正です。WAVEタグが正しくありません。");
+		}
+		else if (strncmp(waveHeader_.formatChunk.formatChunkID, "fmt ", 4) != 0) {
+			DebugOutput::Trace("Waveファイルのフォーマットが不正です。fmtチャンクが正しくありません。");
+			throw FormatException("Waveファイルのフォーマットが不正です。fmtチャンクが正しくありません。");
+		}
+		else if (strncmp(waveHeader_.dataChunk.dataChunkID, "data", 4) != 0) {
+			DebugOutput::Trace("Waveファイルのフォーマットが不正です。dataチャンクが正しくありません。");
+			throw FormatException("Waveファイルのフォーマットが不正です。dataチャンクが正しくありません。");
+		}
+
 		isReadHeader_= true;
 		return waveHeader_;
 	}
@@ -115,7 +134,7 @@ namespace Nyx {
 			*readSize = bufferSize;
 		}
 
-		//Waveデータの読み取り
+		//バッファ初期化
 		char * buffer = new char[*readSize];
 		waveFile_->Read(buffer, *readSize); 
 

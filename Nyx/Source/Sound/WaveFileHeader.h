@@ -22,7 +22,7 @@ namespace Nyx {
 	///Formatチャンク構造体
 	struct FormatChunk
 	{
-		uchar	formatChunkID[4]; ///FMTチャンクID
+		char	formatChunkID[4]; ///FMTチャンクID
 		uint	chunkSize;        ///<チャンクサイズ
 		ushort	formatTag;        ///<フォーマットID
 		ushort	channelNum;       ///<チャンネル数
@@ -32,21 +32,19 @@ namespace Nyx {
 		ushort	bitsRate;         ///< サンプルあたりのビット数
 	};
 
-
 	///データチャンク構造体
 	struct DataChunk
 	{
-		uchar dataChunkID[4]; ///< データチャンクID
+		char dataChunkID[4]; ///< データチャンクID
 		uint  chunkSize;      ///< チャンクサイズ 
 	};
-
 
 	///Waveファイルヘッダ構造体
 	struct WaveFileHeader
 	{
-		uchar        riffID[4];  ///< RIFFフォーマットID
+		char        riffID[4];  ///< RIFFフォーマットID
 		uint         fileSize;   ///< ファイルサイズ
-		uchar        waveID[4];  ///< WaveファイルID
+		char        waveID[4];  ///< WaveファイルID
 		FormatChunk  formatChunk;///<フォーマットチャンク
 		DataChunk    dataChunk;  ///<データチャンク
 	};

@@ -55,7 +55,7 @@ public:
 		desc.algorithm = DS3DALG_DEFAULT;
 		audio1_ = std::make_shared<DirectSoundStreamingAudioBuffer>(desc,manager_->GetHandle(), g_WavFile1);
 		Assert(audio1_ != nullptr);
-		audio2_ = std::make_shared<DirectSoundStaticAudioBuffer>(desc,manager_->GetHandle(), g_WavFile1);
+		audio2_ = std::make_shared<DirectSoundStaticAudioBuffer>(desc,manager_->GetHandle(), g_WavFile2);
 		Assert(audio2_ != nullptr);
 	}
 void Play1() {
@@ -129,8 +129,8 @@ int main()
 		std::cout <<"テストケース5を開始します" << std::endl;
 		test->TestCase5();*/
 	}
-	catch(COMException e) {
-		std::cout << e.GetMessage() << std::endl;
+	catch(std::exception e) {
+		std::cout << e.what() << std::endl;
 		getchar();
 	}
 }
