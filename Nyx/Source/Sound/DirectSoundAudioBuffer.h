@@ -62,13 +62,6 @@ namespace Nyx {
 
 
 		/**
-		* パンの設定
-		* @param long パン
-		*/
-		void SetPan(long pan);
-
-
-		/**
 		* ボリュームの設定
 		* @param long ボリューム
 		*/
@@ -80,13 +73,6 @@ namespace Nyx {
 		* @return long
 		*/
 		long GetVolume() const;
-
-
-		/**
-		* パンの取得
-		* @return long
-		*/
-		long GetPan() const;
 
 
 		/**
@@ -113,7 +99,7 @@ namespace Nyx {
 		* DirectSoundBufferのポインタを返します
 		* @return const DirectSoundBufferPtr& DirectSoundBufferのポインタ
 		*/
-		const DirectSoundBufferPtr& GetHandle();
+		DirectSoundBufferPtr GetHandle();
 
 
 		/**

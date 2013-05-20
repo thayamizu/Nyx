@@ -24,9 +24,6 @@
 namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-
-	//-------------------------------------------------------------------------------------------------------
-	//
 	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(
 		const AudioBufferDesc& bufferDesc, 
 		const DirectSoundPtr dsound, const std::wstring& fileName)
@@ -75,6 +72,8 @@ namespace Nyx {
 	}
 
 
+	//-------------------------------------------------------------------------------------------------------
+	//
 	DirectSoundStreamingAudioBuffer::~DirectSoundStreamingAudioBuffer() {
 		for (auto var : notifyEventList_) {
 			CloseHandle(var);

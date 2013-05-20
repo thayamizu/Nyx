@@ -1,7 +1,9 @@
 #ifndef NYX_CORE_INCLUDED_IAUDIO_BUFFER_3D_H_
 #define NYX_CORE_INCLUDED_IAUDIO_BUFFER_3D_H
+
 namespace Nyx {
-	///3Dオーディオバッファインタフェース
+
+	///3Dサウンドの機能を持つオーディオバッファインタフェース
 	class IAudioBuffer3D {
 	public:
 		virtual void GetPosition() = 0;

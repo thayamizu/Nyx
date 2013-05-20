@@ -122,17 +122,6 @@ namespace Nyx {
 	}
 
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectSoundAudioBuffer::SetPan(long pan) {
-		Assert(soundBuffer_ != nullptr);
-		HRESULT hr = soundBuffer_->SetPan(pan);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのパン値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのパン値の設定に失敗しました。", hr);
-		}
-	}
-
 
 	//-------------------------------------------------------------------------------------------------------
 	//
@@ -144,21 +133,6 @@ namespace Nyx {
 			DebugOutput::Trace("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。", hr);
 		}
-	}
-
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	long DirectSoundAudioBuffer::GetPan() const {
-		Assert(soundBuffer_ != nullptr);
-		long pan;
-		HRESULT hr = soundBuffer_->GetPan(&pan);
-		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのパン値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのパン値の取得に失敗しました。", hr);
-		}
-
-		return pan;
 	}
 
 
@@ -236,7 +210,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const DirectSoundBufferPtr& DirectSoundAudioBuffer::GetHandle() {
+	DirectSoundBufferPtr DirectSoundAudioBuffer::GetHandle() {
 		return soundBuffer_;
 	}
 

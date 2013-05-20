@@ -1,13 +1,14 @@
 #ifndef NYX_CORE_INCLUDED_DIRECT_SOUND_STATIC_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STATIC_AUDIO_BUFFER_H_
 #include "DirectSoundDefinition.h"
-#include "DirectSoundAudioBuffer.h"
+#include "DirectSoundStereoAudioBuffer.h"
 
 namespace Nyx {
 	struct AudioBuffeDesc;
 	class WaveReader;
 
-	class DirectSoundStaticAudioBuffer : public DirectSoundAudioBuffer {
+	///静的バッファ
+	class DirectSoundStaticAudioBuffer : public DirectSoundStereoAudioBuffer {
 	public:
 		/**
 		* コンストラクタ

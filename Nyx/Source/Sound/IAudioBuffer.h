@@ -49,20 +49,6 @@ namespace Nyx {
 
 
 		/**
-		* オーディオバッファのパン値を設定します
-		* @param long パン
-		*/
-		virtual void SetPan(long pan) = 0;
-
-
-		/**
-		* オーディオバッファのパン値を取得します
-		* @return long 
-		*/
-		virtual long GetPan() const = 0;
-
-
-		/**
 		* オーディオバッファのボリューム値を設定します
 		* @return int　ボリューム
 		*/

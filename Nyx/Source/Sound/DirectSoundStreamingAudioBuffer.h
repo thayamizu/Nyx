@@ -23,6 +23,7 @@
 namespace Nyx {
 	class WaveReader;
 
+	///静的ストリーミングバッファクラス
 	class DirectSoundStreamingAudioBuffer : public DirectSoundAudioBuffer {
 	public:
 		/**
