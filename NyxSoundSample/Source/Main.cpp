@@ -8,7 +8,7 @@ using namespace std;
 using namespace Nyx;
 
 
-static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\test.wav";
+static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\test2.wav";
 static const std::wstring g_WavFile2 = L"..\\..\\TestData\\Sound\\test3.wav";
 
 class DirectSoundStaticAudioBufferTest
