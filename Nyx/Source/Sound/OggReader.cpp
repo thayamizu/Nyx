@@ -11,6 +11,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	OggReader::OggReader(const std::wstring& fileName) {
+		fileName;
 
 	}
 
@@ -18,14 +19,14 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void OggReader::Open(const std::wstring& fileName) {
-	
+		fileName;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void OggReader::SetCursor(ulong cursor) {
-
+		cursor=0;
 	}
 
 
@@ -39,13 +40,14 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	const WaveFileHeader& OggReader::ReadHeader() {
-		return WaveFileHeader();
+		return header;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<char> OggReader::Read(size_t bufferSize) {
+		bufferSize=0;
 		return  nullptr;
 	}
 }

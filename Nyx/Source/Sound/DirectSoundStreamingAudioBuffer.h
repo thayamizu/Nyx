@@ -51,7 +51,7 @@ namespace Nyx {
 		* DirectSoundのセカンダリバッファにwaveデータを書き込みます
 		* @param size_t バッファサイズ
 		*/
-		void WriteWaveData(size_t bufferSize);
+		void WriteWaveData();
 
 		/**
 		* DirectSoundセカンダリバッファ記述子を作成します

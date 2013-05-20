@@ -66,7 +66,7 @@ namespace Nyx {
 			HRESULT hr;
 			XMeshContainer *pMeshContainer = NULL;
 			int iFacesAmount;
-			int iMaterial;
+			size_t iMaterial;
 			LPDIRECT3DDEVICE9 pDevice = NULL;
 			LPD3DXMESH pMesh = NULL;
 			*ppMeshContainer = NULL;

@@ -2,6 +2,7 @@
 #define NYX_CORE_INCLUDED_OGG_READER_H_
 
 namespace Nyx {
+	class WaveFileHeader;
 	///oggファイルリーダ
 	class OggReader {
 	public:
@@ -59,6 +60,7 @@ namespace Nyx {
 		*/
 		std::shared_ptr<char> Read(size_t bufferSize);
 	private:
+		WaveFileHeader header;
 	};
 }
 

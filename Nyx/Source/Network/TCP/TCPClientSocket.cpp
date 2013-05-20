@@ -33,7 +33,7 @@ namespace Nyx {
 
 		// 接続先指定用構造体の準備
 		dstAddr.sin_family = AF_INET;
-		dstAddr.sin_port = htons(port);
+		dstAddr.sin_port = htons(static_cast<ushort>(port));
 		dstAddr.sin_addr.S_un.S_addr = inet_addr(addr);
 
 		// サーバに接続

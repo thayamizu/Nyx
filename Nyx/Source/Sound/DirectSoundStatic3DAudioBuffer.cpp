@@ -15,9 +15,9 @@ namespace Nyx {
 
 			bufferDesc_.waveFormat = waveReader_->ReadHeader();
 
-			Load(bufferDesc_, dsound, fileName);
+			Load(bufferDesc_, dsound);
 			Create3DBuffer();
-			WriteWaveData(bufferDesc_.waveFormat.dataChunk.chunkSize);
+			WriteWaveData();
 	}
 
 
@@ -30,7 +30,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStatic3DAudioBuffer::WriteWaveData(size_t bufferSize){
+	void DirectSoundStatic3DAudioBuffer::WriteWaveData(){
 		//バッファに波形データの書き込み
 		void* waveData  = nullptr;
 		ulong waveSize  = 0;

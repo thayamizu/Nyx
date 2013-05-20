@@ -34,7 +34,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Load(const AudioBufferDesc& desc, const DirectSoundPtr ds, const std::wstring& fileName) {
+	void DirectSoundAudioBuffer::Load(const AudioBufferDesc& desc, const DirectSoundPtr ds) {
 		WAVEFORMATEX wfx={};
 		AudioUtility::BuildWaveFormatEx(&wfx, desc.waveFormat);
 
@@ -218,6 +218,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetChorusEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();
@@ -243,6 +244,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetDistortionEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();
@@ -267,6 +269,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetEchoEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();
@@ -292,6 +295,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetFlangerEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();
@@ -316,6 +320,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetGargleEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();
@@ -340,6 +345,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetParametricEqualizerEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();
@@ -364,6 +370,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::SetReverbEffect(const AudioEffectDesc& effectDesc) {
+		effectDesc;
 		ulong status = GetStatus();
 		if (status & DSBSTATUS_PLAYING) {
 			Stop();

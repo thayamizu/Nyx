@@ -38,9 +38,9 @@ namespace Nyx {
 			const ulong size         = samplingRate * 2 * blockAlign / NotifyEventNum;   
 			notifySize_  = size;
 
-			Load(bufferDesc_, dsound, fileName);
+			Load(bufferDesc_, dsound);
 			Create3DBuffer();
-			WriteWaveData(notifySize_);
+			WriteWaveData();
 
 			//通知スレッドの生成
 			notifyThreadHandle_ = CreateThread( NULL,0, Notify3DBufferProc, (void*)this, 0, 0);
@@ -90,7 +90,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreaming3DAudioBuffer::WriteWaveData(size_t bufferSize){
+	void DirectSoundStreaming3DAudioBuffer::WriteWaveData(){
 		const auto handle = GetHandle();
 		const auto size   = bufferDesc_.waveFormat.dataChunk.chunkSize;
 		
@@ -175,20 +175,10 @@ namespace Nyx {
 
 			switch( signal ) {
 			case WAIT_OBJECT_0: 
-				std::cout <<"バッファ書き込み1" << std::endl;
-				WriteWaveData(0);
-				break;
 			case WAIT_OBJECT_0+1:
-				std::cout <<"バッファ書き込み2" << std::endl;
-				WriteWaveData(0);
-				break;
 			case WAIT_OBJECT_0+2:
-				std::cout <<"バッファ書き込み3" << std::endl;
-				WriteWaveData(0);
-			break;
 			case WAIT_OBJECT_0+3:
-				std::cout <<"バッファ書き込み4" << std::endl;
-				WriteWaveData(0);
+				WriteWaveData();
 				break;
 			case WAIT_OBJECT_0+NotifyEventNum:
 				std::cout <<"バッファ書き込み5" << std::endl;

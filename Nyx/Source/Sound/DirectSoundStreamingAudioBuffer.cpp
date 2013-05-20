@@ -38,8 +38,8 @@ namespace Nyx {
 			const ulong size         = samplingRate * 2 * blockAlign / NotifyEventNum;   
 			notifySize_  = size;
 
-			Load(bufferDesc_, dsound, fileName);
-			WriteWaveData(notifySize_);
+			Load(bufferDesc_, dsound);
+			WriteWaveData();
 
 			//通知スレッドの生成
 			notifyThreadHandle_ = CreateThread( NULL,0, NotifyProc, (void*)this, 0, 0);
@@ -89,7 +89,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreamingAudioBuffer::WriteWaveData(size_t bufferSize){
+	void DirectSoundStreamingAudioBuffer::WriteWaveData(){
 		const auto handle = GetHandle();
 		const auto size   = bufferDesc_.waveFormat.dataChunk.chunkSize;
 		
@@ -177,7 +177,7 @@ namespace Nyx {
 			case WAIT_OBJECT_0+1:
 			case WAIT_OBJECT_0+2:
 			case WAIT_OBJECT_0+3:
-				WriteWaveData(0);
+				WriteWaveData();
 				break;
 			case WAIT_OBJECT_0+NotifyEventNum:
 				MSG msg;

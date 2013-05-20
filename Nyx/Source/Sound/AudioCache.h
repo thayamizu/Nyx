@@ -150,7 +150,7 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @return const std::shared_ptr<IAudioBffer>& オーディオaバッファ
 		*/
-		const std::shared_ptr<IAudioBuffer>& GetAudioBuffer(const std::wstring& fileName);
+		const std::shared_ptr<IAudioBuffer> GetAudioBuffer(const std::wstring& fileName);
 	private :
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

@@ -48,6 +48,7 @@ namespace Nyx {
 	//
 	AudioManager::AudioManager(const AudioDesc& desc)
 		: pimpl_(new PImpl()) {
+			desc;
 	}
 
 

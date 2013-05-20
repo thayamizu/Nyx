@@ -146,7 +146,6 @@ class SkinMesh;
 #include "Object/Delegate.h"
 #include "Object/NonCopyable.h"
 #include "Object/IResource.h"
-#include "Object/IResourceManager.h"
 
 
 #endif

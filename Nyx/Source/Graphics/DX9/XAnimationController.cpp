@@ -79,7 +79,7 @@ namespace Nyx {
 			// トラックスピード調節値を算出
 			double defTime = animationSets[animID].animationSet->GetPeriod();
 			animationSets[animID].loopTime = time;
-			animationSets[animID].trackSpeed = defTime / time;
+			animationSets[animID].trackSpeed = defTime / (double)time;
 
 			return true;
 		}

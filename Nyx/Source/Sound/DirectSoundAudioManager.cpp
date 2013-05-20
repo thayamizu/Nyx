@@ -64,6 +64,7 @@ namespace Nyx {
 	//---------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
+		fileName, bufferDesc;
 		return nullptr;
 	}
 
@@ -88,7 +89,7 @@ namespace Nyx {
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
 		//std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
-
+		fileName, bufferDesc;
 		return nullptr;
 	}
 
@@ -97,7 +98,7 @@ namespace Nyx {
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromOggFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
 		//std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
-
+		fileName, bufferDesc;
 		return nullptr;
 	}
 	

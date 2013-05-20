@@ -36,7 +36,7 @@ namespace Nyx {
 		}
 
 		Tick freq;
-		bool isSuccess = QueryPerformanceFrequency(&freq);
+		bool isSuccess = static_cast<bool>(QueryPerformanceFrequency(&freq));
 		if (isSuccess) {
 			PerformanceTimer::Frequency = static_cast<double>(freq.QuadPart);
 			Initialized = true;

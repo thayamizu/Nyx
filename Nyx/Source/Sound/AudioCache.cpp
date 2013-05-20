@@ -223,7 +223,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const std::shared_ptr<IAudioBuffer>& AudioCache::GetAudioBuffer(const std::wstring& fileName) {
+	const std::shared_ptr<IAudioBuffer> AudioCache::GetAudioBuffer(const std::wstring& fileName) {
 		Assert(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {

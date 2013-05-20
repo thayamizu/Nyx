@@ -13,7 +13,7 @@ namespace Nyx {
 	//
 	long AudioUtility::VolumeToDecibel(long volume) {
 		volume  = Math::Clamp(volume, 1L, 100L);
-		return 33.2 * Math::Log10(volume) * 100;
+		return static_cast<long>(33.2 * Math::Log10(volume) * 100);
 	}
 	
 
@@ -21,7 +21,7 @@ namespace Nyx {
 	//
 	long AudioUtility::DecibelToVolume(long decibel) {
 		decibel = Math::Clamp(decibel, -10000L, 10000L);
-		return Math::Pow(10, (decibel/ 33.2));
+		return static_cast<long>(Math::Pow(10, (decibel/ 33.2)));
 	}
 
 	

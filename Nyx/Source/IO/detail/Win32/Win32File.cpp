@@ -76,7 +76,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------
 	bool  Win32File::Close() {
-		return ::CloseHandle(handle);
+		return static_cast<bool>(::CloseHandle(handle));
 	}
 
 	//-----------------------------------------------------------------------------------
@@ -151,6 +151,6 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------
 	bool Win32File::Flush() {
-		return FlushFileBuffers(handle);
+		return static_cast<bool>(FlushFileBuffers(handle));
 	}
 }

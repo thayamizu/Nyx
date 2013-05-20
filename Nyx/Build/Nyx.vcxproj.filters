@@ -442,19 +442,7 @@
     <ClInclude Include="..\Source\Object\ResourceHandle.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Object\ResourceManager.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Object\IResource.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResourceCache.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResourceHandle.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResourceManager.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Object\Delegate.h">
@@ -754,9 +742,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Object\ResourceManager.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp">

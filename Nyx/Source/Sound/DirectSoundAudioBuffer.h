@@ -34,7 +34,7 @@ namespace Nyx {
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds, const std::wstring& fileName);
+		void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds);
 
 
 		/**
@@ -122,7 +122,7 @@ namespace Nyx {
 		* バッファにWaveデータを書き込みます
 		* @param size_t バッファサイズ
 		*/
-		virtual void WriteWaveData(size_t bufferSize) = 0;
+		virtual void WriteWaveData() = 0;
 	private:	
 		/**
 		*　オーディオバッファにコーラスエフェクトを設定します

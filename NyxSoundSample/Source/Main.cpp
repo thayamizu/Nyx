@@ -2,13 +2,15 @@
 #include "Sound/DirectSoundAudioManager.h"
 #include "Sound/DirectSoundAudioBuffer.h"
 #include "Sound/DirectSoundStaticAudioBuffer.h"
+#include "Sound/DirectSoundStatic3DAudioBuffer.h"
 #include "Sound/DirectSoundStreamingAudioBuffer.h"
+#include "Sound/DirectSoundStreaming3DAudioBuffer.h"
 
 using namespace std;
 using namespace Nyx;
 
 
-static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\test2.wav";
+static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\test.wav";
 static const std::wstring g_WavFile2 = L"..\\..\\TestData\\Sound\\test3.wav";
 
 class DirectSoundStaticAudioBufferTest
@@ -31,8 +33,6 @@ public:
 	void TestCase1() {
 		Load();
 		Play1();
-		::Sleep(2000);
-		Play2();
 	}
 	void TestCase2() {
 		Load();
@@ -55,8 +55,6 @@ public:
 		desc.algorithm = DS3DALG_DEFAULT;
 		audio1_ = std::make_shared<DirectSoundStreamingAudioBuffer>(desc,manager_->GetHandle(), g_WavFile1);
 		Assert(audio1_ != nullptr);
-		audio2_ = std::make_shared<DirectSoundStaticAudioBuffer>(desc,manager_->GetHandle(), g_WavFile2);
-		Assert(audio2_ != nullptr);
 	}
 void Play1() {
 		DebugOutput::Trace("オーディオバッファを再生します...");

@@ -1,7 +1,9 @@
 #include "PCH/PCH.h"
 #include "Object/ResourceCache.h"
 
-namespace Nyx 
-{
+namespace Nyx {
 
+	ResourceCache::ResourceCache() {
+	
+	}
 }
