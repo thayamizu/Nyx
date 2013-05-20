@@ -21,7 +21,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	long DirectSoundStereoAudioBuffer::GetPan() {
+	long DirectSoundStereoAudioBuffer::GetPan() const {
 		auto soundBuffer = GetHandle();
 		long pan;
 		HRESULT hr = soundBuffer->GetPan(&pan);

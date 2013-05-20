@@ -18,7 +18,7 @@ namespace Nyx {
 		* オーディオバッファのパン値を取得します
 		* @return long 
 		*/
-		virtual long GetPan()= 0;
+		virtual long GetPan()const = 0;
 
 	};
 }

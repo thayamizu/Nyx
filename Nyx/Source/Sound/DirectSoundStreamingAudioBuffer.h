@@ -16,15 +16,15 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_AUDIOBUFFER_H_
-#include "Sound/IAudioBuffer.h"
 #include "DirectSoundDefinition.h"
-#include "AudioUtility.h"
+#include "DirectSoundStereoAudioBuffer.h"
 
 namespace Nyx {
+	struct AudioBufferDesc;
 	class WaveReader;
 
 	///静的ストリーミングバッファクラス
-	class DirectSoundStreamingAudioBuffer : public DirectSoundAudioBuffer {
+	class DirectSoundStreamingAudioBuffer : public DirectSoundStereoAudioBuffer {
 	public:
 		/**
 		* コンストラクタ

@@ -18,7 +18,6 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "Sound/WaveReader.h"
-#include "DirectSoundAudioBuffer.h"
 #include "DirectSoundStreamingAudioBuffer.h"
 
 namespace Nyx {
@@ -27,7 +26,7 @@ namespace Nyx {
 	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(
 		const AudioBufferDesc& bufferDesc, 
 		const DirectSoundPtr dsound, const std::wstring& fileName)
-		: DirectSoundAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc), offset_(0){
+		: DirectSoundStereoAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc), offset_(0){
 
 			//バッファを作成
 

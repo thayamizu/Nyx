@@ -99,7 +99,7 @@ namespace Nyx {
 		* DirectSoundBufferのポインタを返します
 		* @return const DirectSoundBufferPtr& DirectSoundBufferのポインタ
 		*/
-		DirectSoundBufferPtr GetHandle();
+		const DirectSoundBufferPtr& GetHandle() const;
 
 
 		/**

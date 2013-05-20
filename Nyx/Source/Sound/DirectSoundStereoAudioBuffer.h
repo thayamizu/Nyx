@@ -31,7 +31,7 @@ namespace Nyx {
 		* ƒpƒ“‚ÌŽæ“¾
 		* @return long
 		*/
-		long GetPan();
+		long GetPan() const;
 	};
 }
 #endif

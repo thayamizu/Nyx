@@ -210,7 +210,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundBufferPtr DirectSoundAudioBuffer::GetHandle() {
+	const DirectSoundBufferPtr& DirectSoundAudioBuffer::GetHandle() const {
 		return soundBuffer_;
 	}
 
