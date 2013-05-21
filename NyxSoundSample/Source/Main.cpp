@@ -10,7 +10,7 @@ using namespace std;
 using namespace Nyx;
 
 
-static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\test.wav";
+static const std::wstring g_WavFile1 = L"..\\..\\TestData\\Sound\\あんずのうた.wav";
 static const std::wstring g_WavFile2 = L"..\\..\\TestData\\Sound\\test3.wav";
 
 class DirectSoundStaticAudioBufferTest
@@ -109,8 +109,11 @@ private:
 
 
 int main()
-{
+{Nyx::MemoryState state;
 	try {
+		MemoryChecker::Initialize();
+	state= MemoryChecker::GetMemoryState();
+
 		std::shared_ptr<DirectSoundStaticAudioBufferTest> test(std::make_shared<DirectSoundStaticAudioBufferTest>());
 		std::cout <<"テストケース1を開始します" << std::endl;
 		test->TestCase1();
@@ -131,4 +134,7 @@ int main()
 		std::cout << e.what() << std::endl;
 		getchar();
 	}
+
+	MemoryChecker::DumpStatistics();
+
 }

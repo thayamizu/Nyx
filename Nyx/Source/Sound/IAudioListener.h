@@ -1,13 +1,12 @@
 #ifndef NYX_CORE_INCLUDED_IAUDIO_LISTENER_
 #define NYX_CORE_INCLUDED_IAUDIO_LISTENER_
+#include "Primitive/Vector3.h"
 
 namespace Nyx {
-	
-	class Vector3f;
 	///オーディオリスナー
 	class IAudioListener {
 	public:
-		~IAudioListener() {}
+		virtual ~IAudioListener() {}
 	
 		/**
 		* リスナーの位置を取得します

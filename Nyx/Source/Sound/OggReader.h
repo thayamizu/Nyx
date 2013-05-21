@@ -2,7 +2,7 @@
 #define NYX_CORE_INCLUDED_OGG_READER_H_
 
 namespace Nyx {
-	class WaveFileHeader;
+	struct WaveFileHeader;
 	///oggファイルリーダ
 	class OggReader {
 	public:
