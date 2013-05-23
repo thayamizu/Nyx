@@ -20,6 +20,7 @@
 
 namespace Nyx {
 	//前方宣言
+	class IAudioListener;
 	class  AudioCache;
 
 	///オーディオマネージャインタフェース
@@ -44,7 +45,14 @@ namespace Nyx {
 		* @param AudioBufferDesc バッファタイプ
 		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
+		virtual std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) = 0;
+
+
+		/**
+		* オーディオリスナーを生成します
+		* @return std::shared_ptr<IAudioListener> 
+		*/
+		virtual std::shared_ptr<IAudioListener> CreateAudioListener() = 0;	
 
 
 		/**

@@ -21,11 +21,12 @@
 
 namespace Nyx {
 	//前方宣言
-	class AudioBuffer;
 	class AudioCache;
+	class IAudioBuffer;
+	class IAudioListener;
 	struct AudioBufferDesc;
 	struct AudioDesc;
-
+	
 	///オーディオマネージャ
 	class AudioManager : NonCopyable, public IAudioManager{
 	public:
@@ -53,11 +54,18 @@ namespace Nyx {
 		* オーディオバッファを生成します
 		* @param const std::wstring& ファイル名
 		* @param SoundBufferType バッファタイプ
-		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
+		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
 		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
-
 		
+
+		/**
+		* オーディオリスナーを生成します
+		* @return std::shared_ptr<IAudioListener> 
+		*/
+		std::shared_ptr<IAudioListener> CreateAudioListener();	
+
+
 		/**
 		* オーディオデータををロードしてきます
 		* @param const std::wstring& ファイル名

@@ -1,4 +1,5 @@
 #include "PCH.h"
+#include "Sound/AudioUtility.h"
 #include "Sound/DirectSoundAudioManager.h"
 #include "Sound/DirectSoundAudioBuffer.h"
 #include "Sound/DirectSoundStaticAudioBuffer.h"
@@ -31,51 +32,78 @@ public:
 	}
 
 	void TestCase1() {
-		Load();
+		LoadStaticAudio();
 		Play1();
+		Thread::Sleep(2000);
+		Stop1();
+		Thread::Sleep(2000);
+		Resume1();
+		Thread::Sleep(2000);
+		Reset1();
+		Play1();
+		Thread::Sleep(2000);
+		AudioEffectDesc effect;
+		effect.effectType = AudioUtility::EffectType_Reverb;
+		audio1_->SetEffect(effect);
+		Thread::Sleep(2000);
 	}
-	void TestCase2() {
-		Load();
-		Play1();
-		::Sleep(2000);
-		Stop();
-		::Sleep(1000);
 
-		Resume();
+
+	void TestCase2() {
+		LoadStatic3DAudio();
 		Play1();
-		::Sleep(2000);
-		Reset();
+		Thread::Sleep(2000);
+		Stop1();
+		Thread::Sleep(2000);
+		Resume1();
+		Thread::Sleep(2000);
+		Reset1();
 		Play1();
-		::Sleep(2000);
+		Thread::Sleep(2000);
+		AudioEffectDesc effect;
+		effect.effectType = AudioUtility::EffectType_Echo;
+		audio1_->SetEffect(effect);
+		Thread::Sleep(2000);
 	}
-	void Load() {
+	void LoadStaticAudio() {
+		Assert(manager_!=nullptr)
 		AudioBufferDesc desc;
+		ZeroMemory(&desc, sizeof(AudioBufferDesc));
+		desc.algorithm = DS3DALG_DEFAULT;
 		desc.focusType  = AudioUtility::FocusType_GlobalFocus;
 		desc.bufferType = AudioUtility::BufferType_StaticAudioBuffer;
-		desc.algorithm = DS3DALG_DEFAULT;
-		audio1_ = std::make_shared<DirectSoundStreamingAudioBuffer>(desc,manager_->GetHandle(), g_WavFile1);
-		Assert(audio1_ != nullptr);
+		audio1_ = manager_->CreateAudioBuffer(g_WavFile1, desc);
 	}
-void Play1() {
+	void LoadStatic3DAudio() {
+		Assert(manager_!=nullptr)
+			AudioBufferDesc desc;
+		ZeroMemory(&desc, sizeof(AudioBufferDesc));
+		desc.algorithm = DS3DALG_HRTF_FULL;
+		desc.focusType  = AudioUtility::FocusType_GlobalFocus;
+		desc.bufferType = AudioUtility::BufferType_Static3DAudioBuffer;
+		audio1_ = manager_->CreateAudioBuffer(g_WavFile1, desc);
+	}
+
+	void Play1() {
 		DebugOutput::Trace("オーディオバッファを再生します...");
-		audio1_->Play(true);
+		audio1_->Play(false);
 	}
 	void Play2() {
 		DebugOutput::Trace("オーディオバッファを再生します...");
 		audio2_->Play(true);
 	}
-	
-	void Stop() {
+
+	void Stop1() {
 		DebugOutput::Trace("オーディオバッファを停止します...");
-		audio2_->Stop();
+		audio1_->Stop();
 	}
-	void Resume() {
+	void Resume1() {
 		DebugOutput::Trace("オーディオバッファをレジュームします...");
-		audio2_->Resume();
+		audio1_->Resume();
 	}
-	void Reset() {
+	void Reset1() {
 		DebugOutput::Trace("オーディオバッファをリセットします...");
-		audio2_->Reset();
+		audio1_->Reset();
 	}
 
 	void GetStatus() {
@@ -83,44 +111,33 @@ void Play1() {
 		//ulong status = audio_->GetStatus();
 	}
 
-	void GetPan() {
-		DebugOutput::Trace("オーディオバッファの相対ボリュームを取得します...");
-		long pan = audio2_->GetPan();
-
-	}	
-	void GetVolume() {
-		DebugOutput::Trace("オーディオバッファのボリュームを取得します...");
-		long volume  = audio2_->GetVolume();
-	}		
-	void SetPan() {
-		DebugOutput::Trace("オーディオバッファの相対ボリュームを設定します...");
-		audio2_->SetPan(100);
-	}	
-	void SetVolume() {
-		DebugOutput::Trace("オーディオバッファのボリュームを設定します...");
-		audio2_->SetVolume(100);
-	}
 private:
 	HWND hwnd_;
-	std::shared_ptr<DirectSoundStreamingAudioBuffer>  audio1_;
-	std::shared_ptr<DirectSoundStaticAudioBuffer>  audio2_;
+	std::shared_ptr<IAudioBuffer>  audio1_;
+	std::shared_ptr<IAudioBuffer>  audio2_;
+	std::shared_ptr<IAudioBuffer>  audio3_;
+	std::shared_ptr<IAudioBuffer>  audio4_;
 	std::shared_ptr<DirectSoundAudioManager> manager_;
 };
 
 
 int main()
-{Nyx::MemoryState state;
+{
+	Nyx::MemoryState state;
 	try {
 		MemoryChecker::Initialize();
-	state= MemoryChecker::GetMemoryState();
+		state= MemoryChecker::GetMemoryState();
 
 		std::shared_ptr<DirectSoundStaticAudioBufferTest> test(std::make_shared<DirectSoundStaticAudioBufferTest>());
-		std::cout <<"テストケース1を開始します" << std::endl;
+		/*std::cout <<"テストケース1を開始します" << std::endl;
 		test->TestCase1();
-		getchar();
-		/*	std::cout <<"テストケース2を開始します" << std::endl;
-		test->TestCase2();
+		getchar();*/
 
+		std::cout <<"テストケース2を開始します" << std::endl;
+		test->TestCase2();
+		getchar();
+		
+		/*
 		std::cout <<"テストケース3を開始します" << std::endl;
 		test->TestCase3();
 

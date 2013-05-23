@@ -4,9 +4,9 @@
 #include "DirectSoundDefinition.h"
 
 namespace Nyx {
-	class DirectSoundAudioListener {
+	class DirectSoundAudioListener : public IAudioListener{
 	public:
-		DirectSoundAudioListener();
+		DirectSoundAudioListener(DirectSoundPtr dsound);
 		virtual ~DirectSoundAudioListener();
 		/**
 		* リスナーの位置を取得します

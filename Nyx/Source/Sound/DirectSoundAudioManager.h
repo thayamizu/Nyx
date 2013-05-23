@@ -20,6 +20,7 @@
 #include "DirectSoundDefinition.h"
 
 namespace Nyx {
+	class IAudioListener;
 	///オーディオマネージャのDirectSoundによる実装
 	class DirectSoundAudioManager : public IAudioManager{
 	public:
@@ -53,6 +54,13 @@ namespace Nyx {
 
 
 		/**
+		* オーディオリスナーを生成します
+		* @return std::shared_ptr<IAudioListener> 
+		*/
+		std::shared_ptr<IAudioListener> CreateAudioListener();	
+
+
+		/**
 		* Waveファイルをロードしてきます
 		* @param const std::wstring ファイル名
 		* @param SoundBufferType バッファの種類
@@ -66,26 +74,8 @@ namespace Nyx {
 		* @return const DirectSoundPtr 
 		*/
 		const DirectSoundPtr GetHandle();
-	private:
-		/**
-		* Waveファイルからデータを読み込んできます
-		* @param const std::wstring ファイル名
-		* @param AudioBufferDesc バッファの種類
-		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
-		*/
-		std::shared_ptr<IAudioBuffer> LoadFromWaveFile(const std::wstring, const AudioBufferDesc& bufferDesc);
-
-
-		/**
-		* Oggファイルからデータを読み込んできます
-		* @param const std::wstring ファイル名
-		* @param AudioBufferDesc バッファの種類
-		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
-		*/
-		std::shared_ptr<IAudioBuffer> LoadFromOggFile(const std::wstring, const AudioBufferDesc& bufferDesc);
 	private:	
 		int masterVolume_;	///< マスターボリューム
-		bool align_[3];     ///< アライメント調整
 		DirectSoundPtr directSound_;///< DirectSoundオブジェクト
 		DirectSoundPrimaryBufferPtr primaryBuffer_;
 	};

@@ -48,7 +48,7 @@ namespace Nyx {
 	//
 	AudioManager::AudioManager(const AudioDesc& desc)
 		: pimpl_(new PImpl()) {
-			desc;
+			Initialize(desc);
 	}
 
 
@@ -78,6 +78,15 @@ namespace Nyx {
 	}
 
 
+	//-------------------------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioListener> AudioManager::CreateAudioListener() {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->CreateAudioListener();
+	}	
+	
+	
 	//-------------------------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {

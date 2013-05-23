@@ -18,11 +18,14 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "IO/File.h"
-#include "Sound/AudioUtility.h"
-#include "Sound/AudioCache.h"
-#include "DirectSoundAudioBuffer.h"
+#include "AudioCache.h"
+#include "AudioUtility.h"
 #include "DirectSoundAudioManager.h"
-
+#include "DirectSoundAudioListenerh.h"
+#include "DirectSoundStaticAudioBuffer.h"
+#include "DirectSoundStatic3DAudioBuffer.h"
+#include "DirectSoundStreamingAudioBuffer.h"
+#include "DirectSoundStreaming3DAudioBuffer.h"
 namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	//
@@ -64,8 +67,31 @@ namespace Nyx {
 	//---------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
-		fileName, bufferDesc;
-		return nullptr;
+			std::shared_ptr<IAudioBuffer> audio;
+		switch(bufferDesc.bufferType) {
+		case AudioUtility::BufferType_StaticAudioBuffer :
+			audio = std::make_shared<DirectSoundStaticAudioBuffer>(bufferDesc, directSound_, fileName);
+			break;
+		case AudioUtility::BufferType_Static3DAudioBuffer:
+			audio = std::make_shared<DirectSoundStatic3DAudioBuffer>(bufferDesc, directSound_, fileName);
+			break;
+		case AudioUtility::BufferType_StreamingAudioBuffer:
+			audio = std::make_shared<DirectSoundStreamingAudioBuffer>(bufferDesc, directSound_, fileName);
+			break;
+		case AudioUtility::BufferType_Streaming3DAudioBuffer:
+			audio = std::make_shared<DirectSoundStreaming3DAudioBuffer>(bufferDesc, directSound_, fileName);
+			break;
+		default:
+			throw std::invalid_argument("ñ≥å¯Ç»à¯êîÇ™ìnÇ≥ÇÍÇ‹ÇµÇΩÅB");
+		}
+		return audio;
+	}
+
+
+	//---------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioListener> DirectSoundAudioManager::CreateAudioListener() {
+		return std::make_shared<DirectSoundAudioListener>(directSound_);
 	}
 
 
@@ -77,32 +103,14 @@ namespace Nyx {
 		std::shared_ptr<AudioCache> audioCache(std::make_shared<AudioCache>());
 
 		while (std::getline(file, line)) {
-			std::shared_ptr<IAudioBuffer> buffer = LoadFromWaveFile(line, bufferDesc);
-			//audioCache->Add(line, buffer);
+			std::shared_ptr<IAudioBuffer> buffer = CreateAudioBuffer(line, bufferDesc);
+			audioCache->Add(line, buffer);
 		}
 
 		return audioCache;
 	}	
 
 
-	//---------------------------------------------------------------------------------------
-	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromWaveFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
-		//std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
-		fileName, bufferDesc;
-		return nullptr;
-	}
-
-
-	//---------------------------------------------------------------------------------------
-	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::LoadFromOggFile(const std::wstring fileName, const AudioBufferDesc& bufferDesc){
-		//std::shared_ptr<IAudioBuffer> audio(new DirectSoundAudioBuffer(bufferDesc, directSound_, fileName));
-		fileName, bufferDesc;
-		return nullptr;
-	}
-	
-	
 	//---------------------------------------------------------------------------------------
 	//
 	const DirectSoundPtr DirectSoundAudioManager::GetHandle() {
