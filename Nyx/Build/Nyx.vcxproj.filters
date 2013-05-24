@@ -76,12 +76,6 @@
     <Filter Include="Database\implements">
       <UniqueIdentifier>{c3073ab3-abd4-4951-908c-02339ba572fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Movie\interfaces">
-      <UniqueIdentifier>{eff8bcf6-436f-4a5d-a5e4-dc2314352590}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Movie\implements">
-      <UniqueIdentifier>{4a3c7e11-70dc-48cb-b953-e0600214da1f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
     </Filter>
@@ -102,12 +96,6 @@
     </Filter>
     <Filter Include="Database\base">
       <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Movie\implements\detail">
-      <UniqueIdentifier>{0967790e-47d9-426b-a457-9af07c03716e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Movie\implements\detail\DirectShow">
-      <UniqueIdentifier>{06cb3258-e262-4523-8ecc-ef5614c50d75}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sound\detail">
       <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
@@ -138,9 +126,6 @@
     </Filter>
     <Filter Include="Network\detail">
       <UniqueIdentifier>{17aa248f-8304-4cea-b2b3-e889e8c06d4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\detail\Asio">
-      <UniqueIdentifier>{f2bcf752-6816-4b01-a0a8-be88b2022910}</UniqueIdentifier>
     </Filter>
     <Filter Include="Network\detail\WinSock">
       <UniqueIdentifier>{751bde4c-ee10-491f-894c-766a528bf5e4}</UniqueIdentifier>
@@ -210,6 +195,12 @@
     </Filter>
     <Filter Include="Sound\detail\DirectSound\AudioListener">
       <UniqueIdentifier>{c9526dda-436a-4d26-b710-ed85145ee50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie\detail">
+      <UniqueIdentifier>{0967790e-47d9-426b-a457-9af07c03716e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Movie\detail\DirectShow">
+      <UniqueIdentifier>{06cb3258-e262-4523-8ecc-ef5614c50d75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -349,12 +340,6 @@
     <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
       <Filter>Graphics\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Movie\IMoviePlayer.h">
-      <Filter>Movie\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Movie\MoviePlayer.h">
-      <Filter>Movie\implements</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\IAnimationController.h">
       <Filter>Graphics\Animation\interfaces</Filter>
     </ClInclude>
@@ -389,7 +374,7 @@
       <Filter>IO\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h">
-      <Filter>Movie\implements\detail\DirectShow</Filter>
+      <Filter>Movie\detail\DirectShow</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Thread\CriticalSection.h">
       <Filter>Thread</Filter>
@@ -577,6 +562,12 @@
     <ClInclude Include="..\Source\Sound\DirectSoundAudioListenerh.h">
       <Filter>Sound\detail\DirectSound\AudioListener</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Movie\IMoviePlayer.h">
+      <Filter>Movie</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Movie\MoviePlayer.h">
+      <Filter>Movie</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -687,9 +678,6 @@
     <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
       <Filter>Graphics\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
-      <Filter>Movie\implements</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Utility\Math.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
@@ -709,7 +697,7 @@
       <Filter>IO\detail\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp">
-      <Filter>Movie\implements\detail\DirectShow</Filter>
+      <Filter>Movie\detail\DirectShow</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp">
       <Filter>Thread</Filter>
@@ -821,6 +809,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Sound\DirectSoundAudioListener.cpp">
       <Filter>Sound\detail\DirectSound\AudioListener</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
+      <Filter>Movie</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

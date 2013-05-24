@@ -91,6 +91,7 @@ namespace Nyx {
 		Assert(soundBuffer_ != nullptr);
 		//Ä¶’†‚È‚çˆ—‚µ‚È‚¢
 		ulong status = GetStatus();
+		ulong value =status& DSBSTATUS_PLAYING;
 		if ((status & DSBSTATUS_PLAYING)) {
 			return;
 		} 
