@@ -20,3 +20,6 @@
 #else
 #pragma comment(lib, "../../Lib/Release/Nyx_MT.lib")
 #endif
+
+
+const std::wstring g_waveFile = L"..\\..\\TestData\\Sound\\test.wav";

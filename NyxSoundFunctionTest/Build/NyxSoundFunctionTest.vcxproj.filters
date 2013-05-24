@@ -26,5 +26,29 @@
     <ClInclude Include="..\Source\PCH.h">
       <Filter>PCH</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\AudioCacheTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\AudioManagerTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\DirectSoundAudioLisnterTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\DirectSoundAudioManagerTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\DirectSoundStatic3DAudioBufferTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\DirectSoundStaticAudioBufferTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\DirectSoundStreaming3DAudioBufferTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\DirectSoundStreamingAudioBufferTest.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

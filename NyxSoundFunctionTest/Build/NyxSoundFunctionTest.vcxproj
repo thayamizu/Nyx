@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{15E1937F-A16C-4DF8-AE5D-3AAD508B08A5}</ProjectGuid>
     <RootNamespace>NyxSoundSample</RootNamespace>
-    <ProjectName>NyxSoundSample</ProjectName>
+    <ProjectName>NyxSoundFunctionTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -90,6 +90,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Source\AudioCacheTest.h" />
+    <ClInclude Include="..\Source\AudioManagerTest.h" />
+    <ClInclude Include="..\Source\DirectSoundAudioLisnterTest.h" />
+    <ClInclude Include="..\Source\DirectSoundAudioManagerTest.h" />
+    <ClInclude Include="..\Source\DirectSoundStatic3DAudioBufferTest.h" />
+    <ClInclude Include="..\Source\DirectSoundStaticAudioBufferTest.h" />
+    <ClInclude Include="..\Source\DirectSoundStreaming3DAudioBufferTest.h" />
+    <ClInclude Include="..\Source\DirectSoundStreamingAudioBufferTest.h" />
     <ClInclude Include="..\Source\PCH.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
