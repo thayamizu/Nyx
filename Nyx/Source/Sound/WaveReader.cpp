@@ -44,7 +44,7 @@ namespace Nyx {
 	//
 	void WaveReader::Open(const std::wstring& fileName) {
 		fileName_ = fileName;
-		waveFile_ = std::make_shared<File>(fileName);
+		waveFile_ = std::make_shared<File>(fileName, AccessAttribute::ReadMode);
 	}
 
 

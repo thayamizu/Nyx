@@ -90,14 +90,13 @@ namespace Nyx {
 	void DirectSoundAudioBuffer::Resume() {
 		Assert(soundBuffer_ != nullptr);
 		//再生中なら処理しない
-		ulong status = GetStatus();
-		ulong value =status& DSBSTATUS_PLAYING;
-		if ((status & DSBSTATUS_PLAYING)) {
+		auto state = GetState();
+		if (state.isPlaying) {
 			return;
 		} 
 
 		//レジュームする
-		HRESULT hr = soundBuffer_->Play(0, 0, status & DSBPLAY_LOOPING);
+		HRESULT hr = soundBuffer_->Play(0, 0, state.isLooping);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
@@ -110,8 +109,8 @@ namespace Nyx {
 	void DirectSoundAudioBuffer::Reset() {
 		Assert(soundBuffer_ != nullptr);
 		//再生中なら停止する
-		ulong status = GetStatus();
-		if (status & DSBSTATUS_PLAYING) {
+		auto state = GetState();
+		if (state.isPlaying) {
 			Stop();
 		} 
 
@@ -179,6 +178,7 @@ namespace Nyx {
 			break;
 		default:
 			DebugOutput::Trace("EffectTypeの値が違います。");
+			throw std::invalid_argument("EffectTypeの値が違います。");
 		}
 	}
 
