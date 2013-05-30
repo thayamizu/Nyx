@@ -94,7 +94,13 @@ namespace Nyx {
 		if (state.isPlaying) {
 			return;
 		} 
-
+		if (state.isBufferLost) {
+			HRESULT hr = soundBuffer_->Restore();
+			if (FAILED(hr)) {
+				DebugOutput::Trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
+			}
+		}
 		//レジュームする
 		HRESULT hr = soundBuffer_->Play(0, 0, state.isLooping);
 		if (FAILED(hr)) {
@@ -108,17 +114,13 @@ namespace Nyx {
 	//
 	void DirectSoundAudioBuffer::Reset() {
 		Assert(soundBuffer_ != nullptr);
-		//再生中なら停止する
-		auto state = GetState();
-		if (state.isPlaying) {
-			Stop();
-		} 
 
 		HRESULT hr = soundBuffer_->SetCurrentPosition(0);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。", hr);
 		}
+
 	}
 
 

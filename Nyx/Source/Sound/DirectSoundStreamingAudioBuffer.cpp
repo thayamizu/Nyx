@@ -89,6 +89,14 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
+	void DirectSoundStreamingAudioBuffer::Reset() {
+		offset_ = 0;
+		waveReader_->SetCursor(0);
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
 	void DirectSoundStreamingAudioBuffer::WriteWaveData(){
 		const auto handle = GetHandle();
 		const auto size   = bufferDesc_.waveFormat.dataChunk.chunkSize;

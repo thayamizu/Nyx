@@ -87,6 +87,10 @@ namespace Nyx {
 		return AudioUtility::BufferType_Streaming3DAudioBuffer;
 	}
 
+	void DirectSoundStreaming3DAudioBuffer::Reset() {
+		offset_ = 0;
+		waveReader_->SetCursor(0);
+	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
@@ -98,7 +102,6 @@ namespace Nyx {
 			offset_ = 0;
 			waveReader_->SetCursor(0);
 		}
-
 		//バッファをロック
 		void* readData1 = nullptr;
 		void* readData2 = nullptr;

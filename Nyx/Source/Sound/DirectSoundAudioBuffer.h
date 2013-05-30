@@ -34,79 +34,79 @@ namespace Nyx {
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds);
+		virtual void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds);
 
 
 		/**
 		* 再生
 		*/
-		void Play(bool isLoop);
+		virtual void Play(bool isLoop);
 
 
 		/**
 		* 停止
 		*/
-		void Stop();
+		virtual void Stop();
 
 
 		/**
 		* レジューム
 		*/
-		void Resume();
+		virtual void Resume();
 
 
 		/**
 		* リセット
 		*/
-		void Reset();
+		virtual void Reset();
 
 
 		/**
 		* ボリュームの設定
 		* @param long ボリューム
 		*/
-		void SetVolume(long volume);
+		virtual void SetVolume(long volume);
 
 
 		/**
 		* ボリュームの取得
 		* @return long
 		*/
-		long GetVolume() const;
+		virtual long GetVolume() const;
 
 
 		/**
 		* ステータスコードの取得
 		* @return ulong
 		*/
-		ulong GetStatus() const;
+		virtual ulong GetStatus() const;
 
 
 		/**
 		*　オーディオバッファにエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetEffect(const AudioEffectDesc& effectDesc);
+		virtual void SetEffect(const AudioEffectDesc& effectDesc);
 
 
 		/**
 		*　オーディオバッファのエフェクトをリセットします
 		*/
-		void ResetEffect();
+		virtual void ResetEffect();
 
 
 		/**
 		* DirectSoundBufferのポインタを返します
 		* @return const DirectSoundBufferPtr& DirectSoundBufferのポインタ
 		*/
-		const DirectSoundBufferPtr& GetHandle() const;
+		virtual const DirectSoundBufferPtr& GetHandle() const;
 
 
 		/**
 		* オーディオバッファの状態の取得
 		* @return AudioState
 		*/
-		AudioState GetState() const;
+		virtual AudioState GetState() const;
 
 
 	protected:

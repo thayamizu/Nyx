@@ -45,6 +45,11 @@ namespace Nyx {
 		* @return AudioUtility::BufferType
 		*/
 		AudioUtility::BufferType GetBufferType() const;
+
+		/**
+		* オーディオバッファをリセットします．
+		*/
+		void Reset();
 	private:
 		/**
 		* DirectSoundのセカンダリバッファにwaveデータを書き込みます

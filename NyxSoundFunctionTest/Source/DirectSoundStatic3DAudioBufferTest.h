@@ -30,13 +30,10 @@ public:
 		Thread::Sleep(2000);
 		Stop();
 		Thread::Sleep(2000);
-		Resume();
 		Thread::Sleep(2000);
 		Play();
 		Thread::Sleep(2000);
-		Reset();
-		Thread::Sleep(2000);
-		Play();
+
 	}
 
 	
