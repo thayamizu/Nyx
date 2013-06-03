@@ -78,6 +78,10 @@ namespace Nyx {
 		for (auto var : notifyEventList_) {
 			CloseHandle(var);
 		}
+
+		if (notifyThreadHandle_ != nullptr) {
+			CloseHandle(notifyThreadHandle_);
+		}
 	}
 
 

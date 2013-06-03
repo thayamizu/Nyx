@@ -49,6 +49,13 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
+	std::shared_ptr<IAudioBuffer> AudioCache::operator[](const std::wstring& fileName) {
+		return nullptr;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
 	void AudioCache::Add(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer) {
 		Assert(pimpl_ != nullptr);
 		
