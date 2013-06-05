@@ -42,11 +42,10 @@ int main()
 				test3->Test();
 				break;
 			case '4':
-				test4=std::make_shared<DirectSoundStreaming3DAudioBufferTest>();
-				test4->Test();
-				break;
+				test9 = std::make_shared<AudioCacheTest>();
+				test9->Test();
 			case '5':
-
+				break;
 			}
 	}
 	catch(std::exception e) {

@@ -59,7 +59,7 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @param std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		void Remove(const std::wstring& fileName,  std::shared_ptr<IAudioBuffer> audioBuffer);
+		void Remove(const std::wstring& fileName);
 
 
 		/**

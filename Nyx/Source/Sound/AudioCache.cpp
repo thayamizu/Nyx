@@ -50,7 +50,11 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> AudioCache::operator[](const std::wstring& fileName) {
-		return nullptr;
+		size_t begin = fileName.find_last_of(L"\\/");
+		size_t end = fileName.find_last_of(L".");
+		size_t num = end - begin - 1;
+		auto name = fileName.substr(begin + 1, num);
+		return pimpl_->audioBufferMap_[name];
 	}
 
 
@@ -59,25 +63,37 @@ namespace Nyx {
 	void AudioCache::Add(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer) {
 		Assert(pimpl_ != nullptr);
 		
+		size_t begin = fileName.find_last_of(L"\\/");
+		size_t end = fileName.find_last_of(L".");
+		size_t num = end - begin - 1;
+		auto name = fileName.substr(begin + 1, num);
 		pimpl_->audioBufferList_.push_back(audioBuffer);
-		pimpl_->audioBufferMap_.insert(PImpl::AudioBufferMap::value_type(fileName, audioBuffer));
+		pimpl_->audioBufferMap_.insert(PImpl::AudioBufferMap::value_type(name, audioBuffer));
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Remove(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer) {
+	void AudioCache::Remove(const std::wstring& fileName) {
 		Assert(pimpl_ != nullptr);
+		
+		size_t begin = fileName.find_last_of(L"\\/");
+		size_t end = fileName.find_last_of(L".");
+		size_t num = end - begin - 1;
+		auto name = fileName.substr(begin + 1, num);
+		auto mapIter = pimpl_->audioBufferMap_.find(name);
+		if (mapIter == pimpl_->audioBufferMap_.end()) {
+			return;
+		}
+		
+		pimpl_->audioBufferMap_.erase(mapIter);
+		
+		auto audioBuffer = mapIter->second;
 		auto listIter = std::find(
 			pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end()  , audioBuffer);
 		if (listIter != pimpl_->audioBufferList_.end()) {
 			pimpl_->audioBufferList_.erase(listIter);
-		}
-
-		auto mapIter = pimpl_->audioBufferMap_.find(fileName);
-		if (mapIter != pimpl_->audioBufferMap_.end()) {
-			pimpl_->audioBufferMap_.erase(mapIter);
 		}
 	}
 	
