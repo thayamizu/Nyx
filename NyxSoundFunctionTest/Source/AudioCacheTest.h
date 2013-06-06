@@ -24,6 +24,16 @@ public:
 		StopAll();
 		Thread::Sleep(2000);
 		PlayAll();
+		Thread::Sleep(2000);
+		ResetAll();
+		Thread::Sleep(2000);
+		StopAll();
+		Thread::Sleep(2000);
+		ResumeAll();
+		SetEffectAll();	
+		Thread::Sleep(2000);
+		ResetEffectAll();
+		Thread::Sleep(2000);
 	}
 	void Load() {
 		Assert(cache_   == nullptr);
@@ -103,6 +113,7 @@ public:
 		Assert(cache_ != nullptr);
 		Assert(manager_ != nullptr);
 		AudioEffectDesc effectDesc={};
+		effectDesc.effectType = AudioUtility::EffectType_Chorus;
 		cache_->SetEffectAll(effectDesc);
 	}
 	void ResetEffectAll() {

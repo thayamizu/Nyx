@@ -172,6 +172,7 @@ namespace Nyx {
 		*/
 		void SetReverbEffect(const AudioEffectDesc& effectDesc);
 	private:
+		bool isLoop_;
 		DirectSoundBufferPtr soundBuffer_;
 	};
 }

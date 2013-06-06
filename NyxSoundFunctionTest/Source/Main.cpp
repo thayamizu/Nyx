@@ -47,6 +47,8 @@ int main()
 			case '5':
 				break;
 			}
+
+			Thread::Sleep(10000);
 	}
 	catch(std::exception e) {
 		std::cout << e.what() << std::endl;

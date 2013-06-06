@@ -27,7 +27,7 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
-		: soundBuffer_(nullptr){
+		: isLoop_(false), soundBuffer_(nullptr){
 
 	}
 
@@ -65,7 +65,8 @@ namespace Nyx {
 	//
 	void DirectSoundAudioBuffer::Play(bool isLoop) {
 		Assert(soundBuffer_ != nullptr);
-		HRESULT hr = soundBuffer_->Play(0, 0, isLoop);
+		isLoop_ = isLoop;
+		HRESULT hr = soundBuffer_->Play(0, 0, isLoop_);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("DirectSoundオーディオバッファを再生出来ませんでした。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundオーディオバッファを再生出来ませんでした。", hr);
@@ -102,7 +103,7 @@ namespace Nyx {
 			}
 		}
 		//レジュームする
-		HRESULT hr = soundBuffer_->Play(0, 0, state.isLooping);
+		HRESULT hr = soundBuffer_->Play(0, 0, isLoop_);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
@@ -203,9 +204,9 @@ namespace Nyx {
 		ulong status = GetStatus();
 
 		AudioState state;
-		state.isBufferLost = static_cast<bool>(status & DSBSTATUS_BUFFERLOST);
-		state.isLooping    = static_cast<bool>(status & DSBSTATUS_LOOPING);
-		state.isPlaying    = static_cast<bool>(status & DSBSTATUS_PLAYING);
+		state.isBufferLost = (status & DSBSTATUS_BUFFERLOST) != 0;
+		state.isLooping    = (status & DSBSTATUS_LOOPING)    != 0;
+		state.isPlaying    = (status & DSBSTATUS_PLAYING)    != 0;
 
 		return state;
 	}
