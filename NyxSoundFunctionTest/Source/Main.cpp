@@ -18,7 +18,7 @@ int main()
 		std::shared_ptr<DirectSoundStaticAudioBufferTest> test1;
 		std::shared_ptr<DirectSoundStatic3DAudioBufferTest> test2;
 		std::shared_ptr<DirectSoundStreamingAudioBufferTest> test3;
-		std::shared_ptr<DirectSoundAudioManagerTest> test4;
+		std::shared_ptr<DirectSoundStreaming3DAudioBufferTest> test4;
 		std::shared_ptr<DirectSoundAudioManagerTest> test5;
 		std::shared_ptr<DirectSoundAudioListenerTest> test6;
 		std::shared_ptr<AudioManagerTest> test7;
@@ -45,6 +45,8 @@ int main()
 				test9 = std::make_shared<AudioCacheTest>();
 				test9->Test();
 			case '5':
+				test4= std::make_shared<DirectSoundStreaming3DAudioBufferTest>();
+				test4->Test();
 				break;
 			}
 

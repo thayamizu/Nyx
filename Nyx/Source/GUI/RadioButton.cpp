@@ -107,7 +107,7 @@ namespace Nyx {
 	//----------------------------------------------------------------
 	bool RadioButton::IsActivate() const {
 		Assert(hwnd != NULL);
-		return static_cast<bool>(::IsWindowEnabled(hwnd));
+		return IsWindowEnabled(hwnd) != 0;
 	}
 
 	//----------------------------------------------------------------

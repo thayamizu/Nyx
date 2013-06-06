@@ -29,15 +29,22 @@ namespace Nyx {
 	//
 	long AudioUtility::VolumeToDecibel(long volume) {
 		volume  = Math::Clamp(volume, 1L, 100L);
-		return static_cast<long>(33.2 * Math::Log10(volume) * 100);
+		return static_cast<long>(33.2f * Math::Log10((float)volume/100) * 100);
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	long AudioUtility::DecibelToVolume(long decibel) {
-		decibel = Math::Clamp(decibel, -10000L, 10000L);
-		return static_cast<long>(Math::Pow(10, (decibel/ 33.2)));
+		decibel = Math::Clamp(decibel, -10000L, 0L);
+		if (decibel <= -10000L) {
+			return 0;
+		}
+		if (decibel >= 0 ) {
+			return 100;
+		}
+
+		return static_cast<long>(Math::Pow(10, (decibel / 33.2/100)) * 100);
 	}
 
 	

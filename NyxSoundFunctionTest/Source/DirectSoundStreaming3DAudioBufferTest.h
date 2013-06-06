@@ -26,12 +26,30 @@ public:
 	void Test() {
 		LoadStaticAudio();
 		Play();
-		Thread::Sleep(2000);
-		Reset();
-		Thread::Sleep(2000);
-		Stop();
-		Thread::Sleep(2000);
-		Resume();
+		audio_->SetVolume(100);
+		Thread::Sleep(1000);
+	std::cout << audio_->GetVolume() << std::endl;
+		
+		audio_->SetVolume(75);
+		Thread::Sleep(1000);
+	std::cout << audio_->GetVolume() << std::endl;
+
+		
+		audio_->SetVolume(50);
+		Thread::Sleep(1000);
+	std::cout << audio_->GetVolume() << std::endl;
+
+		
+		audio_->SetVolume(25);
+		Thread::Sleep(1000);
+	std::cout << audio_->GetVolume() << std::endl;
+
+		
+		audio_->SetVolume(0);
+		Thread::Sleep(1000);
+	std::cout << audio_->GetVolume() << std::endl;
+
+
 	}
 
 	
