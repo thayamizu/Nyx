@@ -189,11 +189,18 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectSoundAudioBuffer::ResetEffect() {
+		ulong status = GetStatus();
+		if (status & DSBSTATUS_PLAYING) {
+			Stop();
+		}
+
 		HRESULT hr = soundBuffer_->SetFX(0, NULL, NULL);
 		if (FAILED(hr)) {
 			DebugOutput::Trace("エフェクトのリセットに失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw COMException("エフェクトのリセットに失敗しました。", hr);
 		}
+
+		Resume();
 	}
 
 

@@ -34,6 +34,9 @@ public:
 		Thread::Sleep(2000);
 		ResetEffectAll();
 		Thread::Sleep(2000);
+		StopAll();
+		getbuffer();
+		Thread::Sleep(2000);
 	}
 	void Load() {
 		Assert(cache_   == nullptr);
@@ -115,6 +118,41 @@ public:
 		AudioEffectDesc effectDesc={};
 		effectDesc.effectType = AudioUtility::EffectType_Chorus;
 		cache_->SetEffectAll(effectDesc);
+	}
+	void getbuffer() {
+		Assert(cache_ != nullptr);
+		Assert(manager_ != nullptr);
+		auto buffer = cache_->operator[](L"test");
+		if (buffer != nullptr) {
+			buffer->Play(true);
+		}
+		else {
+			Assert(false);
+		}
+
+		buffer = cache_->operator[](L"../../TestData/Sound/test2");
+		if (buffer != nullptr) {
+			buffer->Play(true);
+		}
+		else {
+			Assert(false);
+		}
+
+		buffer = cache_->operator[](L"test3.wav");
+		if (buffer != nullptr) {
+			buffer->Play(true);
+
+			buffer->Stop();
+		}
+		else {
+			Assert(false);
+		}
+
+		cache_->Remove(L"test3.wav");
+		buffer= cache_->operator[](L"test3.wav");
+		if (buffer != nullptr) {
+			Assert(false);
+		}
 	}
 	void ResetEffectAll() {
 		Assert(cache_ != nullptr);

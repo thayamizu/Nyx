@@ -86,7 +86,6 @@ namespace Nyx {
 			return;
 		}
 		
-		pimpl_->audioBufferMap_.erase(mapIter);
 		
 		auto audioBuffer = mapIter->second;
 		auto listIter = std::find(
@@ -95,6 +94,9 @@ namespace Nyx {
 		if (listIter != pimpl_->audioBufferList_.end()) {
 			pimpl_->audioBufferList_.erase(listIter);
 		}
+
+		pimpl_->audioBufferMap_.erase(mapIter);
+
 	}
 	
 
