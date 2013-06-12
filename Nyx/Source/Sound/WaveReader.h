@@ -59,13 +59,6 @@ namespace Nyx {
 		
 		
 		/**
-		* ファイルからWaveファイルを読み込みます
-		* @param std::wstring wavファイル名
-		*/
-		//void ReadFromFile(const std::wstring& fileName);
-
-
-		/**
 		* Waveファイルヘッダの取得します
 		* @return const WaveFileHeader& WAVEファイルヘッダ
 		*/
@@ -74,6 +67,8 @@ namespace Nyx {
 
 		/**
 		* Waveデータを取得します
+		* @param size_t  読み込みバイト数
+		* @param size_t　実際に読み取ったサイズ
 		* @return std::shared_ptr<char> WAVEデータ
 		*/
 		std::shared_ptr<char> Read(size_t bufferSize, ulong* readSize=nullptr);

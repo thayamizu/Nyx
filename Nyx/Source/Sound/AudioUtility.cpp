@@ -36,13 +36,14 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	long AudioUtility::DecibelToVolume(long decibel) {
-		decibel = Math::Clamp(decibel, -10000L, 0L);
+		decibel = Math::Clamp(decibel, -10000L, 10000L);
 		if (decibel <= -10000L) {
-			return 0;
+			return 0L;
 		}
-		if (decibel >= 0 ) {
-			return 100;
+		if (decibel >= 10000L ) {
+			return 100L;
 		}
+		
 
 		return static_cast<long>(Math::Pow(10, (decibel / 33.2/100)) * 100);
 	}
