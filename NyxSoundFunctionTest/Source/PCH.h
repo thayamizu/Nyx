@@ -22,4 +22,4 @@
 #endif
 
 
-const std::wstring g_waveFile = L"..\\..\\TestData\\Sound\\test.wav";
+const std::wstring g_waveFile = L"..\\..\\TestData\\Sound\\test2.wav";

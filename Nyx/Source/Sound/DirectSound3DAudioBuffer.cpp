@@ -97,8 +97,8 @@ namespace Nyx {
 		Assert(buffer_ != nullptr);
 		HRESULT hr = buffer_->GetMaxDistance(&distance);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源からの最大距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
-			throw COMException("音源からの最大距離の取得に失敗しました。", hr);
+			DebugOutput::Trace("音源の最大距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
+			throw COMException("音源の最大距離の取得に失敗しました。", hr);
 		}
 		return distance;
 	}
@@ -110,8 +110,8 @@ namespace Nyx {
 		Assert(buffer_ != nullptr);
 		HRESULT hr = buffer_->SetMaxDistance(maxDistance, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源からの最大距離の設定に失敗しました。[%s, %d]",__FILE__, __LINE__);
-			throw COMException("音源からの最大距離の設定に失敗しました", hr);
+			DebugOutput::Trace("音源の最大距離の設定に失敗しました。[%s, %d]",__FILE__, __LINE__);
+			throw COMException("音源の最大距離の設定に失敗しました", hr);
 		}
 	}
 
@@ -123,8 +123,8 @@ namespace Nyx {
 		Assert(buffer_ != nullptr);
 		HRESULT hr = buffer_->GetMinDistance(&distance);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源からの最小距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
-			throw COMException("音源からの最小距離の取得に失敗しました。",hr);
+			DebugOutput::Trace("音源の最小距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
+			throw COMException("音源の最小距離の取得に失敗しました。",hr);
 		}
 		return distance;
 	}
@@ -136,8 +136,8 @@ namespace Nyx {
 		Assert(buffer_ != nullptr);
 		HRESULT hr = buffer_->SetMinDistance(minDistance, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源からの最小距離の設定に失敗しました。[%s,%d]",__FILE__, __LINE__);
-			throw COMException("音源からの最小距離の設定に失敗しました。", hr);
+			DebugOutput::Trace("音源の最小距離の設定に失敗しました。[%s,%d]",__FILE__, __LINE__);
+			throw COMException("音源の最小距離の設定に失敗しました。", hr);
 		}
 	}
 
@@ -154,5 +154,8 @@ namespace Nyx {
 			DebugOutput::Trace("IDirectSound3DBuffer8の取得に失敗しました。[%s,%d]",__FILE__, __LINE__);
 			throw COMException("IDirectSound3DBuffer8の取得に失敗しました。", hr);
 		}
+
+		//スマートポインタの管理下に置く
+		buffer_ = buffer;
 	}
 }

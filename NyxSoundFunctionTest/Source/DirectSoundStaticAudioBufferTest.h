@@ -27,15 +27,45 @@ public:
 		LoadStaticAudio();
 		Play();
 		Thread::Sleep(2000);
-		Stop();
+	/*	Stop();
 		Thread::Sleep(2000);
 		Resume();
 		Thread::Sleep(2000);
 		Play();
 		Thread::Sleep(2000);
 		Reset();
+		Thread::Sleep(2000);*/
+
+		SetPan(100);
+		GetPan();
 		Thread::Sleep(2000);
-		Play();
+		SetPan(75);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(50);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(25);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(0);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(-25);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(-50);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(-50);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(-75);
+		GetPan();
+		Thread::Sleep(2000);
+		SetPan(-100);
+		GetPan();
+		Thread::Sleep(2000);
 	}
 
 	
@@ -64,7 +94,16 @@ public:
 		DebugOutput::Trace("オーディオバッファをリセットします...");
 		audio_->Reset();
 	}
-
+	void SetPan(ulong pan) {
+		DebugOutput::Trace("オーディオバッファをリセットします...");
+		auto a = dynamic_cast<Nyx::IStereoAudioBuffer*>(audio_.get());
+		a->SetPan(pan);
+	}
+	void GetPan() {
+		DebugOutput::Trace("オーディオバッファをリセットします...");
+		auto stereo = dynamic_cast<Nyx::IStereoAudioBuffer*>(audio_.get());
+		std::cout << stereo->GetPan() << std::endl;
+	}
 private:
 	HWND hwnd_;
 	std::shared_ptr<IAudioBuffer>  audio_;

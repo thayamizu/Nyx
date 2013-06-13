@@ -28,12 +28,15 @@ public:
 		LoadStatic3DAudio();
 		Play();
 		Thread::Sleep(2000);
-		Stop();
-		Thread::Sleep(2000);
-		Thread::Sleep(2000);
-		Play();
-		Thread::Sleep(2000);
 
+		SetMinDistance(50);
+		SetMaxDistance(20);
+		for (float z = -150; z < 150; z+=20.f) {
+			SetPosition(Vector3f(0, 0, z));
+			GetPosition();
+			Thread::Sleep(1000);
+		}
+		Thread::Sleep(1000);
 	}
 
 	
@@ -58,11 +61,56 @@ public:
 		DebugOutput::Trace("オーディオバッファをレジュームします...");
 		audio_->Resume();
 	}
+	
+	
 	void Reset() {
 		DebugOutput::Trace("オーディオバッファをリセットします...");
 		audio_->Reset();
 	}
+	
+	
+	void SetPosition(const Vector3f& pos) {
+		Assert(audio_ != nullptr);
+		auto a = dynamic_cast<Nyx::I3DAudioBuffer*>(audio_.get());
+		a->SetPosition(pos);
+	}
 
+
+	void GetPosition() {
+		Assert(audio_ != nullptr);
+		auto buffer = dynamic_cast<Nyx::I3DAudioBuffer* >(audio_.get());
+		auto pos = buffer->GetPosition();
+		printf("pos=(%f, %f, %f)\n", pos.x, pos.y, pos.z);
+	}
+
+
+	void SetMinDistance(float distance) {
+		Assert(audio_ != nullptr);
+		auto buffer = dynamic_cast<Nyx::I3DAudioBuffer* >(audio_.get());
+		buffer->SetMinDistance(distance);
+	}
+	
+	
+	void GetMinDistance() {
+		Assert(audio_ != nullptr);
+		auto buffer = dynamic_cast<Nyx::I3DAudioBuffer* >(audio_.get());
+		printf("min distance=%f\n", buffer->GetMinDistance());
+	}
+
+
+	void SetMaxDistance(float distance) {
+		Assert(audio_ != nullptr);
+		auto buffer = dynamic_cast<Nyx::I3DAudioBuffer* >(audio_.get());
+		buffer->SetMaxDistance(distance);
+
+	}
+
+	void GetMaxDistance() {
+		Assert(audio_ != nullptr);
+		auto buffer = dynamic_cast<Nyx::I3DAudioBuffer* >(audio_.get());
+		printf("max distance=%f\n", buffer->GetMaxDistance());
+
+	}
 private:
 	HWND hwnd_;
 	std::shared_ptr<IAudioBuffer>  audio_;
