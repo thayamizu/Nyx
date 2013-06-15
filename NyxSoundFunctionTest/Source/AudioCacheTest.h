@@ -44,7 +44,7 @@ public:
 		AudioBufferDesc bufferDesc;
 		bufferDesc.algorithm = DS3DALG_DEFAULT;
 		bufferDesc.focusType  = AudioUtility::FocusType_GlobalFocus;
-		bufferDesc.bufferType = AudioUtility::BufferType_StaticAudioBuffer;
+		bufferDesc.bufferType = AudioUtility::BufferType_Static3DAudioBuffer;
 		cache_ = manager_->Load(L"../../TestData/Sound/testcase.txt", bufferDesc);
 		Assert(cache_ != nullptr);
 		Assert(manager_ != nullptr);

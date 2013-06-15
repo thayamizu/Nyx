@@ -19,6 +19,7 @@
 #include "Debug/DebugOutput.h"
 #include "AudioUtility.h"
 #include "WaveReader.h"
+#include "SoundReader.h"
 #include "DirectSoundStatic3DAudioBuffer.h"
 
 namespace Nyx {
@@ -26,8 +27,8 @@ namespace Nyx {
 	//
 	DirectSoundStatic3DAudioBuffer::DirectSoundStatic3DAudioBuffer(
 		const AudioBufferDesc& bufferDesc, 
-		const DirectSoundPtr dsound, const std::wstring& fileName)
-		: DirectSound3DAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc){
+		const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader)
+		: DirectSound3DAudioBuffer(), waveReader_(reader), bufferDesc_(bufferDesc){
 
 			bufferDesc_.waveFormat = waveReader_->ReadHeader();
 

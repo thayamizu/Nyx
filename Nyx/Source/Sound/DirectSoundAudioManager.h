@@ -75,6 +75,23 @@ namespace Nyx {
 		*/
 		const DirectSoundPtr GetHandle();
 	private:	
+		/**
+		* Waveファイルからオーディオバッファを生成します
+		* @param const std::wstring& ファイル名
+		* @param SoundBufferType バッファタイプ
+		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
+		*/
+		std::shared_ptr<IAudioBuffer> CreateAudioBufferFromWave(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);	
+		
+	
+		/**
+		* Oggファイルからオーディオバッファを生成します
+		* @param const std::wstring& ファイル名
+		* @param SoundBufferType バッファタイプ
+		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
+		*/
+		std::shared_ptr<IAudioBuffer> CreateAudioBufferFromOgg(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);	
+	
 		int masterVolume_;	///< マスターボリューム
 		DirectSoundPtr directSound_;///< DirectSoundオブジェクト
 		DirectSoundPrimaryBufferPtr primaryBuffer_;

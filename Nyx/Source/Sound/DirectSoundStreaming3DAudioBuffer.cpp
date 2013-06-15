@@ -19,14 +19,15 @@
 #include "Debug/DebugOutput.h"
 #include "IO/File.h"
 #include "Sound/WaveReader.h"
+#include "Sound/SoundReader.h"
 #include "DirectSoundStreaming3DAudioBuffer.h"
 namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	DirectSoundStreaming3DAudioBuffer::DirectSoundStreaming3DAudioBuffer(
 		const AudioBufferDesc& bufferDesc, 
-		const DirectSoundPtr dsound, const std::wstring& fileName)
-		: DirectSound3DAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc), offset_(0){
+		const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader)
+		: DirectSound3DAudioBuffer(), waveReader_(reader), bufferDesc_(bufferDesc), offset_(0){
 
 			//バッファを作成
 

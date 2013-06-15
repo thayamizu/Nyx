@@ -25,8 +25,8 @@ namespace Nyx {
 	//
 	DirectSoundStaticAudioBuffer::DirectSoundStaticAudioBuffer(
 		const AudioBufferDesc& bufferDesc, 
-		const DirectSoundPtr dsound, const std::wstring& fileName)
-		: DirectSoundStereoAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc){
+		const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader)
+		: DirectSoundStereoAudioBuffer(), waveReader_(reader), bufferDesc_(bufferDesc){
 
 			bufferDesc_.waveFormat = waveReader_->ReadHeader();
 

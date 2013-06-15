@@ -26,6 +26,10 @@
 #include "DirectSoundStatic3DAudioBuffer.h"
 #include "DirectSoundStreamingAudioBuffer.h"
 #include "DirectSoundStreaming3DAudioBuffer.h"
+#include "SoundReader.h"
+#include "WaveReader.h"
+#include "OggReader.h"
+
 namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	//
@@ -67,23 +71,20 @@ namespace Nyx {
 	//---------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
-			std::shared_ptr<IAudioBuffer> audio;
-		switch(bufferDesc.bufferType) {
-		case AudioUtility::BufferType_StaticAudioBuffer :
-			audio = std::make_shared<DirectSoundStaticAudioBuffer>(bufferDesc, directSound_, fileName);
-			break;
-		case AudioUtility::BufferType_Static3DAudioBuffer:
-			audio = std::make_shared<DirectSoundStatic3DAudioBuffer>(bufferDesc, directSound_, fileName);
-			break;
-		case AudioUtility::BufferType_StreamingAudioBuffer:
-			audio = std::make_shared<DirectSoundStreamingAudioBuffer>(bufferDesc, directSound_, fileName);
-			break;
-		case AudioUtility::BufferType_Streaming3DAudioBuffer:
-			audio = std::make_shared<DirectSoundStreaming3DAudioBuffer>(bufferDesc, directSound_, fileName);
-			break;
-		default:
-			throw std::invalid_argument("無効な引数が渡されました。");
+		std::shared_ptr<IAudioBuffer> audio;
+		size_t pos = fileName.find_last_of(L".");
+		std::wstring ext = fileName.substr( pos+1, fileName.npos);
+		
+		if (ext == L"wav") {
+			audio = CreateAudioBufferFromWave(fileName, bufferDesc);
 		}
+		else if (ext == L"ogg") {
+			audio = CreateAudioBufferFromOgg(fileName, bufferDesc);
+		}
+		else {
+			audio = nullptr;
+		}
+
 		return audio;
 	}
 
@@ -115,5 +116,42 @@ namespace Nyx {
 	//
 	const DirectSoundPtr DirectSoundAudioManager::GetHandle() {
 		return directSound_;
+	}
+
+
+	//---------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBufferFromWave(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
+		std::shared_ptr<IAudioBuffer> audio;
+		std::shared_ptr<SoundReader> reader = std::make_shared<WaveReader>(fileName);
+		//sound readerは必ず初期化される
+		Assert (reader != nullptr) 
+
+		switch(bufferDesc.bufferType) {
+		case AudioUtility::BufferType_StaticAudioBuffer :
+			audio = std::make_shared<DirectSoundStaticAudioBuffer>(bufferDesc, directSound_, reader);
+			break;
+		case AudioUtility::BufferType_Static3DAudioBuffer:
+			audio = std::make_shared<DirectSoundStatic3DAudioBuffer>(bufferDesc, directSound_, reader);
+			break;
+		case AudioUtility::BufferType_StreamingAudioBuffer:
+			audio = std::make_shared<DirectSoundStreamingAudioBuffer>(bufferDesc, directSound_, reader);
+			break;
+		case AudioUtility::BufferType_Streaming3DAudioBuffer:
+			audio = std::make_shared<DirectSoundStreaming3DAudioBuffer>(bufferDesc, directSound_, reader);
+			break;
+		default:
+			throw std::invalid_argument("無効な引数が渡されました。");
+		}
+		return audio;
+	}
+
+
+	//---------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBufferFromOgg(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
+		Nyx::DebugOutput::Trace("Oggファイルはサポートされていません");
+		fileName, bufferDesc;
+		return nullptr;
 	}
 }

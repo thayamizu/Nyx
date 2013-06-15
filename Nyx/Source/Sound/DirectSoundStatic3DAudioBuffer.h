@@ -21,7 +21,7 @@
 
 namespace Nyx {
 	struct AudioBuffeDesc;
-	class WaveReader;
+	class SoundReader;
 
 	///静的3Dバッファ
 	class DirectSoundStatic3DAudioBuffer : public DirectSound3DAudioBuffer {
@@ -32,7 +32,7 @@ namespace Nyx {
 		* @param const DirectSoundPtr 
 		* @param const std::wstring& fileName
 		*/
-		DirectSoundStatic3DAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::wstring& fileName);
+		DirectSoundStatic3DAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader);
 
 
 		/**
@@ -56,7 +56,7 @@ namespace Nyx {
 		void BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
 	private:
 		AudioBufferDesc bufferDesc_;
-		std::shared_ptr<WaveReader> waveReader_;
+		std::shared_ptr<SoundReader> waveReader_;
 	};
 }
 #endif

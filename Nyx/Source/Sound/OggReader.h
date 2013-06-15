@@ -1,10 +1,11 @@
 #ifndef NYX_CORE_INCLUDED_OGG_READER_H_
 #define NYX_CORE_INCLUDED_OGG_READER_H_
+#include "SoundReader.h"
 
 namespace Nyx {
 	struct WaveFileHeader;
 	///oggファイルリーダ
-	class OggReader {
+	class OggReader : public SoundReader {
 	public:
 		/**
 		* コンストラクタ
@@ -20,7 +21,7 @@ namespace Nyx {
 
 
 		/**
-		* oggファイルを開く
+		* WAVファイルを開く
 		* @param const std::wstring& ファイル名
 		*/
 		void Open(const std::wstring& fileName);
@@ -41,24 +42,19 @@ namespace Nyx {
 		
 		
 		/**
-		* ファイルからoggファイルを読み込みます
-		* @param std::wstring wavファイル名
-		*/
-		//void ReadFromFile(const std::wstring& fileName);
-
-
-		/**
-		* oggファイルヘッダの取得します
+		* Waveファイルヘッダの取得します
 		* @return const WaveFileHeader& WAVEファイルヘッダ
 		*/
 		const WaveFileHeader& ReadHeader();
 
 
 		/**
-		* oggデータを取得します
+		* Waveデータを取得します
+		* @param size_t  読み込みバイト数
+		* @param size_t　実際に読み取ったサイズ
 		* @return std::shared_ptr<char> WAVEデータ
 		*/
-		std::shared_ptr<char> Read(size_t bufferSize);
+		std::shared_ptr<char> Read(size_t bufferSize, ulong* readSize=nullptr);
 	private:
 		WaveFileHeader header;
 	};

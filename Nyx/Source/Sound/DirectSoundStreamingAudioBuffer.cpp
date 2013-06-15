@@ -17,6 +17,7 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
+#include "Sound/SoundReader.h"
 #include "Sound/WaveReader.h"
 #include "DirectSoundStreamingAudioBuffer.h"
 
@@ -25,8 +26,8 @@ namespace Nyx {
 	//
 	DirectSoundStreamingAudioBuffer::DirectSoundStreamingAudioBuffer(
 		const AudioBufferDesc& bufferDesc, 
-		const DirectSoundPtr dsound, const std::wstring& fileName)
-		: DirectSoundStereoAudioBuffer(), waveReader_(new WaveReader(fileName)), bufferDesc_(bufferDesc), offset_(0){
+		const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader)
+		: DirectSoundStereoAudioBuffer(), waveReader_(reader), bufferDesc_(bufferDesc), offset_(0){
 
 			//バッファを作成
 
