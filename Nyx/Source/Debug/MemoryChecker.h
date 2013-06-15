@@ -18,13 +18,12 @@
 #ifndef NYX_CORE_INCLUDED_MEMORY_CHECKER_H_
 #define NYX_CORE_INCLUDED_MEMORY_CHECKER_H_
 
-
+#ifdef _DEBUG
 #include <crtdbg.h>
 // crtdbg.h をインクルードしたあとに _CRTDBG_MAP_ALLOC を定義してやる
 #define _CRTDBG_MAP_ALLOC
-#define new  ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new  ::new(_CLIENT_BLOCK, __FILE__, __LINE__)
 
-#ifdef _DEBUG
 namespace Nyx {
 	///メモリの状態
 	typedef ::_CrtMemState MemoryState;

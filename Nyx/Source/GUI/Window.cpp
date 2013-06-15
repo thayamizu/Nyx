@@ -146,7 +146,7 @@ namespace Nyx {
 	//----------------------------------------------------------------
 	bool Window::IsActivate() const {
 		Assert(hwnd != NULL);
-		return ::IsWindowEnabled(hwnd);
+		return ::IsWindowEnabled(hwnd) != 0;
 	}
 
 

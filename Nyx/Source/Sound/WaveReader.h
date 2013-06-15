@@ -1,4 +1,3 @@
-
 /********************************************************************************
 *
 *  The MIT License
@@ -17,90 +16,70 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_WAVE_READER_H_
 #define NYX_CORE_INCLUDED_WAVE_READER_H_
+#include "WaveFileHeader.h"
+#include "SoundReader.h"
 
 namespace Nyx {
-	using std::unique_ptr;
-	using std::shared_ptr;
-
-	///RIFFチャンク構造体
-	struct RIFFChunk
-	{
-		ulong fileSize;///< ファイルサイズ
-	};
-
-	///Formatチャンク構造体
-	struct FmtChunk
-	{
-		long chunkSize; ///<チャンクサイズ
-		short formatTag; ///<フォーマットID
-		ushort channelNum;///<チャンネル数
-		ulong  samplingRate; ///<サンプリングレート
-		ulong  bytesPerSec;//<データ速度
-		ushort blockSize; ///<ブロックサイズ
-		ushort bitsRate;///< サンプルあたりのビット数
-	};
-
-	///データチャンク構造体
-	struct DataChunk
-	{
-		long   chunkSize;///< チャンクサイズ 
-		uchar* waveData;///< 波形データ
-	};
+	class File;
 
 	///wavファイルリーダ
-	class WaveReader {
+	class WaveReader : public SoundReader {
 	public:
 		/**
 		* コンストラクタ
 		*/
 		WaveReader();
 
-		/**
-		* デストラクタ
-		*/
-		~WaveReader();
 
 		/**
-		* ファイルからWaveファイルを読み込みます
-		* @param std::wstring wavファイル名
+		* コンストラクタ
+		* @param const std::wstring& ファイル名
 		*/
-		void ReadFromFile(std::wstring fileName);
+		WaveReader(const std::wstring& fileName);
+
 
 		/**
-		* メモリ上のデータからWaveファイルを読み込みます
-		* @param shared_ptr<char> Waveファイルデータ
+		* WAVファイルを開く
+		* @param const std::wstring& ファイル名
 		*/
-		void ReadFromMem(shared_ptr<char> waveData);
+		void Open(const std::wstring& fileName);
+		
 
 		/**
-		* Waveファイルのヘッダ情報を出力
-		* @note 
-		* 文字列で返す方がいいかなぁー
+		* 読み込みカーソルを指定した位置にセットする
+		* @param ulong 読み込みカーソル位置
 		*/
-		void PrintHeaderInfo();
+		void SetCursor(ulong cursor);
+
 
 		/**
-		* RIFFチャンクを取得します。
-		* @param RIFFChunk* Riffチャンク構造体へのポインタ
+		* 読み込みカーソルを取得する
+		* @return ulong 読み込みカーソル位置
 		*/
-		void GetRiffChunk(RIFFChunk* riff);
+		ulong GetCursor() const;
+		
+		
+		/**
+		* Waveファイルヘッダの取得します
+		* @return const WaveFileHeader& WAVEファイルヘッダ
+		*/
+		const WaveFileHeader& ReadHeader();
+
 
 		/**
-		* フォーマットチャンクを取得
-		* @param FmtChunk* Fmtチャンク構造体へのポインタ
+		* Waveデータを取得します
+		* @param size_t  読み込みバイト数
+		* @param size_t　実際に読み取ったサイズ
+		* @return std::shared_ptr<char> WAVEデータ
 		*/
-		void GetFmtChunk(FmtChunk* fmt);
-
-		/**
-		*　データチャンクを取得
-		* @param DataChunk* データチャンク構造体へのポインタ
-		*/
-		void GetDataChunk(DataChunk* data);
-
+		std::shared_ptr<char> Read(size_t bufferSize, ulong* readSize=nullptr);
 	private:
-		RIFFChunk riffChunk_; ///< RIFFチャンク
-		FmtChunk fmtChunk_;///< fmtチャンク
-		DataChunk dataChunk_; ///< dataチャンク
+		bool isReadHeader_;             ///< ヘッダを読み込んでいるか
+		char align_[3];                 ///< アライメント調整
+		ulong cursor_;                  ///< カーソル
+		std::wstring   fileName_;       ///< ファイル名
+		std::shared_ptr<File> waveFile_;///< Waveファイル
+		WaveFileHeader waveHeader_;     ///< Waveファイルヘッダ
 	};
 }
 #endif

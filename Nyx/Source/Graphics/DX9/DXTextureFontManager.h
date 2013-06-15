@@ -22,7 +22,7 @@ namespace Nyx {
 		///文字一つ描画するときに必要な情報
 		struct CharInfo {
 			bool isDrawed;///<描画されている
-			int transparency;///< 透明度(0~255)
+			uchar transparency;///< 透明度(0~255)
 		};
 
 		//前方宣言
@@ -180,7 +180,7 @@ namespace Nyx {
 			int transparent;///< 透過率
 			int fontSize;///< フォントサイズ
 			int textSpeed;///< 文字送りの速さ
-			int textLength;///< 一度に描画するテキストの長さ
+			size_t textLength;///< 一度に描画するテキストの長さ
 			int rowNum;   ///< １行で表示する文字数
 			int columnNum;///< 1列に表示する文字数
 			uint cursorRead;///< すでに作成したものまでの;

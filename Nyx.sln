@@ -1,18 +1,18 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nyx", "Nyx\Build\Nyx.vcxproj", "{1B75596E-EBDA-47BD-A1FD-7E865274F809}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxUnitTest", "NyxUnitTest\Build\NyxUnitTest.vcxproj", "{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1B75596E-EBDA-47BD-A1FD-7E865274F809} = {1B75596E-EBDA-47BD-A1FD-7E865274F809}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadMe", "ReadMe", "{1E4C4F3B-86B9-4993-BBD4-15AEE826F02C}"
 	ProjectSection(SolutionItems) = preProject
 		Build.txt = Build.txt
 		Glossary.txt = Glossary.txt
 		ReadMe.txt = ReadMe.txt
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxCoreUnitTest", "NyxCoreUnitTest\Build\NyxCoreUnitTest.vcxproj", "{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1B75596E-EBDA-47BD-A1FD-7E865274F809} = {1B75596E-EBDA-47BD-A1FD-7E865274F809}
 	EndProjectSection
 EndProject
 Global

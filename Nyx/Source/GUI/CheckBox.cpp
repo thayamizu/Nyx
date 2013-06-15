@@ -41,7 +41,7 @@ namespace Nyx {
 			_width,	//幅
 			_height,	//高さ
 			_hwnd, //親ウィンドウのハンドル、親を作るときはNULL
-			(HMENU)id, //メニューハンドル、クラスメニューを使うときはNULL
+			(HMENU)_id, //メニューハンドル、クラスメニューを使うときはNULL
 			hInstance, //インスタンスハンドル
 			NULL);
 
@@ -104,7 +104,7 @@ namespace Nyx {
 	//----------------------------------------------------------------
 	bool CheckBox::IsActivate() const {
 		Assert(hwnd != NULL);
-		return ::IsWindowEnabled(hwnd);
+		return IsWindowEnabled(hwnd) != 0;
 	}
 
 	//----------------------------------------------------------------

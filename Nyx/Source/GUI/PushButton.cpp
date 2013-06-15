@@ -111,7 +111,7 @@ namespace Nyx {
 		const 
 	{
 		Assert(hwnd != NULL);
-		return ::IsWindowEnabled(hwnd);
+		return IsWindowEnabled(hwnd) != 0;
 	}
 
 	//---------------------------------------------------------------------------------------

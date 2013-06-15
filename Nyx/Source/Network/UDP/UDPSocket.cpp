@@ -19,8 +19,8 @@
 #include "Network/UDP/UDPSocket.h"
 
 namespace Nyx {
-	UDPSocket::UDPSocket(char *addr, int port)
-	{
+	//-----------------------------------------------------------------------------------------
+	UDPSocket::UDPSocket(char *addr, int port) {
 		dstAddrSize = sizeof(dstAddr);
 
 		// winsock2の初期化
@@ -34,15 +34,18 @@ namespace Nyx {
 
 		// ソケットの設定
 		srcAddr.sin_family = AF_INET;
-		srcAddr.sin_port = htons(port);
+		srcAddr.sin_port = htons(static_cast<ushort>(port));
 		srcAddr.sin_addr.S_un.S_addr = INADDR_ANY;
-
+		addr=nullptr;
 		if(bind(srcSock, (struct sockaddr *)&srcAddr, sizeof(srcAddr)) != 0){
 			exit(-1);
 		}
 	}
-	UDPSocket::~UDPSocket()
-	{
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	UDPSocket::~UDPSocket() {
 
 		// UDPセッションの終了
 		closesocket(srcSock);
@@ -51,14 +54,17 @@ namespace Nyx {
 		WSACleanup();
 	}
 
-	int UDPSocket::Send(char *buf, int buf_len) 
-	{
+
+	//-----------------------------------------------------------------------------------------
+	//
+	int UDPSocket::Send(char *buf, int buf_len) {
 		return sendto(dstSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, sizeof(dstAddr));;
 	}
 
 
-	int UDPSocket::Recieve(char *buf, int buf_len)
-	{
+	//-----------------------------------------------------------------------------------------
+	//
+	int UDPSocket::Recieve(char *buf, int buf_len) {
 		return recvfrom(srcSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, &dstAddrSize);
 	}
 }

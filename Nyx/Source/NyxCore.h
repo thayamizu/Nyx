@@ -111,13 +111,16 @@ class SkinMesh;
 #include "Graphics/DX9/XMesh.h"
 #include "Graphics/DX9/XStaticMesh.h"
 
-///サウンド
+//サウンド
+#include "Sound/AudioBuffer.h"
+#include "Sound/AudioCache.h"
+#include "Sound/AudioManager.h"
+#include "Sound/AudioUtility.h"
 #include "Sound/IAudioBuffer.h"
 #include "Sound/IAudioManager.h"
-#include "Sound/AudioManager.h"
 #include "Sound/WaveReader.h"
 
-///入力機器 
+//入力機器 
 #include "Input/IKeyBase.h"
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
@@ -143,7 +146,6 @@ class SkinMesh;
 #include "Object/Delegate.h"
 #include "Object/NonCopyable.h"
 #include "Object/IResource.h"
-#include "Object/IResourceManager.h"
 
 
 #endif

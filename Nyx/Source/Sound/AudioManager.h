@@ -16,126 +16,66 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
 #define NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
-#include "Sound/IAudioManager.h"
+#include "Object/NonCopyable.h"
+#include "IAudioManager.h"
 
 namespace Nyx {
 	//前方宣言
+	class AudioCache;
 	class IAudioBuffer;
-
+	class IAudioListener;
+	struct AudioBufferDesc;
+	struct AudioDesc;
+	
 	///オーディオマネージャ
-	class AudioManager : public IAudioManager{
+	class AudioManager : NonCopyable, public IAudioManager{
 	public:
 		/**
 		 * コンストラクタ
 		 */
-		AudioManager();
+		explicit AudioManager();
+
 
 		/**
 		 * コンストラクタ
+		 * @param const const AudioDesc& オーディオバッファ
 		 */
-		AudioManager(HWND hwnd, int volume);
-
-
-		/**
-		* デストラクタ
-		*/
-		virtual ~AudioManager();
+		explicit AudioManager(const AudioDesc& desc);
+		
 
 		/**
 		* オーディオマネージャの初期化
-		* @param HWND
-		* @param int
 		* @return bool
 		*/
-		bool Initialize(HWND hwnd, int volume);
+		void Initialize(const AudioDesc& desc);
+
 
 		/**
-		* 指定したインデックスの曲を再生する
-		* @param size_t インデックス
-		*/
-		virtual void Play(size_t index);
-
-		/**
-		* すべての曲を再生する
-		*/
-		virtual void PlayAll();
-
-		/**
-		* 指定したインデックスの曲を停止
-		* @param size_t インデックス
-		*/
-		virtual void Stop(size_t index);
-
-		/**
-		*すべての曲を停止
-		*/
-		virtual void StopAll();
-
-		/**
-		* 指定したインデックスの曲をレジュームする
-		* @param size_t インデックス
-		*/
-		virtual void Resume(size_t index);
-
-		/**
-		* すべての曲をレジュームする
-		*/
-		virtual void ResumeAll();
-
-		/**
-		* 指定したインデックスの曲をリセット
-		* つまり、オーディオをいったん止めて、先頭まで巻戻します。
-		* @param size_t インデックス
-		*/
-		virtual void Reset(size_t index);
-
-		/**
-		* すべての曲をリセットする
-		*/
-		virtual void ResetAll();
-
-		/**
-		*　指定したインデックスをポーズさせる
-		* @param size_t インデックス
-		* @param bool ポーズするならtrue
-		*/
-		virtual void SetPause(size_t index, bool);
-
-		/**
-		* すべての曲をポーズさせる
-		* @param bool ポーズするならtrue  
-		*/
-		virtual void SetPauseAll(bool) ;
-
-		/**
-		* マスターボリュームを取得
-		* @return int マスターボリューム値
-		*/
-		virtual int GetMasterVolume() const ;
-
-		/**
-		* マスターボリュームを設定
-		* @param int マスターボリューム値
-		*/
-		virtual void SetMasterVolume(int v) ;
-
-		/**
-		* オーディオバッファを取得
-		* @param size_t インデックス
-		*/
-		virtual std::shared_ptr<IAudioBuffer> GetAudioBuffer(size_t index);
-
-		/**
-		* オーディオをロードしてくる
-		* @param std::wstring ファイル名
+		* オーディオバッファを生成します
+		* @param const std::wstring& ファイル名
 		* @param SoundBufferType バッファタイプ
-		* [out] @param int& index 読み込んできたオーディオの管理番号
+		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		virtual std::shared_ptr<IAudioBuffer> Load(std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index);
+		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
+		
 
-	protected:
+		/**
+		* オーディオリスナーを生成します
+		* @return std::shared_ptr<IAudioListener> 
+		*/
+		std::shared_ptr<IAudioListener> CreateAudioListener();	
+
+
+		/**
+		* オーディオデータををロードしてきます
+		* @param const std::wstring& ファイル名
+		* @param SoundBufferType バッファタイプ
+		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
+		*/
+		std::shared_ptr<AudioCache> Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc);
+	private:
 		struct PImpl;
-		std::unique_ptr<PImpl> pimpl_;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 #endif

@@ -37,7 +37,7 @@ namespace Nyx {
 	Logger::Logger(const std::wstring& name)
 		:pimpl_(new PImpl())
 	{
-		pimpl_->logger = std::unique_ptr<Win32File>(new Win32File(name));
+		pimpl_->logger = std::unique_ptr<Win32File>(new Win32File(name, WriteMode));
 
 	}
 

@@ -16,155 +16,82 @@
 ********************************************************************************/
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
-#include "Sound/AudioManager.h"
-#include "detail/DirectSound/DirectSoundAudioManager.h"
-namespace Nyx {
+#include "Debug/DebugOutput.h"
+#include "AudioCache.h"
+#include "AudioManager.h"
+#include "AudioUtility.h"
+#include "DirectSoundAudioManager.h"
 
-	struct AudioManager::PImpl{
-		PImpl():isInitialized(false), manager(nullptr) {}
-		bool isInitialized;
-		std::unique_ptr<DirectSoundAudioManager> manager;
+namespace Nyx {
+	
+	//-------------------------------------------------------------------------------------------------------
+	//Pimpl
+	struct AudioManager::PImpl {
+		PImpl()
+			:isInitialized_(false), audioManager_(nullptr) {
+		}
+		
+		bool isInitialized_;
+		
+		std::shared_ptr<IAudioManager> audioManager_;
 	};
 
-	AudioManager::AudioManager() 
-		: pimpl_( new PImpl())	
-	{
 
-	}
-	//--------------------------------------------------------------------------------------
+	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioManager::AudioManager(HWND hwnd, int volume) 
-		: pimpl_( new PImpl())	
-	{
+	AudioManager::AudioManager()
+		: pimpl_(new PImpl()){
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	AudioManager::AudioManager(const AudioDesc& desc)
+		: pimpl_(new PImpl()) {
+			Initialize(desc);
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void AudioManager::Initialize(const AudioDesc& desc) {
 		Assert(pimpl_ != nullptr);
-		try {
-			if (Initialize(hwnd, volume) == false) {
-				throw std::exception();
-			}
+		if (pimpl_->isInitialized_) {
+			return ;
 		}
-		catch(std::exception e) {
-			pimpl_.reset();//リソースを開放
-			throw;
-		}
+		
+		//オーディオマネージャを初期化
+		pimpl_->audioManager_ = std::make_shared<DirectSoundAudioManager>();
+		pimpl_->audioManager_->Initialize(desc);
+
+		//初期化フラグ
+		pimpl_->isInitialized_ = true;
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioManager::~AudioManager() {
-
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	bool AudioManager::Initialize(HWND hwnd, int volume) {
+	std::shared_ptr<IAudioBuffer> AudioManager::CreateAudioBuffer(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
 		Assert(pimpl_ != nullptr);
-		if (pimpl_->isInitialized) { return true;}
-
-		pimpl_->manager = std::unique_ptr<DirectSoundAudioManager>( new DirectSoundAudioManager(hwnd, volume));
-
-		if (pimpl_->manager != nullptr) {
-			pimpl_->isInitialized = true;
-		}
-		else {
-			pimpl_->isInitialized = false;
-		}
-
-		return pimpl_->isInitialized;
+		Assert(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->CreateAudioBuffer(fileName, bufferDesc);
 	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Play(size_t index) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->Play(index);
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::PlayAll() {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->PlayAll();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::Stop(size_t index) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->Stop(index);
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::StopAll() {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->StopAll();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::Resume(size_t index) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->Resume(index);
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::ResumeAll() {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->ResumeAll();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::Reset(size_t index) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->Reset(index);
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::ResetAll() {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->ResetAll();
-	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::SetPause(size_t index, bool p) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->SetPause(index, p);
-	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::SetPauseAll(bool p) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->SetPauseAll(p);
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	int AudioManager::GetMasterVolume() const {
-		Assert(pimpl_->manager != nullptr);
-		return pimpl_->manager->GetMasterVolume();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void AudioManager::SetMasterVolume(int v) {
-		Assert(pimpl_->manager != nullptr);
-		pimpl_->manager->SetMasterVolume(v);
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	std::shared_ptr<IAudioBuffer> AudioManager::GetAudioBuffer(size_t index) {
-		Assert(pimpl_->manager != nullptr);
-		return pimpl_->manager->GetAudioBuffer(index);
-	}
-
-	//---------------------------------------------------------------------------------------
-	//
-	std::shared_ptr<IAudioBuffer> AudioManager::Load(const std::wstring fileName, SoundBufferType::enum_t bufferType, size_t& index) {
-		Assert(pimpl_->manager != nullptr);
-		return pimpl_->manager->Load(fileName, bufferType, index);
+	std::shared_ptr<IAudioListener> AudioManager::CreateAudioListener() {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->CreateAudioListener();
 	}	
+	
+	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->Load(fileName, bufferDesc);
+	}
 }

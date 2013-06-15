@@ -16,24 +16,12 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IAUDIO_MANAGER_H_
 #define NYX_CORE_INCLUDED_IAUDIO_MANAGER_H_
+#include "AudioUtility.h"
 
 namespace Nyx {
-	class IAudioBuffer;
-
-	/**
- 	 * サウンドバッファタイプ
-	 * DirectSoundの場合は，3D再生ができません．
-	 */
-	struct SoundBufferType
-	{
-		enum enum_t {
-			Static,		///< 静的バッファ
-			Static3D,	///< 静的3Dバッファ
-			Streaming,	///< ストリーミングバッファ
-			Streaming3D, ///< ストリーミング3Dバッファ
-			NumSoundBufferType
-		};
-	};
+	//前方宣言
+	class IAudioListener;
+	class  AudioCache;
 
 	///オーディオマネージャインタフェース
 	class IAudioManager {
@@ -43,44 +31,37 @@ namespace Nyx {
 		*/
 		virtual ~IAudioManager() {}
 
-		/**
-		* すべての曲を再生
-		*/
-		virtual void PlayAll() = 0;
 
 		/**
-		* すべての曲を停止
+		* オーディオマネージャの初期化します
+		* const AudioDesc& オーディオ初期化記述子
 		*/
-		virtual void StopAll() = 0;
+		virtual void Initialize(const AudioDesc& desc) = 0;
+
 
 		/**
-		* すべての曲をレジューム
+		* オーディオバッファを生成します
+		* @param const std::wstring& ファイル名
+		* @param AudioBufferDesc バッファタイプ
+		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
 		*/
-		virtual void ResumeAll() = 0;
+		virtual std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) = 0;
+
 
 		/**
-		* すべての曲をリセット.
-		* 再生中の曲を止めたうえで、先頭まで巻戻します
+		* オーディオリスナーを生成します
+		* @return std::shared_ptr<IAudioListener> 
 		*/
-		virtual void ResetAll() = 0;
+		virtual std::shared_ptr<IAudioListener> CreateAudioListener() = 0;	
+
 
 		/**
-		* すべての曲をポーズ
-		* @param bool ポーズするならtrue
+		* オーディオデータををロードします
+		* @param const std::wstring& ファイル名
+		* @param SoundBufferType バッファタイプ
+		* @param std::int& index 読み込んできたオーディオの管理番号
 		*/
-		virtual void SetPauseAll(bool) = 0;
-
-		/**
-		* マスターボリュームを取得
-		* @return int マスターボリューム値
-		*/
-		virtual int GetMasterVolume() const = 0;
-
-		/**
-		* マスターボリュームを設定
-		* @param int マスターボリューム値
-		*/
-		virtual  void SetMasterVolume(int v) = 0;
+		virtual std::shared_ptr<AudioCache> Load(const std::wstring& fileName, const AudioBufferDesc& desc) = 0;
 	};
 }
 #endif

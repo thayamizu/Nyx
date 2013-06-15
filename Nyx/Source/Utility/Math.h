@@ -45,6 +45,47 @@ namespace Nyx
 		static const float Epsilon;
 
 
+		//--------------------------------------------------------------------------------------
+		//クランプ
+		//--------------------------------------------------------------------------------------
+		/**
+		* 上限クランプ
+		* @note テンプレートパラメータには、算術型を指定してください。
+		* @param  クランプ対象
+		* @param  上限
+		*/
+		template <typename T>
+		static T UpperClamp(T value, T upper) {
+			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
+			return (value >= upper)? upper: value; 
+		}
+
+		/**
+		* 下限クランプ
+		* @note テンプレートパラメータには、算術型を指定してください。
+		* @param T value クランプ対象
+		* @param T lower 下限
+		*/
+		template <typename T>
+		static T LowerClamp(T value, T lower) {
+			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
+			return (value <= lower)? lower: value; 
+		}
+
+		/**
+		* クランプ
+		* @note テンプレートパラメータには、算術型を指定してください。
+		* @param T value クランプ対象
+		* @param T upper 上限
+		* @param T lower 下限
+		*/
+		template <typename T>
+		static T Clamp(T value, T lower, T upper) {
+			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
+			value = LowerClamp(value, lower);
+			value = UpperClamp(value, upper);
+			return value;
+		}
 
 		//--------------------------------------------------------------------------------------
 		// 単位変換関数

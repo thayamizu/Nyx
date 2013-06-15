@@ -23,12 +23,13 @@ namespace Nyx {
 		:handle(INVALID_HANDLE_VALUE),attribute(None), fileName(TEXT("")) {
 	}
 
+
 	//-----------------------------------------------------------------------------------
 	Win32File::Win32File(const std::wstring& name, AccessAttribute attr) 
 		:handle(NULL), attribute(attr), fileName(name) {
 		try {
 			if (!Open(name, attr)) {
-				throw std::exception("file can't open!");
+				throw std::domain_error("file can't open!");
 			}
 		}
 		catch(std::exception e) {
@@ -36,11 +37,13 @@ namespace Nyx {
 		}
 	}
 
+
 	//-----------------------------------------------------------------------------------
 	Win32File::~Win32File() {
 		if (IsOpened()) { Close();}
 	}
 	
+
 	//-----------------------------------------------------------------------------------
 	bool Win32File::Open(const std::wstring& name, AccessAttribute attr) {
 		if (IsOpened()) { Close();}
@@ -73,7 +76,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------
 	bool  Win32File::Close() {
-		return ::CloseHandle(handle);
+		return CloseHandle(handle) != 0;
 	}
 
 	//-----------------------------------------------------------------------------------
@@ -103,7 +106,6 @@ namespace Nyx {
 		}
 		ulong readBytes;
 		::ReadFile(handle, buffer, size, &readBytes, NULL); 
-
 		return readBytes;
 	}
 
@@ -149,6 +151,6 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------
 	bool Win32File::Flush() {
-		return FlushFileBuffers(handle);
+		return FlushFileBuffers(handle) != 0;
 	}
 }

@@ -150,11 +150,10 @@ namespace Nyx {
 		void DXTextureFontManager::RenderAll(float x, float y, float z,  float sx, float sy, float angle)
 		{	
 			float startX =x;
-			float startY =y;
 
 			for (int i=0; i < columnNum; i++) {
 				for (int j=0; j< rowNum; j++) {
-					uint n = i*rowNum+j;
+					size_t n = i*rowNum+j;
 					if (n > textLength) {return;}
 					if (n >= charInfo.size()) {
 						return;

@@ -21,8 +21,7 @@
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPClientSocket::TCPClientSocket(char *addr, int port)
-	{
+	TCPClientSocket::TCPClientSocket(char *addr, int port) {
 		//WinSock 初期化
 		WSAStartup(MAKEWORD(2,0), &wsaData);
 
@@ -34,7 +33,7 @@ namespace Nyx {
 
 		// 接続先指定用構造体の準備
 		dstAddr.sin_family = AF_INET;
-		dstAddr.sin_port = htons(port);
+		dstAddr.sin_port = htons(static_cast<ushort>(port));
 		dstAddr.sin_addr.S_un.S_addr = inet_addr(addr);
 
 		// サーバに接続
@@ -43,10 +42,10 @@ namespace Nyx {
 		}
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPClientSocket::~TCPClientSocket()
-	{
+	TCPClientSocket::~TCPClientSocket() {
 		// tcPセッションの終了
 		closesocket(dstSock);
 
@@ -54,17 +53,17 @@ namespace Nyx {
 		WSACleanup();
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	int TCPClientSocket::Send(char *buf, int buf_len)
-	{
+	int TCPClientSocket::Send(char *buf, int buf_len) {
 		return send(dstSock, buf, buf_len, 0);
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//受信
-	int TCPClientSocket::Recieve(char *buf, int buf_len)
-	{
+	int TCPClientSocket::Recieve(char *buf, int buf_len) {
 		return recv(dstSock, buf, buf_len, 0);
 	}
 }

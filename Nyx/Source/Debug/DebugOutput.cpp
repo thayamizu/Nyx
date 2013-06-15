@@ -36,6 +36,18 @@ namespace Nyx {
 
 	//----------------------------------------------------------------------------------------------
 	//
+	void DebugOutput::Trace(char* format, ...) {
+		va_list list;
+		va_start(list, format);
+		static const int length = 1024;
+		static char tmp[length];
+		vsprintf_s(tmp, length, format, list);
+		GetInstance()->PrintLn(tmp);
+		va_end(list);
+	}
+
+	//----------------------------------------------------------------------------------------------
+	//
 	void DebugOutput::DebugMessage(char* format, ...) {
 		va_list list;
 		va_start(list, format);

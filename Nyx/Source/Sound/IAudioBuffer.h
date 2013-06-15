@@ -16,107 +16,77 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IAUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_IAUDIO_BUFFER_H_
+#include "AudioUtility.h"
 
 namespace Nyx {
 	///オーディオバッファインタフェース
 	class IAudioBuffer {
 	public:
-		IAudioBuffer() :isLooping(false), isPlaying(false), isPause(false){}
-
 		virtual ~IAudioBuffer() {}
+
 		/**
-		*　再生
+		*　オーディオバッファを再生します
 		*/
-		virtual void Play() = 0;
+		virtual void Play(bool isLoop) = 0;
+
+
 		/**
-		*　停止
+		*　オーディオバッファを停止します
 		*/
 		virtual void Stop() = 0;
+		
+		
 		/**
-		*　レジューム
+		*　オーディオバッファをレジュームします
 		*/
 		virtual void Resume() = 0;
+		
+		
 		/**
-		*　リセット
+		*　オーディオバッファをリセットします
 		*/
 		virtual void Reset()  = 0; 
 
-			/**
-		* パンを設定する
-		* @param int パン
-		*/
-		virtual void SetPan(long p)=0;
-		
-		/**
-		* パンを取得する
-		* @return long パン
-		*/
-		virtual long GetPan() const = 0;
 
 		/**
-		*　ボリュームを設定する
+		* オーディオバッファのボリューム値を設定します
 		* @return int　ボリューム
 		*/
-		virtual void SetVolume(long v) = 0;
+		virtual void SetVolume(long volume) = 0;
 
+		
 		/**
-		* ボリュームを取得する
+		* オーディオバッファのボリュームを取得します
 		* @return int ボリューム
 		*/
 		virtual long GetVolume() const = 0;
+
 		
 		/**
-		* ループ再生かどうか判定
-		* @return bool　ループ再生ならtrue
+		* オーディオバッファの状態を取得します
+		* @return int ボリューム
 		*/
-		virtual bool IsLooping() const {
-			return isLooping;
-		} 
+		virtual AudioState GetState() const = 0;
+		
 
 		/**
-		* 再生中かどうか
-		* @return bool 再生中ならtrue
+		*　オーディオバッファのエフェクトをリセットします
 		*/
-		virtual bool IsPlaying() const  {
-			return isPlaying;
-		}
+		virtual void ResetEffect() = 0; 
+		
+		
+		/**
+		*　オーディオバッファにエフェクトを設定します
+		* @param const AudioEffectDesc& オーディオエフェクト記述子
+		*/
+		virtual void SetEffect(const AudioEffectDesc& effectDesc) = 0;
+
 
 		/**
-		* ポーズ中かどうか
-		* @return bool ポーズ中ならtrue
+		* オーディオバッファの状態の取得します
+		* @return AudioUtility::BufferType
 		*/
-		virtual bool IsPause() const {
-			return isPause;
-		}
-
-		/**
-		* ループ再生するかどうかを設定
-		* @param bool ループ再生ならtrue
-		*/
-		virtual void SetLooping(bool loop) {
-			isLooping = loop;
-		}
-
-		/**
-		* 再生中かどうか
-		* @param bool 再生中ならtrue
-		*/
-		virtual void SetPlaying(bool play) {
-			isPlaying = play;
-		}
-
-		/**
-		* ポーズ中かどうか
-		* @param bool ポーズ中ならtrue
-		*/
-		virtual void SetPause(bool pause) {
-			isPause = pause;
-		}
-	private:
-		bool isPlaying;///< 再生中
-		bool isLooping;///< ループ
-		bool isPause;///< ポーズ
+		virtual AudioUtility::BufferType GetBufferType() const = 0;
 	};
-
 }
 #endif

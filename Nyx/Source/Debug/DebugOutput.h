@@ -29,6 +29,11 @@ namespace Nyx  {
 		* DebugOutputのシングルトンオブジェクトを取得する
 		*/
 		static Nyx::Logger* GetInstance();
+		
+		/**
+		* トレース出力
+		*/
+		static void Trace(char* format, ...);
 
 		/**
 		* DebugOutputのシングルトンオブジェクトを削除する

@@ -41,12 +41,7 @@
 #pragma inline_depth ( 16 )
 #pragma inline_recursion ( on )
 
-//warningó}êß
-#pragma warning ( disable : 4101 )
-#pragma warning ( disable : 4201 )
-#pragma warning ( disable : 4995 )
-#pragma warning ( disable : 4996 )
-#pragma warning ( disable : 4800 )
+#pragma warning(disable:4201)
 
 //STL 
 #include <map>
@@ -59,9 +54,15 @@
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <fstream>
+#include <sstream>
+
+//boost
+#include <boost/intrusive_ptr.hpp>
 
 //Common
 #include "Utility/Common.h"
+#include "Utility/Exception.h"
 #include "Utility/Type.h"
 #include "Utility/Limits.h"
 #include "Utility/Math.h"

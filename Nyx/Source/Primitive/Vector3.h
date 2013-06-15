@@ -248,6 +248,8 @@ namespace Nyx
 		*/
 		bool operator !=(const Vector3& u) const;
 	};
+
+	typedef Vector3 Vector3f;
 }
 
 
