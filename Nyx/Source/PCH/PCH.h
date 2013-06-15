@@ -71,8 +71,4 @@
 //DirectX
 #include "Graphics/DirectXDefinition.h"
 
-#if defined(DEBUG) || defined(_DEBUG)
-#define protected public
-#define private   public
-#endif
 #endif
