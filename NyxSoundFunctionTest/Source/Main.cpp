@@ -22,7 +22,7 @@ int main()
 		std::shared_ptr<DirectSoundAudioManagerTest> test5;
 		std::shared_ptr<DirectSoundAudioListenerTest> test6;
 		std::shared_ptr<AudioManagerTest> test7;
-		std::shared_ptr<AudioCacheTest> test8;
+		std::shared_ptr<DirectSoundAudioListenerTest> test8;
 		std::shared_ptr<AudioCacheTest> test9;
 
 		std::cout <<"テスト項目を選択してください";
@@ -47,6 +47,10 @@ int main()
 			case '5':
 				test4= std::make_shared<DirectSoundStreaming3DAudioBufferTest>();
 				test4->Test();
+				break;
+			case '6':
+				test8 = std::make_shared<DirectSoundAudioListenerTest>();
+				test8->Test();
 				break;
 			}
 

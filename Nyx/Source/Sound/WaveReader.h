@@ -17,12 +17,13 @@
 #ifndef NYX_CORE_INCLUDED_WAVE_READER_H_
 #define NYX_CORE_INCLUDED_WAVE_READER_H_
 #include "WaveFileHeader.h"
+#include "SoundReader.h"
 
 namespace Nyx {
 	class File;
 
 	///wavファイルリーダ
-	class WaveReader {
+	class WaveReader : public SoundReader {
 	public:
 		/**
 		* コンストラクタ
