@@ -19,48 +19,52 @@
 
 namespace Nyx
 {
-	class Rect2i
-	{
+	template <typename T>
+	class Rect{
+		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
 		union {
 			struct {
 				///
-				int x;
+				T x;
 				///
-				int y;
+				T y;
 				///
-				int width;
+				T width;
 				///
-				int height;
+				T height;
 
 			};
-			int element[4];
+			T element[4];
 		};
-		static const Rect2i Zero;
-		static const Rect2i Unit;
+		static const Rect<T> Zero;
+		static const Rect<T> Unit;
 
 		/**
 		*
 		*/
-		Rect2i();
+		Rect<T>();
 		/**
 		*
 		*/
-		Rect2i(const int x, const int y, const int width, const int height);
+		Rect<T>(const T x, const T y, const T width, const T height);
 		/**
 		*
 		*/
-		Rect2i(const Rect2i& rect );
+		Rect<T>(const Rect<T>& rect );
 
 		/**
 		*
 		*/
-		bool operator ==(const Rect2i & rect);
+		bool operator ==(const Rect<T>& rect);
 		/**
 		*
 		*/
-		bool operator !=(const Rect2i & rect);
-
+		bool operator !=(const Rect<T>& rect);
 	};
-}
+
+	typedef Rect<int>    Rect2i;
+	typedef Rect<float>   Rect2f;
+	typedef Rect<double>  Rect2d;
+} 
 #endif

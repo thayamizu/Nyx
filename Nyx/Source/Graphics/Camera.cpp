@@ -1,4 +1,4 @@
-f/********************************************************************************
+/********************************************************************************
  *
  *  The MIT License
  *
@@ -26,19 +26,19 @@ f/******************************************************************************
 		 float  lx, float ly, float lz,
 		 float  ux, float uy, float uz)
 	 {
-		 eyePt	= new Vector3(ex, ey, ez);
-		 lookatPt	= new Vector3(lx, ly, lz);
-		 upPt	= new Vector3(ux, uy, uz);
+		 eyePt	= new Vector3f(ex, ey, ez);
+		 lookatPt	= new Vector3f(lx, ly, lz);
+		 upPt	= new Vector3f(ux, uy, uz);
 
 	 }
 
 	 //-----------------------------------------------------------------------------------------
 	 //
-	 Camera::Camera(Vector3& eye, Vector3& at, Vector3& up)
+	 Camera::Camera(Vector3f& eye, Vector3f& at, Vector3f& up)
 	 {
-		 eyePt	= new Vector3(eye);
-		 lookatPt	= new Vector3(at);
-		 upPt	= new Vector3(up);
+		 eyePt	= new Vector3f(eye);
+		 lookatPt	= new Vector3f(at);
+		 upPt	= new Vector3f(up);
 
 	 }
 	 //-----------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ f/******************************************************************************
 
 	 //-----------------------------------------------------------------------------------------
 	 //
-	 void Camera::GetEyePoint(Vector3* eye)
+	 void Camera::GetEyePoint(Vector3f* eye)
 	 {
 		 Assert(eyePt);
 		 *eye	= *eyePt;
@@ -60,7 +60,7 @@ f/******************************************************************************
 
 	 //-----------------------------------------------------------------------------------------
 	 //
-	 void Camera::SetEyePoint(Vector3& eye)
+	 void Camera::SetEyePoint(Vector3f& eye)
 	 {
 		 Assert(eyePt);
 		 *eyePt	= eye;
@@ -68,7 +68,7 @@ f/******************************************************************************
 
 	 //-----------------------------------------------------------------------------------------
 	 //	
-	 void Camera::GetLookAtPoint(Vector3* lookat) 
+	 void Camera::GetLookAtPoint(Vector3f* lookat) 
 	 {
 		 Assert(lookatPt);
 		 *lookat	= *lookatPt; 
@@ -76,7 +76,7 @@ f/******************************************************************************
 
 	 //-----------------------------------------------------------------------------------------
 	 //
-	 void Camera::SetLookAtPoint(Vector3& lookat)
+	 void Camera::SetLookAtPoint(Vector3f& lookat)
 	 {
 		 Assert(lookatPt);
 		 *lookatPt = lookat;
@@ -84,7 +84,7 @@ f/******************************************************************************
 
 	 //-----------------------------------------------------------------------------------------
 	 //
-	 void Camera::GetUpPoint(Vector3* up)
+	 void Camera::GetUpPoint(Vector3f* up)
 	 {
 		 Assert(upPt);
 		 *up	= *upPt;
@@ -93,7 +93,7 @@ f/******************************************************************************
 
 	 //-----------------------------------------------------------------------------------------
 	 //
-	 void Camera::SetUpPoint(Vector3& up)
+	 void Camera::SetUpPoint(Vector3f& up)
 	 {
 		 Assert(upPt);
 		 *upPt	= up;

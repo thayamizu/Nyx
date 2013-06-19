@@ -37,7 +37,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//コンストラクタ
-	Quaternion::Quaternion(Vector3 v, float n)
+	Quaternion::Quaternion(Vector3f v, float n)
 		:x(v.x), y(v.y), z(v.z), w(n)
 	{
 

@@ -603,7 +603,7 @@ namespace Nyx {
 		return *out;
 	}
 
-	Matrix44& Matrix44::Transform(Matrix44* out, Vector3 sv, Vector3 rv, Vector3 tv) 
+	Matrix44& Matrix44::Transform(Matrix44* out, Vector3f sv, Vector3f rv, Vector3f tv) 
 	{
 		Matrix44 scaling  = Unit;
 		Matrix44 rotation =Unit;

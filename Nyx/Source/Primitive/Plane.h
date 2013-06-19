@@ -18,38 +18,39 @@
 #define NYX_CORE_INCLUDED_PLANE_H_
 
 namespace Nyx {
-	class Plane
-	{
+
+	template <typename T>
+	class Plane{
+		static_assert(std::is_arithmetic<T>::value,"T required arithmetic type.");
 	public:
 		union {
 			struct {
 				///
-				float a;
+				T  a;
 				///
-				float b;
+				T  b;
 				///
-				float c;
+				T  c;
 				///
-				float d;
+				T  d;
 			};
 			///
-			float element[4];
+			T  element[4];
 		};
 
-	public:
-		//--------------------------------------------------------------------------------------
-		// コンストラクタ・デストラクタ
-		//--------------------------------------------------------------------------------------
+
 		/**
 		*
 		*/
-		Plane(): a(0),b(0),c(0),d(0) {
+		Plane() 
+			: a(0), b(0), c(0), d(0) {
 
 		} 
+
+
 		/**
 		*
 		*/
-
 		Plane(float a, float b, float c, float d) {
 			element[0] = a;
 			element[1] = b;
@@ -66,18 +67,35 @@ namespace Nyx {
 		}
 
 
-		//--------------------------------------------------------------------------------------
-		//距離の取得とか 
-		//--------------------------------------------------------------------------------------
 		/**
 		*
 		*/
-		void Normalize();
-		/**
-		*
-		*/
-		float GetDistance(const Vector3& v);
+		void Normalize(){
+			float abs = Math::Sqrt(a*a + b*b + c*c);
+			if (abs <= Math::Epsilon) { 
+				abs = 1.f;
+			}
 
+			a /= abs;
+			b /= abs;
+			c /= abs;
+
+			if (Math::Abs(a) < Math::Epsilon) {
+				a = 0.f;
+			}
+			if (Math::Abs(b) < Math::Epsilon) {
+				b = 0.f;
+			}
+			if (Math::Abs(c) < Math::Epsilon) {
+				c = 0.f;
+			}
+		}
+		/**
+		*
+		*/
+		float GetDistance(const Vector3f& v) {
+			return Math::Abs(a*v.x + b*v.y+ c*v.z+d) / Math::Sqrt(a*a + b*b + c*c);
+		}
 	};
 }
 #endif

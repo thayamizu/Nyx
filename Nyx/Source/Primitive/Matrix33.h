@@ -16,10 +16,10 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_MATRIX33_H_
 #define NYX_CORE_INCLUDED_MATRIX33_H_
+#include "Primitive/Vector3.h"
 
 namespace Nyx {
 
-	class Vector3;
 	class Matrix33 {
 	public:
 		//--------------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ namespace Nyx {
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33 operator *(const Vector3& mat) const;
+		inline Matrix33 operator *(const Vector3f& mat) const;
 
 		/**
 		* œZ
@@ -167,7 +167,7 @@ namespace Nyx {
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33& operator *=(const Vector3& s);
+		inline Matrix33& operator *=(const Vector3f& s);
 
 		/**
 		* æZ

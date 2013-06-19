@@ -213,7 +213,7 @@ namespace Nyx  {
 			float sx, float sy, float sz, 
 			float rx, float ry, float rz, 
 			float tx, float ty, float tz);
-		static Matrix44& Transform(Matrix44* out, Vector3 sv, Vector3 rv, Vector3 tv);
+		static Matrix44& Transform(Matrix44* out, Vector3f sv, Vector3f rv, Vector3f tv);
 
 		//--------------------------------------------------------------------------------------
 		// ïΩçsà⁄ìÆ

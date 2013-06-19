@@ -16,7 +16,7 @@
 ********************************************************************************/
 #include "PCH/PCH.h"
 #include "Primitive/Matrix33.h"
-
+#include "Primitive/Vector3.h"
 namespace Nyx {
 	const Matrix33 Matrix33::Unit(1, 0, 0,
 		0, 1, 0,

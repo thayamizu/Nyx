@@ -2,10 +2,10 @@
 #define NYX_CORE_INCLUDED_ICONTROL_H_
 #include "Object/Delegate.h"
 #include "Utility/Type.h"
+#include "Primitive/Vector2.h"
+#include "Primitive/Rect2i.h"
 namespace Nyx 
 {
-	class Rect2i;
-	class Point2i;
 
 	///GUIƒRƒ“ƒgƒ[ƒ‹‚Ìí•Ê
 	struct ControlType {

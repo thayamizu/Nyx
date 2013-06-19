@@ -161,7 +161,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		// ライティングの設定
-		void DirectGraphicsDevice::SetLight(Vector3 pos, Vector3 dir, Color3f diffuse, Color3f specular, float range, D3DLIGHTTYPE type) {
+		void DirectGraphicsDevice::SetLight(Vector3f pos, Vector3f dir, Color3f diffuse, Color3f specular, float range, D3DLIGHTTYPE type) {
 			Assert(d3dDevice);
 			D3DLight light;
 

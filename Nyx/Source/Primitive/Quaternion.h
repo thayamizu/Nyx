@@ -46,10 +46,10 @@ namespace Nyx {
 		Quaternion();
 
 		/*!コンストラクタ
-		*@param Vector3 v
+		*@param Vector3f v
 		*@param float n
 		*/
-		Quaternion(Vector3 v, float n);
+		Quaternion(Vector3f v, float n);
 
 		/*!コンストラクタ
 		*@param float x

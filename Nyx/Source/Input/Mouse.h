@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_MOUSE_H_
 #define NYX_CORE_INCLUDED_MOUSE_H_
 
-#include "Primitive/Point2i.h"
+#include "Primitive/Vector2.h"
 
 namespace Nyx {
 	///ƒ}ƒEƒX“ü—Í

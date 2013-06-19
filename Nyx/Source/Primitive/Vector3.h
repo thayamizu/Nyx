@@ -19,45 +19,39 @@
 
 namespace Nyx
 {
+	template<typename T>
 	class Vector3 {
+		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
-		//--------------------------------------------------------------------------------------
-		// メンバ変数
-		//--------------------------------------------------------------------------------------
-		/// メンバ変数
 		union {
 			struct {
 				/// x値
-				float  x;
+				T  x;
 				/// y値
-				float  y;
+				T  y;
 				/// z値
-				float z;
+				T z;
 			};
 			/// 配列
-			float elements[3];
+			T elements[3];
 		};
 
-		//--------------------------------------------------------------------------------------
-		// メンバ定数
-		//--------------------------------------------------------------------------------------
-		static const Vector3 Zero;  ///< ゼロベクトル
+		static const Vector3<T> Zero;  ///< ゼロベクトル
 
-		static const Vector3 UnitX; ///< X軸単位ベクトル
+		static const Vector3<T> UnitX; ///< X軸単位ベクトル
 
-		static const Vector3 UnitY; ///< Y軸単位ベクトル
+		static const Vector3<T> UnitY; ///< Y軸単位ベクトル
 
-		static const Vector3 UnitZ; ///< Z軸単位ベクトル
+		static const Vector3<T> UnitZ; ///< Z軸単位ベクトル
 
-		static const Vector3 ScaleUnit; ///< スケール単位ベクトル 
+		static const Vector3<T> ScaleUnit; ///< スケール単位ベクトル 
 
-		//--------------------------------------------------------------------------------------
-		// コンストラクタ・デストラクタ
-		//--------------------------------------------------------------------------------------
 		/**
 		*デフォルトコンストラクタ
 		*/
-		Vector3();
+		Vector3<T>() {
+			Set(0, 0, 0);
+		}
 
 		/**
 		* 引数つきコンストラクタ
@@ -65,191 +59,297 @@ namespace Nyx
 		* @param y
 		* @param z
 		*/
-		Vector3(float x_, float y_, float z_);
+		Vector3<T>(T x, T y, T z) {
+			Set(x, y, z);
+		}
 
 		/**
 		* コピーコンストラクタ
-		* @param Vector3
+		* @param Vector3<T>
 		*/
-		Vector3(const Vector3 & u);
+		Vector3<T>(const Vector3<T> & u) {
+			Set(u.x, u.y, u.z);
+		}
 
-		/**
-		* デストラクタ
-		*/
-		~Vector3();
-		//--------------------------------------------------------------------------------------
-		// 値の設定
-		//--------------------------------------------------------------------------------------
 		/**
 		* 値の設定
 		*/
-		void Set(float x_, float y_, float z_);
+		void Set(T x, T y, T z) {
+			this->x = x;
+			this->y = y;
+			this->z = z;
+		}
 
-		//--------------------------------------------------------------------------------------
-		// 演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* 加算
 		* @param 右辺値  
 		* @return　加算結果 
 		*/
-		Vector3 operator +(const Vector3& u) const;
+		Vector3<T> operator +(const Vector3<T>& u) const {
+			return Vector3<T>( x + u.x, y + u.y, z + u.z); 
+
+		}
 
 		/**
 		* 減算
 		* @param　右辺値  
 		* @return 減算結果
 		*/
-		Vector3 operator -(const Vector3& u) const;
+		Vector3<T> operator -(const Vector3<T>& u) const {
+			return Vector3<T>( x - u.x, y - u.y, z - u.z); 
+
+		}
 
 		/**
 		* 乗算
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Vector3 operator *(const float u) const;
+		Vector3<T> operator *(const T u) const {
+			return Vector3<T>( x * u, y * u, z * u);
 
-		/**
-		* 乗算
-		* @param  右辺値
-		* @return 乗算結果 
-		*/
-		friend Vector3 operator *(const float u, const Vector3& v);
+		}
 
 		/**
 		* 除算
 		* @param 右辺値  
 		* @return 除算結果
 		*/
-		Vector3 operator /(const float u) const;
+		Vector3<T> operator /(const T u) const {
+			return Vector3<T>( x / u, y / u, z / u);
+		}
 
-		//--------------------------------------------------------------------------------------
-		// 代入演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* 加算代入
 		* @param  右辺値
 		* @return 加算結果
 		*/
-		Vector3& operator +=(const Vector3& u);
+		Vector3<T>& operator +=(const Vector3<T>& u) {
+			x += u.x;
+			y += u.y;
+			z += u.z;
+			return *this;
+		}
 
 		/**
 		* 減算代入
 		* @param  右辺値
 		* @return 減算結果
 		*/
-		Vector3& operator -=(const Vector3& u);
+		Vector3<T>& operator -=(const Vector3<T>& u) {
+			x -= u.x;
+			y -= u.y;
+			z -= u.z;
+			return *this;
+		}
 
 		/**
 		* 乗算代入
 		* @param  右辺値
 		* @return 乗算結果
 		*/
-		Vector3& operator *=(const float u);
+		Vector3<T>& operator *=(const T u) {
+			x *= u;
+			y *= u;
+			z *= u;
+			return *this;
+		}
 
 		/**
 		* 除算代入
 		* @param  右辺値
 		* @return 除算結果
 		*/
-		Vector3& operator /=(const float u);
+		Vector3<T>& operator /=(const T u) {
+			Assert(u != 0);
+			x /= u;
+			y /= u;
+			z /= u;
+			return *this;
+		}
 
 		/**
 		* 代入
 		* @param 右辺値
 		* @return 代入結果
 		*/
-		Vector3& operator =(Vector3& u);
+		Vector3<T>& operator =(Vector3<T>& u) {
+			using std::swap;
+			swap(*this, u);
+			return u;
+		}
 
 		/**
 		* 反転 
 		* @param 反転結果
 		*/
-		Vector3& operator ~();
+		Vector3<T>& operator ~() {
+			Inverse();
+			return *this;
+		}
 
-		//--------------------------------------------------------------------------------------
-		// ベクトル演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* ドット積
 		* @param 右辺値
-		* @return float 内積
+		* @return T 内積
 		*/
-		float Dot(Vector3& u);
+		T Dot(Vector3<T>& u) {
+			return (x * u.x + y * u.y + z * u.z);
+		}
 
 		/**
 		* クロス積
 		* @param   右辺値
-		* @return　Vector3 クロス積 
+		* @return　Vector3<T> クロス積 
 		*/
-		Vector3 Cross(Vector3& u);
+		Vector3<T> Cross(Vector3<T>& u) {
+			return Vector3<T>(
+				(y * u.z - z * u.y ),
+				(x * u.z - z * u.x ),
+				(x * u.y - y * u.x ));
+		}
 
 		/**
 		* ベクトルの長さ
-		* @return  float 長さ
+		* @return  T 長さ
 		*/
-		float Length();
+		T Length() {
+			return static_cast<T>(sqrt(x * x + y * y + z * z));
+
+		}
 
 		/**
 		* ベクトルの長さの二乗値
-		* @return  float 長さ
+		* @return  T 長さ
 		*/
-		float SquaredLength();
+		T SquaredLength() {
+			return static_cast<T>(x * x + y * y + z * z);
+
+		}
 
 		/**
 		* ベクトルの正規化
 		*/
-		void Normalize();
+		void Normalize() {
+			T abs = Length(); 
+
+			if (abs <= Math::Epsilon) { abs = 1.f;}
+
+			x /= abs;
+			y /= abs;
+			z /= abs;
+
+			if (Math::Abs(x) < Math::Epsilon) {x = 0.f;}
+			if (Math::Abs(y) < Math::Epsilon) {y = 0.f;}
+			if (Math::Abs(z) < Math::Epsilon) {z = 0.f;}
+		}
 
 		/**
 		* ベクトルの反転
 		*/
-		void Inverse();
+		void Inverse() {
+			x = - x;
+			y = - y;
+			z = - z;
+		}
 
 		/**
 		* 線形補間
-		* @param const Vector3& 始点ベクトル
-		* @param const Vector3& 終点ベクトル
-		* @param float 補間係数
+		* @param const Vector3<T>& 始点ベクトル
+		* @param const Vector3<T>& 終点ベクトル
+		* @param T 補間係数
 		*/
-		Vector3 Lerp(const Vector3& v1, const Vector3& v2, float s);
+		Vector3<T> Lerp(const Vector3<T>& v1, const Vector3<T>& v2, T s) {
+			Vector3<T> lerp;
+			if (s > 1) s = 1;
+			if (s < 0) s = 0;
+			lerp.x = v1.x * (1 - s) + v2.x * s;
+			lerp.y = v1.y * (1 - s) + v2.y * s;
+			lerp.z = v1.z * (1 - s) + v2.z * s;
 
-		//--------------------------------------------------------------------------------------
-		// 論理演算
-		//--------------------------------------------------------------------------------------
+			return lerp;	
+		}
+
 		/** 
 		* @return ゼロベクトルならtrue
 		*/
-		bool IsZero() const;
+		bool IsZero() const {
+			return (
+				Math::Abs(x) <= Math::Epsilon &&
+				Math::Abs(y) <= Math::Epsilon &&
+				Math::Abs(z) <= Math::Epsilon);
+		}
 
 		/** 
 		* @return 単位ベクトルならtrue
 		*/
-		bool IsUnit() const;
+		bool IsUnit() const {
+			return (
+				Math::Abs(x - 1.f) <= Math::Epsilon &&
+				Math::Abs(y - 1.f) <= Math::Epsilon &&
+				Math::Abs(z - 1.f) <= Math::Epsilon);
+		}
 
 		/** 
 		* ベクトルの等価演算
 		* @param 右辺値 
 		* @return 比較結果が等しいならばtrue
 		*/
-		bool operator ==(const Vector3& u) const;
+		bool operator ==(const Vector3<T>& u) const {	
+			return (
+			Math::Abs(x - u.x) <= Math::Epsilon &&
+			Math::Abs(y - u.y) <= Math::Epsilon &&
+			Math::Abs(z - u.z) <= Math::Epsilon);
+		}
 
-		/** 
-		* ベクトルの等価演算
-		* 丸め誤差対策
-		* @param 右辺値 
-		* @return 比較結果が等しいならばtrue
-		*/
-		bool Equal(const Vector3& u) const;    
 		/** 
 		* ベクトル等価演算
 		* @param 右辺値 
 		* @return　比較結果が等しくないならばtrue
 		*/
-		bool operator !=(const Vector3& u) const;
+		bool operator !=(const Vector3<T>& u) const {
+			return !(*this == u);
+		}
 	};
+	//--------------------------------------------------------------------------------------
+	// 定数定義
+	//--------------------------------------------------------------------------------------
+	typedef Vector3<int>     Axis3i;
+	typedef Vector3<float>   Axis3f;
+	typedef Vector3<double>  Axis3d;
+	typedef Vector3<int>     Point3i;
+	typedef Vector3<float>   Point3f;
+	typedef Vector3<double>  Point3d;
+	typedef Vector3<int>     Vector3i;
+	typedef Vector3<float>   Vector3f;
+	typedef Vector3<double>  Vector3d;
+	typedef Vector3<int>     TexChoord3i;
+	typedef Vector3<float>   TexChoord3f;
+	typedef Vector3<double>  TexChoord3d;
 
-	typedef Vector3 Vector3f;
+	//--------------------------------------------------------------------------------------
+	// 定数定義
+	//--------------------------------------------------------------------------------------
+	// ゼロベクトル   
+	template<typename T>
+	const Vector3<T> Vector3<T>::Zero = Vector3<T>(0, 0, 0);  
+
+	// X軸単位ベクトル
+	template<typename T>
+	const Vector3<T> Vector3<T>::UnitX = Vector3<T>(1, 0, 0);
+
+	// Y軸単位ベクトル
+	template<typename T>
+	const Vector3<T> Vector3<T>::UnitY = Vector3<T>(0, 1, 0); 
+
+	// Z軸ベクトル
+	template<typename T>
+	const Vector3<T> Vector3<T>::UnitZ = Vector3<T>(0, 0, 1); 
+
+	// スケール単位ベクトル
+	template<typename T>
+	const Vector3<T> Vector3<T>::ScaleUnit = Vector3<T>(1, 1, 1);
+
 }
 
 

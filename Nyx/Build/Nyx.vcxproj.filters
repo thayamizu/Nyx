@@ -273,18 +273,6 @@
     <ClInclude Include="..\Source\Primitive\Plane.h">
       <Filter>Primitive</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point2f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point2i.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point3f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point3i.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Primitive\Quaternion.h">
       <Filter>Primitive</Filter>
     </ClInclude>
@@ -300,12 +288,6 @@
     <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h">
       <Filter>Graphics\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2i.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2f.h">
-      <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Camera.h">
       <Filter>Graphics\Camera</Filter>
@@ -568,6 +550,9 @@
     <ClInclude Include="..\Source\Movie\MoviePlayer.h">
       <Filter>Movie</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Rect2i.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -633,41 +618,11 @@
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Plane.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point2f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point2i.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point3f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point3i.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Primitive\Quarternion.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Vector2.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Vector3.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Vector4.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
       <Filter>Graphics\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Rect2i.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Rect2f.cpp">
-      <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\Camera.cpp">
       <Filter>Graphics\Camera</Filter>

@@ -118,14 +118,14 @@ namespace Nyx {
 
 			/**
 			* ライトを設定
-			* @param Vector3 ライト位置
-			* @param Vector3 方向ベクトル
+			* @param Vector3f ライト位置
+			* @param Vector3f 方向ベクトル
 			* @param Color3f 拡散反射光の値(RGB)
 			* @param Color3f 鏡面反射光の値(RGB)
 			* @param float ライトの範囲
 			* @param D3DLIGHTTYPE ライトの種類(ポイントライトディレクショナルライトなど)
 			*/
-			void SetLight(Vector3 pos, Vector3 dir, Color3f diffuse, Color3f specular, float range, D3DLIGHTTYPE type);
+			void SetLight(Vector3f pos, Vector3f dir, Color3f diffuse, Color3f specular, float range, D3DLIGHTTYPE type);
 
 			//---------------------------------------------------------------------------
 			//トランスフォーム

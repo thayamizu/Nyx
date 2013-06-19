@@ -38,7 +38,7 @@ namespace Nyx {
 		/**
 		* コンストラクタ
 		*/
-		Camera(Vector3& eye, Vector3& at, Vector3&);
+		Camera(Vector3f& eye, Vector3f& at, Vector3f&);
 
 		/**
 		* デストラクタ
@@ -51,29 +51,29 @@ namespace Nyx {
 		/**
 		*
 		*/
-		virtual void GetEyePoint(Vector3*);
+		virtual void GetEyePoint(Vector3f*);
 		/**
 		*
 		*/
-		virtual void SetEyePoint(Vector3& eye);
+		virtual void SetEyePoint(Vector3f& eye);
 
 		/**
 		*
 		*/
-		virtual void GetLookAtPoint(Vector3*);
+		virtual void GetLookAtPoint(Vector3f*);
 		/**
 		*
 		*/
-		virtual void SetLookAtPoint(Vector3& lookAt);
+		virtual void SetLookAtPoint(Vector3f& lookAt);
 
 		/**
 		*
 		*/
-		virtual void GetUpPoint(Vector3*);
+		virtual void GetUpPoint(Vector3f*);
 		/**
 		*
 		*/
-		virtual void SetUpPoint(Vector3& up);
+		virtual void SetUpPoint(Vector3f& up);
 
 		//--------------------------------------------------------------------------
 		//視野変換行列
@@ -109,9 +109,9 @@ namespace Nyx {
 		void MatrixPerspectiveFovRH(Matrix44* out, float fovy, float aspect, float zn, float zf);
 
 	private:
-		Vector3* eyePt;
-		Vector3* lookatPt;
-		Vector3* upPt;
+		Vector3f* eyePt;
+		Vector3f* lookatPt;
+		Vector3f* upPt;
 	};
 }
 #endif
