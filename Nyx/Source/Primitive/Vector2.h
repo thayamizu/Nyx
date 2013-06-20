@@ -80,7 +80,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 加算結果
 		*/
-		Vector2<T> operator +(const Vector2<T>& rhs) const {
+		Vector2<T> operator +(const Vector2<T>& u) const {
 			return Vector2( x + u.x, y + u.y); 
 		}
 
@@ -89,7 +89,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 減算結果
 		*/ 
-		Vector2<T> operator -(const Vector2<T>& rhs) const {
+		Vector2<T> operator -(const Vector2<T>& u) const {
 			return Vector2( x - u.x, y - u.y); 
 		}
 
@@ -116,7 +116,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 加算結果
 		*/
-		Vector2<T> & operator +=(const Vector2<T>& rhs) {
+		Vector2<T> & operator +=(const Vector2<T>& u) {
 			x += u.x;
 			y += u.y;
 
@@ -127,7 +127,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 減算結果
 		*/                                                                             
-		Vector2<T> & operator -=(const Vector2<T>& rhs) {
+		Vector2<T> & operator -=(const Vector2<T>& u) {
 			x -= u.x;
 			y -= u.y;
 
@@ -139,7 +139,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Vector2<T> &  operator *=(const T rhs) {
+		Vector2<T> &  operator *=(const T u) {
 			x *= u;
 			y *= u;
 
@@ -151,7 +151,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Vector2<T> & operator /=(const T rhs) {
+		Vector2<T> & operator /=(const T u) {
 			x /= u;
 			y /= u;
 
@@ -184,7 +184,7 @@ namespace Nyx
 		* @param 右辺値
 		* @return 内積
 		*/
-		T Dot(const Vector2& rhs) {
+		T Dot(const Vector2& u) {
 			return (x * u.x + y * u.y);
 
 		}
@@ -257,9 +257,8 @@ namespace Nyx
 		* @return 単位ベクトルならtrue
 		*/
 		bool IsUnit() const {
-			return (
-				Math::Abs(x - 1.f) <= Math::Epsilon &&
-				Math::Abs(y - 1.f) <= Math::Epsilon);
+			const float value = Math::Sqrt(x*x + y*y);
+			return (Math::Abs(value - 1.f) <= Math::Epsilon);
 		}
 
 
@@ -268,7 +267,7 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 比較結果が等しいならばtrue
 		*/
-		bool operator ==(const Vector2<T>& rhs) const {
+		bool operator ==(const Vector2<T>& v) const {
 			return ( 
 				Math::Abs(x - v.x ) < Math::Epsilon &&
 				Math::Abs(y - v.y ) < Math::Epsilon);

@@ -18,7 +18,7 @@
 #define NYX_CORE_DIRECT_GRAPHICS_SPRITE_H_
 
 #include "Graphics/ISprite.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 #include "Primitive/Color4c.h"
 
 namespace Nyx {

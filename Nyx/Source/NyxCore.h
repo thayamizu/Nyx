@@ -60,7 +60,7 @@
 #include "Primitive/Matrix44.h"
 #include "Primitive/Plane.h"
 #include "Primitive/Quaternion.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 #include "Primitive/Vector3.h"
 #include "Primitive/Vector4.h"

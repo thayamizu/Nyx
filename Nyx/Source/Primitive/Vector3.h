@@ -213,8 +213,8 @@ namespace Nyx
 		* ベクトルの長さ
 		* @return  T 長さ
 		*/
-		T Length() {
-			return static_cast<T>(sqrt(x * x + y * y + z * z));
+		float Length() {
+			return static_cast<float>(sqrt(x * x + y * y + z * z));
 
 		}
 
@@ -222,8 +222,8 @@ namespace Nyx
 		* ベクトルの長さの二乗値
 		* @return  T 長さ
 		*/
-		T SquaredLength() {
-			return static_cast<T>(x * x + y * y + z * z);
+		float SquaredLength() {
+			return static_cast<float>(x * x + y * y + z * z);
 
 		}
 
@@ -284,10 +284,8 @@ namespace Nyx
 		* @return 単位ベクトルならtrue
 		*/
 		bool IsUnit() const {
-			return (
-				Math::Abs(x - 1.f) <= Math::Epsilon &&
-				Math::Abs(y - 1.f) <= Math::Epsilon &&
-				Math::Abs(z - 1.f) <= Math::Epsilon);
+			const auto value = Math::Sqrt(x*x + y*y +z*z);
+			return (Math::Abs(value - 1.f) <= Math::Epsilon);
 		}
 
 		/** 

@@ -11,9 +11,6 @@
     <Filter Include="Primitive">
       <UniqueIdentifier>{b7d8e03d-4f5b-4a8a-a605-b8f5aefb484b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Thread">
-      <UniqueIdentifier>{9dcb3e0e-8865-4fe3-8863-a853f7419fa7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\PCH\PCH.cpp">
@@ -53,47 +50,23 @@
     <ClInclude Include="..\Source\Primitive\Color4fUnitTest.h">
       <Filter>Primitive</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Matrix33UnitTest.h">
-      <Filter>Primitive</Filter>
+    <ClInclude Include="..\Source\Utility\ExceptionUnitTest.h">
+      <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Matrix44UnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\PlaneUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point2fUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point2iUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point3fUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point3iUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\QuaternionUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2fUnitTest.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2iUnitTest.h">
+    <ClInclude Include="..\Source\Primitive\UnitTestAll.h">
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Vector3UnitTest.h">
       <Filter>Primitive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Vector2UnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
     <ClInclude Include="..\Source\Primitive\Vector4UnitTest.h">
       <Filter>Primitive</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\UnitTestAll.h">
+    <ClInclude Include="..\Source\Primitive\Rect2iUnitTest.h">
       <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Utility\ExceptionUnitTest.h">
-      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

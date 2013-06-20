@@ -18,7 +18,7 @@
 #include "Debug/Assert.h"
 #include "GUI/PushButton.h"
 #include "Object/Delegate.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 
 namespace Nyx {

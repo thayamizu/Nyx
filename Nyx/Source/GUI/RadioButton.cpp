@@ -17,7 +17,7 @@
 #include "PCH/PCH.h"
 #include "GUI/RadioButton.h"
 #include "Debug/Assert.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 
 namespace Nyx {

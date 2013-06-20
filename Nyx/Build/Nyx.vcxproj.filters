@@ -427,9 +427,6 @@
     <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Network\ISocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\IO\IFile.h">
       <Filter>IO</Filter>
     </ClInclude>
@@ -550,7 +547,13 @@
     <ClInclude Include="..\Source\Movie\MoviePlayer.h">
       <Filter>Movie</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2i.h">
+    <ClInclude Include="..\Source\Primitive\Rect.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\ISocket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\EulerAngles.h">
       <Filter>Primitive</Filter>
     </ClInclude>
   </ItemGroup>
@@ -767,6 +770,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
       <Filter>Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\EulerAngles.cpp">
+      <Filter>Primitive</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

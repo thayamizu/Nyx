@@ -46,6 +46,8 @@ namespace Nyx
 
 		static const Vector4<T> UnitZ; ///< Z軸単位ベクトル
 
+		static const Vector4<T> UnitW; ///< W軸単位ベクトル
+
 		static const Vector4<T> ScaleUnit; ///< スケール単位ベクトル 
 
 		/**
@@ -229,9 +231,10 @@ namespace Nyx
 		* @return  長さ
 		*/
 		float SquaredLength() {
-			return Math::Sqrt(x * x + y * y + z * z + w * w);
+			return static_cast<float>(x * x + y * y + z * z + w * w);
 
 		}
+
 
 		/**
 		* ベクトルの正規化
@@ -292,11 +295,8 @@ namespace Nyx
 		* @return 単位ベクトルならtrue
 		*/
 		bool IsUnit() const {
-			return (
-				Math::Abs(x - 1.f) <= Math::Epsilon &&
-				Math::Abs(y - 1.f) <= Math::Epsilon &&
-				Math::Abs(z - 1.f) <= Math::Epsilon &&
-				Math::Abs(w - 1.f) <= Math::Epsilon);
+			const float value = Math::Sqrt(x*x + y*y + z*z + w*w);
+			return (Math::Abs(value - 1.f) <= Math::Epsilon);
 		}
 
 		/** 
@@ -355,7 +355,11 @@ namespace Nyx
 	// Z軸ベクトル
 	template<typename T>
 	const Vector4<T> Vector4<T>::UnitZ = Vector4(0, 0, 1, 0); 
-
+	
+	// W軸ベクトル
+	template<typename T>
+	const Vector4<T> Vector4<T>::UnitW = Vector4(0, 0, 0, 1); 
+	
 	// スケール単位ベクトル
 	template<typename T>
 	const Vector4<T> Vector4<T>::ScaleUnit = Vector4(1, 1, 1, 1);

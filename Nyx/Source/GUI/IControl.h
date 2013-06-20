@@ -3,7 +3,7 @@
 #include "Object/Delegate.h"
 #include "Utility/Type.h"
 #include "Primitive/Vector2.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 namespace Nyx 
 {
 

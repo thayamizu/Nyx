@@ -171,7 +171,8 @@
     <ClInclude Include="..\Source\Network\UDP\UDPSocket.h" />
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
-    <ClInclude Include="..\Source\Primitive\Rect2i.h" />
+    <ClInclude Include="..\Source\Primitive\EulerAngles.h" />
+    <ClInclude Include="..\Source\Primitive\Rect.h" />
     <ClInclude Include="..\Source\Sound\AudioCache.h" />
     <ClInclude Include="..\Source\Sound\AudioManager.h" />
     <ClInclude Include="..\Source\Sound\AudioUtility.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp" />
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
+    <ClCompile Include="..\Source\Primitive\EulerAngles.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
     <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp" />
