@@ -50,12 +50,14 @@ namespace Nyx
 
 		static const Vector4<T> ScaleUnit; ///< スケール単位ベクトル 
 
+
 		/**
 		*デフォルトコンストラクタ
 		*/
 		Vector4<T>()
 			:x(0), y(0), z(0), w(0){
 		}
+
 
 		/**
 		* 引数つきコンストラクタ
@@ -67,6 +69,7 @@ namespace Nyx
 			: x(x_), y(y_), z(z_), w(w_) {
 		}
 
+
 		/**
 		* コピーコンストラクタ
 		* @param Vector4<T>
@@ -74,6 +77,7 @@ namespace Nyx
 		Vector4<T>(const Vector4<T> & u)
 			: x(u.x), y(u.y), z(u.z) ,w(u.w){
 		}
+
 
 		/**
 		* 値の設定
@@ -85,6 +89,7 @@ namespace Nyx
 			w = w_;
 		}
 
+
 		/**
 		* 加算
 		* @param 右辺値  
@@ -93,6 +98,7 @@ namespace Nyx
 		Vector4<T> operator +(const Vector4<T>& u) const {
 			return Vector4<T>( x + u.x, y + u.y, z + u.z, w + u.w); 
 		}
+
 
 		/**
 		* 減算
@@ -103,6 +109,7 @@ namespace Nyx
 			return Vector4<T>( x - u.x, y - u.y, z - u.z, w - u.w); 
 		}
 
+
 		/**
 		* 乗算
 		* @param 右辺値 
@@ -111,6 +118,7 @@ namespace Nyx
 		Vector4<T> operator *(const T u) const {
 			return Vector4<T>( x * u, y * u, z * u, w * u);
 		}
+
 
 		/**
 		* 除算
@@ -121,6 +129,7 @@ namespace Nyx
 			return Vector4<T>( x / u, y / u, z / u, w / u);
 
 		}
+
 
 		/**
 		* 加算代入
@@ -134,6 +143,7 @@ namespace Nyx
 			w += u.w;
 			return *this;
 		}
+
 
 		/**
 		* 減算代入
@@ -149,6 +159,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* 乗算代入
 		* @param  右辺値
@@ -163,6 +174,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* 除算代入
 		* @param  右辺値
@@ -175,6 +187,7 @@ namespace Nyx
 			w /= u;
 			return *this;
 		}
+
 
 		/**
 		* 代入
@@ -189,6 +202,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* 反転 
 		* @param 反転結果
@@ -201,6 +215,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* ドット積
 		* @param 右辺値
@@ -210,13 +225,6 @@ namespace Nyx
 			return (x * u.x + y * u.y + z * u.z + w*u.w);
 		}
 
-		//四次元では外積は定義できない
-		//**
-		//* クロス積
-		//* @param   右辺値
-		//* @return　クロス積 
-		//*/
-		//Vector4<T> Cross(Vector4<T>& u);
 
 		/**
 		* ベクトルの長さ
@@ -225,6 +233,7 @@ namespace Nyx
 		float Length() {
 			return Math::Sqrt(x * x + y * y + z * z+ w * w);
 		}
+
 
 		/**
 		* ベクトルの長さの二乗値
@@ -255,6 +264,7 @@ namespace Nyx
 			if (Math::Abs(w) < Math::Epsilon) {w = 0.f;}
 		}
 
+
 		/**
 		* ベクトルの反転
 		*/
@@ -280,6 +290,8 @@ namespace Nyx
 
 			return lerp;	
 		}
+		
+		
 		/** 
 		* @return ゼロベクトルならtrue
 		*/
@@ -291,6 +303,7 @@ namespace Nyx
 				Math::Abs(w) <= Math::Epsilon);
 		}
 
+
 		/** 
 		* @return 単位ベクトルならtrue
 		*/
@@ -298,6 +311,7 @@ namespace Nyx
 			const float value = Math::Sqrt(x*x + y*y + z*z + w*w);
 			return (Math::Abs(value - 1.f) <= Math::Epsilon);
 		}
+
 
 		/** 
 		* ベクトルの等価演算
@@ -311,6 +325,7 @@ namespace Nyx
 				Math::Abs(z - u.z) <= Math::Epsilon &&
 				Math::Abs(w - u.w) <= Math::Epsilon);
 		}
+
 
 		/** 
 		* ベクトル等価演算

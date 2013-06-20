@@ -38,8 +38,12 @@ namespace Nyx
 			};
 			T element[4];
 		};
+
+
 		static const Rect<T> Zero;
+		
 		static const Rect<T> Unit;
+
 
 		/**
 		* コンストラクタ
@@ -94,6 +98,7 @@ namespace Nyx
 			}
 			return false;
 		}
+
 
 		/**
 		* 等価演算

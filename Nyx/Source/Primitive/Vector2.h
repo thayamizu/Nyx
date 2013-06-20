@@ -49,6 +49,7 @@ namespace Nyx
 			: x(0), y(0) {
 		}
 
+
 		/**
 		* コンストラクタ
 		* @param x
@@ -57,6 +58,7 @@ namespace Nyx
 		Vector2<T>(T x, T y) {
 			Set(x, y);
 		}
+
 
 		/**
 		* コピーコンストラクタ
@@ -67,6 +69,7 @@ namespace Nyx
 
 		}
 
+
 		/**
 		* 値の設定
 		*/
@@ -74,6 +77,7 @@ namespace Nyx
 			this->x = x;
 			this->y = y;
 		}
+
 
 		/** 
 		* ベクトル加算
@@ -84,6 +88,7 @@ namespace Nyx
 			return Vector2( x + u.x, y + u.y); 
 		}
 
+
 		/** 
 		* ベクトル減算
 		* @param 右辺値 
@@ -92,6 +97,7 @@ namespace Nyx
 		Vector2<T> operator -(const Vector2<T>& u) const {
 			return Vector2( x - u.x, y - u.y); 
 		}
+
 
 		/** 
 		* ベクトル乗算
@@ -102,6 +108,7 @@ namespace Nyx
 			return Vector2( x * u, y * u); 
 		}
 
+
 		/** 
 		* ベクトル除算
 		* @param 右辺値 
@@ -110,6 +117,7 @@ namespace Nyx
 		Vector2<T> operator /(const T u) const {
 			return Vector2( x / u, y / u); 
 		}
+
 
 		/** 
 		* ベクトル加算
@@ -122,6 +130,8 @@ namespace Nyx
 
 			return *this;
 		}
+
+
 		/** 
 		* ベクトル減算
 		* @param 右辺値 
@@ -133,6 +143,7 @@ namespace Nyx
 
 			return *this;
 		}
+
 
 		/** 
 		* ベクトル乗算
@@ -146,6 +157,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/** 
 		* ベクトル除算
 		* @param 右辺値 
@@ -158,6 +170,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/** 
 		* ベクトル反転
 		* @param 右辺値 
@@ -165,6 +178,7 @@ namespace Nyx
 		*/
 		Vector2<T> operator ~() {
 		}
+
 
 		/** 
 		* ベクトル代入
@@ -221,6 +235,7 @@ namespace Nyx
 			if (Math::Abs(y) < Math::Epsilon) {y = 0.0f;}
 		}
 
+
 		/**
 		* ベクトルを反転
 		*/
@@ -228,6 +243,7 @@ namespace Nyx
 			x = - x;
 			y = - y;
 		}
+
 
 		/**
 		*

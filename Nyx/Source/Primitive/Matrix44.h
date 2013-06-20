@@ -218,20 +218,20 @@ namespace Nyx  {
 		//--------------------------------------------------------------------------------------
 		// ïΩçsà⁄ìÆ
 		//--------------------------------------------------------------------------------------
-		static Matrix44& Translation(Matrix44* out, float tx, float ty, float tz);
+		static Matrix44& Translate(Matrix44* out, float tx, float ty, float tz);
 
 		//--------------------------------------------------------------------------------------
 		// ägëÂÅEèkè¨
 		//--------------------------------------------------------------------------------------
-		static Matrix44& Scaling(Matrix44* out, float sx, float sy, float sz);
+		static Matrix44& Scale(Matrix44* out, float sx, float sy, float sz);
 
 		//--------------------------------------------------------------------------------------
 		// âÒì]
 		//--------------------------------------------------------------------------------------
-		static Matrix44& RotationX(Matrix44* out, float angle);
-		static Matrix44& RotationY(Matrix44* out, float angle);
-		static Matrix44& RotationZ(Matrix44* out, float angle);
-		static Matrix44& RotationZXY(Matrix44* out, float roll, float pitch, float yaw);
+		static Matrix44& RotateX(Matrix44* out, float angle);
+		static Matrix44& RotateY(Matrix44* out, float angle);
+		static Matrix44& RotateZ(Matrix44* out, float angle);
+		static Matrix44& RotateZXY(Matrix44* out, float roll, float pitch, float yaw);
 
 	};
 };

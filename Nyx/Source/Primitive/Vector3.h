@@ -46,12 +46,14 @@ namespace Nyx
 
 		static const Vector3<T> ScaleUnit; ///< スケール単位ベクトル 
 
+
 		/**
 		*デフォルトコンストラクタ
 		*/
 		Vector3<T>() {
 			Set(0, 0, 0);
 		}
+
 
 		/**
 		* 引数つきコンストラクタ
@@ -63,6 +65,7 @@ namespace Nyx
 			Set(x, y, z);
 		}
 
+
 		/**
 		* コピーコンストラクタ
 		* @param Vector3<T>
@@ -70,6 +73,7 @@ namespace Nyx
 		Vector3<T>(const Vector3<T> & u) {
 			Set(u.x, u.y, u.z);
 		}
+
 
 		/**
 		* 値の設定
@@ -79,6 +83,7 @@ namespace Nyx
 			this->y = y;
 			this->z = z;
 		}
+
 
 		/**
 		* 加算
@@ -90,6 +95,7 @@ namespace Nyx
 
 		}
 
+
 		/**
 		* 減算
 		* @param　右辺値  
@@ -99,6 +105,7 @@ namespace Nyx
 			return Vector3<T>( x - u.x, y - u.y, z - u.z); 
 
 		}
+
 
 		/**
 		* 乗算
@@ -110,6 +117,7 @@ namespace Nyx
 
 		}
 
+
 		/**
 		* 除算
 		* @param 右辺値  
@@ -118,6 +126,7 @@ namespace Nyx
 		Vector3<T> operator /(const T u) const {
 			return Vector3<T>( x / u, y / u, z / u);
 		}
+
 
 		/**
 		* 加算代入
@@ -131,6 +140,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* 減算代入
 		* @param  右辺値
@@ -143,6 +153,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* 乗算代入
 		* @param  右辺値
@@ -154,6 +165,7 @@ namespace Nyx
 			z *= u;
 			return *this;
 		}
+
 
 		/**
 		* 除算代入
@@ -168,6 +180,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* 代入
 		* @param 右辺値
@@ -179,6 +192,7 @@ namespace Nyx
 			return u;
 		}
 
+
 		/**
 		* 反転 
 		* @param 反転結果
@@ -188,6 +202,7 @@ namespace Nyx
 			return *this;
 		}
 
+
 		/**
 		* ドット積
 		* @param 右辺値
@@ -196,6 +211,7 @@ namespace Nyx
 		T Dot(Vector3<T>& u) {
 			return (x * u.x + y * u.y + z * u.z);
 		}
+
 
 		/**
 		* クロス積
@@ -209,6 +225,7 @@ namespace Nyx
 				(x * u.y - y * u.x ));
 		}
 
+
 		/**
 		* ベクトルの長さ
 		* @return  T 長さ
@@ -218,6 +235,7 @@ namespace Nyx
 
 		}
 
+
 		/**
 		* ベクトルの長さの二乗値
 		* @return  T 長さ
@@ -226,6 +244,7 @@ namespace Nyx
 			return static_cast<float>(x * x + y * y + z * z);
 
 		}
+
 
 		/**
 		* ベクトルの正規化
@@ -244,6 +263,7 @@ namespace Nyx
 			if (Math::Abs(z) < Math::Epsilon) {z = 0.f;}
 		}
 
+
 		/**
 		* ベクトルの反転
 		*/
@@ -252,6 +272,7 @@ namespace Nyx
 			y = - y;
 			z = - z;
 		}
+
 
 		/**
 		* 線形補間
@@ -270,6 +291,7 @@ namespace Nyx
 			return lerp;	
 		}
 
+
 		/** 
 		* @return ゼロベクトルならtrue
 		*/
@@ -280,6 +302,7 @@ namespace Nyx
 				Math::Abs(z) <= Math::Epsilon);
 		}
 
+
 		/** 
 		* @return 単位ベクトルならtrue
 		*/
@@ -287,6 +310,7 @@ namespace Nyx
 			const auto value = Math::Sqrt(x*x + y*y +z*z);
 			return (Math::Abs(value - 1.f) <= Math::Epsilon);
 		}
+
 
 		/** 
 		* ベクトルの等価演算
@@ -299,6 +323,7 @@ namespace Nyx
 			Math::Abs(y - u.y) <= Math::Epsilon &&
 			Math::Abs(z - u.z) <= Math::Epsilon);
 		}
+
 
 		/** 
 		* ベクトル等価演算

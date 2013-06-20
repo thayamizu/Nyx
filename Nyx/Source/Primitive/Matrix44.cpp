@@ -594,9 +594,9 @@ namespace Nyx {
 		Matrix44 translation = Unit;
 
 
-		Scaling(&scaling, sx,sy, sz);
-		RotationZXY(&rotation, rz,rx, ry);
-		Translation(&translation, tx,ty, tz);
+		Scale(&scaling, sx,sy, sz);
+		RotateZXY(&rotation, rz,rx, ry);
+		Translate(&translation, tx,ty, tz);
 
 		*out = scaling * rotation* translation; 
 
@@ -609,9 +609,9 @@ namespace Nyx {
 		Matrix44 rotation =Unit;
 		Matrix44 translation=Unit;
 
-		Scaling(&scaling, sv.x,sv.y, sv.z);
-		RotationZXY(&rotation, rv.z,rv.x, rv.y);
-		Translation(&translation, tv.x,tv.y, tv.z);
+		Scale(&scaling, sv.x,sv.y, sv.z);
+		RotateZXY(&rotation, rv.z,rv.x, rv.y);
+		Translate(&translation, tv.x,tv.y, tv.z);
 
 		*out = scaling * rotation* translation; 
 
@@ -620,7 +620,7 @@ namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	// •½sˆÚ“®
 	//--------------------------------------------------------------------------------------
-	Matrix44& Matrix44::Translation(Matrix44* out, float tx, float ty, float tz) {
+	Matrix44& Matrix44::Translate(Matrix44* out, float tx, float ty, float tz) {
 		out->Set(
 			1.f, 0.f, 0.f, 0.f,
 			0.f, 1.f, 0.f, 0.f,
@@ -633,7 +633,7 @@ namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	// Šg‘åEk¬
 	//--------------------------------------------------------------------------------------
-	Matrix44& Matrix44::Scaling(Matrix44* out, float sx, float sy, float sz) {
+	Matrix44& Matrix44::Scale(Matrix44* out, float sx, float sy, float sz) {
 		out->Set(
 			sx, 0.f, 0.f, 0.f,
 			0.f,  sy, 0.f, 0.f,
@@ -647,7 +647,7 @@ namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	// ‰ñ“]
 	//--------------------------------------------------------------------------------------
-	Matrix44& Matrix44::RotationX(Matrix44* out, float angle) {
+	Matrix44& Matrix44::RotateX(Matrix44* out, float angle) {
 		float c = Math::Cos(angle);
 		float s = Math::Sin(angle);
 
@@ -661,7 +661,7 @@ namespace Nyx {
 		return  *out;
 
 	}
-	Matrix44& Matrix44::RotationY(Matrix44* out, float angle) {
+	Matrix44& Matrix44::RotateY(Matrix44* out, float angle) {
 		float c = Math::Cos(angle);
 		float s = Math::Sin(angle);
 
@@ -675,7 +675,7 @@ namespace Nyx {
 		return  *out;
 
 	}
-	Matrix44& Matrix44::RotationZ(Matrix44* out, float angle) {
+	Matrix44& Matrix44::RotateZ(Matrix44* out, float angle) {
 		float c = Math::Cos(angle);
 		float s = Math::Sin(angle);
 
@@ -689,12 +689,12 @@ namespace Nyx {
 		return  *out;
 
 	}
-	Matrix44& Matrix44::RotationZXY(Matrix44* out, float roll, float pitch, float yaw) {
+	Matrix44& Matrix44::RotateZXY(Matrix44* out, float roll, float pitch, float yaw) {
 		Matrix44 tmp;
 		*out = Unit;
-		*out *= RotationZ(&tmp,roll);
-		*out *= RotationX(&tmp,pitch);
-		*out *= RotationY(&tmp,yaw);
+		*out *= RotateZ(&tmp,roll);
+		*out *= RotateX(&tmp,pitch);
+		*out *= RotateY(&tmp,yaw);
 
 		return  *out;
 
