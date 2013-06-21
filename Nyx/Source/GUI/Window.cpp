@@ -88,6 +88,7 @@ namespace Nyx {
 
 		if (!hwnd) {
 			::MessageBox(NULL, TEXT("Ž¸”s‚µ‚Ü‚µ‚½"), TEXT("error"), MB_OK);
+			return false;
 		}
 
 		::SetWindowLong(hwnd, GWL_USERDATA, (long)this);

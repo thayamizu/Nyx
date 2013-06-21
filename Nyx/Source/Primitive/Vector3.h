@@ -124,6 +124,9 @@ namespace Nyx
 		* @return œZŒ‹‰Ê
 		*/
 		Vector3<T> operator /(const T u) const {
+			if (u <= Math::Epsilon) {
+				return *this;
+			}
 			return Vector3<T>( x / u, y / u, z / u);
 		}
 

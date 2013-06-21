@@ -70,12 +70,6 @@
     <Filter Include="Movie">
       <UniqueIdentifier>{2b9a50a9-e9ec-411d-a61b-e814cc5af50e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Database\interfaces">
-      <UniqueIdentifier>{abbda38a-d885-4e15-8d18-f79c78692d42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Database\implements">
-      <UniqueIdentifier>{c3073ab3-abd4-4951-908c-02339ba572fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
     </Filter>
@@ -84,18 +78,6 @@
     </Filter>
     <Filter Include="Graphics\Animation\implements">
       <UniqueIdentifier>{eeebc2e5-08dc-4307-af96-276012c0defa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\interfaces">
-      <UniqueIdentifier>{035928b2-6b12-4429-b9ff-9a13936728e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\base">
-      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\implements">
-      <UniqueIdentifier>{76cca335-ea3c-4b10-b7ac-d173fbf88b53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Database\base">
-      <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sound\detail">
       <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
@@ -201,6 +183,12 @@
     </Filter>
     <Filter Include="Movie\detail\DirectShow">
       <UniqueIdentifier>{06cb3258-e262-4523-8ecc-ef5614c50d75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\detail">
+      <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision\detail">
+      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,11 +301,8 @@
     <ClInclude Include="..\Source\Graphics\IMesh.h">
       <Filter>Graphics\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Database\IDatabaseConnector.h">
-      <Filter>Database\interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Collision\BulletDefinition.h">
-      <Filter>Collision\base</Filter>
+      <Filter>Collision\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
       <Filter>Graphics\Core</Filter>
@@ -326,10 +311,7 @@
       <Filter>Graphics\Animation\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Database\SQLiteDefinition.h">
-      <Filter>Database\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\SQLiteDatabase.h">
-      <Filter>Database\implements</Filter>
+      <Filter>Database\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Limits.h">
       <Filter>Utility</Filter>
@@ -556,6 +538,12 @@
     <ClInclude Include="..\Source\Primitive\EulerAngles.h">
       <Filter>Primitive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\SQLiteDatabase.h">
+      <Filter>Database\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Database\IDatabaseConnector.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -619,9 +607,6 @@
       <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Quarternion.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">

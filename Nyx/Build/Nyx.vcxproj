@@ -303,7 +303,6 @@
     <ClCompile Include="..\Source\Primitive\Color4f.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp" />
-    <ClCompile Include="..\Source\Primitive\Quarternion.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />
   </ItemGroup>
