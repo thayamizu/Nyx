@@ -240,6 +240,14 @@ END_TEST
 
 BEGIN_TEST(Quaternion_0021)
 {
+	Quaternion<float> q(1, 2, 3, 4);
+	Quaternion<float> inv = q.Inverse();
 
+	Quaternion<float> value = inv.Cross(q);
+	WIN_TRACE("value(%f, %f, %f, %f)", value.w, value.x, value.y, value.z);
+	WIN_ASSERT_TRUE(Math::Abs(value.w - 1) <= Math::Epsilon);
+	WIN_ASSERT_TRUE(Math::Abs(value.x - 0) <= Math::Epsilon);
+	WIN_ASSERT_TRUE(Math::Abs(value.y - 0) <= Math::Epsilon);
+	WIN_ASSERT_TRUE(Math::Abs(value.z - 0) <= Math::Epsilon);
 }
 END_TEST

@@ -224,6 +224,19 @@ namespace Nyx {
 			return Quaternion(w * q.w - dot, cross + v2*w + v1*q.w);
 		}
 
+		/**
+		* ãtêî
+		*/
+		Quaternion<T> Inverse() const {
+			const auto length = SquaredLength();
+			if (length <= Math::Epsilon) {
+				return Quaternion<T>(w, x, y, z);
+			}
+
+			Quaternion<T> q(w, x, y, z);
+			q = ~q;
+			return q / length;
+		}
 
 		/** 
 		* ê≥ãKâª
