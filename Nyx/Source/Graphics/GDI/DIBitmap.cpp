@@ -16,7 +16,7 @@
 ********************************************************************************/
 #include "PCH/PCH.h"
 #include "Graphics/GDI/DIBitmap.h"
-#include "Primitive/Color3c.h"
+#include "Primitive/Color3.h"
 #include "Debug/Assert.h"
 
 namespace Nyx {

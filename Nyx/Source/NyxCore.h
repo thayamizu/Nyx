@@ -52,10 +52,8 @@
 #include "Thread/Thread.h"
 
 // プリミティブオブジェクト
-#include "Primitive/Color3c.h"
-#include "Primitive/Color4c.h"
-#include "Primitive/Color3f.h"
-#include "Primitive/Color4f.h"
+#include "Primitive/Color3.h"
+#include "Primitive/Color4.h"
 #include "Primitive/Matrix33.h"
 #include "Primitive/Matrix44.h"
 #include "Primitive/Plane.h"

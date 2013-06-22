@@ -46,8 +46,8 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<char> OggReader::Read(size_t bufferSize, ulong *readeBytes) {
-		bufferSize=0;
+	std::shared_ptr<char> OggReader::Read(size_t bufferSize, ulong *readBytes) {
+		bufferSize=0, readBytes=0;
 		return  nullptr;
 	}
 }

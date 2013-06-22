@@ -19,7 +19,7 @@
 
 #include "Graphics/ISprite.h"
 #include "Primitive/Rect.h"
-#include "Primitive/Color4c.h"
+#include "Primitive/Color4.h"
 
 namespace Nyx {
 	namespace DX9 {

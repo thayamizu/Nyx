@@ -22,7 +22,7 @@
 #include "Graphics/DX9/DXTextureFont.h"
 #include "Graphics/DX9/DXTextureFontManager.h"
 #include "Primitive/Matrix44.h"
-#include "Primitive/Color4c.h"
+#include "Primitive/Color4.h"
 #include "Thread/Thread.h"
 namespace Nyx {
 	namespace DX9 {

@@ -18,7 +18,7 @@
 #define NYX_CORE_INCLUDED_ITEXTURE_H_
 #include "Object/IResource.h"
 #include "Primitive/Matrix44.h"
-#include "Primitive/Color4c.h"
+#include "Primitive/Color4.h"
 
 namespace Nyx {
 	using Nyx::IResource;

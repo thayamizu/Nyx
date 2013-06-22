@@ -240,18 +240,6 @@
     <ClInclude Include="..\Source\PCH\PCH.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color3c.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color3f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color4c.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color4f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Primitive\Matrix33.h">
       <Filter>Primitive</Filter>
     </ClInclude>
@@ -544,6 +532,12 @@
     <ClInclude Include="..\Source\Database\IDatabaseConnector.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color3.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color4.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -590,18 +584,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\PCH\PCH.cpp">
       <Filter>PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color3c.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color3f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color4c.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color4f.cpp">
-      <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp">
       <Filter>Primitive</Filter>

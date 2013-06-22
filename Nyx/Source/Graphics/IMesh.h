@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_IMESH_H_
 #define NYX_CORE_INCLUDED_IMESH_H_
 
-#include "Primitive/Color4f.h"
+#include "Primitive/Color4.h"
 
 namespace Nyx {
 	///　メッシュインタフェース

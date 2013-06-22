@@ -171,6 +171,8 @@
     <ClInclude Include="..\Source\Network\UDP\UDPSocket.h" />
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
+    <ClInclude Include="..\Source\Primitive\Color3.h" />
+    <ClInclude Include="..\Source\Primitive\Color4.h" />
     <ClInclude Include="..\Source\Primitive\EulerAngles.h" />
     <ClInclude Include="..\Source\Primitive\Rect.h" />
     <ClInclude Include="..\Source\Sound\AudioCache.h" />
@@ -213,10 +215,6 @@
     <ClInclude Include="..\Source\Object\Delegate.h" />
     <ClInclude Include="..\Source\Object\IResource.h" />
     <ClInclude Include="..\Source\Object\NonCopyable.h" />
-    <ClInclude Include="..\Source\Primitive\Color3c.h" />
-    <ClInclude Include="..\Source\Primitive\Color3f.h" />
-    <ClInclude Include="..\Source\Primitive\Color4c.h" />
-    <ClInclude Include="..\Source\Primitive\Color4f.h" />
     <ClInclude Include="..\Source\Primitive\Matrix33.h" />
     <ClInclude Include="..\Source\Primitive\Matrix44.h" />
     <ClInclude Include="..\Source\Primitive\Plane.h" />
@@ -297,10 +295,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color3c.cpp" />
-    <ClCompile Include="..\Source\Primitive\Color3f.cpp" />
-    <ClCompile Include="..\Source\Primitive\Color4c.cpp" />
-    <ClCompile Include="..\Source\Primitive\Color4f.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />

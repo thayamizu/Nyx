@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_DIRECT_GRAPHICS_DEVICE_H_
 #define NYX_CORE_DIRECT_GRAPHICS_DEVICE_H_
 
-#include "Primitive/Color3f.h"
+#include "Primitive/Color3.h"
 #include "Primitive/Vector3.h"
 #include "Primitive/Matrix44.h"
 
