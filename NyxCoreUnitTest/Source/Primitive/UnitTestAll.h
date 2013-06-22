@@ -9,7 +9,7 @@
 //#include "Primitive/Matrix44UnitTest.h"
 //#include "Primitive/PlaneUnitTest.h"
 //#include "Primtiive/EulerAngles.h"
-//#include "Primitive/QuaternionUnitTest.h"
+#include "Primitive/QuaternionUnitTest.h"
 #include "Primitive/Rect2iUnitTest.h"
 #include "Primitive/Vector2UnitTest.h"
 #include "Primitive/Vector3UnitTest.h"

@@ -68,5 +68,8 @@
     <ClInclude Include="..\Source\Primitive\Rect2iUnitTest.h">
       <Filter>Primitive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Primitive\QuaternionUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

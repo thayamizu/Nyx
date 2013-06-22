@@ -305,3 +305,14 @@ BEGIN_TEST(Vector3_0024)
 	WIN_ASSERT_FALSE(v1 != Vector3f::ScaleUnit);
 }
 END_TEST
+
+BEGIN_TEST(Vector3_0025)
+{
+	WIN_TRACE("Vector3::Cross");
+	Vector3f v1(2, 3, 4);
+	Vector3f v2(6, 7, 8);
+	const auto exp = Vector3f(44, 0, -11);
+	const auto value = v1.Cross(v2);
+	WIN_TRACE("cross = (%f, %f, %f)", value.x, value.y, value.z);
+}
+END_TEST
