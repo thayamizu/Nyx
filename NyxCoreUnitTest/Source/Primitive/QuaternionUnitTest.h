@@ -251,3 +251,24 @@ BEGIN_TEST(Quaternion_0021)
 	WIN_ASSERT_TRUE(Math::Abs(value.z - 0) <= Math::Epsilon);
 }
 END_TEST
+
+BEGIN_TEST(Quaternion_0022) 
+{
+	typedef Quaternion<float> qtn;
+	qtn q1(0.4, 0.1, 0.2, 0.3);
+	qtn q2(0.8, 0.5, 0.6, 0.7);
+
+	const auto slerp = qtn::Slerp(q1, q2, 0.5);
+	const auto expW = 0.6507913734559685F;
+	const auto expX = 0.32539568672798425F;
+	const auto expY = 0.4338609156373123F;
+	const auto expZ = 0.5423261445466404F;
+	WIN_TRACE("slerp(%f, %f, %f, %f)\n",
+		slerp.w, slerp.x, slerp.y, slerp.z);
+	WIN_ASSERT_TRUE(Math::Abs(slerp.w - expW) <= Math::Epsilon);
+	WIN_ASSERT_TRUE(Math::Abs(slerp.x - expX) <= Math::Epsilon);
+	WIN_ASSERT_TRUE(Math::Abs(slerp.y - expY) <= Math::Epsilon);
+	WIN_ASSERT_TRUE(Math::Abs(slerp.z - expZ) <= Math::Epsilon);
+
+}
+END_TEST

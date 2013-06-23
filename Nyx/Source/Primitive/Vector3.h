@@ -283,7 +283,7 @@ namespace Nyx
 		* @param const Vector3<T>& 終点ベクトル
 		* @param T 補間係数
 		*/
-		Vector3<T> Lerp(const Vector3<T>& v1, const Vector3<T>& v2, T s) {
+		Vector3<T> Lerp(const Vector3<T>& v1, const Vector3<T>& v2, float s) {
 			Vector3<T> lerp;
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;

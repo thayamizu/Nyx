@@ -256,8 +256,32 @@ namespace Nyx {
 		/**
 		* Sphirical Lerp
 		*/
-		static Quaternion<T> SLerp(const Quaternion<T>& rhs, const Quaternion<T>& q2, float t) {
-			return Quaternion<T>();
+		static Quaternion<T> Slerp(const Quaternion<T>& lhs, const Quaternion<T>& rhs, float t) {
+			Quaternion<T> q1(lhs);
+			Quaternion<T> q2(rhs);
+			float cosOmega = q1.Dot(q2);
+			if (cosOmega < 0.f) {
+				q2 = ~q2;
+				cosOmega = - cosOmega;
+			} 
+
+			float k0, k1;
+			if (cosOmega > 0.9999f) {
+				k0 = 1.0f - t;
+				k1 = t;
+			}
+			else {
+				const auto sinOmega = Math::Sqrt(1.f - cosOmega* cosOmega);
+				const auto omega    = Math::Atan2(sinOmega, cosOmega);
+				const auto inverse  = 1.f/sinOmega;
+
+				k0 = Math::Sin((1.f - t) * omega) * inverse;
+				k1 = Math::Sin(t * omega) * inverse;
+			}
+
+
+			return Quaternion<T>(q1.w * k0 + q2.w * k1, q1.x * k0+q2.x * k1, 
+								 q1.y * k0 + q2.y * k1, q1.z * k0+q2.z * k1);
 		}
 
 		/**
@@ -282,8 +306,8 @@ namespace Nyx {
 		/**
 		* âÒì]çsóÒÇ…ïœä∑ÇµÇ‹Ç∑
 		*/
-		static Matrix44 ToRotaionMatrix44() {
-			return Matrix44::Unit;
+		static Matrix44 ToRotaionMatrix44(const Quaternion<T>& q) {
+			Matrix44 mat = Matrix44::Unit;
 		}
 	};
 }

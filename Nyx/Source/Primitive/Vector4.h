@@ -278,7 +278,7 @@ namespace Nyx
 		/**
 		* ê¸å`ï‚ä‘
 		*/
-		Vector4<T> Lerp(const Vector4<T>& v1, const Vector4<T>& v2, T s) {
+		Vector4<T> Lerp(const Vector4<T>& v1, const Vector4<T>& v2, float s) {
 			Vector4<T> lerp;
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;

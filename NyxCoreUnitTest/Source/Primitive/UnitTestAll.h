@@ -5,7 +5,7 @@
 #include "Primitive/Color4cUnitTest.h"
 #include "Primitive/Color4fUnitTest.h"
 #include "Primitive/Color4fUnitTest.h"
-//#include "Primitive/Matrix33UnitTest.h"
+#include "Primitive/Matrix33UnitTest.h"
 //#include "Primitive/Matrix44UnitTest.h"
 //#include "Primitive/PlaneUnitTest.h"
 //#include "Primtiive/EulerAngles.h"

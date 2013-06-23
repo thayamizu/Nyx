@@ -66,12 +66,6 @@ namespace Nyx {
 		Matrix33(float a11, float a12, float a13, 
 			float a21, float a22, float a23,
 			float a31, float a32, float a33);
-
-		/** 
-		* ƒfƒXƒgƒ‰ƒNƒ^
-		*/
-		~Matrix33(){}
-
 		//--------------------------------------------------------------------------------------
 		// ’l‚Ìİ’è
 		//--------------------------------------------------------------------------------------
@@ -101,42 +95,42 @@ namespace Nyx {
 		* @param ‰E•Ó’l
 		* @return ‰ÁZŒ‹‰Ê
 		*/
-		inline Matrix33 operator +(const Matrix33& mat) const;
+		Matrix33 operator +(const Matrix33& mat) const;
 
 		/**
 		* Œ¸Z
 		* @param ‰E•Ó’l
 		* @return Œ¸ZŒ‹‰Ê
 		*/
-		inline Matrix33 operator -(const Matrix33& mat) const;
+		Matrix33 operator -(const Matrix33& mat) const;
 
 		/**
 		* æZ
 		* @param ‰E•Ó’l
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33 operator *(const float s) const;
+		Matrix33 operator *(const float s) const;
 
 		/**
 		* æZ
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33 operator *(const Matrix33& mat) const;
+		Matrix33 operator *(const Matrix33& mat) const;
 
 		/**
 		* æZ
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33 operator *(const Vector3f& mat) const;
+		Vector3f operator *(const Vector3f& v) const;
 
 		/**
 		* œZ
 		* @param ‰E•Ó’l
 		* @return œZŒ‹‰Ê
 		*/
-		inline Matrix33 operator /(const float s) const;
+		Matrix33 operator /(const float s) const;
 
 		//--------------------------------------------------------------------------------------
 		// ‘ã“ü‰‰Z
@@ -146,50 +140,46 @@ namespace Nyx {
 		* @param ‰E•Ó’l 
 		* @return ‰ÁZŒ‹‰Ê 
 		*/
-		inline Matrix33& operator +=(const Matrix33 & mat);
+		Matrix33& operator +=(const Matrix33 & mat);
 
 		/**
 		* Œ¸Z
 		* @param ‰E•Ó’l 
 		* @return Œ¸ZŒ‹‰Ê
 		*/
-		inline Matrix33& operator -=(const Matrix33 & mat);
+		Matrix33& operator -=(const Matrix33 & mat);
 
 		/**
 		* æZ
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33& operator *=(const float s);
-
-		/** 
-		* æZ
-		* @param ‰E•Ó’l 
-		* @return æZŒ‹‰Ê
-		*/
-		inline Matrix33& operator *=(const Vector3f& s);
+		Matrix33& operator *=(const float s);
 
 		/**
 		* æZ
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		inline Matrix33& operator *=(const Matrix33& s);
+		Matrix33& operator *=(const Matrix33& s);
 
 		/**
 		* œZ
 		* @param ‰E•Ó’l 
 		* @return œZŒ‹‰Ê
 		*/
-		inline Matrix33& operator /=(const float s);
+		Matrix33& operator /=(const float s);
 
-		//--------------------------------------------------------------------------------------
-		// ˜_—‰‰Z
-		//--------------------------------------------------------------------------------------
+		bool operator==(const Matrix33& mat) {
+			return true;
+		}
 
-		//--------------------------------------------------------------------------------------
-		// s—ñ‰‰Z
-		//--------------------------------------------------------------------------------------
+		bool operator != (const Matrix33& mat) {
+			return true;
+		}
+
+		void SetupIdentity();
+
 		/**
 		* s—ñ®
 		* @return s—ñ®‚Ì’l
