@@ -24,8 +24,8 @@ namespace Nyx {
 		0, 0, 1);
 
 	const Matrix33 Matrix33::Zero(0, 0, 0,
-								  0, 0, 0,
-								  0, 0, 0);
+		0, 0, 0,
+		0, 0, 0);
 
 	Matrix33::Matrix33() {
 		Set(0, 0, 0,
@@ -42,19 +42,19 @@ namespace Nyx {
 	}
 
 	void Matrix33::Set(float a11, float a12, float a13, 
-			 float a21, float a22, float a23,
-			 float a31, float a32, float a33) {
-		this->_11 = a11;
-		this->_12 = a12;
-		this->_13 = a13;
-		
-		this->_21 = a21;
-		this->_22 = a22;
-		this->_23 = a23;
-		
-		this->_31 = a31;
-		this->_32 = a32;
-		this->_33 = a33;
+		float a21, float a22, float a23,
+		float a31, float a32, float a33) {
+			this->_11 = a11;
+			this->_12 = a12;
+			this->_13 = a13;
+
+			this->_21 = a21;
+			this->_22 = a22;
+			this->_23 = a23;
+
+			this->_31 = a31;
+			this->_32 = a32;
+			this->_33 = a33;
 	}
 
 
@@ -96,6 +96,12 @@ namespace Nyx {
 			Mat[2][0] * s, Mat[2][1] * s, Mat[2][2] * s);
 	}
 
+		Matrix33 Matrix33::operator / (const float s) const {
+		return Matrix33(
+			Mat[0][0] / s, Mat[0][1] / s, Mat[0][2] / s,
+			Mat[1][0] / s, Mat[1][1] / s, Mat[1][2] / s,
+			Mat[2][0] / s, Mat[2][1] / s, Mat[2][2] / s);
+	}
 
 	Vector3f Matrix33::operator *(const Vector3f& v) const {
 		return Vector3f(
@@ -146,7 +152,19 @@ namespace Nyx {
 
 		return *this;
 	}
+	Matrix33& Matrix33::operator/=(const float s) {
+		Mat[0][0] /= s;
+		Mat[0][1] /= s;
+		Mat[0][2] /= s;
+		Mat[1][0] /= s;
+		Mat[1][1] /= s;
+		Mat[1][2] /= s;
+		Mat[2][0] /= s;
+		Mat[2][1] /= s;
+		Mat[2][2] /= s;
 
+		return *this;
+	}
 
 	Matrix33& Matrix33::operator*=(const Matrix33& mat) {
 		Set(
@@ -164,6 +182,11 @@ namespace Nyx {
 		return *this;
 	}
 
+	void Matrix33::SetupIdentity() {
+		Set(1, 0, 0,
+			0, 1, 0,
+			0, 0, 1);
+	}
 	float Matrix33::Determinant() {
 		return (
 			Mat[0][0] * (Mat[1][1] * Mat[2][2] - Mat[1][2] * Mat[2][1]) -

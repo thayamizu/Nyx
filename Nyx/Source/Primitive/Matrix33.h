@@ -17,15 +17,14 @@
 #ifndef NYX_CORE_INCLUDED_MATRIX33_H_
 #define NYX_CORE_INCLUDED_MATRIX33_H_
 #include "Primitive/Vector3.h"
+#include "Primitive/EulerAngles.h"
+#include "Primitive/Quaternion.h"
 
 namespace Nyx {
 
 	class Matrix33 {
 	public:
-		//--------------------------------------------------------------------------------------
-		// 変数
-		//--------------------------------------------------------------------------------------
-		/// 3x3の行列
+		/// 3x3行列
 		union {	
 			struct{
 				float _11, _12, _13;
@@ -34,18 +33,12 @@ namespace Nyx {
 			};
 			float Mat[3][3];
 		};
-
-		//--------------------------------------------------------------------------------------
-		// 定数
-		//--------------------------------------------------------------------------------------
 		static const Matrix33 Unit;
 
 		static const Matrix33 Zero;
 
-		//--------------------------------------------------------------------------------------
-		// コンストラクタ・デストラクタ
-		//--------------------------------------------------------------------------------------
-		/**デフォルトコンストラクタ
+		/**
+		* デフォルトコンストラクタ
 		* 行列の値をすべてゼロに設定する
 		*/
 		Matrix33();
@@ -66,9 +59,7 @@ namespace Nyx {
 		Matrix33(float a11, float a12, float a13, 
 			float a21, float a22, float a23,
 			float a31, float a32, float a33);
-		//--------------------------------------------------------------------------------------
-		// 値の設定
-		//--------------------------------------------------------------------------------------
+		
 		/**
 		* 行列の各要素に任意の値を設定する
 		* @param a11 
@@ -86,16 +77,13 @@ namespace Nyx {
 			float a31, float a32, float a33);
 
 
-
-		//--------------------------------------------------------------------------------------
-		// 演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* 加算
 		* @param 右辺値
 		* @return 加算結果
 		*/
 		Matrix33 operator +(const Matrix33& mat) const;
+
 
 		/**
 		* 減算
@@ -104,12 +92,14 @@ namespace Nyx {
 		*/
 		Matrix33 operator -(const Matrix33& mat) const;
 
+
 		/**
 		* 乗算
 		* @param 右辺値
 		* @return 乗算結果
 		*/
 		Matrix33 operator *(const float s) const;
+
 
 		/**
 		* 乗算
@@ -118,12 +108,14 @@ namespace Nyx {
 		*/
 		Matrix33 operator *(const Matrix33& mat) const;
 
+
 		/**
 		* 乗算
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
 		Vector3f operator *(const Vector3f& v) const;
+
 
 		/**
 		* 除算
@@ -132,15 +124,14 @@ namespace Nyx {
 		*/
 		Matrix33 operator /(const float s) const;
 
-		//--------------------------------------------------------------------------------------
-		// 代入演算
-		//--------------------------------------------------------------------------------------
+
 		/**
 		* 加算
 		* @param 右辺値 
 		* @return 加算結果 
 		*/
 		Matrix33& operator +=(const Matrix33 & mat);
+
 
 		/**
 		* 減算
@@ -149,12 +140,14 @@ namespace Nyx {
 		*/
 		Matrix33& operator -=(const Matrix33 & mat);
 
+
 		/**
 		* 乗算
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
 		Matrix33& operator *=(const float s);
+
 
 		/**
 		* 乗算
@@ -163,6 +156,7 @@ namespace Nyx {
 		*/
 		Matrix33& operator *=(const Matrix33& s);
 
+
 		/**
 		* 除算
 		* @param 右辺値 
@@ -170,15 +164,29 @@ namespace Nyx {
 		*/
 		Matrix33& operator /=(const float s);
 
-		bool operator==(const Matrix33& mat) {
-			return true;
+		bool operator==(const Matrix33& mat) const {
+			return (
+			Mat[0][0] == mat.Mat[0][0] && 
+			Mat[0][1] == mat.Mat[0][1] &&
+			Mat[0][2] == mat.Mat[0][2] &&
+			
+			Mat[1][0] == mat.Mat[1][0] &&
+			Mat[1][1] == mat.Mat[1][1] &&
+			Mat[1][2] == mat.Mat[1][2] &&
+			
+			Mat[2][0] == mat.Mat[2][0] && 
+			Mat[2][1] == mat.Mat[2][1] &&
+			Mat[2][2] == mat.Mat[2][2]);
 		}
 
-		bool operator != (const Matrix33& mat) {
-			return true;
+
+		bool operator != (const Matrix33& mat) const {
+			return !(*this == mat);
 		}
+
 
 		void SetupIdentity();
+
 
 		/**
 		* 行列式
@@ -186,17 +194,26 @@ namespace Nyx {
 		*/
 		float Determinant();
 
+
 		/**
 		* 行列の転置
 		* @return 転置行列
 		*/
 		Matrix33 Transpose();
 
+
 		/**
 		* 逆行列
 		* @return 逆行列
 		*/
 		Matrix33 Inverse();
+
+		void SetupRotate(const EulerAngles& orientation);
+
+		void FromObjectToInertial(const Quaternion<float> & q);
+		void FromObjectToInertial(const Vector3<float> & v);
+		void FromInertialToObject(const Quaternion<float> &q);
+		void FromInertialToObject(const Vector3<float>& v);
 	};
 }
 //-----------------------------------------------------

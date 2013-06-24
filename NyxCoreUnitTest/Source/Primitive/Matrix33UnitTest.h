@@ -274,3 +274,160 @@ BEGIN_TEST(Matrix33_0014)
 
 }
 END_TEST
+
+BEGIN_TEST(Matrix33_0015)
+{
+	Matrix33 mat(1,2,3,4,5,6,7,8,9);
+	const auto value = mat.Determinant();
+	const auto exp = 0.f;
+
+	WIN_TRACE("value = %f", value);
+	WIN_ASSERT_TRUE(value == exp);
+}
+END_TEST
+
+BEGIN_TEST(Matrix33_0016)
+{
+	Matrix33 mat(1, 2, 3, 
+		         4, 5, 6,
+				 7, 8, 9);
+	const Matrix33 value = mat.Transpose();
+	const Matrix33 exp(1, 4, 7,
+					   2, 5, 8,
+					   3, 6, 9);
+		for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			WIN_ASSERT_TRUE(value.Mat[i][j] == exp.Mat[i][j]);
+		}
+
+	}
+}
+END_TEST
+
+BEGIN_TEST(Matrix33_0017)
+{
+	Matrix33 mat;
+	mat.SetupIdentity();
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (i == j ) {
+				WIN_ASSERT_TRUE(mat.Mat[i][j] == 1);
+			}
+			else {
+				WIN_ASSERT_TRUE(mat.Mat[i][j] == 0);
+			}
+		}
+	}
+}
+END_TEST
+
+BEGIN_TEST(Matrix_0018)
+{
+	Matrix33 mat(1, 2, 3, 
+		4, 5, 6,
+		7, 8, 9);
+	const auto value = mat.Inverse();
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			WIN_ASSERT_TRUE(value.Mat[i][j] == 0);
+		}
+	}
+
+}
+END_TEST
+
+
+BEGIN_TEST(Matrix_0019)
+{
+	Matrix33 mat(1, 2, 3, 
+		3, 2, 1, 
+		2, 3, 1);
+	const auto d = mat.Determinant();
+	WIN_TRACE("%f", d);
+	WIN_ASSERT_TRUE(d == 12);
+	const auto value = mat.Inverse();
+	const auto exp = Matrix33( -1,  1,  5,
+		-7, -5, -1, 
+		-4, -8, -4) / d; 
+
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				const auto a = Math::Abs(exp.Mat[i][j]);
+				const auto b = Math::Abs(exp.Mat[i][j]);
+				WIN_ASSERT_TRUE(Math::Abs(a - b) <= Math::Epsilon);
+			}
+		}
+
+}
+END_TEST
+
+
+BEGIN_TEST(Matrix_0020)
+{
+	const Matrix33 mat1(1, 2, 3, 
+		3, 2, 1, 
+		2, 3, 1);
+	const Matrix33 mat2(1, 2, 3,
+		3, 2, 1,
+		2, 3, 1);
+	const Matrix33 mat3(1, 2, 3,
+		3, 2, 1,
+		2, -1, 1);
+	
+	WIN_ASSERT_TRUE(mat1 == mat2);
+	WIN_ASSERT_FALSE(mat1 == mat3);
+}
+END_TEST
+
+
+BEGIN_TEST(Matrix_0021)
+{
+	const Matrix33 mat1(1, 2, 3, 
+		3, 2, 1, 
+		2, 3, 1);
+	const Matrix33 mat2(1, 2, 3,
+		3, 2, 1,
+		2, 3, 1);
+	const Matrix33 mat3(1, 2, 3,
+		3, 2, 1,
+		2, -1, 1);
+	
+	WIN_ASSERT_FALSE(mat1 != mat2);
+	WIN_ASSERT_TRUE(mat1 != mat3);
+}
+END_TEST
+
+
+BEGIN_TEST(Matrix_0022)
+{
+
+}
+END_TEST
+
+BEGIN_TEST(Matrix_0023)
+{
+}
+END_TEST
+
+BEGIN_TEST(Matrix_0024)
+{
+}
+END_TEST
+
+BEGIN_TEST(Matrix_0025)
+{
+}
+END_TEST
+
+BEGIN_TEST(Matrix_0026)
+{
+}
+END_TEST
