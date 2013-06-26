@@ -15,15 +15,12 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
-#include "Network/UDP/UDPSocket.h"
+#include "Network/WinsockUDPSocket.h"
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	UDPSocket::UDPSocket(char *addr, int port) {
+	WinsockUDPSocket::WinsockUDPSocket(char *addr, int port) {
 		dstAddrSize = sizeof(dstAddr);
-
-		// winsock2の初期化
-		WSAStartup(MAKEWORD(2,0), &wsaData);
 
 		// ソケットの作成
 		srcSock = socket(AF_INET, SOCK_DGRAM, 0);
@@ -44,26 +41,24 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	UDPSocket::~UDPSocket() {
+	WinsockUDPSocket::~WinsockUDPSocket() {
 
 		// UDPセッションの終了
 		closesocket(srcSock);
 
-		// winsock2の終了処理
-		WSACleanup();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int UDPSocket::Send(char *buf, int buf_len) {
+	int WinsockUDPSocket::Send(char *buf, int buf_len) {
 		return sendto(dstSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, sizeof(dstAddr));;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int UDPSocket::Recieve(char *buf, int buf_len) {
+	int WinsockUDPSocket::Recieve(char *buf, int buf_len) {
 		return recvfrom(srcSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, &dstAddrSize);
 	}
 }

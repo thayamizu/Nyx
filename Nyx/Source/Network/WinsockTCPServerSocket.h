@@ -14,13 +14,13 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_TCP_SERVER_SOCKET_H_
-#define NYX_CORE_TCP_SERVER_SOCKET_H_
+#ifndef NYX_CORE_WINSOCK_TCP_SERVER_SOCKET_H_
+#define NYX_CORE_WINSOCK_TCP_SERVER_SOCKET_H_
 
 namespace Nyx {
 
 	///TCPサーバソケット
-	class TCPServerSocket {
+	class WinsockTCPServerSocket {
 	public:
 		static const int MaxConnectNum;
 		
@@ -29,13 +29,13 @@ namespace Nyx {
 		* コンストラクタ
 		* @param int ポート番号
 		*/
-		TCPServerSocket(int port) ;
+		WinsockTCPServerSocket(int port) ;
 
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~TCPServerSocket();
+		virtual ~WinsockTCPServerSocket();
 
 
 		/**
@@ -44,7 +44,8 @@ namespace Nyx {
 		*/
 		bool Accept();
 
-
+		void Listen();
+		void Bind();
 		/**
 		* @param char* 送信バッファ
 		* @param int 送信バッファの長さ
@@ -60,7 +61,7 @@ namespace Nyx {
 		*/
 		int Recieve(char *buf, int buf_len);
 	private:
-		WSADATA wsaData;
+		uint maxConnectNum_;
 		SOCKET srcSock;
 		SOCKET dstSock;
 		int dstAddrSize;

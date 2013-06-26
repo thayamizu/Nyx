@@ -15,28 +15,35 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
-#include "Network/TCP/TCPClientSocket.h"
+#include "Network/WinsockTCPServerSocket.h"
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPClientSocket::TCPClientSocket(char *addr, int port) {
-		//WinSock 初期化
-		WSAStartup(MAKEWORD(2,0), &wsaData);
+	const int WinsockTCPServerSocket::MaxConnectNum = 5;
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	WinsockTCPServerSocket::WinsockTCPServerSocket(int port) {
+		dstAddrSize = sizeof(dstAddr);
 
 		// ソケットの作成
-		dstSock = socket(AF_INET, SOCK_STREAM, 0);
-		if(dstSock < 0){
+		srcSock = socket(AF_INET, SOCK_STREAM, 0);
+		if(srcSock < 0){
 			exit(-1);
 		}
 
-		// 接続先指定用構造体の準備
-		dstAddr.sin_family = AF_INET;
-		dstAddr.sin_port = htons(static_cast<ushort>(port));
-		dstAddr.sin_addr.S_un.S_addr = inet_addr(addr);
+		// ソケットの設定
+		srcAddr.sin_family = AF_INET;
+		srcAddr.sin_port = htons(static_cast<ushort>(port));
+		srcAddr.sin_addr.S_un.S_addr = INADDR_ANY;
+		if(bind(srcSock, (struct sockaddr *)&srcAddr, sizeof(srcAddr)) != 0){
+			exit(-1);
+		}
 
-		// サーバに接続
-		if(connect(dstSock, (struct sockaddr *)&dstAddr, sizeof(dstAddr)) != 0){
+		// TCPクライアントからの接続要求を待てる状態にする
+		if(listen(srcSock, MaxConnectNum)){
 			exit(-1);
 		}
 	}
@@ -44,25 +51,34 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPClientSocket::~TCPClientSocket() {
-		// tcPセッションの終了
+	WinsockTCPServerSocket::~WinsockTCPServerSocket() {
+		// TCPセッションの終了
+		closesocket(srcSock);
 		closesocket(dstSock);
 
-		// winsock2の終了処理
-		WSACleanup();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int TCPClientSocket::Send(char *buf, int buf_len) {
+	bool WinsockTCPServerSocket::Accept() {
+		// TCPクライアントからの接続要求を受け付ける
+		dstSock = accept(srcSock, (struct sockaddr *)&dstAddr, &dstAddrSize);
+
+		return dstSock != INVALID_SOCKET;
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	int WinsockTCPServerSocket::Send(char *buf, int buf_len) {
 		return send(dstSock, buf, buf_len, 0);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
-	//受信
-	int TCPClientSocket::Recieve(char *buf, int buf_len) {
+	//
+	int WinsockTCPServerSocket::Recieve(char *buf, int buf_len) {
 		return recv(dstSock, buf, buf_len, 0);
 	}
 }

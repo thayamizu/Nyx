@@ -14,23 +14,23 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_UDP_SERVER_SOCKET_H_
-#define NYX_CORE_INCLUDED_UDP_SERVER_SOCKET_H_
+#ifndef NYX_CORE_INCLUDED_WINSOCK_UDP_SERVER_SOCKET_H_
+#define NYX_CORE_INCLUDED_WINSOCK_UDP_SERVER_SOCKET_H_
 
 namespace Nyx {
 	///UDPソケット
-	class UDPSocket {
+	class WinsockUDPSocket {
 	public:
 		/**
 		*　コンストラクタ
 		*/
-		UDPSocket(char *addr, int port);
+		WinsockUDPSocket(char *addr, int port);
 		
 		
 		/**
 		*　デストラクタ
 		*/
-		~UDPSocket();
+		~WinsockUDPSocket();
 
 
 		/**

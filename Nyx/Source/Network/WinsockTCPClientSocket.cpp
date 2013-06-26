@@ -15,75 +15,80 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
-#include "Network/TCP/TCPServerSocket.h"
+#include "Network/WinsockTCPClientSocket.h"
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	const int TCPServerSocket::MaxConnectNum = 5;
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	TCPServerSocket::TCPServerSocket(int port) {
-		// winsock2の初期化
-		WSAStartup(MAKEWORD(2,0), &wsaData);
-
-		dstAddrSize = sizeof(dstAddr);
-
+	WinsockTCPClientSocket::WinsockTCPClientSocket()
+	:destination_(NULL), address_() {
 		// ソケットの作成
-		srcSock = socket(AF_INET, SOCK_STREAM, 0);
-		if(srcSock < 0){
-			exit(-1);
-		}
-
-		// ソケットの設定
-		srcAddr.sin_family = AF_INET;
-		srcAddr.sin_port = htons(static_cast<ushort>(port));
-		srcAddr.sin_addr.S_un.S_addr = INADDR_ANY;
-		if(bind(srcSock, (struct sockaddr *)&srcAddr, sizeof(srcAddr)) != 0){
-			exit(-1);
-		}
-
-		// TCPクライアントからの接続要求を待てる状態にする
-		if(listen(srcSock, MaxConnectNum)){
-			exit(-1);
+		destination_ = socket(AF_INET, SOCK_STREAM, 0);
+		if(destination_ < 0){
+			int result = ::WSAGetLastError();
+			throw Nyx::Win32Exception("Winsockソケットの作成に失敗しました", result);
 		}
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPServerSocket::~TCPServerSocket() {
-		// TCPセッションの終了
-		closesocket(srcSock);
-		closesocket(dstSock);
+	WinsockTCPClientSocket::~WinsockTCPClientSocket() {
+		Disconnect();
+	}
 
-		// winsock2の終了処理
-		WSACleanup();
+	//-----------------------------------------------------------------------------------------
+	//
+	bool WinsockTCPClientSocket::Connect(const char* address, const ushort port) {
+		// 接続先指定用構造体の準備
+		address_.sin_family           = AF_INET;
+		address_.sin_port             = htons(port);
+		address_.sin_addr.S_un.S_addr = inet_addr(address);
+
+		// 無効だったので, DomainName から検索する
+		if (address_.sin_addr.S_un.S_addr == 0xffffffff) {
+			auto host = gethostbyname(address);
+			if (host == NULL) {
+				return false;
+			}
+
+			auto hostname = reinterpret_cast<unsigned int *>(host->h_addr_list[0]);
+			address_.sin_addr.S_un.S_addr = *hostname;
+		}
+
+		//サーバーへ接続
+		int result = connect(destination_, (sockaddr *)&address_, sizeof(address_));
+
+		return (result == 0) ? true : false;
+	}
+	
+	
+	//-----------------------------------------------------------------------------------------
+	//
+	bool WinsockTCPClientSocket::Connect(const std::string& address, const ushort port) {
+		return Connect(address.c_str(), port);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool TCPServerSocket::Accept() {
-		// TCPクライアントからの接続要求を受け付ける
-		dstSock = accept(srcSock, (struct sockaddr *)&dstAddr, &dstAddrSize);
-
-		return dstSock != INVALID_SOCKET;
+	void WinsockTCPClientSocket::Disconnect() {
+		if (destination_ != NULL) {
+			closesocket(destination_);
+		}
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int TCPServerSocket::Send(char *buf, int buf_len) {
-		return send(dstSock, buf, buf_len, 0);
+	int WinsockTCPClientSocket::Send(char *buffer, const int bufferSize) {
+		return send(destination_, buffer, bufferSize, 0);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
-	//
-	int TCPServerSocket::Recieve(char *buf, int buf_len) {
-		return recv(dstSock, buf, buf_len, 0);
+	//受信
+	int WinsockTCPClientSocket::Recieve(char *buffer, const int bufferSize) {
+		return recv(destination_, buffer, bufferSize, 0);
 	}
 }

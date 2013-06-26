@@ -14,44 +14,66 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_TCP_CLIENT_SOCKET_H_
-#define NYX_CORE_TCP_CLIENT_SOCKET_H_
+#ifndef NYX_CORE_WINSOCK_TCP_CLIENT_SOCKET_H_
+#define NYX_CORE_WINSOCK_TCP_CLIENT_SOCKET_H_
 
 namespace Nyx {
 	///TCPクライアントソケット
-	class TCPClientSocket {
+	class WinsockTCPClientSocket {
 	public:
-		/**
-		* @param char* アドレス
-		* @param int ポート番号
+		/*
+		* コンストラクタ
 		*/
-		TCPClientSocket(char *addr, int port);
+		WinsockTCPClientSocket();
 
-		
+
 		/**
 		* デストラクタ
 		*/
-		~TCPClientSocket();
+		~WinsockTCPClientSocket();
 
 
 		/**
+		* サーバーへ接続する
+		* @param const char* アドレス
+		* @param const int ポート番号
+		*/
+		bool Connect(const char* address, ushort port);
+		
+		
+		/**
+		* サーバーへ接続する
+		* @param const std::string& アドレス
+		* @param int ポート番号
+		*/
+		bool Connect(const std::string&  address, ushort port);
+		
+		
+		/**
+		* サーバーへの接続を切断する
+		*/
+		void Disconnect();
+
+
+		/**
+		* サーバーにデータを送信する
 		* @param 送信バッファ
 		* @param 送信バッファの長さ
 		* @return 送信バイト数
 		*/
-		int Send(char *buf, int buf_len);
+		int Send(char *buffer, int bufferSize);
 
 
 		/**
+		* サーバーからデータを受信する
 		* @param 受信バッファ
 		* @param 受信バッファの長さ
 		* @return 受信バイト数
 		*/
-		int Recieve(char *buf, int buf_len);
+		int Recieve(char *buffer, int bufferSize);
 	private:
-		WSADATA wsaData;///< 
-		SOCKET dstSock;///< 接続先のソケット
-		struct sockaddr_in dstAddr;///<　サーバのアドレス情報
+		SOCKET  destination_;///< 接続先のソケット
+		sockaddr_in address_;///< サーバのアドレス情報
 	};
 
 }
