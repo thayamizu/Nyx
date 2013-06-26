@@ -19,7 +19,7 @@
 
 namespace Nyx {
 	///UDPソケット
-	class UDPSocket : public ISocket {
+	class UDPSocket {
 	public:
 		/**
 		*　コンストラクタ

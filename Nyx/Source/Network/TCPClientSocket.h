@@ -14,59 +14,45 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_TCP_SERVER_SOCKET_H_
-#define NYX_CORE_TCP_SERVER_SOCKET_H_
+#ifndef NYX_CORE_TCP_CLIENT_SOCKET_H_
+#define NYX_CORE_TCP_CLIENT_SOCKET_H_
 
 namespace Nyx {
-
-	///TCPサーバソケット
-	class TCPServerSocket : public ISocket {
+	///TCPクライアントソケット
+	class TCPClientSocket {
 	public:
-		static const int MaxConnectNum;
-		
-		
 		/**
-		* コンストラクタ
+		* @param char* アドレス
 		* @param int ポート番号
 		*/
-		TCPServerSocket(int port) ;
+		TCPClientSocket(char *addr, int port);
 
-
+		
 		/**
 		* デストラクタ
 		*/
-		virtual ~TCPServerSocket();
+		~TCPClientSocket();
 
 
 		/**
-		* クライアントからの接続要求を受け入れ
-		* @return bool クライアントと接続したならtrue
-		*/
-		bool Accept();
-
-
-		/**
-		* @param char* 送信バッファ
-		* @param int 送信バッファの長さ
-		* @return int 送信バイト数
+		* @param 送信バッファ
+		* @param 送信バッファの長さ
+		* @return 送信バイト数
 		*/
 		int Send(char *buf, int buf_len);
 
 
 		/**
-		* @param char* 受信バッファ
-		* @param int 受信バッファの長さ
-		* @return int 受信バイト数
+		* @param 受信バッファ
+		* @param 受信バッファの長さ
+		* @return 受信バイト数
 		*/
 		int Recieve(char *buf, int buf_len);
 	private:
-		WSADATA wsaData;
-		SOCKET srcSock;
-		SOCKET dstSock;
-		int dstAddrSize;
-		struct sockaddr_in srcAddr;
-		struct sockaddr_in dstAddr;
+		WSADATA wsaData;///< 
+		SOCKET dstSock;///< 接続先のソケット
+		struct sockaddr_in dstAddr;///<　サーバのアドレス情報
 	};
+
 }
 #endif
-

@@ -15,29 +15,28 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
-#include "Network/ISocket.h"
-#include "Network/TCP/TCPClientSocket.h"
+#include "Network/UDP/UDPSocket.h"
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	//
-	TCPClientSocket::TCPClientSocket(char *addr, int port) {
-		//WinSock 初期化
+	UDPSocket::UDPSocket(char *addr, int port) {
+		dstAddrSize = sizeof(dstAddr);
+
+		// winsock2の初期化
 		WSAStartup(MAKEWORD(2,0), &wsaData);
 
 		// ソケットの作成
-		dstSock = socket(AF_INET, SOCK_STREAM, 0);
-		if(dstSock < 0){
+		srcSock = socket(AF_INET, SOCK_DGRAM, 0);
+		if(srcSock < 0){
 			exit(-1);
 		}
 
-		// 接続先指定用構造体の準備
-		dstAddr.sin_family = AF_INET;
-		dstAddr.sin_port = htons(static_cast<ushort>(port));
-		dstAddr.sin_addr.S_un.S_addr = inet_addr(addr);
-
-		// サーバに接続
-		if(connect(dstSock, (struct sockaddr *)&dstAddr, sizeof(dstAddr)) != 0){
+		// ソケットの設定
+		srcAddr.sin_family = AF_INET;
+		srcAddr.sin_port = htons(static_cast<ushort>(port));
+		srcAddr.sin_addr.S_un.S_addr = INADDR_ANY;
+		addr=nullptr;
+		if(bind(srcSock, (struct sockaddr *)&srcAddr, sizeof(srcAddr)) != 0){
 			exit(-1);
 		}
 	}
@@ -45,9 +44,10 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TCPClientSocket::~TCPClientSocket() {
-		// tcPセッションの終了
-		closesocket(dstSock);
+	UDPSocket::~UDPSocket() {
+
+		// UDPセッションの終了
+		closesocket(srcSock);
 
 		// winsock2の終了処理
 		WSACleanup();
@@ -56,14 +56,14 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int TCPClientSocket::Send(char *buf, int buf_len) {
-		return send(dstSock, buf, buf_len, 0);
+	int UDPSocket::Send(char *buf, int buf_len) {
+		return sendto(dstSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, sizeof(dstAddr));;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
-	//受信
-	int TCPClientSocket::Recieve(char *buf, int buf_len) {
-		return recv(dstSock, buf, buf_len, 0);
+	//
+	int UDPSocket::Recieve(char *buf, int buf_len) {
+		return recvfrom(srcSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, &dstAddrSize);
 	}
 }
