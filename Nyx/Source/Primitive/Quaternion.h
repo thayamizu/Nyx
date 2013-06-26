@@ -23,9 +23,9 @@
 
 namespace Nyx {
 
-	template<typename T>
+	template<typename T=float>
 	class Quaternion  {
-		static_assert(std::is_arithmetic<T>::value, "T required arithmetic_type.");
+		static_assert(std::is_floating_point<T>::value, "T required floating_point.");
 	public:
 		T w;///< w値
 		T x;///< x値
@@ -74,8 +74,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T>
 		*/
-		Quaternion<T>&& operator + (const Quaternion<T>& q) const {
-			return std::move(Quaternion<T>(w + q.w, x + q.x, y + q.y, z + q.z));
+		Quaternion<T> operator + (const Quaternion<T>& q) const {
+			return Quaternion<T>(w + q.w, x + q.x, y + q.y, z + q.z);
 		}
 
 
@@ -83,8 +83,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T>&& operator - (const Quaternion<T>& q) const {
-			return std::move(Quaternion<T>(w - q.w, x - q.x, y - q.y, z - q.z));
+		Quaternion<T> operator - (const Quaternion<T>& q) const {
+			return Quaternion<T>(w - q.w, x - q.x, y - q.y, z - q.z);
 		}
 
 
@@ -92,8 +92,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T>&& operator * (const T s) const  {
-			return std::move(Quaternion<T>(w * s, x * s, y * s, z * s));
+		Quaternion<T> operator * (const T s) const  {
+			return Quaternion<T>(w * s, x * s, y * s, z * s);
 		}
 
 
@@ -101,20 +101,20 @@ namespace Nyx {
 		* @param const T s
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T>&& operator / (const T s) const  {
+		Quaternion<T> operator / (const T s) const  {
 			if (s <= Math::Epsilon) {
 				return std::move(Quaternion<T>(*this));
 			}
-			return std::move(Quaternion<T>(w / s, x / s, y / s, z / s));
+			return Quaternion<T>(w / s, x / s, y / s, z / s);
 		}
 		
 
 		/** 共役
 		* @param const Quaternion<T> q
-		* @return Quaternion<T> &
+		* @return Quaternion<T> 
 		*/
-		Quaternion<T>&& operator ~ () const {
-			return std::move(Quaternion<T>(w, -x, -y, -z));
+		Quaternion<T> operator ~ () const {
+			return Quaternion<T>(w, -x, -y, -z);
 		}
 
 
@@ -192,7 +192,7 @@ namespace Nyx {
 		/** クォータニオンの長さ
 		* @return float 長さ
 		*/
-		float Length() const {
+		T Length() const {
 			return Math::Sqrt(x*x + y*y + z*z + w*w);
 		}
 
@@ -200,7 +200,7 @@ namespace Nyx {
 		/** クォータニオンの2乗の長さ
 		* @return float 2乗の長さ
 		*/
-		float SquaredLength() const {
+		T SquaredLength() const {
 			return (x*x + y*y + z*z + w*w);
 		}
 
@@ -291,24 +291,27 @@ namespace Nyx {
 			return Quaternion<T>();
 		}
 
-		/**
-		*/
-		static float getRotationAngle(const Quaternion<T>& q) {
-			return 1.f;
-		}
-		/**
-		*/
-		static EulerAngles getEulerAngle(const Quaternion<T>& q) {
-			return 1.f;
-		}
+		///*
+		///**
+		//
+		//static float getRotationAngle(const Quaternion<T>& q) {
+		//	return 1.f;
+		//}
+		//*/
+		///**
+		//*/
+		//static EulerAngles getEulerAngle(const Quaternion<T>& q) {
+		//	return 1.f;
+		//}
 
 
-		/**
-		* 回転行列に変換します
-		*/
-		static Matrix44 ToRotaionMatrix44(const Quaternion<T>& q) {
-			Matrix44 mat = Matrix44::Unit;
-		}
+		///**
+		//* 回転行列に変換します
+		//*/
+		//static Matrix44 ToRotaionMatrix44(const Quaternion<T>& q) {
+		//	Matrix44 mat = Matrix44::Unit;
+		//}
+		//*/
 	};
 }
 #endif

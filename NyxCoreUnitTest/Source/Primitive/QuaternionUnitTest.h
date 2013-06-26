@@ -128,9 +128,9 @@ END_TEST
 
 BEGIN_TEST(Quaternion_0011)
 {
-	      Quaternion<float>  q1(1, 2, 3, 4);
+	      Quaternion<>  q1(1, 2, 3, 4);
 	const float               s(3);
-	const Quaternion<float> exp(3, 6 , 9 , 12);
+	const Quaternion<> exp(3, 6 , 9 , 12);
 	q1 *= s;
 	WIN_ASSERT_TRUE(exp.w == q1.w);
 	WIN_ASSERT_TRUE(exp.x == q1.x);

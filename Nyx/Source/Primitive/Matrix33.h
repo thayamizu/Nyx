@@ -207,13 +207,6 @@ namespace Nyx {
 		* @return ãtçsóÒ
 		*/
 		Matrix33 Inverse();
-
-		void SetupRotate(const EulerAngles& orientation);
-
-		void FromObjectToInertial(const Quaternion<float> & q);
-		void FromObjectToInertial(const Vector3<float> & v);
-		void FromInertialToObject(const Quaternion<float> &q);
-		void FromInertialToObject(const Vector3<float>& v);
 	};
 }
 //-----------------------------------------------------
