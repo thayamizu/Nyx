@@ -20,65 +20,125 @@
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	const int WinsockTCPServerSocket::MaxConnectNum = 5;
+	WinsockTCPServerSocket::WinsockTCPServerSocket() 
+		: port_(0), maxConnect_(1) {
+			// ソケットの作成
+			source_ = socket(AF_INET, SOCK_STREAM, 0);
+			if(source_ != 0){
+				int status = ::WSAGetLastError();
+				throw Win32Exception("ソケットの作成に失敗しました", status);
+			}
+	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockTCPServerSocket::WinsockTCPServerSocket(int port) {
-		dstAddrSize = sizeof(dstAddr);
+	WinsockTCPServerSocket::WinsockTCPServerSocket(ushort port) 
+		: port_(port), maxConnect_(1) {
+			// ソケットの作成
+			source_ = socket(AF_INET, SOCK_STREAM, 0);
+			if(source_ != 0){
+				int status = ::WSAGetLastError();
+				throw Win32Exception("ソケットの作成に失敗しました", status);
+			}
 
-		// ソケットの作成
-		srcSock = socket(AF_INET, SOCK_STREAM, 0);
-		if(srcSock < 0){
-			exit(-1);
-		}
+			//ソケットとアドレス情報にバインド
+			Bind();
 
-		// ソケットの設定
-		srcAddr.sin_family = AF_INET;
-		srcAddr.sin_port = htons(static_cast<ushort>(port));
-		srcAddr.sin_addr.S_un.S_addr = INADDR_ANY;
-		if(bind(srcSock, (struct sockaddr *)&srcAddr, sizeof(srcAddr)) != 0){
-			exit(-1);
-		}
-
-		// TCPクライアントからの接続要求を待てる状態にする
-		if(listen(srcSock, MaxConnectNum)){
-			exit(-1);
-		}
+			//接続要求を受け付ける
+			Listen();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
 	WinsockTCPServerSocket::~WinsockTCPServerSocket() {
-		// TCPセッションの終了
-		closesocket(srcSock);
-		closesocket(dstSock);
-
+		Disconnect();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
 	bool WinsockTCPServerSocket::Accept() {
-		// TCPクライアントからの接続要求を受け付ける
-		dstSock = accept(srcSock, (struct sockaddr *)&dstAddr, &dstAddrSize);
+		int destinationAddressSize = sizeof(sockaddr_in);
+		sockaddr_in destinationAddress;
+		destination_ = accept(source_, (struct sockaddr *)&destinationAddress, &destinationAddressSize);
 
-		return dstSock != INVALID_SOCKET;
+		return destination_ != INVALID_SOCKET;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int WinsockTCPServerSocket::Send(char *buf, int buf_len) {
-		return send(dstSock, buf, buf_len, 0);
+	bool WinsockTCPServerSocket::Listen() {
+		int result = listen(source_, maxConnect_);
+		return result == INVALID_SOCKET;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int WinsockTCPServerSocket::Recieve(char *buf, int buf_len) {
-		return recv(dstSock, buf, buf_len, 0);
+	bool WinsockTCPServerSocket::Bind() {
+		address_.sin_family           = AF_INET;
+		address_.sin_port             = htons(port_);
+		address_.sin_addr.S_un.S_addr = INADDR_ANY;
+		int result = bind(source_, (sockaddr *)&address_, sizeof(address_));
+
+		return result != INVALID_SOCKET;
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void WinsockTCPServerSocket::Disconnect() {
+		if (destination_ != NULL) {
+			closesocket(destination_);
+		}
+
+		if (source_ != NULL) {
+			closesocket(source_);
+		}
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void WinsockTCPServerSocket::SetPort(ushort port) {
+		port_ = port;
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	ushort WinsockTCPServerSocket::GetPort() const {
+		return port_;
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void WinsockTCPServerSocket::SetMaxConnect(size_t maxConnect) {
+		maxConnect_ = maxConnect;
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	size_t WinsockTCPServerSocket::GetMaxConnect() const {
+		return maxConnect_;
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	int WinsockTCPServerSocket::Send(char *buffer, const size_t bufferSize) const {
+		return send(destination_, buffer, bufferSize, 0);
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	int WinsockTCPServerSocket::Recieve(char *buffer, const size_t bufferSize) const  {
+		return recv(destination_, buffer, bufferSize, 0);
 	}
 }

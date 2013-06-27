@@ -22,20 +22,23 @@ namespace Nyx {
 	///TCPサーバソケット
 	class WinsockTCPServerSocket {
 	public:
-		static const int MaxConnectNum;
-		
-		
+		/**
+		* コンストラクタ
+		*/
+		WinsockTCPServerSocket();
+
+
 		/**
 		* コンストラクタ
 		* @param int ポート番号
 		*/
-		WinsockTCPServerSocket(int port) ;
+		WinsockTCPServerSocket(ushort port) ;
 
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~WinsockTCPServerSocket();
+		~WinsockTCPServerSocket();
 
 
 		/**
@@ -44,14 +47,31 @@ namespace Nyx {
 		*/
 		bool Accept();
 
-		void Listen();
-		void Bind();
+
+		/**
+		*
+		*/
+		bool Listen();
+
+
+		/**
+		*
+		*/
+		bool Bind();
+		/**
+		* 
+		*/
+		void Disconnect();
+		void SetPort(ushort port);
+		ushort GetPort() const;
+		void SetMaxConnect(size_t maxConnect);
+		size_t GetMaxConnect() const;
 		/**
 		* @param char* 送信バッファ
 		* @param int 送信バッファの長さ
 		* @return int 送信バイト数
 		*/
-		int Send(char *buf, int buf_len);
+		int Send(char *buffer, size_t bufferSize) const ;
 
 
 		/**
@@ -59,14 +79,12 @@ namespace Nyx {
 		* @param int 受信バッファの長さ
 		* @return int 受信バイト数
 		*/
-		int Recieve(char *buf, int buf_len);
+		int Recieve(char *buffer, size_t bufferSize) const;
 	private:
-		uint maxConnectNum_;
-		SOCKET srcSock;
-		SOCKET dstSock;
-		int dstAddrSize;
-		struct sockaddr_in srcAddr;
-		struct sockaddr_in dstAddr;
+		ushort port_;
+		size_t maxConnect_;
+		SOCKET source_, destination_;
+		sockaddr_in address_;
 	};
 }
 #endif

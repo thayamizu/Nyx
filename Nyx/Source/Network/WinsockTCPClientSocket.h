@@ -61,7 +61,7 @@ namespace Nyx {
 		* @param 送信バッファの長さ
 		* @return 送信バイト数
 		*/
-		int Send(char *buffer, int bufferSize);
+		int Send(char* buffer, size_t bufferSize) const;
 
 
 		/**
@@ -70,7 +70,7 @@ namespace Nyx {
 		* @param 受信バッファの長さ
 		* @return 受信バイト数
 		*/
-		int Recieve(char *buffer, int bufferSize);
+		int Recieve(char* buffer, size_t bufferSize) const;
 	private:
 		SOCKET  destination_;///< 接続先のソケット
 		sockaddr_in address_;///< サーバのアドレス情報
