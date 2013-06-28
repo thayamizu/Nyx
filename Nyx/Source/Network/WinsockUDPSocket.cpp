@@ -19,46 +19,42 @@
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	WinsockUDPSocket::WinsockUDPSocket(char *addr, int port) {
-		dstAddrSize = sizeof(dstAddr);
+	//
+	WinsockUDPSocket::WinsockUDPSocket(const char* address, const ushort port)
+		: socket_(NULL), address_() {
+			socket_ = socket(AF_INET, SOCK_DGRAM, 0);
+			if (socket_ == INVALID_SOCKET) {
+				LRESULT status = ::WSAGetLastError();
+				throw Win32Exception("UDPソケットの作成に失敗しました", status);
+			}
 
-		// ソケットの作成
-		srcSock = socket(AF_INET, SOCK_DGRAM, 0);
-		if(srcSock < 0){
-			exit(-1);
-		}
-
-		// ソケットの設定
-		srcAddr.sin_family = AF_INET;
-		srcAddr.sin_port = htons(static_cast<ushort>(port));
-		srcAddr.sin_addr.S_un.S_addr = INADDR_ANY;
-		addr=nullptr;
-		if(bind(srcSock, (struct sockaddr *)&srcAddr, sizeof(srcAddr)) != 0){
-			exit(-1);
-		}
+			// ローカルサーバのアドレスを指定
+			address_.sin_family           = AF_INET;
+			address_.sin_port			  = htons(port);
+			address_.sin_addr.S_un.S_addr = inet_addr(address);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
 	WinsockUDPSocket::~WinsockUDPSocket() {
+		if (socket_ != NULL) {
+			closesocket(socket_);
+		}
+	}
 
-		// UDPセッションの終了
-		closesocket(srcSock);
-
+	//-----------------------------------------------------------------------------------------
+	//
+	size_t WinsockUDPSocket::Send(const WinsockUDPSocket& destination, char *buffer, const size_t bufferSize) {
+		return sendto(destination.socket_, buffer, bufferSize, 0, (sockaddr *)&address_, sizeof(sockaddr_in));
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int WinsockUDPSocket::Send(char *buf, int buf_len) {
-		return sendto(dstSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, sizeof(dstAddr));;
-	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	int WinsockUDPSocket::Recieve(char *buf, int buf_len) {
-		return recvfrom(srcSock, buf, buf_len, 0, (struct sockaddr *)&dstAddr, &dstAddrSize);
+	size_t WinsockUDPSocket::Recieve(const WinsockUDPSocket& source, char *buffer, const size_t bufferSize) {
+		int length;
+		sockaddr address;
+		return recvfrom(source.socket_, buffer, bufferSize, 0,  &address, &length);
 	}
 }

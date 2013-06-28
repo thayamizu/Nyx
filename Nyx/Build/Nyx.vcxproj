@@ -165,10 +165,10 @@
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h" />
     <ClInclude Include="..\Source\Movie\IMoviePlayer.h" />
     <ClInclude Include="..\Source\Movie\MoviePlayer.h" />
-    <ClInclude Include="..\Source\Network\ISocket.h" />
-    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h" />
-    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h" />
-    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h" />
+    <ClInclude Include="..\Source\Network\WinsockInitializer.h" />
+    <ClInclude Include="..\Source\Network\WinsockTCPClientSocket.h" />
+    <ClInclude Include="..\Source\Network\WinsockTCPServerSocket.h" />
+    <ClInclude Include="..\Source\Network\WinsockUDPSocket.h" />
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Primitive\Color3.h" />
@@ -261,9 +261,9 @@
     <ClCompile Include="..\Source\IO\PackedFile.cpp" />
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp" />
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp" />
-    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp" />
-    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp" />
-    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp" />
+    <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp" />
+    <ClCompile Include="..\Source\Network\WinsockTCPServerSocket.cpp" />
+    <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp" />
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Primitive\EulerAngles.cpp" />

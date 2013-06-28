@@ -81,14 +81,14 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	int WinsockTCPClientSocket::Send(char *buffer, const size_t bufferSize) const {
+	size_t WinsockTCPClientSocket::Send(char *buffer, const size_t bufferSize) const {
 		return send(destination_, buffer, bufferSize, 0);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//éÛêM
-	int WinsockTCPClientSocket::Recieve(char *buffer, const size_t bufferSize) const {
+	size_t WinsockTCPClientSocket::Recieve(char *buffer, const size_t bufferSize) const {
 		return recv(destination_, buffer, bufferSize, 0);
 	}
 }

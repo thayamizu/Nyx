@@ -30,7 +30,7 @@ namespace Nyx {
 
 		/**
 		* コンストラクタ
-		* @param int ポート番号
+		* @param ushort ポート番号
 		*/
 		WinsockTCPServerSocket(ushort port) ;
 
@@ -62,10 +62,32 @@ namespace Nyx {
 		* 
 		*/
 		void Disconnect();
+
+
+		/**
+		* 
+		*/
 		void SetPort(ushort port);
+
+
+		/**
+		* 
+		*/
 		ushort GetPort() const;
+
+
+		/**
+		* 
+		*/
 		void SetMaxConnect(size_t maxConnect);
+
+
+		/**
+		* 
+		*/
 		size_t GetMaxConnect() const;
+
+
 		/**
 		* @param char* 送信バッファ
 		* @param int 送信バッファの長さ

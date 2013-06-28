@@ -388,15 +388,6 @@
     <ClInclude Include="..\Source\Object\NonCopyable.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\IO\IFile.h">
       <Filter>IO</Filter>
     </ClInclude>
@@ -520,9 +511,6 @@
     <ClInclude Include="..\Source\Primitive\Rect.h">
       <Filter>Primitive</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Network\ISocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Primitive\EulerAngles.h">
       <Filter>Primitive</Filter>
     </ClInclude>
@@ -537,6 +525,18 @@
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Color4.h">
       <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockTCPClientSocket.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockTCPServerSocket.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockUDPSocket.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockInitializer.h">
+      <Filter>Network\detail\WinSock</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -657,15 +657,6 @@
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\IO\File.cpp">
       <Filter>IO</Filter>
     </ClCompile>
@@ -740,6 +731,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Primitive\EulerAngles.cpp">
       <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\WinsockTCPServerSocket.cpp">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp">
+      <Filter>Network\detail\WinSock</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

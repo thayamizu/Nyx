@@ -24,7 +24,7 @@ namespace Nyx {
 		/**
 		*　コンストラクタ
 		*/
-		WinsockUDPSocket(char *addr, int port);
+		WinsockUDPSocket(const char* address, ushort port);
 		
 		
 		/**
@@ -34,28 +34,24 @@ namespace Nyx {
 
 
 		/**
-		* @param 送信バッファ
-		* @param 送信バッファの長さ
-		* @return 送信バイト数
+		* サーバーにデータを送信します
+		* @param char*   送信バッファ
+		* @param size_t  送信バッファの長さ
+		* @return size_t 送信バイト数
 		*/
-		int Send(char *buf, int buf_len);
+		size_t Send(const WinsockUDPSocket& destination, char *buffer, size_t bufferSize);
 
 
 		/**
-		* @param 受信バッファ
-		* @param 受信バッファの長さ
-		* @return 受信バイト数
+		* サーバーからデータを受信します
+		* @param char*  受信バッファ
+		* @param size_t 受信バッファの長さ
+		* @return size_ 受信バイト数
 		*/
-		int Recieve(char *buf, int buf_len);
+		size_t Recieve(const WinsockUDPSocket& source, char *buffer, size_t bufferSize);
 	private:
-
-		int dstAddrSize;
-		struct sockaddr_in srcAddr;///< 接続元のアドレス情報
-		struct sockaddr_in dstAddr;///< 接続先のアドレス情報
-
-		WSADATA wsaData;
-		SOCKET dstSock;///< 接続元のソケット
-		SOCKET srcSock;///< 接続先のソケット
+		SOCKET      socket_;  ///< 接続先のソケット
+		sockaddr_in address_; ///< 接続元のアドレス情報
 	};
 }
 #endif
