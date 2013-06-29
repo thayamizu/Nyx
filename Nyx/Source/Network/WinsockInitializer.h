@@ -11,7 +11,7 @@ namespace Nyx {
 		* コンストラクタ
 		*/
 		WinsockInitializer() {
-			Initalize();
+			Startup();
 		}
 
 

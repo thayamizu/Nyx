@@ -131,6 +131,10 @@ class SkinMesh;
 #include "Timer/FPSTimer.h"
 #include "Timer/PerformanceTimer.h"
 
+//ネットワーク
+#include "Network/WinsockTCPClientSocket.h"
+#include "Network/WinsockTCPServerSocket.h"
+#include "Network/WinsockUDPSocket.h"
 
 //ユーティリティ
 #include "Utility/Common.h"

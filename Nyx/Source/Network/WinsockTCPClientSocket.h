@@ -16,6 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_WINSOCK_TCP_CLIENT_SOCKET_H_
 #define NYX_CORE_WINSOCK_TCP_CLIENT_SOCKET_H_
+#include "WinsockInitializer.h"
 
 namespace Nyx {
 	///TCPクライアントソケット
