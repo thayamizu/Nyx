@@ -182,10 +182,10 @@ BEGIN_TEST(Color4f010)
 	Color4f c;
 
 	c -= _c;
-	WIN_ASSERT_TRUE(c.r == -0.5f);
-	WIN_ASSERT_TRUE(c.g == -0.5f);
-	WIN_ASSERT_TRUE(c.b == -0.5f);
-	WIN_ASSERT_TRUE(c.a == -0.5f);
+	WIN_ASSERT_TRUE(c.r == 0.f);
+	WIN_ASSERT_TRUE(c.g == 0.f);
+	WIN_ASSERT_TRUE(c.b == 0.f);
+	WIN_ASSERT_TRUE(c.a == 0.f);
 }
 END_TEST
 

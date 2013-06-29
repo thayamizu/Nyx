@@ -70,12 +70,6 @@
     <Filter Include="Movie">
       <UniqueIdentifier>{2b9a50a9-e9ec-411d-a61b-e814cc5af50e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Database\interfaces">
-      <UniqueIdentifier>{abbda38a-d885-4e15-8d18-f79c78692d42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Database\implements">
-      <UniqueIdentifier>{c3073ab3-abd4-4951-908c-02339ba572fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
     </Filter>
@@ -84,18 +78,6 @@
     </Filter>
     <Filter Include="Graphics\Animation\implements">
       <UniqueIdentifier>{eeebc2e5-08dc-4307-af96-276012c0defa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\interfaces">
-      <UniqueIdentifier>{035928b2-6b12-4429-b9ff-9a13936728e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\base">
-      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\implements">
-      <UniqueIdentifier>{76cca335-ea3c-4b10-b7ac-d173fbf88b53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Database\base">
-      <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sound\detail">
       <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
@@ -202,6 +184,12 @@
     <Filter Include="Movie\detail\DirectShow">
       <UniqueIdentifier>{06cb3258-e262-4523-8ecc-ef5614c50d75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Database\detail">
+      <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision\detail">
+      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -252,18 +240,6 @@
     <ClInclude Include="..\Source\PCH\PCH.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color3c.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color3f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color4c.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Color4f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Primitive\Matrix33.h">
       <Filter>Primitive</Filter>
     </ClInclude>
@@ -271,18 +247,6 @@
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Plane.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point2f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point2i.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point3f.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Point3i.h">
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Quaternion.h">
@@ -300,12 +264,6 @@
     <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h">
       <Filter>Graphics\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2i.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Rect2f.h">
-      <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Camera.h">
       <Filter>Graphics\Camera</Filter>
@@ -331,11 +289,8 @@
     <ClInclude Include="..\Source\Graphics\IMesh.h">
       <Filter>Graphics\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Database\IDatabaseConnector.h">
-      <Filter>Database\interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Collision\BulletDefinition.h">
-      <Filter>Collision\base</Filter>
+      <Filter>Collision\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
       <Filter>Graphics\Core</Filter>
@@ -344,10 +299,7 @@
       <Filter>Graphics\Animation\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Database\SQLiteDefinition.h">
-      <Filter>Database\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\SQLiteDatabase.h">
-      <Filter>Database\implements</Filter>
+      <Filter>Database\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Limits.h">
       <Filter>Utility</Filter>
@@ -435,18 +387,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Object\NonCopyable.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Network\ISocket.h">
-      <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\IO\IFile.h">
       <Filter>IO</Filter>
@@ -568,6 +508,36 @@
     <ClInclude Include="..\Source\Movie\MoviePlayer.h">
       <Filter>Movie</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Rect.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\EulerAngles.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\SQLiteDatabase.h">
+      <Filter>Database\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Database\IDatabaseConnector.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color3.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Color4.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockTCPClientSocket.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockTCPServerSocket.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockUDPSocket.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Network\WinsockInitializer.h">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -615,59 +585,14 @@
     <ClCompile Include="..\Source\PCH\PCH.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color3c.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color3f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color4c.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color4f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Plane.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point2f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point2i.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point3f.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Point3i.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Quarternion.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Vector2.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Vector3.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Vector4.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
       <Filter>Graphics\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Rect2i.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Rect2f.cpp">
-      <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\Camera.cpp">
       <Filter>Graphics\Camera</Filter>
@@ -731,15 +656,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp">
-      <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\IO\File.cpp">
       <Filter>IO</Filter>
@@ -812,6 +728,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
       <Filter>Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\EulerAngles.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\WinsockTCPServerSocket.cpp">
+      <Filter>Network\detail\WinSock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp">
+      <Filter>Network\detail\WinSock</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

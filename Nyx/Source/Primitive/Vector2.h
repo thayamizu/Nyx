@@ -20,224 +20,316 @@
 
 namespace Nyx
 {
+	template<typename T>
 	class Vector2 {
+		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
-		//--------------------------------------------------------------------------------------
-		// メンバ変数
-		//--------------------------------------------------------------------------------------
 		union {
 			struct {
-				float x; ///< X成分
-				float y; ///< Y成分
+				T x; ///< X成分
+				T y; ///< Y成分
 			};
 
-			float element[2];
+			T elements[2];
 		};
 
-		//--------------------------------------------------------------------------------------
-		// メンバ定数
-		//--------------------------------------------------------------------------------------
-		static const Vector2 Zero;  ///< ゼロベクトル
+		static const Vector2<T> Zero;  ///< ゼロベクトル
 
-		static const Vector2 UnitX; ///< X軸単位ベクトル
+		static const Vector2<T> UnitX; ///< X軸単位ベクトル
 
-		static const Vector2 UnitY; ///< Y軸単位ベクトル
+		static const Vector2<T> UnitY; ///< Y軸単位ベクトル
 
-		static const Vector2 ScaleUnit; ///< スケール単位ベクトル
+		static const Vector2<T> ScaleUnit; ///< スケール単位ベクトル
 
-
-		//--------------------------------------------------------------------------------------
-		// コンストラクタ・デストラクタ
-		//--------------------------------------------------------------------------------------
 
 		/**
 		* デフォルトコンストラクタ
 		*/
-		Vector2();
+		Vector2<T>() 
+			: x(0), y(0) {
+		}
+
 
 		/**
 		* コンストラクタ
 		* @param x
 		* @param y
 		*/
-		Vector2(float x, float y);
+		Vector2<T>(T x, T y) {
+			Set(x, y);
+		}
+
 
 		/**
 		* コピーコンストラクタ
 		* @param Vector2
 		*/
-		Vector2(const Vector2 & u);
+		Vector2<T>(const Vector2 & u) 
+			:x(u.x), y(u.y) {
 
-		/** 
-		* デストラクタ
-		*/
-		~Vector2();
-		//--------------------------------------------------------------------------------------
-		// 値の設定
-		//--------------------------------------------------------------------------------------
+		}
+
+
 		/**
 		* 値の設定
 		*/
-		void Set(float x_, float y_);
+		void Set(T x, T y) {
+			this->x = x;
+			this->y = y;
+		}
 
-		//--------------------------------------------------------------------------------------
-		// 演算
-		//--------------------------------------------------------------------------------------
+
 		/** 
 		* ベクトル加算
 		* @param 右辺値 
 		* @return 加算結果
 		*/
-		Vector2 operator +(const Vector2& rhs) const ;
+		Vector2<T> operator +(const Vector2<T>& u) const {
+			return Vector2( x + u.x, y + u.y); 
+		}
+
 
 		/** 
 		* ベクトル減算
 		* @param 右辺値 
 		* @return 減算結果
 		*/ 
-		Vector2 operator -(const Vector2& rhs) const;
+		Vector2<T> operator -(const Vector2<T>& u) const {
+			return Vector2( x - u.x, y - u.y); 
+		}
+
 
 		/** 
 		* ベクトル乗算
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Vector2 operator *(const float rhs) const;
+		Vector2<T> operator *(const T u) const {
+			return Vector2( x * u, y * u); 
+		}
 
-		/** 
-		* ベクトル乗算
-		* @param 右辺値 
-		* @return 乗算結果
-		*/
-		Vector2 operator *(const Vector2& rhs) const;
 
 		/** 
 		* ベクトル除算
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Vector2 operator /(const float rhs) const;
+		Vector2<T> operator /(const T u) const {
+			return Vector2( x / u, y / u); 
+		}
 
-		//--------------------------------------------------------------------------------------
-		// 代入演算
-		//--------------------------------------------------------------------------------------
+
 		/** 
 		* ベクトル加算
 		* @param 右辺値 
 		* @return 加算結果
 		*/
-		Vector2 & operator +=(const Vector2& rhs);
+		Vector2<T> & operator +=(const Vector2<T>& u) {
+			x += u.x;
+			y += u.y;
+
+			return *this;
+		}
+
+
 		/** 
 		* ベクトル減算
 		* @param 右辺値 
 		* @return 減算結果
 		*/                                                                             
-		Vector2 & operator -=(const Vector2& rhs);
+		Vector2<T> & operator -=(const Vector2<T>& u) {
+			x -= u.x;
+			y -= u.y;
+
+			return *this;
+		}
+
 
 		/** 
 		* ベクトル乗算
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Vector2 &  operator *=(const float rhs);
+		Vector2<T> &  operator *=(const T u) {
+			x *= u;
+			y *= u;
 
-		/** 
-		* ベクトル乗算
-		* @param 右辺値 
-		* @return 乗算結果
-		*/
-		Vector2 &  operator *=(const Vector2& rhs);
+			return *this;
+		}
+
 
 		/** 
 		* ベクトル除算
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Vector2 & operator /=(const float rhs);
+		Vector2<T> & operator /=(const T u) {
+			x /= u;
+			y /= u;
+
+			return *this;
+		}
+
 
 		/** 
 		* ベクトル反転
 		* @param 右辺値 
 		* @return 反転されたベクトル
 		*/
-		Vector2 operator ~();
+		Vector2<T> operator ~() {
+		}
+
 
 		/** 
 		* ベクトル代入
 		* @param 右辺値 
 		* @return 代入されたベクトル
 		*/
-		Vector2& operator =(const Vector2 &rhs);
+		Vector2<T>& operator =(const Vector2<T> &u) {
+			x = u.x;
+			y = u.y;
+
+			return *this;
+		}
 
 
-		//--------------------------------------------------------------------------------------
-		// ベクトル演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* ドット積（内積）
 		* @param 右辺値
 		* @return 内積
 		*/
-		float Dot(const Vector2& rhs);
+		T Dot(const Vector2& u) {
+			return (x * u.x + y * u.y);
+
+		}
 
 		/**
 		* ベクトルの長さ
 		* @return ベクトルの長さの平方根
 		*/
-		float Length();
+		float Length() {
+			return static_cast<float>(sqrt(x * x + y * y ));
+
+		}
 
 		/**
 		* ベクトルの長さの平方根
 		* @return ベクトルの長さの平方根
 		*/
-		float SquaredLength();
+		float SquaredLength() {
+			return static_cast<float>(x * x + y * y );
+		}
 
 		/**
 		* ベクトルを正規化
 		*/
-		inline void Normalize();
+		void Normalize() {
+			float abs = Length();
+
+			if (abs <= Math::Epsilon) { abs = 1.0;}
+
+			x /= abs;
+			y /= abs;
+
+			if (Math::Abs(x) < Math::Epsilon) {x = 0.0f;}
+			if (Math::Abs(y) < Math::Epsilon) {y = 0.0f;}
+		}
+
 
 		/**
 		* ベクトルを反転
 		*/
-		inline void Inverse();
+		void Inverse() {
+			x = - x;
+			y = - y;
+		}
 
-		inline Vector2 Lerp(const Vector2& v1, const Vector2& v2, float s); 
-		//--------------------------------------------------------------------------------------
-		// 論理演算
-		//--------------------------------------------------------------------------------------
+
+		/**
+		*
+		*/
+		Vector2<T> Lerp(const Vector2<T>& v1, const Vector2<T>& v2, float s) {
+			Vector2 lerp;
+			if (s > 1) s = 1;
+			if (s < 0) s = 0;
+			lerp.x = v1.x * (1 - s) + v2.x * s;
+			lerp.y = v1.y * (1 - s) + v2.y * s;
+
+			return lerp;
+		}
+
+
 		/** 
 		* @return ゼロベクトルならtrue
 		*/
-		bool IsZero() const;
+		bool IsZero() const {
+			return (
+				Math::Abs(x) <= Math::Epsilon &&
+				Math::Abs(y) <= Math::Epsilon);
+		}
+
 
 		/** 
 		* @return 単位ベクトルならtrue
 		*/
-		bool IsUnit() const;
+		bool IsUnit() const {
+			const float value = Math::Sqrt(x*x + y*y);
+			return (Math::Abs(value - 1.f) <= Math::Epsilon);
+		}
+
 
 		/** 
 		* ベクトルの等価演算
 		* @param 右辺値 
 		* @return 比較結果が等しいならばtrue
 		*/
-		bool operator ==(const Vector2& rhs) const;
+		bool operator ==(const Vector2<T>& v) const {
+			return ( 
+				Math::Abs(x - v.x ) < Math::Epsilon &&
+				Math::Abs(y - v.y ) < Math::Epsilon);
+		}
 
-		/** 
-		* ベクトルの等価演算
-		* 丸め誤差対策
-		* @param 右辺値 
-		* @return 比較結果が等しいならばtrue
-		*/
-		bool Equal(const Vector2& rhs) const;    
+
 		/** 
 		* ベクトル等価演算
 		* @param 右辺値 
 		* @return　比較結果が等しくないならばtrue
 		*/
-		bool operator !=(const Vector2& rhs) const;
+		bool operator !=(const Vector2<T>& rhs) const {
+			return !(*this == rhs);
+		}
 	};
 
+	//--------------------------------------------------------------------------------------
+	// 別名定義
+	//--------------------------------------------------------------------------------------
+	typedef Vector2<int>     Axis2i;
+	typedef Vector2<int>     Point2i;
+	typedef Vector2<int>     Vector2i;
+	typedef Vector2<int>     TexChoord2i;
+	typedef Vector2<float>   Axis2f;
+	typedef Vector2<float>   Point2f;
+	typedef Vector2<float>   Vector2f;
+	typedef Vector2<float>   TexChoord2f;
+	typedef Vector2<double>  Axis2d;
+	typedef Vector2<double>  Point2d;
+	typedef Vector2<double>  Vector2d;
+	typedef Vector2<double>  TexChoord2d;
+
+	//--------------------------------------------------------------------------------------
+	// 定数定義
+	//-------------------------------------------------------------------------------------- 
+	template<typename T>
+	const Vector2<T> Vector2<T>::Zero = Vector2(0, 0);
+
+	template<typename T>
+	const Vector2<T> Vector2<T>::UnitX = Vector2(1, 0);
+
+	template<typename T>
+	const Vector2<T> Vector2<T>::UnitY = Vector2(0, 1);
+
+	template<typename T>
+	const Vector2<T> Vector2<T>::ScaleUnit = Vector2(1, 1);
 }
 #endif
 //VECTOR_H

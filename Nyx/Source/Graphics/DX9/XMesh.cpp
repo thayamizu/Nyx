@@ -17,7 +17,7 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
-#include "Primitive/Color4f.h"
+#include "Primitive/Color4.h"
 #include "Graphics/DX9/XMesh.h"
 
 namespace Nyx {

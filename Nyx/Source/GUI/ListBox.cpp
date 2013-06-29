@@ -17,8 +17,8 @@
 #include "PCH/PCH.h"
 #include "GUI/ListBox.h"
 #include "Debug/Assert.h"
-#include "Primitive/Rect2i.h"
-#include "Primitive/Point2i.h"
+#include "Primitive/Rect.h"
+#include "Primitive/Vector2.h"
 
 namespace Nyx {
 	//---------------------------------------------------------------------------------------

@@ -20,22 +20,5 @@
 
 namespace Nyx {
 
-	void Plane::Normalize() 
-	{
-		float abs = Math::Sqrt(a*a+b*b+c*c);
-		if (abs <= Math::Epsilon) { abs = 1.f;}
 
-		a /= abs;
-		b /= abs;
-		c /= abs;
-
-		if (Math::Abs(a) < Math::Epsilon) {a = 0.f;}
-		if (Math::Abs(b) < Math::Epsilon) {b = 0.f;}
-		if (Math::Abs(c) < Math::Epsilon) {c = 0.f;}
-	}
-
-	float Plane::GetDistance(const Vector3& v)
-	{
-		return Math::Abs(a*v.x + b*v.y+ c*v.z+d) / Math::Sqrt(a*a + b*b + c*c);
-	}
 }

@@ -52,20 +52,13 @@
 #include "Thread/Thread.h"
 
 // プリミティブオブジェクト
-#include "Primitive/Color3c.h"
-#include "Primitive/Color4c.h"
-#include "Primitive/Color3f.h"
-#include "Primitive/Color4f.h"
+#include "Primitive/Color3.h"
+#include "Primitive/Color4.h"
 #include "Primitive/Matrix33.h"
 #include "Primitive/Matrix44.h"
 #include "Primitive/Plane.h"
-#include "Primitive/Point2f.h"
-#include "Primitive/Point2i.h"
-#include "Primitive/Point3f.h"
-#include "Primitive/Point3i.h"
 #include "Primitive/Quaternion.h"
-#include "Primitive/Rect2f.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 #include "Primitive/Vector3.h"
 #include "Primitive/Vector4.h"
@@ -138,6 +131,10 @@ class SkinMesh;
 #include "Timer/FPSTimer.h"
 #include "Timer/PerformanceTimer.h"
 
+//ネットワーク
+#include "Network/WinsockTCPClientSocket.h"
+#include "Network/WinsockTCPServerSocket.h"
+#include "Network/WinsockUDPSocket.h"
 
 //ユーティリティ
 #include "Utility/Common.h"

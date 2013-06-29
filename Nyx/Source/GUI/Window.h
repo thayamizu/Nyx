@@ -16,15 +16,11 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_WINDOW_H_
 #define NYX_CORE_INCLUDED_WINDOW_H_
-
 #include "GUI/Dispatcher.h"
 #include "GUI/IWindow.h"
-#include "Primitive/Point2i.h"
-#include "Primitive/Rect2i.h"
 
 namespace Nyx {
-	class IWindow;
-	class Rect2i;
+
 	///ウインドウ
 	class Window : public IWindow 
 	{

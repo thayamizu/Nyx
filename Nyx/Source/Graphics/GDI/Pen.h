@@ -17,8 +17,8 @@
 #ifndef NYX_CORE_INCLUDED_PEN_H_
 #define NYX_CORE_INCLUDED_PEN_H_
 
-#include "Primitive/Color3c.h"
-#include "Primitive/Point2i.h"
+#include "Primitive/Color3.h"
+#include "Primitive/Vector2.h"
 namespace Nyx {
 	namespace GDI
 	{  

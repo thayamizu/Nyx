@@ -14,15 +14,53 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
+#ifndef NYX_CORE_INCLUDED_WINSOCK_UDP_SERVER_SOCKET_H_
+#define NYX_CORE_INCLUDED_WINSOCK_UDP_SERVER_SOCKET_H_
+#include "WinsockInitializer.h"
 
-#include "PCH/PCH.h"
-#include "Primitive/Point2f.h"
+namespace Nyx {
+	///UDPソケット
+	class WinsockUDPSocket {
+	public:
+		/**
+		*　コンストラクタ
+		*/
+		WinsockUDPSocket(const char* address, unsigned short port, ulong blockingMode = 1);
 
-namespace Nyx
-{
 
-	const Point2f Point2f::Zero(0.0f, 0.0f);
+		/**
+		*　デストラクタ
+		*/
+		~WinsockUDPSocket();
 
-	const Point2f Point2f::Unit(1.0f, 1.0f);
 
+		/**
+		* ソケットとアドレス情報をバインドします
+		* @param const char* アドレス
+		* @param ushort ポート番号
+		*/
+		bool Bind(const char* address, unsigned short port);
+
+
+		/**
+		* サーバーにデータを送信します
+		* @param char*   送信バッファ
+		* @param size_t  送信バッファの長さ
+		* @return size_t 送信バイト数
+		*/
+		size_t Send(const char *buffer, size_t bufferSize, const WinsockUDPSocket& socket) const;
+
+
+		/**
+		* サーバーからデータを受信します
+		* @param char*  受信バッファ
+		* @param size_t 受信バッファの長さ
+		* @return size_ 受信バイト数
+		*/
+		size_t Recieve(char *buffer, size_t bufferSize, WinsockUDPSocket& socket) const;
+	private:
+		SOCKET      socket_;  ///< 接続先のソケット
+		sockaddr_in address_; ///< 接続元のアドレス情報
+	};
 }
+#endif

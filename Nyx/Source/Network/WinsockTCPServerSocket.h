@@ -14,45 +14,83 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_TCP_CLIENT_SOCKET_H_
-#define NYX_CORE_TCP_CLIENT_SOCKET_H_
+#ifndef NYX_CORE_WINSOCK_TCP_SERVER_SOCKET_H_
+#define NYX_CORE_WINSOCK_TCP_SERVER_SOCKET_H_
+#include "WinsockInitializer.h"
 
 namespace Nyx {
-	///TCPクライアントソケット
-	class TCPClientSocket : public ISocket {
+
+	///TCPサーバソケット
+	class WinsockTCPServerSocket {
 	public:
 		/**
-		* @param char* アドレス
-		* @param int ポート番号
+		* コンストラクタ
+		* @param ushort ポート番号
 		*/
-		TCPClientSocket(char *addr, int port);
+		WinsockTCPServerSocket(ushort port=8080) ;
 
-		
+
 		/**
 		* デストラクタ
 		*/
-		~TCPClientSocket();
+		~WinsockTCPServerSocket();
 
 
 		/**
-		* @param 送信バッファ
-		* @param 送信バッファの長さ
-		* @return 送信バイト数
+		* クライアントからの接続要求を受け入れ
+		* @return bool クライアントと接続したならtrue
 		*/
-		int Send(char *buf, int buf_len);
+		bool Accept();
 
 
 		/**
-		* @param 受信バッファ
-		* @param 受信バッファの長さ
-		* @return 受信バイト数
+		*
 		*/
-		int Recieve(char *buf, int buf_len);
+		bool Listen();
+
+
+		/**
+		*
+		*/
+		bool Bind();
+		/**
+		* 
+		*/
+		void Disconnect();
+
+
+		/**
+		* 
+		*/
+		void SetMaxConnect(size_t maxConnect);
+
+
+		/**
+		* 
+		*/
+		size_t GetMaxConnect() const;
+
+
+		/**
+		* @param char* 送信バッファ
+		* @param int 送信バッファの長さ
+		* @return int 送信バイト数
+		*/
+		int Send(char *buffer, size_t bufferSize) const ;
+
+
+		/**
+		* @param char* 受信バッファ
+		* @param int 受信バッファの長さ
+		* @return int 受信バイト数
+		*/
+		int Recieve(char *buffer, size_t bufferSize) const;
 	private:
-		WSADATA wsaData;///< 
-		SOCKET dstSock;///< 接続先のソケット
-		struct sockaddr_in dstAddr;///<　サーバのアドレス情報
+		ushort port_;
+		size_t maxConnect_;
+		SOCKET source_, destination_;
+		sockaddr_in address_;
 	};
-
 }
 #endif
+

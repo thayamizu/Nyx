@@ -14,142 +14,304 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-/*@file
-*@brief 四元数の演算
-*テスト実装なので、できれば使わないでください。
-*Todo：単体テストの実施
-*@author t.hayamizu
-*/
 #ifndef NYX_CORE_INCLUDED_QUATERNION_H_
 #define NYX_CORE_INCLUDED_QUATERNION_H_
-
+#include "Primitive/EulerAngles.h"
+#include "Primitive/Matrix44.h"
+#include "Primitive/Vector3.h"
+#include "Primitive/Vector4.h"
 
 namespace Nyx {
-	class Quaternion 
-	{
+
+	template<typename T=float>
+	class Quaternion  {
+		static_assert(std::is_floating_point<T>::value, "T required floating_point.");
 	public:
-		union {
-			struct {
-				float x;
-				float y;
-				float z;
-				float w;
-			};
-			float element[4];
-		};
-		static const Quaternion Zero;
-		static const Quaternion Unit;
+		T w;///< w値
+		T x;///< x値
+		T y;///< y値
+		T z;///< z値
 
-	public: 
-		//!デフォルトコンストラクタ
-		//各要素を０初期化する
-		Quaternion();
-
-		/*!コンストラクタ
-		*@param Vector3 v
-		*@param float n
+		/** 
+		* コンストラクタ
 		*/
-		Quaternion(Vector3 v, float n);
+		Quaternion<T>()
+			:w(0), x(0), y(0), z(0) {
+		}
 
-		/*!コンストラクタ
-		*@param float x
-		*@param float y
-		*@param float z
-		*@param float n
+
+		/** コンストラクタ
+		* @param Vector4f
 		*/
-		Quaternion (float x, float y, float z, float n);
+		Quaternion<T>(const float w, const Vector3<T>& v) 
+			:w(w), x(v.x), y(v.y), z(v.z) {
+		}
 
-		//!デストラクタ
-		~Quaternion();
 
-		/*!四元数の大きさ
-		*@return float 四元数の大きさ
+		/** コンストラクタ
+		* @param Vector4f
 		*/
-		float Length();
+		Quaternion<T>(const Vector4<T>& v) 
+			:w(v.w), x(v.x), y(v.y), z(v.z) {
+		}
 
-		/*!四元数の大きさ
-		*@return float 四元数の大きさ
-		*/
-		float SquaredLength();
 
-		/*!四元数同士の加算
-		*@param const Quaternion q
-		*@return Quaternion
+		/** コンストラクタ
+		* @param T w
+		* @param T x
+		* @param T y
+		* @param T z
 		*/
-		inline Quaternion operator + (const Quaternion& q) const ;
+		Quaternion<T> (const T w, const T x, const T y, const T z) {
+			this->w = w;
+			this->x = x;
+			this->y = y;
+			this->z = z;
+		}
+		
 
-		/*!四元数同士の減算
-		*@param const Quaternion q
-		*@return Quaternion 
+		/** クォータニオンの加算
+		* @param const Quaternion<T> q
+		* @return Quaternion<T>
 		*/
-		inline Quaternion operator - (const Quaternion& q) const ;
+		Quaternion<T> operator + (const Quaternion<T>& q) const {
+			return Quaternion<T>(w + q.w, x + q.x, y + q.y, z + q.z);
+		}
 
-		/*!四元数同士の乗算
-		*@param const Quaternion q
-		*@return Quaternion 
-		*/
-		inline Quaternion operator * (const Quaternion& q) const ;
 
-		/*!四元数のスカラ乗算
-		*@param const Quaternion q
-		*@return Quaternion 
+		/** クォータニオンの減算
+		* @param const Quaternion<T> q
+		* @return Quaternion<T> 
 		*/
-		inline Quaternion operator * (const float s) const ;
+		Quaternion<T> operator - (const Quaternion<T>& q) const {
+			return Quaternion<T>(w - q.w, x - q.x, y - q.y, z - q.z);
+		}
 
-		/*!四元数のスカラ除算
-		*@param const Quaternion q
-		*@return Quaternion 
-		*/
-		inline Quaternion operator / (const float  s) const ;
 
-		/*!四元数の加算
-		*@param const Quaternion q
-		*@return Quaternion &
+		/** クォータニオンのスカラ乗算
+		* @param const Quaternion<T> q
+		* @return Quaternion<T> 
 		*/
-		inline Quaternion& operator += (const Quaternion& q);
+		Quaternion<T> operator * (const T s) const  {
+			return Quaternion<T>(w * s, x * s, y * s, z * s);
+		}
 
-		/*!四元数の減算
-		*@param const Quaternion q
-		*@return Quaternion &
-		*/
-		inline Quaternion& operator -= (const Quaternion& q);
 
-		/*!四元数同士の乗算
-		*@param const float q
-		*@return Quaternion &
+		/** クォータニオンのスカラ除算
+		* @param const T s
+		* @return Quaternion<T> 
 		*/
-		inline Quaternion& operator *= (const Quaternion& q);
+		Quaternion<T> operator / (const T s) const  {
+			if (s <= Math::Epsilon) {
+				return std::move(Quaternion<T>(*this));
+			}
+			return Quaternion<T>(w / s, x / s, y / s, z / s);
+		}
+		
 
-		/*!四元数のスカラ乗算
-		*@param const float q
-		*@return Quaternion &
+		/** 共役
+		* @param const Quaternion<T> q
+		* @return Quaternion<T> 
 		*/
-		inline Quaternion& operator *= (const float s);
+		Quaternion<T> operator ~ () const {
+			return Quaternion<T>(w, -x, -y, -z);
+		}
 
-		/*!四元数のスカラ除算
-		*@param const float q
-		*@return Quaternion &
-		*/
-		inline Quaternion& operator /= (const float s);
 
-		/*!共役
-		*@param const Quaternion q
-		*@return Quaternion &
+		/** クォータニオンの加算
+		* @param const Quaternion<T> q
+		* @return Quaternion<T> &
 		*/
-		inline Quaternion operator ~ () const;
+		Quaternion<T>& operator += (const Quaternion<T>& q) {
+			this->w += q.w;
+			this->x += q.x;
+			this->y += q.y;
+			this->z += q.z;
+
+			return *this;
+		}
+
+
+		/** クォータニオンの減算
+		* @param const Quaternion<T> q
+		* @return Quaternion<T> &
+		*/
+		Quaternion<T>& operator -= (const Quaternion<T>& q) {
+			this->w -= q.w;
+			this->x -= q.x;
+			this->y -= q.y;
+			this->z -= q.z;
+
+			return *this;
+		}
+
+
+		/** スカラ乗算
+		* @param const T q
+		* @return Quaternion<T> &
+		*/
+		Quaternion<T>& operator *= (const T s) {
+			this->w *= s;
+			this->x *= s;
+			this->y *= s;
+			this->z *= s;
+
+			return *this;
+		}
+
+
+		/** スカラ除算
+		* @param const T q
+		* @return Quaternion<T> &
+		*/
+		Quaternion<T>& operator /= (const T s) {
+			if (s <= Math::Epsilon) {
+				return *this;
+			}
+
+			this->w /= s;
+			this->x /= s;
+			this->y /= s;
+			this->z /= s;
+
+			return *this;
+		}
+
 
 		/**
-		* 逆元
-		* @return Quaternion&
+		* 恒等クォターニオン
 		*/
-		Quaternion& Inverse();
+		void SetupIdentity() {
+			this->w = 1;
+			this->x = 0;
+			this->y = 0;
+			this->z = 0;
+		}
+
+
+		/** クォータニオンの長さ
+		* @return float 長さ
+		*/
+		T Length() const {
+			return Math::Sqrt(x*x + y*y + z*z + w*w);
+		}
+
+
+		/** クォータニオンの2乗の長さ
+		* @return float 2乗の長さ
+		*/
+		T SquaredLength() const {
+			return (x*x + y*y + z*z + w*w);
+		}
+
 
 		/**
-		* 四元数の正規化
+		* 内積
 		*/
-		void Normalize();
+		T Dot(const Quaternion<T>& q) const {
+			return w * q.w + x * q.x + y * q.y + z * q.z;
+		}
+		
+		
+		/**
+		* 外積
+		*/
+		Quaternion<T> Cross(const Quaternion<T>& q) const {
+			Vector3<T> v1    = Vector3<T>(  x,   y,   z);
+			Vector3<T> v2    = Vector3<T>(q.x, q.y, q.z);
+			float dot        = v1.Dot(v2);
+			Vector3<T> cross = v1.Cross(v2);
+			return Quaternion(w * q.w - dot, cross + v2*w + v1*q.w);
+		}
 
+		/**
+		* 逆数
+		*/
+		Quaternion<T> Inverse() const {
+			const auto length = SquaredLength();
+			if (length <= Math::Epsilon) {
+				return Quaternion<T>(w, x, y, z);
+			}
+
+			Quaternion<T> q(w, x, y, z);
+			q = ~q;
+			return q / length;
+		}
+
+		/** 
+		* 正規化
+		*/
+		void Normalize() {
+			float length = Math::Sqrt(x * x + y * y + z * z + w * w);
+			if (length <= Math::Epsilon) {
+				length = 1;
+			}
+
+			x /= length;
+			y /= length;
+			z /= length;
+			w /= length;
+		}
+
+		/**
+		* Sphirical Lerp
+		*/
+		static Quaternion<T> Slerp(const Quaternion<T>& lhs, const Quaternion<T>& rhs, float t) {
+			Quaternion<T> q1(lhs);
+			Quaternion<T> q2(rhs);
+			float cosOmega = q1.Dot(q2);
+			if (cosOmega < 0.f) {
+				q2 = ~q2;
+				cosOmega = - cosOmega;
+			} 
+
+			float k0, k1;
+			if (cosOmega > 0.9999f) {
+				k0 = 1.0f - t;
+				k1 = t;
+			}
+			else {
+				const auto sinOmega = Math::Sqrt(1.f - cosOmega* cosOmega);
+				const auto omega    = Math::Atan2(sinOmega, cosOmega);
+				const auto inverse  = 1.f/sinOmega;
+
+				k0 = Math::Sin((1.f - t) * omega) * inverse;
+				k1 = Math::Sin(t * omega) * inverse;
+			}
+
+
+			return Quaternion<T>(q1.w * k0 + q2.w * k1, q1.x * k0+q2.x * k1, 
+								 q1.y * k0 + q2.y * k1, q1.z * k0+q2.z * k1);
+		}
+
+		/**
+		* Sphirical and Quadrangle
+		*/
+		static Quaternion<T> Squad() {
+			return Quaternion<T>();
+		}
+
+		///*
+		///**
+		//
+		//static float getRotationAngle(const Quaternion<T>& q) {
+		//	return 1.f;
+		//}
+		//*/
+		///**
+		//*/
+		//static EulerAngles getEulerAngle(const Quaternion<T>& q) {
+		//	return 1.f;
+		//}
+
+
+		///**
+		//* 回転行列に変換します
+		//*/
+		//static Matrix44 ToRotaionMatrix44(const Quaternion<T>& q) {
+		//	Matrix44 mat = Matrix44::Unit;
+		//}
+		//*/
 	};
-
 }
 #endif

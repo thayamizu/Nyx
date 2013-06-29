@@ -165,12 +165,16 @@
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h" />
     <ClInclude Include="..\Source\Movie\IMoviePlayer.h" />
     <ClInclude Include="..\Source\Movie\MoviePlayer.h" />
-    <ClInclude Include="..\Source\Network\ISocket.h" />
-    <ClInclude Include="..\Source\Network\TCP\TCPClientSocket.h" />
-    <ClInclude Include="..\Source\Network\TCP\TCPServerSocket.h" />
-    <ClInclude Include="..\Source\Network\UDP\UDPSocket.h" />
+    <ClInclude Include="..\Source\Network\WinsockInitializer.h" />
+    <ClInclude Include="..\Source\Network\WinsockTCPClientSocket.h" />
+    <ClInclude Include="..\Source\Network\WinsockTCPServerSocket.h" />
+    <ClInclude Include="..\Source\Network\WinsockUDPSocket.h" />
     <ClInclude Include="..\Source\Object\ResourceCache.h" />
     <ClInclude Include="..\Source\Object\ResourceHandle.h" />
+    <ClInclude Include="..\Source\Primitive\Color3.h" />
+    <ClInclude Include="..\Source\Primitive\Color4.h" />
+    <ClInclude Include="..\Source\Primitive\EulerAngles.h" />
+    <ClInclude Include="..\Source\Primitive\Rect.h" />
     <ClInclude Include="..\Source\Sound\AudioCache.h" />
     <ClInclude Include="..\Source\Sound\AudioManager.h" />
     <ClInclude Include="..\Source\Sound\AudioUtility.h" />
@@ -211,20 +215,10 @@
     <ClInclude Include="..\Source\Object\Delegate.h" />
     <ClInclude Include="..\Source\Object\IResource.h" />
     <ClInclude Include="..\Source\Object\NonCopyable.h" />
-    <ClInclude Include="..\Source\Primitive\Color3c.h" />
-    <ClInclude Include="..\Source\Primitive\Color3f.h" />
-    <ClInclude Include="..\Source\Primitive\Color4c.h" />
-    <ClInclude Include="..\Source\Primitive\Color4f.h" />
     <ClInclude Include="..\Source\Primitive\Matrix33.h" />
     <ClInclude Include="..\Source\Primitive\Matrix44.h" />
     <ClInclude Include="..\Source\Primitive\Plane.h" />
-    <ClInclude Include="..\Source\Primitive\Point2f.h" />
-    <ClInclude Include="..\Source\Primitive\Point2i.h" />
-    <ClInclude Include="..\Source\Primitive\Point3f.h" />
-    <ClInclude Include="..\Source\Primitive\Point3i.h" />
     <ClInclude Include="..\Source\Primitive\Quaternion.h" />
-    <ClInclude Include="..\Source\Primitive\Rect2f.h" />
-    <ClInclude Include="..\Source\Primitive\Rect2i.h" />
     <ClInclude Include="..\Source\Primitive\Vector2.h" />
     <ClInclude Include="..\Source\Primitive\Vector3.h" />
     <ClInclude Include="..\Source\Primitive\Vector4.h" />
@@ -267,11 +261,12 @@
     <ClCompile Include="..\Source\IO\PackedFile.cpp" />
     <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp" />
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp" />
-    <ClCompile Include="..\Source\Network\TCP\TCPClientSocket.cpp" />
-    <ClCompile Include="..\Source\Network\TCP\TCPServerSocket.cpp" />
-    <ClCompile Include="..\Source\Network\UDP\UDPSocket.cpp" />
+    <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp" />
+    <ClCompile Include="..\Source\Network\WinsockTCPServerSocket.cpp" />
+    <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp" />
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
+    <ClCompile Include="..\Source\Primitive\EulerAngles.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
     <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp" />
@@ -300,23 +295,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Color3c.cpp" />
-    <ClCompile Include="..\Source\Primitive\Color3f.cpp" />
-    <ClCompile Include="..\Source\Primitive\Color4c.cpp" />
-    <ClCompile Include="..\Source\Primitive\Color4f.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp" />
-    <ClCompile Include="..\Source\Primitive\Plane.cpp" />
-    <ClCompile Include="..\Source\Primitive\Point2f.cpp" />
-    <ClCompile Include="..\Source\Primitive\Point2i.cpp" />
-    <ClCompile Include="..\Source\Primitive\Point3f.cpp" />
-    <ClCompile Include="..\Source\Primitive\Point3i.cpp" />
-    <ClCompile Include="..\Source\Primitive\Quarternion.cpp" />
-    <ClCompile Include="..\Source\Primitive\Rect2f.cpp" />
-    <ClCompile Include="..\Source\Primitive\Rect2i.cpp" />
-    <ClCompile Include="..\Source\Primitive\Vector2.cpp" />
-    <ClCompile Include="..\Source\Primitive\Vector3.cpp" />
-    <ClCompile Include="..\Source\Primitive\Vector4.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />
   </ItemGroup>

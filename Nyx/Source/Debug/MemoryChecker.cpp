@@ -40,7 +40,7 @@
 		//----------------------------------------------------------------------------------------------
 		//
 		MemoryState MemoryChecker::GetMemoryState() {
-			MemoryState state;
+			MemoryState state = {};
 			_CrtMemCheckpoint(&state);
 			return state;
 		}

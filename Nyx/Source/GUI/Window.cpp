@@ -19,7 +19,7 @@
 #include "GUI/Dispatcher.h"
 #include "Debug/Assert.h"
 #include "Thread/CriticalSection.h"
-#include "Primitive/Rect2i.h"
+#include "Primitive/Rect.h"
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	Window::Window(HWND hWnd, std::wstring caption_, int x, int y, int width, int height, int id_)
@@ -88,6 +88,7 @@ namespace Nyx {
 
 		if (!hwnd) {
 			::MessageBox(NULL, TEXT("Ž¸”s‚µ‚Ü‚µ‚½"), TEXT("error"), MB_OK);
+			return false;
 		}
 
 		::SetWindowLong(hwnd, GWL_USERDATA, (long)this);

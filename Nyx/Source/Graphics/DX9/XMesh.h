@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_XMESH_H_
 #define NYX_CORE_INCLUDED_XMESH_H_
 #include "Graphics/IMesh.h"
-#include "Primitive/Color4f.h"
+#include "Primitive/Color4.h"
 namespace Nyx {
 	namespace DX9 {
 

@@ -83,7 +83,7 @@ namespace Nyx {
 			//•`‰æ
 			//---------------------------------------------------------------------------
 			void Render(Matrix44& world);
-			Vector3 position;
+			Vector3f position;
 			Matrix44 rotation;
 			Matrix44 world;
 		public:

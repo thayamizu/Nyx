@@ -45,7 +45,7 @@ namespace Nyx {
 		}
 		
 
-		return static_cast<long>(Math::Pow(10, (decibel / 33.2/100)) * 100);
+		return static_cast<long>(Math::Pow(10, (float)(decibel / 33.2/100)) * 100);
 	}
 
 	

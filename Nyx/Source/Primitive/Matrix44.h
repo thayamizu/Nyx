@@ -17,13 +17,11 @@
 #ifndef NYX_CORE_INCLUDED_MATRIX44_H_
 #define NYX_CORE_INCLUDED_MATRIX44_H_
 #include "Primitive/Vector3.h"
+
 namespace Nyx  {
 	class Matrix44 {
 	public:
-		//--------------------------------------------------------------------------------------
-		// 変数
-		//--------------------------------------------------------------------------------------
-		/// 4x4の行列
+		/// 4x4行列
 		union {	
 			struct{
 				float _11, _12, _13, _14;
@@ -34,16 +32,10 @@ namespace Nyx  {
 			float Mat[4][4];
 		};
 
-		//--------------------------------------------------------------------------------------
-		// 定数
-		//--------------------------------------------------------------------------------------
 		static const Matrix44 Unit;
 
 		static const Matrix44 Zero;
 
-		//--------------------------------------------------------------------------------------
-		// コンストラクタ・デストラクタ
-		//--------------------------------------------------------------------------------------
 		/**デフォルトコンストラクタ
 		* 行列の値をすべてゼロに設定する
 		*/
@@ -74,9 +66,6 @@ namespace Nyx  {
 		*/
 		~Matrix44();
 
-		//--------------------------------------------------------------------------------------
-		// 値の設定
-		//--------------------------------------------------------------------------------------
 		/**
 		* 行列の各要素に任意の値を設定する
 		* @param a11 
@@ -94,9 +83,6 @@ namespace Nyx  {
 			float a31, float a32, float a33, float a34,
 			float a41, float a42, float a43, float a44);
 
-		//--------------------------------------------------------------------------------------
-		// 演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* 加算
 		* @param 右辺値
@@ -132,9 +118,6 @@ namespace Nyx  {
 		*/
 		Matrix44 operator /(const float s) const;
 
-		//--------------------------------------------------------------------------------------
-		// 代入演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* 加算
 		* @param 右辺値 
@@ -177,16 +160,10 @@ namespace Nyx  {
 		*/
 		Matrix44& operator = (const Matrix44& mat);
 
-		//--------------------------------------------------------------------------------------
-		// 論理演算
-		//--------------------------------------------------------------------------------------
 		bool Equal(const Matrix44 & m);
 		bool operator == (const Matrix44 &m);
 		bool operator != (const Matrix44 &m);
 
-		//--------------------------------------------------------------------------------------
-		// 行列演算
-		//--------------------------------------------------------------------------------------
 		/**
 		* 行列式
 		* @return 行列式の値
@@ -205,34 +182,33 @@ namespace Nyx  {
 		*/
 		float Inverse();
 
-		//--------------------------------------------------------------------------------------
-		// 変換行列
-		//--------------------------------------------------------------------------------------
+		/*static Matrix44&& SetupTransform();
+		static Matrix44&& SetupRotate();
+		static Matrix44&& SetupScale();
+		static Matrix44&& SetupTranslate();
+		*/
 		static Matrix44& Transform(
 			Matrix44* out, 
 			float sx, float sy, float sz, 
 			float rx, float ry, float rz, 
 			float tx, float ty, float tz);
-		static Matrix44& Transform(Matrix44* out, Vector3 sv, Vector3 rv, Vector3 tv);
+		static Matrix44& Transform(Matrix44* out, Vector3f sv, Vector3f rv, Vector3f tv);
 
-		//--------------------------------------------------------------------------------------
-		// 平行移動
-		//--------------------------------------------------------------------------------------
-		static Matrix44& Translation(Matrix44* out, float tx, float ty, float tz);
+		static Matrix44& Translate(Matrix44* out, float tx, float ty, float tz);
+		//static Matrix44& Translate(Matrix44* out, Vector3f tv);
 
-		//--------------------------------------------------------------------------------------
-		// 拡大・縮小
-		//--------------------------------------------------------------------------------------
-		static Matrix44& Scaling(Matrix44* out, float sx, float sy, float sz);
+		static Matrix44& Scale(Matrix44* out, float sx, float sy, float sz);
+		//static Matrix44& Scale(Matrix44* out, Vector3f sv);
 
-		//--------------------------------------------------------------------------------------
-		// 回転
-		//--------------------------------------------------------------------------------------
-		static Matrix44& RotationX(Matrix44* out, float angle);
-		static Matrix44& RotationY(Matrix44* out, float angle);
-		static Matrix44& RotationZ(Matrix44* out, float angle);
-		static Matrix44& RotationZXY(Matrix44* out, float roll, float pitch, float yaw);
+		static Matrix44& RotateX(Matrix44* out, float angle);
+		static Matrix44& RotateY(Matrix44* out, float angle);
+		static Matrix44& RotateZ(Matrix44* out, float angle);
+		static Matrix44& RotateZXY(Matrix44* out, float roll, float pitch, float yaw);
 
+		/**
+		static EulerAngles ToQuaternion(); 
+		static EulerAngles ToEulerAngles(); 
+		*/
 	};
 };
 
