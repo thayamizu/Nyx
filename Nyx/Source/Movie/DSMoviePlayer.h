@@ -10,18 +10,46 @@ namespace Nyx
 	public:
 		DSMoviePlayer(); 
 		DSMoviePlayer(const std::wstring & name);
-		~DSMoviePlayer();
-		bool Open(const std::wstring& name);
-	bool Close();
-		
-		bool Play();
-		bool Stop();
-		bool Pause();
-		bool Resume();
 
-		bool IsPause();
-		bool IsPlaying();
-		bool IsOpened();
+		/**
+		* 動画ファイルを開きます
+		* @param const std::wstring& ファイル名
+		* @return bool(trueなら成功)
+		*/
+		bool Open(const std::wstring& name);
+
+
+		/**
+		* 動画ファイルを閉じます
+		* @param const std::wstring& ファイル名
+		* @return bool(trueなら成功)
+		*/
+		bool Close();
+
+
+		/**
+		* 動画を再生します
+		*/
+		void Play();
+
+
+		/**
+		* 動画を停止します
+		*/
+		void Stop();
+
+
+		/**
+		* 動画を一時停止します
+		*/
+		void Pause();
+
+
+		/**
+		* 動画再生をレジュームします
+		*/
+		void Resume();
+	private:
 	};
 }
 #endif

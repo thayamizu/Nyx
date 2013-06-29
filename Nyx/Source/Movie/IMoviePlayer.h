@@ -7,60 +7,51 @@ namespace Nyx
 	class IMoviePlayer 
 	{
 	public:
+		/**
+		* デストラクタ
+		*/
 		virtual ~IMoviePlayer() {}
 
-			/**
-		*
-		*@return 
+		/**
+		* 動画ファイルを開きます
+		* @param const std::wstring& ファイル名
+		* @return bool(trueなら成功)
 		*/
 		virtual bool Open(const std::wstring& name) = 0;
-			
+
+
 		/**
-		*
-		*@return 
+		* 動画ファイルを閉じます
+		* @param const std::wstring& ファイル名
+		* @return bool(trueなら成功)
 		*/
 		virtual bool Close() = 0;
-		/**
-		*
-		*@return 
-		*/
-		virtual bool Play()  = 0;
+
 
 		/**
-		*
-		*@return 
+		* 動画を再生します
 		*/
-		virtual bool Stop()  = 0;
+		virtual void Play()  = 0;
+
+
 
 		/**
-		*
-		*@return 
+		* 動画を再生します
 		*/
-		virtual bool Pause()  = 0;
+		virtual void Stop()  = 0;
+
 
 		/**
-		*
-		*@return 
+		* 動画を一時停止します
 		*/
-		virtual bool Resume() = 0;
+		virtual void Pause()  = 0;
+
 
 		/**
-		*
-		*@return 
+		* 動画再生をレジュームします
 		*/
-		virtual bool IsPause()   = 0;
+		virtual void Resume() = 0;
 
-		/**
-		*
-		*@return 
-		*/
-		virtual bool IsPlaying() = 0;
-
-		/**
-		*
-		*@return
-		*/
-		virtual bool IsOpened() =0;
 	};
 }
 #endif
