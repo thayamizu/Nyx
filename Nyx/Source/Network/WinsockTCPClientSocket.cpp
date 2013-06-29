@@ -15,6 +15,7 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
+#include "Debug/DebugOutput.h"
 #include "Network/WinsockTCPClientSocket.h"
 
 namespace Nyx {
@@ -26,7 +27,8 @@ namespace Nyx {
 		destination_ = socket(AF_INET, SOCK_STREAM, 0);
 		if(destination_ < 0){
 			int result = ::WSAGetLastError();
-			throw Nyx::Win32Exception("Winsockソケットの作成に失敗しました", result);
+			DebugOutput::Trace("Winsockソケットの作成に失敗しました。");
+			throw Nyx::Win32Exception("Winsockソケットの作成に失敗しました。", result);
 		}
 	}
 

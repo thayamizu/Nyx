@@ -32,7 +32,6 @@
 #pragma comment( lib, "user32.lib" )
 #pragma comment( lib, "comdlg32.lib" )
 #pragma comment( lib, "advapi32.lib" )
-#pragma comment( lib, "ws2_32.lib" )
 #pragma comment( lib, "winmm.lib" )
 
 #endif

@@ -25,15 +25,9 @@ namespace Nyx {
 	public:
 		/**
 		* コンストラクタ
-		*/
-		WinsockTCPServerSocket();
-
-
-		/**
-		* コンストラクタ
 		* @param ushort ポート番号
 		*/
-		WinsockTCPServerSocket(ushort port) ;
+		WinsockTCPServerSocket(ushort port=8080) ;
 
 
 		/**
@@ -63,18 +57,6 @@ namespace Nyx {
 		* 
 		*/
 		void Disconnect();
-
-
-		/**
-		* 
-		*/
-		void SetPort(ushort port);
-
-
-		/**
-		* 
-		*/
-		ushort GetPort() const;
 
 
 		/**

@@ -15,38 +15,36 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
+#include "Debug/DebugOutput.h"
 #include "Network/WinsockTCPServerSocket.h"
 
 namespace Nyx {
-	//-----------------------------------------------------------------------------------------
-	//
-	WinsockTCPServerSocket::WinsockTCPServerSocket() 
-		: port_(0), maxConnect_(1) {
-			// ソケットの作成
-			source_ = socket(AF_INET, SOCK_STREAM, 0);
-			if(source_ != 0){
-				int status = ::WSAGetLastError();
-				throw Win32Exception("ソケットの作成に失敗しました", status);
-			}
-	}
-
-
 	//-----------------------------------------------------------------------------------------
 	//
 	WinsockTCPServerSocket::WinsockTCPServerSocket(ushort port) 
 		: port_(port), maxConnect_(1) {
 			// ソケットの作成
 			source_ = socket(AF_INET, SOCK_STREAM, 0);
-			if(source_ != 0){
+			if(source_ == INVALID_SOCKET){
 				int status = ::WSAGetLastError();
-				throw Win32Exception("ソケットの作成に失敗しました", status);
+				DebugOutput::Trace("ソケットの作成に失敗しました。");
+				throw Win32Exception("ソケットの作成に失敗しました。", status);
 			}
 
 			//ソケットとアドレス情報にバインド
-			Bind();
+			if (!this->Bind()) {
+				LRESULT status = ::WSAGetLastError();
+				DebugOutput::Trace("Bindに失敗しました。");
+				throw Win32Exception("Bindに失敗しました。", status);
+			}
 
 			//接続要求を受け付ける
-			Listen();
+			if(!this->Listen()) {
+				LRESULT status = ::WSAGetLastError();
+				DebugOutput::Trace("Listenに失敗しました。");
+				throw Win32Exception("Listenに失敗しました。", status);
+			}
+
 	}
 
 
@@ -72,19 +70,20 @@ namespace Nyx {
 	//
 	bool WinsockTCPServerSocket::Listen() {
 		int result = listen(source_, maxConnect_);
-		return result == INVALID_SOCKET;
+		return result == 0;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
 	bool WinsockTCPServerSocket::Bind() {
+		// ソケットの設定
 		address_.sin_family           = AF_INET;
 		address_.sin_port             = htons(port_);
 		address_.sin_addr.S_un.S_addr = INADDR_ANY;
 		int result = bind(source_, (sockaddr *)&address_, sizeof(address_));
 
-		return result != INVALID_SOCKET;
+		return result != SOCKET_ERROR;
 	}
 
 
@@ -98,20 +97,6 @@ namespace Nyx {
 		if (source_ != NULL) {
 			closesocket(source_);
 		}
-	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	void WinsockTCPServerSocket::SetPort(ushort port) {
-		port_ = port;
-	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	ushort WinsockTCPServerSocket::GetPort() const {
-		return port_;
 	}
 
 

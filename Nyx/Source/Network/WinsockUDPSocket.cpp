@@ -45,7 +45,6 @@ namespace Nyx {
 		// ローカルサーバのアドレスを指定
 		address_.sin_family           = AF_INET;
 		address_.sin_port			  = htons(port);
-
 		address_.sin_addr.S_un.S_addr = inet_addr(address);
 
 		// 無効だったので, DomainName から検索する
@@ -59,6 +58,7 @@ namespace Nyx {
 			address_.sin_addr.S_un.S_addr = *hostname;
 
 		}
+
 		int status = bind(socket_, (sockaddr*)&address_, sizeof(address_));
 		if (status == INVALID_SOCKET) {
 			return false;

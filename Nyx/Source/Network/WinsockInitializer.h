@@ -1,6 +1,7 @@
 #ifndef NYX_CORE_INCLUDED_WINSOCK_INITIALIZER_H_
 #define NYX_CORE_INCLUDED_WINSOCK_INITIALIZER_H_
 #include "PCH/PCH.h"
+#pragma comment( lib, "ws2_32.lib" )
 
 namespace Nyx {
 
