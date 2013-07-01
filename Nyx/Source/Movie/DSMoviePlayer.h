@@ -1,15 +1,14 @@
 #ifndef NYX_CORE_DSMOVIE_PLAYER_H_
 #define NYX_CORE_DSMOVIE_PLAYER_H_
-#include "Utility/Type.h"
+#include "DirectShowDefinition.h"
 #include "Movie/IMoviePlayer.h"
 
 namespace Nyx
 {
-	class DSMoviePlayer : public IMoviePlayer 
-	{
+	class Window;
+	class DSMoviePlayer : public IMoviePlayer {
 	public:
-		DSMoviePlayer(); 
-		DSMoviePlayer(const std::wstring & name);
+		DSMoviePlayer(const std::wstring & name, Nyx::Window& window);
 
 		/**
 		* 動画ファイルを開きます
@@ -50,6 +49,10 @@ namespace Nyx
 		*/
 		void Resume();
 	private:
+		IMediaControlPtr  mediaControl_;
+		IMediaEventExPtr  mediaEvent_;
+		IGraphBuilderPtr  graphBuilder_;
+		IVideoWindowPtr   videoWindow_;
 	};
 }
 #endif

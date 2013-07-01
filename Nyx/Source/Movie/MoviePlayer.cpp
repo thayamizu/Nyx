@@ -10,13 +10,13 @@ namespace Nyx
 	//-----------------------------------------------------------------------------------
 	MoviePlayer::MoviePlayer() 
 		:player_(nullptr) {
-		player_  = std::make_shared<DSMoviePlayer>();
+		//player_  = std::make_shared<DSMoviePlayer>();
 	}
 
 	//-----------------------------------------------------------------------------------
 	MoviePlayer::MoviePlayer(const std::wstring & name)
 		:player_(nullptr) {
-		player_  =std::make_shared<DSMoviePlayer>(name);
+		//player_  =std::make_shared<DSMoviePlayer>(name, nullptr);
 	}
 
 	//-----------------------------------------------------------------------------------

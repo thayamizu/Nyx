@@ -162,6 +162,7 @@
     <ClInclude Include="..\Source\IO\IFile.h" />
     <ClInclude Include="..\Source\IO\Logger.h" />
     <ClInclude Include="..\Source\IO\PackedFile.h" />
+    <ClInclude Include="..\Source\Movie\DirectShowDefinition.h" />
     <ClInclude Include="..\Source\Movie\DSMoviePlayer.h" />
     <ClInclude Include="..\Source\Movie\IMoviePlayer.h" />
     <ClInclude Include="..\Source\Movie\MoviePlayer.h" />

@@ -538,6 +538,9 @@
     <ClInclude Include="..\Source\Network\WinsockInitializer.h">
       <Filter>Network\detail\WinSock</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Movie\DirectShowDefinition.h">
+      <Filter>Movie\detail\DirectShow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
