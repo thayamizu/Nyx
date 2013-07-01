@@ -6,16 +6,16 @@
 namespace Nyx
 {
 	class Window;
-	class DSMoviePlayer : public IMoviePlayer {
+	class DSMoviePlayer{
 	public:
-		DSMoviePlayer(const std::wstring & name, Nyx::Window& window);
+		DSMoviePlayer(const std::wstring & name);
 
 		/**
 		* 動画ファイルを開きます
 		* @param const std::wstring& ファイル名
 		* @return bool(trueなら成功)
 		*/
-		bool Open(const std::wstring& name);
+		bool Open(const std::wstring& name, Nyx::Window& window);
 
 
 		/**

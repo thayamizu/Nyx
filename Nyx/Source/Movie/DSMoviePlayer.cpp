@@ -6,7 +6,7 @@
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------
-	DSMoviePlayer::DSMoviePlayer(const std::wstring & name, Window& window)
+	DSMoviePlayer::DSMoviePlayer(const std::wstring & name)
 		:mediaControl_(nullptr), mediaEvent_(nullptr), videoWindow_(nullptr), graphBuilder_(nullptr){
 
 			Assert(graphBuilder_  == nullptr);
@@ -18,8 +18,8 @@ namespace Nyx {
 			HRESULT hr = CoCreateInstance(CLSID_FilterGraph, NULL,
 				CLSCTX_INPROC, IID_IGraphBuilder, (LPVOID *)&pGraphBuilder);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
+				DebugOutput::Trace("GraphBuilderの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("GraphBuilderの作成に失敗しました。", hr);
 			}
 			graphBuilder_ = IGraphBuilderPtr(pGraphBuilder);
 
@@ -27,8 +27,8 @@ namespace Nyx {
 			hr = pGraphBuilder->QueryInterface(IID_IMediaControl,
 				(LPVOID *)&pMediaControl);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
+				DebugOutput::Trace("IMediaControlインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("IMediaControlインタフェースの取得に失敗しました。", hr);
 			}
 			mediaControl_ = IMediaControlPtr(pMediaControl);
 
@@ -36,8 +36,8 @@ namespace Nyx {
 			pGraphBuilder->QueryInterface(IID_IMediaEventEx,
 				(LPVOID *)&pMediaEvent);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
+				DebugOutput::Trace("IMediaEventExインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("IMediaEventExインタフェースの取得に失敗しました。", hr);
 			}
 			mediaEvent_ = IMediaEventExPtr(pMediaEvent);
 
@@ -46,19 +46,11 @@ namespace Nyx {
 			pGraphBuilder->QueryInterface(IID_IVideoWindow,
 				(LPVOID *)&pVideoWindow);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
+				DebugOutput::Trace("IVideoWindowインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("IVideoWindowインタフェースの取得に失敗しました。", hr);
 			}
-			hr = pVideoWindow->put_Owner((OAHWND)(window.GetHandle()));
-			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
-			}
-			pVideoWindow->put_WindowStyle(WS_CHILD|WS_CLIPSIBLINGS);
-			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
-			}
+			videoWindow_ = IVideoWindowPtr(pVideoWindow);
+
 			Assert(graphBuilder_  != nullptr);
 			Assert(mediaControl_  != nullptr);
 			Assert(mediaEvent_    != nullptr);
@@ -67,13 +59,31 @@ namespace Nyx {
 
 
 	//-----------------------------------------------------------------------------------
-	bool DSMoviePlayer::Open(const std::wstring& fileName) {
+	bool DSMoviePlayer::Open(const std::wstring& fileName, Nyx::Window& window) {
 		BSTR  name = ::SysAllocString(fileName.c_str());
 		HRESULT hr = mediaControl_->RenderFile(name);
 		if (FAILED(hr)) {
 			return false;
 		}
 		return true;
+
+		hr = videoWindow_->put_Owner((OAHWND)window.GetHandle());
+		if (FAILED(hr)) {
+			DebugOutput::Trace("出力ウインドウの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("出力ウインドウの設定に失敗しました。", hr);
+		}
+		hr = videoWindow_->put_WindowStyle(WS_CHILD|WS_CLIPSIBLINGS);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("ウインドウスタイルの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("ウインドウスタイルの設定に失敗しました。", hr);
+		}
+		Rect2i rect;
+		window.GetSize(&rect);
+		videoWindow_->SetWindowPosition(0, 0,
+			rect.width, rect.height);
+
+		videoWindow_->SetWindowForeground(OATRUE);
+		videoWindow_->put_Visible(OATRUE);
 	}
 
 
