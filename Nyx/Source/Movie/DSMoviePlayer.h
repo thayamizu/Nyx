@@ -8,14 +8,14 @@ namespace Nyx
 	class Window;
 	class DSMoviePlayer{
 	public:
-		DSMoviePlayer(const std::wstring & name);
+		DSMoviePlayer(HWND hwnd);
 
 		/**
 		* 動画ファイルを開きます
 		* @param const std::wstring& ファイル名
 		* @return bool(trueなら成功)
 		*/
-		bool Open(const std::wstring& name, Nyx::Window& window);
+		bool Open(const std::wstring& name);
 
 
 		/**
@@ -52,7 +52,11 @@ namespace Nyx
 		IMediaControlPtr  mediaControl_;
 		IMediaEventExPtr  mediaEvent_;
 		IGraphBuilderPtr  graphBuilder_;
-		IVideoWindowPtr   videoWindow_;
+		IBaseFilterPtr    baseFilter_;
+		IBaseFilterPtr    sourceFilter_;
+		IVMRWindowlessControlPtr   windowlessControl_;
+		ICaptureGraphBuilder2Ptr   captureGraphBuilder_;
+		std::shared_ptr<Nyx::Window> window_;
 	};
 }
 #endif
