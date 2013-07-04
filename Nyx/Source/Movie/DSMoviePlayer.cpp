@@ -6,8 +6,35 @@
 
 namespace Nyx {
 	//-----------------------------------------------------------------------------------
-	DSMoviePlayer::DSMoviePlayer(HWND hwnd)
-		:mediaControl_(nullptr), mediaEvent_(nullptr), windowlessControl_(nullptr), graphBuilder_(nullptr) {
+	//
+	DSMoviePlayer::DSMoviePlayer()
+			: mediaControl_(nullptr), mediaEvent_(nullptr), windowlessControl_(nullptr), graphBuilder_(nullptr), 
+			captureGraphBuilder_(nullptr), videoMixingRenderer_(nullptr), sourceFilter_(nullptr) {
+
+	}
+
+
+	//-----------------------------------------------------------------------------------
+	//
+	DSMoviePlayer::DSMoviePlayer(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName)
+		: mediaControl_(nullptr), mediaEvent_(nullptr), windowlessControl_(nullptr), graphBuilder_(nullptr), 
+			captureGraphBuilder_(nullptr), videoMixingRenderer_(nullptr), sourceFilter_(nullptr) {
+				try {
+					//動画再生用のフィルタグラフを初期化
+					Initialize(window);
+
+					//動画を開く
+					Open(fileName);
+				}
+				catch(COMException e) {
+					throw e;
+				}
+	}
+	
+
+
+	//-----------------------------------------------------------------------------------
+	void DSMoviePlayer::Initialize(const std::shared_ptr<Nyx::Window> window) {
 			Assert(graphBuilder_  == nullptr);
 			Assert(mediaControl_  == nullptr);
 			Assert(mediaEvent_    == nullptr);
@@ -44,6 +71,7 @@ namespace Nyx {
 			mediaEvent_ = IMediaEventExPtr(pMediaEvent);
 
 
+			//VidoMixingRendererを取得
 			IBaseFilter *pBaseFilter = NULL;
 			hr = CoCreateInstance(CLSID_VideoMixingRenderer, NULL, 
 				CLSCTX_INPROC, IID_IBaseFilter, (void**)&pBaseFilter); 
@@ -51,9 +79,11 @@ namespace Nyx {
 				DebugOutput::Trace("IBaseFilterインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
 				throw COMException("IBaseFilterインタフェースの取得に失敗しました。", hr);
 			}
-			baseFilter_ = IBaseFilterPtr(pBaseFilter);
+			videoMixingRenderer_ = IBaseFilterPtr(pBaseFilter);
 
-			hr = graphBuilder_->AddFilter(baseFilter_.get(), L"Video Mixing Renderer9");
+
+			//GraphBuilderに VideoMixingRendererフィルタを追加
+			hr = graphBuilder_->AddFilter(videoMixingRenderer_.get(), L"Video Mixing Renderer9");
 			if (FAILED(hr)) {
 				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
 				throw COMException("AddFilterメソッドに失敗しました。", hr);
@@ -61,44 +91,34 @@ namespace Nyx {
 
 			// レンダリング モードを設定する。
 			IVMRFilterConfig* pRenderingConfig = NULL;
-			hr = baseFilter_->QueryInterface(IID_IVMRFilterConfig, (LPVOID*)&pRenderingConfig);
+			hr = videoMixingRenderer_->QueryInterface(IID_IVMRFilterConfig, (LPVOID*)&pRenderingConfig);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				DebugOutput::Trace("IVMRFilterConfigインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("IVMRFilterConfigインタフェースの取得に失敗しました。", hr);
 			}
-
-
 			hr = pRenderingConfig->SetRenderingMode(VMRMode_Windowless);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				DebugOutput::Trace("SetRenderingModeメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw COMException("SetRenderingModeメソッドに失敗しました。", hr);
 			}
 			pRenderingConfig->Release();
 
-			// ウィンドウを設定する。
+
+			// 再生ウインドウを設定する。
 			IVMRWindowlessControl *pWindowlessControl = NULL;
-			hr = baseFilter_->QueryInterface(IID_IVMRWindowlessControl, (LPVOID*)&pWindowlessControl);
+			hr = videoMixingRenderer_->QueryInterface(IID_IVMRWindowlessControl, (LPVOID*)&pWindowlessControl);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
 				throw COMException("AddFilterメソッドに失敗しました。", hr);
 			}
 			windowlessControl_ = IVMRWindowlessControlPtr(pWindowlessControl);
-
-			hr = windowlessControl_->SetVideoClippingWindow(hwnd);
+			hr = windowlessControl_->SetVideoClippingWindow(window->GetHandle());
 			if (FAILED(hr)) {
 				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
 				throw COMException("AddFilterメソッドに失敗しました。", hr);
 			}
 
-			IBaseFilter *pSource;
-			hr  = graphBuilder_->AddSourceFilter(L"中川かのん.mp4", L"中川かのん.mp4", &pSource);
-			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
-			}
-			sourceFilter_ = IBaseFilterPtr(pSource);
-
-			
+			//CaptureGraphBuilder2インタフェースの取得
 			ICaptureGraphBuilder2 *pCGB2 = NULL;
 			hr = CoCreateInstance( CLSID_CaptureGraphBuilder2, NULL, CLSCTX_INPROC_SERVER, IID_ICaptureGraphBuilder2, (void**)&pCGB2);
 			if (FAILED(hr)) {
@@ -107,65 +127,91 @@ namespace Nyx {
 			}
 			captureGraphBuilder_ = ICaptureGraphBuilder2Ptr(pCGB2);
 
+
+			//フィルタグラフにグラフビルダーを追加
 			hr = captureGraphBuilder_->SetFiltergraph(graphBuilder_.get());
 			if (FAILED(hr)) {
 				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
 				throw COMException("AddFilterメソッドに失敗しました。", hr);
 			}
-			hr = pCGB2->RenderStream(0, 0, sourceFilter_.get(), 0, baseFilter_.get());
-			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
-			}
-			// ネイティブ ビデオ サイズを取得する。
-			long width, height;
-			hr = windowlessControl_->GetNativeVideoSize(&width, &height, NULL, NULL);
-			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
-			}
 
-			RECT src = {};
-			src.right = width;
-			src.bottom = height;
 
-			RECT dest = {};
-			dest.right = 800;
-			dest.bottom = 600;
-			hr = windowlessControl_->SetVideoPosition(&src, &dest);
-			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
-			}
-			pCGB2->RenderStream(0, &MEDIATYPE_Audio, pSource, 0, 0);
+			//クライアントウインドウのサイズを覚えておく
+			Rect2i clientSize;
+			window->GetSize(&clientSize);
+			SetRect(&clientRect_, 0, 0, clientSize.width, clientSize.height);
+
 			Assert(graphBuilder_  != nullptr);
 			Assert(mediaControl_  != nullptr);
 			Assert(mediaEvent_    != nullptr);
-			Assert(windowlessControl_   != nullptr);
+			Assert(windowlessControl_     != nullptr);
+			Assert(captureGraphBuilder_   != nullptr);
+			Assert(videoMixingRenderer_   != nullptr);
 	}
 
 
 	//-----------------------------------------------------------------------------------
-	bool DSMoviePlayer::Open(const std::wstring& fileName) {
-		BSTR  name = ::SysAllocString(fileName.c_str());
-		
-		HRESULT hr = graphBuilder_->RenderFile(name, NULL);
+	void DSMoviePlayer::Open(const std::wstring& fileName) {
+		//ソースフィルタにファイルを接続する
+		IBaseFilter *pSource = NULL;
+		HRESULT hr  = graphBuilder_->AddSourceFilter(fileName.c_str(), fileName.c_str(), &pSource);
 		if (FAILED(hr)) {
-			return false;
+			DebugOutput::Trace("AddSourceFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("AddSourceFilterメソッドに失敗しました。", hr);
+		}
+		sourceFilter_ = IBaseFilterPtr(pSource);
+
+
+		// ネイティブ ビデオ サイズを取得する。
+		long width, height;
+		hr = windowlessControl_->GetNativeVideoSize(&width, &height, NULL, NULL);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("AddFilterメソッドに失敗しました。", hr);
+		}
+		
+		//転送元矩形を設定
+		RECT src = {0, 0, width, height};
+		hr = windowlessControl_->SetVideoPosition(&src, &clientRect_);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("AddFilterメソッドに失敗しました。", hr);
 		}
 
-       
+		//ビデオレンダラにソースフィルタを接続
+		hr = captureGraphBuilder_->RenderStream(0, 0, sourceFilter_.get(), 0, videoMixingRenderer_.get());
+		if (FAILED(hr)) {
+			DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("AddFilterメソッドに失敗しました。", hr);
+		}
+
+		
+		//オーディオレンダラにソースフィルタを接続
+		hr = captureGraphBuilder_->RenderStream(0, &MEDIATYPE_Audio, pSource, 0, 0);
+		if (FAILED(hr)) {
+			DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("AddFilterメソッドに失敗しました。", hr);
+		}
+
 		return true;
 	}
 
 
 	//-----------------------------------------------------------------------------------
-	bool DSMoviePlayer::Close() {
-		return true;
+	//
+	void DSMoviePlayer::Close() {
+		Assert(sourceFilter_ != nullptr);
+		Assert(graphBuilder_ != nullptr);
+		HRESULT hr = graphBuilder_->RemoveFilter(sourceFilter_.get());
+		if (FAILED(hr)) {
+			DebugOutput::Trace("RemoveFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw COMException("RemoveFilterメソッドに失敗しました。", hr);
+		}
 	}
 
-
+	
 	//-----------------------------------------------------------------------------------
+	//
 	void DSMoviePlayer::Play() {
 		Assert(mediaControl_ != nullptr);
 		HRESULT hr = mediaControl_->Run();
@@ -176,7 +222,9 @@ namespace Nyx {
 	}
 
 
+	
 	//-----------------------------------------------------------------------------------
+	//
 	void DSMoviePlayer::Stop() {
 		Assert(mediaControl_ != nullptr);
 		HRESULT hr = mediaControl_->Stop();
@@ -188,6 +236,7 @@ namespace Nyx {
 
 
 	//-----------------------------------------------------------------------------------
+	//
 	void DSMoviePlayer::Pause() {
 		Assert(mediaControl_ != nullptr);
 		HRESULT hr  =mediaControl_->Pause();
@@ -199,6 +248,7 @@ namespace Nyx {
 
 
 	//-----------------------------------------------------------------------------------
+	//
 	void DSMoviePlayer::Resume() {
 		Assert(mediaControl_ != nullptr);
 		HRESULT hr = mediaControl_->Run();
