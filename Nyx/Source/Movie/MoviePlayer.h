@@ -1,17 +1,16 @@
-#ifndef NYX_CORE_DSMOVIE_PLAYER_H_
-#define NYX_CORE_DSMOVIE_PLAYER_H_
+#ifndef NYX_CORE_MOVIE_PLAYER_H_
+#define NYX_CORE_MOVIE_PLAYER_H_
 #include "DirectShowDefinition.h"
-#include "Movie/IMoviePlayer.h"
 
 namespace Nyx
 {
 	class Window;
-	class DSMoviePlayer {
+	class MoviePlayer {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		DSMoviePlayer();
+		MoviePlayer();
 
 
 		/**
@@ -19,7 +18,7 @@ namespace Nyx
 		* @param const std::shared_ptr<Nyx::Window> ウインドウ
 		* @param const std::wstring& ファイル名
 		*/
-		DSMoviePlayer(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName);
+		MoviePlayer(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName);
 		
 
 		/**
@@ -36,14 +35,6 @@ namespace Nyx
 		* @return bool(trueなら成功)
 		*/
 		void Open(const std::wstring& name);
-
-
-		/**
-		* 動画ファイルを閉じます
-		* @param const std::wstring& ファイル名
-		* @return bool(trueなら成功)
-		*/
-		void Close();
 
 
 		/**
@@ -68,6 +59,20 @@ namespace Nyx
 		* 動画再生をレジュームします
 		*/
 		void Resume();
+
+
+		/**
+		* アスペクト比維持するかどうかを指定します．
+		* @param bool アスペクト比を維持するならtrue
+		*/
+		void SetAspectRatioMode(bool mode);
+
+
+		/**
+		* アスペクト比のモードを取得します
+		* @return bool アスペクト比を維持するならtrue
+		*/
+		bool GetAspectRatioMode() const;
 	private:
 		IMediaControlPtr  mediaControl_;
 		IMediaEventExPtr  mediaEvent_;
