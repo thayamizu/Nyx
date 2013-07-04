@@ -120,8 +120,6 @@ class SkinMesh;
 #include "Input/Joystick.h"
 
 //動画再生
-#include "Movie/IMoviePlayer.h"
-#include "Movie/DSMoviePlayer.h"
 #include "Movie/MoviePlayer.h"
 
 // タイマー

@@ -162,8 +162,7 @@
     <ClInclude Include="..\Source\IO\IFile.h" />
     <ClInclude Include="..\Source\IO\Logger.h" />
     <ClInclude Include="..\Source\IO\PackedFile.h" />
-    <ClInclude Include="..\Source\Movie\DSMoviePlayer.h" />
-    <ClInclude Include="..\Source\Movie\IMoviePlayer.h" />
+    <ClInclude Include="..\Source\Movie\DirectShowDefinition.h" />
     <ClInclude Include="..\Source\Movie\MoviePlayer.h" />
     <ClInclude Include="..\Source\Network\WinsockInitializer.h" />
     <ClInclude Include="..\Source\Network\WinsockTCPClientSocket.h" />
@@ -259,7 +258,6 @@
     <ClCompile Include="..\Source\IO\File.cpp" />
     <ClCompile Include="..\Source\IO\Logger.cpp" />
     <ClCompile Include="..\Source\IO\PackedFile.cpp" />
-    <ClCompile Include="..\Source\Movie\DSMoviePlayer.cpp" />
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp" />
     <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp" />
     <ClCompile Include="..\Source\Network\WinsockTCPServerSocket.cpp" />
