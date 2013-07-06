@@ -284,13 +284,6 @@ namespace Nyx {
 								 q1.y * k0 + q2.y * k1, q1.z * k0+q2.z * k1);
 		}
 
-		/**
-		* Sphirical and Quadrangle
-		*/
-		static Quaternion<T> Squad() {
-			return Quaternion<T>();
-		}
-
 		///*
 		///**
 		//

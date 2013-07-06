@@ -214,7 +214,6 @@
     <ClInclude Include="..\Source\Object\Delegate.h" />
     <ClInclude Include="..\Source\Object\IResource.h" />
     <ClInclude Include="..\Source\Object\NonCopyable.h" />
-    <ClInclude Include="..\Source\Primitive\Matrix33.h" />
     <ClInclude Include="..\Source\Primitive\Matrix44.h" />
     <ClInclude Include="..\Source\Primitive\Plane.h" />
     <ClInclude Include="..\Source\Primitive\Quaternion.h" />
@@ -264,7 +263,6 @@
     <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp" />
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
-    <ClCompile Include="..\Source\Primitive\EulerAngles.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
     <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp" />
@@ -293,7 +291,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />

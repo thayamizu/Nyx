@@ -237,9 +237,6 @@
     <ClInclude Include="..\Source\PCH\PCH.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Primitive\Matrix33.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Primitive\Matrix44.h">
       <Filter>Primitive</Filter>
     </ClInclude>
@@ -579,9 +576,6 @@
     <ClCompile Include="..\Source\PCH\PCH.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Matrix33.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Primitive\Matrix44.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
@@ -716,9 +710,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Sound\DirectSoundAudioListener.cpp">
       <Filter>Sound\detail\DirectSound\AudioListener</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\EulerAngles.cpp">
-      <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp">
       <Filter>Network\detail\WinSock</Filter>
