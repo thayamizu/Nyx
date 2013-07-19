@@ -45,7 +45,7 @@ namespace Nyx
 		static const Vector3<T> UnitZ; ///< Z軸単位ベクトル
 
 		static const Vector3<T> ScaleUnit; ///< スケール単位ベクトル 
-
+	
 
 		/**
 		*デフォルトコンストラクタ
@@ -352,6 +352,7 @@ namespace Nyx
 	typedef Vector3<int>     TexChoord3i;
 	typedef Vector3<float>   TexChoord3f;
 	typedef Vector3<double>  TexChoord3d;
+
 
 	//--------------------------------------------------------------------------------------
 	// 定数定義

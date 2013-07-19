@@ -284,27 +284,94 @@ namespace Nyx {
 								 q1.y * k0 + q2.y * k1, q1.z * k0+q2.z * k1);
 		}
 
-		///*
-		///**
-		//
-		//static float getRotationAngle(const Quaternion<T>& q) {
-		//	return 1.f;
-		//}
-		//*/
-		///**
-		//*/
-		//static EulerAngles getEulerAngle(const Quaternion<T>& q) {
-		//	return 1.f;
-		//}
+
+		/**
+		* クォターニオンからから回転角を取り出す
+		*/
+		static float GetRotationAngle(const Quaternion<T>& q) {
+			float tmp =  Math::Clamp(w, -1.0, 1.0);
+			float theta = Math::Asin(tmp);
+
+			return theta;
+		}
+		
+
+		/**
+		* クォターニオンから回転軸を取り出す
+		*/
+		static Axis3f GetRotationAxis(){
+			float sinTheta  = 1.f - w * w;
+
+			if (Math::Abs(sinTheta) <= Math::Epsilon) {
+				return Axis3f(1.f, 1.f, 1.f);
+			}
+
+			float oneOverSinTheta = 1.f / Math::Sqrt(sinTheta);
+
+			return Axis3f(x * oneOverSinTheta,
+						  y * oneOverSinTheta,
+						  z * oneOverSinTheta);
+		}
+
+		/**
+		* X軸周りの回転をセットアップします
+		*/
+		void SetupRotationAxisX(T theta) {
+			T thetaOver2 = theta * 0.5f;
+			w = Math::Cos(thetaOver2);
+			x = Math::Sin(thetaOver2);
+			y = 0;
+			z = 0;
+		}
+		
+
+		/**
+		* Y軸周りの回転をセットアップする
+		*/
+		void SetupRotationAxisY(T theta) {
+			T thetaOver2 = theta * 0.5f;
+			w = Math::Cos(thetaOver2);
+			x = 0;
+			y = Math::Sin(thetaOver2);
+			z = 0;
+		}
+		
+
+		/**
+		* Z軸周りの回転をセットアップする
+		*/
+		void SetupRotationAxisZ(T theta) {
+			T thetaOver2 = theta * 0.5f;
+			w = Math::Cos(thetaOver2);
+			x = 0;
+			y = 0;
+			z = Math::Sin(thetaOver2);
+		}
+
+		/**
+		* 任意軸周りの回転
+		*/
+		void SetupRotationAxis(const Vector3f& axis, T theta) {
+			Assert(Math::Abs(axis.Length() - 1) <= Math::Epsilon);
+
+			T radian   = theta * 0.5;
+			T sinTheta = Math::Sin(radian);
+
+			w = Math::Cos(radian);
+			x = axis.x * sinTheta;
+			y = axis.y * sinTheta;
+			z = axis.z * sinTheta;
+		}
 
 
-		///**
-		//* 回転行列に変換します
-		//*/
-		//static Matrix44 ToRotaionMatrix44(const Quaternion<T>& q) {
-		//	Matrix44 mat = Matrix44::Unit;
-		//}
-		//*/
+		/**
+		* 回転軸を追加します
+		*/
+		void AddRotationAxis(const Vector3f& axis, T radian) {
+			Quaternion<T> quaternion;
+			quaternion.SetRotationAxis(axis, radian);
+			(*this) = quaternion.Cross(*this);
+		}
 	};
 }
 #endif

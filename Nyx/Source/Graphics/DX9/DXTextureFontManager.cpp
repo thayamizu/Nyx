@@ -139,7 +139,7 @@ namespace Nyx {
 		void DXTextureFontManager::Render(int index, float x, float y, float z,  float sx, float sy, float angle)
 		{
 			Matrix44 world = Matrix44::Unit;
-			Matrix44::Transform(&world, sx,sy, 1, 0, 0,angle, x, y, z);
+			Matrix44::SetTransform(&world, sx,sy, 1, 0, 0,angle, x, y, z);
 
 			fontColor.a = charInfo[index].transparency;
 			container[index]->Render(world, fontColor);
