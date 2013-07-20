@@ -17,6 +17,9 @@
       <Filter>PCH</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\NyxCoreUnitTestAll.cpp" />
+    <ClCompile Include="PlaneUnitTest.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\PCH\PCH.h">
@@ -72,6 +75,12 @@
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Matrix33UnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\EulerAnglesUnitTest.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Matrix44UnitTest.h">
       <Filter>Primitive</Filter>
     </ClInclude>
   </ItemGroup>

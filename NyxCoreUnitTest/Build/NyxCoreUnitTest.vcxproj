@@ -16,6 +16,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PCH.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="PlaneUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\NyxCoreUnitTestAll.h" />
@@ -24,7 +25,9 @@
     <ClInclude Include="..\Source\Primitive\Color3fUnitTest.h" />
     <ClInclude Include="..\Source\Primitive\Color4cUnitTest.h" />
     <ClInclude Include="..\Source\Primitive\Color4fUnitTest.h" />
+    <ClInclude Include="..\Source\Primitive\EulerAnglesUnitTest.h" />
     <ClInclude Include="..\Source\Primitive\Matrix33UnitTest.h" />
+    <ClInclude Include="..\Source\Primitive\Matrix44UnitTest.h" />
     <ClInclude Include="..\Source\Primitive\QuaternionUnitTest.h" />
     <ClInclude Include="..\Source\Primitive\Rect2iUnitTest.h" />
     <ClInclude Include="..\Source\Primitive\UnitTestAll.h" />
