@@ -16,7 +16,6 @@
 ********************************************************************************/
 #ifndef NYX_CORE_PACKED_FILE_H_
 #define NYX_CORE_PACKED_FILE_H_
-#include "NyxCore.h"
 #include "IO/IFile.h"
 namespace Nyx
 {
