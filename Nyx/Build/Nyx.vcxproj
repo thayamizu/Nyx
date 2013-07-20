@@ -173,6 +173,7 @@
     <ClInclude Include="..\Source\Primitive\Color3.h" />
     <ClInclude Include="..\Source\Primitive\Color4.h" />
     <ClInclude Include="..\Source\Primitive\EulerAngles.h" />
+    <ClInclude Include="..\Source\Primitive\Matrix33.h" />
     <ClInclude Include="..\Source\Primitive\Rect.h" />
     <ClInclude Include="..\Source\Sound\AudioCache.h" />
     <ClInclude Include="..\Source\Sound\AudioManager.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp" />
     <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
+    <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
     <ClCompile Include="..\Source\Sound\AudioManager.cpp" />
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp" />
@@ -291,7 +293,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Matrix44.cpp" />
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />
   </ItemGroup>

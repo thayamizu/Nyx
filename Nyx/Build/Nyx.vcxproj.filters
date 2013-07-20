@@ -529,6 +529,9 @@
     <ClInclude Include="..\Source\Movie\MoviePlayer.h">
       <Filter>Movie</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Primitive\Matrix33.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -575,9 +578,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\PCH\PCH.cpp">
       <Filter>PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Primitive\Matrix44.cpp">
-      <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
       <Filter>Graphics\DX9</Filter>
@@ -722,6 +722,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Movie\MoviePlayer.cpp">
       <Filter>Movie</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Primitive\Matrix33.cpp">
+      <Filter>Primitive</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
