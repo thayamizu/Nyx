@@ -78,7 +78,7 @@ BEGIN_TEST(Quaternion_0007)
 {
 	const float s = 3;
 	const Quaternion<float> q(1, 2, 3, 4);
-	const Quaternion<float> exp(0.33333333333333333, 0.66666666666666666 , 1.0f , 1.33333333333);
+	const Quaternion<float> exp(0.33333333333333333f, 0.66666666666666666f , 1.0f , 1.33333333333f);
 	const Quaternion<float> value = q / s;
 	WIN_ASSERT_TRUE(Math::Abs(exp.w -value.w) <=Math::Epsilon);
 	WIN_ASSERT_TRUE(Math::Abs(exp.x -value.x) <=Math::Epsilon);
