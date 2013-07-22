@@ -22,7 +22,7 @@
 
 namespace Nyx {
 
-	class Matrix33 {
+	DEPRECATED class Matrix33 {
 	public:
 		/// 3x3çsóÒ
 		union {	

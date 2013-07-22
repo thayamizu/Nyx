@@ -51,19 +51,19 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Plane(float a, float b, float c, float d) {
-			element[0] = a;
-			element[1] = b;
-			element[2] = c;
-			element[3] = d;
-
+		Plane(T a, T b, T c, T d) {
+				Set(a, b, c, d);
 		}
+
 
 		/**
 		*
 		*/
-		~Plane() {
-
+		void Set(T a, T b, T c, T d) {
+			this->a = a;
+			this->b = b;
+			this->c = c;
+			this->d = d;
 		}
 
 
@@ -71,30 +71,38 @@ namespace Nyx {
 		*
 		*/
 		void Normalize(){
-			float abs = Math::Sqrt(a*a + b*b + c*c);
-			if (abs <= Math::Epsilon) { 
-				abs = 1.f;
-			}
+			float distance = Math::Abs(Math::Sqrt(a*a + b*b + c*c));
+			Assert(distance != 0);
 
-			a /= abs;
-			b /= abs;
-			c /= abs;
+			a /= distance;
+			b /= distance;
+			c /= distance;
 
-			if (Math::Abs(a) < Math::Epsilon) {
+			if (Math::Abs(a) <= Math::Epsilon) {
 				a = 0.f;
 			}
-			if (Math::Abs(b) < Math::Epsilon) {
+			if (Math::Abs(b) <= Math::Epsilon) {
 				b = 0.f;
 			}
-			if (Math::Abs(c) < Math::Epsilon) {
+			if (Math::Abs(c) <= Math::Epsilon) {
 				c = 0.f;
 			}
 		}
+		
+		
 		/**
 		*
 		*/
-		float GetDistance(const Vector3f& v) {
-			return Math::Abs(a*v.x + b*v.y+ c*v.z+d) / Math::Sqrt(a*a + b*b + c*c);
+		float GetSignedDistance(const Vector3<T>& point) {
+			return Math::Sqrt(a * point.x + b * point.y + c * point.z + d);
+		}
+		
+
+		/**
+		*
+		*/
+		float GetUnsignedDistance(const Vector3<T>& point) {
+			return Math::Abs(GetSignedDistance(point));
 		}
 	};
 }
