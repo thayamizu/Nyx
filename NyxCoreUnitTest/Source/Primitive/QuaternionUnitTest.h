@@ -255,8 +255,8 @@ END_TEST
 BEGIN_TEST(Quaternion_0022) 
 {
 	typedef Quaternion<float> qtn;
-	qtn q1(0.4, 0.1, 0.2, 0.3);
-	qtn q2(0.8, 0.5, 0.6, 0.7);
+	qtn q1(0.4f, 0.1f, 0.2f, 0.3f);
+	qtn q2(0.8f, 0.5f, 0.6f, 0.7f);
 
 	const auto slerp = qtn::Slerp(q1, q2, 0.5);
 	const auto expW = 0.6507913734559685F;

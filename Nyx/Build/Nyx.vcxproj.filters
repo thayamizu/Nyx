@@ -10,9 +10,6 @@
     <Filter Include="Graphics\GDI">
       <UniqueIdentifier>{dcb3b735-18df-479b-b389-6e94d48fce77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\DX9">
-      <UniqueIdentifier>{3ba3e4eb-64da-4582-954f-19b3d98e2855}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{2c25916e-2b58-4e27-91ca-81608c9ca34f}</UniqueIdentifier>
     </Filter>
@@ -187,6 +184,18 @@
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\detail">
+      <UniqueIdentifier>{659553ff-b780-4c0d-bc20-21b1e9ea348c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\detail\DX10">
+      <UniqueIdentifier>{c37dd47e-38f4-409f-9dff-23f90b2155d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\detail\DX11">
+      <UniqueIdentifier>{d14fc043-6e0e-42ad-b9bf-d0e42b9be716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\detail\DX9">
+      <UniqueIdentifier>{3ba3e4eb-64da-4582-954f-19b3d98e2855}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -208,28 +217,28 @@
       <Filter>Graphics\GDI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DirectGraphicsDevice.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DXSprite.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFont.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XMesh.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Random.h">
       <Filter>Utility</Filter>
@@ -257,7 +266,7 @@
     </ClInclude>
     <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Camera.h">
       <Filter>Graphics\Camera</Filter>
@@ -550,28 +559,28 @@
       <Filter>Graphics\GDI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DirectGraphicsDevice.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSprite.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFont.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Random.cpp">
       <Filter>Utility</Filter>
@@ -580,7 +589,7 @@
       <Filter>PCH</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
-      <Filter>Graphics\DX9</Filter>
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\Camera.cpp">
       <Filter>Graphics\Camera</Filter>

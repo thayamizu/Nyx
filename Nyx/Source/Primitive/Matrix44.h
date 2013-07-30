@@ -22,7 +22,8 @@
 #include "Primitive/Vector3.h"
 
 namespace Nyx  {
-	class Matrix44 {
+
+	class Matrix {
 	public:
 		/// 4x4行列
 		union {	
@@ -33,11 +34,12 @@ namespace Nyx  {
 				float _41, _42, _43, _44;
 			};
 			float Mat[4][4];
+			float array[16];
 		};
 
-		//static const Matrix44 Unit;
+		//static const Matrix Unit;
 
-		//static const Matrix44 Zero;
+		//static const Matrix Zero;
 		//--------------------------------------------------------------------------------------
 		// コンストラクタ・デストラクタ
 		//--------------------------------------------------------------------------------------
@@ -45,8 +47,8 @@ namespace Nyx  {
 		* 行列の値をすべてゼロに設定する
 		*/
 
-		Matrix44() {
-
+		Matrix() {
+			memset(array, 0, sizeof(array)); 
 		}
 
 		/**
@@ -62,7 +64,7 @@ namespace Nyx  {
 		* @param a32
 		* @param a33
 		*/
-		Matrix44(
+		Matrix(
 			float a11, float a12, float a13, float a14, 
 			float a21, float a22, float a23, float a24,
 			float a31, float a32, float a33, float a34,
@@ -117,8 +119,8 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 加算結果
 		*/
-		Matrix44 operator +(const Matrix44& m) const {
-			return Matrix44(
+		Matrix operator +(const Matrix& m) const {
+			return Matrix(
 				Mat[0][0] + m.Mat[0][0], Mat[0][1] +m.Mat[0][1], Mat[0][2]+ m.Mat[0][2],Mat[0][3]+ m.Mat[0][3],
 				Mat[1][0] + m.Mat[1][0], Mat[1][1] +m.Mat[1][1], Mat[1][2]+ m.Mat[1][2],Mat[1][3]+ m.Mat[1][3],
 				Mat[2][0] + m.Mat[2][0], Mat[2][1] +m.Mat[2][1], Mat[2][2]+ m.Mat[2][2],Mat[2][3]+ m.Mat[2][3],
@@ -130,8 +132,8 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 減算結果
 		*/
-		Matrix44 operator -(const Matrix44& m) const {
-			return Matrix44(
+		Matrix operator -(const Matrix& m) const {
+			return Matrix(
 				Mat[0][0] - m.Mat[0][0], Mat[0][1] - m.Mat[0][1], Mat[0][2] - m.Mat[0][2], Mat[0][3] - m.Mat[0][3],
 				Mat[1][0] - m.Mat[1][0], Mat[1][1] - m.Mat[1][1], Mat[1][2] - m.Mat[1][2], Mat[1][3] - m.Mat[1][3],
 				Mat[2][0] - m.Mat[2][0], Mat[2][1] - m.Mat[2][1], Mat[2][2] - m.Mat[2][2], Mat[2][3] - m.Mat[2][3],
@@ -142,8 +144,8 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 乗算結果
 		*/
-		Matrix44 operator *(const float s) const {
-			return Matrix44(
+		Matrix operator *(const float s) const {
+			return Matrix(
 				Mat[0][0] * s, Mat[0][1] * s, Mat[0][2] * s, Mat[0][3] * s,
 				Mat[1][0] * s, Mat[1][1] * s, Mat[1][2] * s, Mat[1][3] * s,
 				Mat[2][0] * s, Mat[2][1] * s, Mat[2][2] * s, Mat[2][3] * s,
@@ -155,8 +157,8 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix44 operator *(const Matrix44& mat) const {
-			return Matrix44(
+		Matrix operator *(const Matrix& mat) const {
+			return Matrix(
 
 				Mat[0][0]*mat.Mat[0][0] + Mat[0][1]*mat.Mat[1][0] + Mat[0][2]*mat.Mat[2][0] + Mat[0][3] * mat.Mat[3][0],  
 				Mat[0][0]*mat.Mat[0][1] + Mat[0][1]*mat.Mat[1][1] + Mat[0][2]*mat.Mat[2][1] + Mat[0][3] * mat.Mat[3][1], 
@@ -187,9 +189,9 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 除算結果
 		*/
-		Matrix44 operator /(float s) const {
+		Matrix operator /(float s) const {
 			if (s==0.f) {s=1;}
-			return Matrix44(
+			return Matrix(
 				Mat[0][0] / s, Mat[0][1] / s, Mat[0][2] / s, Mat[0][3] / s,
 				Mat[1][0] / s, Mat[1][1] / s, Mat[1][2] / s, Mat[1][3] / s,
 				Mat[2][0] / s, Mat[2][1] / s, Mat[2][2] / s, Mat[2][3] / s,
@@ -205,7 +207,7 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 加算結果 
 		*/
-		Matrix44& operator +=(const Matrix44 & mat) {
+		Matrix& operator +=(const Matrix & mat) {
 			Mat[0][0] += mat.Mat[0][0];
 			Mat[0][1] += mat.Mat[0][1];
 			Mat[0][2] += mat.Mat[0][2];
@@ -233,7 +235,7 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 減算結果
 		*/
-		Matrix44& operator -=(const Matrix44 & mat) {
+		Matrix& operator -=(const Matrix & mat) {
 			Mat[0][0] -= mat.Mat[0][0];
 			Mat[0][1] -= mat.Mat[0][1];
 			Mat[0][2] -= mat.Mat[0][2];
@@ -261,7 +263,7 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix44& operator *=(const float s) {
+		Matrix& operator *=(const float s) {
 			Mat[0][0] *= s;
 			Mat[0][1] *= s;
 			Mat[0][2] *= s;
@@ -287,7 +289,7 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix44& operator *=(const Matrix44& mat) {
+		Matrix& operator *=(const Matrix& mat) {
 			Set(
 				Mat[0][0]*mat.Mat[0][0] + Mat[0][1]*mat.Mat[1][0] + Mat[0][2]*mat.Mat[2][0] + Mat[0][3] * mat.Mat[3][0],  
 				Mat[0][0]*mat.Mat[0][1] + Mat[0][1]*mat.Mat[1][1] + Mat[0][2]*mat.Mat[2][1] + Mat[0][3] * mat.Mat[3][1],
@@ -317,7 +319,7 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Matrix44& operator /=(const float s) {
+		Matrix& operator /=(const float s) {
 			Mat[0][0] /= s;
 			Mat[0][1] /= s;
 			Mat[0][2] /= s;
@@ -345,7 +347,7 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Matrix44& operator =(const Matrix44& mat) {
+		Matrix& operator =(const Matrix& mat) {
 			Mat[0][0] = mat.Mat[0][0];
 			Mat[0][1] = mat.Mat[0][1];
 			Mat[0][2] = mat.Mat[0][2];
@@ -378,7 +380,7 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しいならtrue
 		*/
-		bool Equal(const Matrix44 & m) {
+		bool Equal(const Matrix & m) {
 
 			return (
 				Math::Abs(Mat[0][0] - m.Mat[0][0]) <= Math::Epsilon &&
@@ -409,7 +411,7 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しくないならtrue
 		*/
-		bool NotEqual(const Matrix44& matrix) {
+		bool NotEqual(const Matrix& matrix) {
 			return !Equal(matrix);
 		}
 
@@ -419,7 +421,7 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しいならtrue
 		*/
-		bool operator == (const Matrix44 &m) {
+		bool operator == (const Matrix &m) {
 			return (
 				Mat[0][0] == m.Mat[0][0] && 
 				Mat[0][1] == m.Mat[0][1] && 
@@ -449,7 +451,7 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しくないならtrue
 		*/
-		bool operator != (const Matrix44& matrix) {
+		bool operator != (const Matrix& matrix) {
 			return !(*this == matrix);
 		}
 
@@ -492,7 +494,7 @@ namespace Nyx  {
 		* 行列の転置
 		* @return 転置行列
 		*/
-		Matrix44& Transpose() {
+		Matrix& Transpose() {
 
 			Set(
 				Mat[0][0], Mat[1][0], Mat[2][0], Mat[3][0],
@@ -509,7 +511,7 @@ namespace Nyx  {
 		* @return 逆行列
 		*/
 		float Invert() {
-			Matrix44 invertMatrix;
+			Matrix invertMatrix;
 			// 行列式を出す
 			invertMatrix.Mat[0][0] = (
 				Mat[1][1] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
@@ -596,7 +598,7 @@ namespace Nyx  {
 		//--------------------------------------------------------------------------------------
 		/**
 		* 変換行列を作成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float scaleX
 		* @param float scaleY
 		* @param float scaleZ
@@ -607,14 +609,14 @@ namespace Nyx  {
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix44& SetTransform(
-			Matrix44* out, 
+		static Matrix& SetTransform(
+			Matrix* out, 
 			float sx, float sy, float sz, 
 			float rx, float ry, float rz, 
 			float tx, float ty, float tz) {
-				Matrix44 scaling ;
-				Matrix44 rotation ;
-				Matrix44 translation ;
+				Matrix scaling ;
+				Matrix rotation ;
+				Matrix translation ;
 
 
 				SetScale(&scaling, sx,sy, sz);
@@ -629,12 +631,12 @@ namespace Nyx  {
 
 		/**
 		* 変換行列を作成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float スケーリングベクトル
 		* @param float 回転ベクトル
 		* @param float 平行移動ベクトル
 		*/
-		static Matrix44& SetTransform(Matrix44* matrix, Vector3f sv, Vector3f rv, Vector3f tv) 
+		static Matrix& SetTransform(Matrix* matrix, Vector3f sv, Vector3f rv, Vector3f tv) 
 		{
 			SetTransform(matrix, sv.x, sv.y, sv.z, rv.x, rv.y, rv.z, tv.x, tv.y, tv.z);
 			return *matrix;
@@ -642,7 +644,7 @@ namespace Nyx  {
 
 		/**
 		* 変換行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float scaleX
 		* @param float scaleY
 		* @param float scaleZ
@@ -653,13 +655,13 @@ namespace Nyx  {
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix44& AddTransform(
-			Matrix44* matrix, 
+		static Matrix& AddTransform(
+			Matrix* matrix, 
 			float sx, float sy, float sz, 
 			float rx, float ry, float rz, 
 			float tx, float ty, float tz) 
 		{
-			Matrix44 mat;
+			Matrix mat;
 			SetTransform(&mat, sx, sy, sz, rx, ry, rz, tx, ty, tz);
 
 			*matrix = mat * (*matrix);
@@ -670,14 +672,14 @@ namespace Nyx  {
 
 		/**
 		* 変換行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float スケーリングベクトル
 		* @param float 回転ベクトル
 		* @param float 平行移動ベクトル
 		*/
-		static Matrix44& AddTransform(Matrix44* matrix, Vector3f sv, Vector3f rv, Vector3f tv) 
+		static Matrix& AddTransform(Matrix* matrix, Vector3f sv, Vector3f rv, Vector3f tv) 
 		{
-			Matrix44 mat;
+			Matrix mat;
 			mat.SetTransform(&mat, sv, rv, tv);
 			*matrix = mat * (*matrix); 
 
@@ -689,12 +691,12 @@ namespace Nyx  {
 		//--------------------------------------------------------------------------------------
 		/**
 		* 平行移動行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float translateX
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix44& SetTranslate(Matrix44* matrix, float tx, float ty, float tz) {
+		static Matrix& SetTranslate(Matrix* matrix, float tx, float ty, float tz) {
 			matrix->Set(1.f, 0.f, 0.f, 0.f,
 				0.f, 1.f, 0.f, 0.f,
 				0.f, 0.f, 1.f, 0.f,
@@ -705,23 +707,23 @@ namespace Nyx  {
 
 		/**
 		* 平行移動行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Vector3f& スケーリングベクトル
 		*/
-		static Matrix44& Matrix44::SetTranslate(Matrix44* matrix, const Vector3f& tv) {
+		static Matrix& Matrix::SetTranslate(Matrix* matrix, const Vector3f& tv) {
 			return SetTranslate(matrix, tv.x, tv.y, tv.z);
 		}
 
 
 		/**
 		* 平行移動行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float translateX
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix44& Matrix44::AddTranslate(Matrix44* matrix, float tx, float ty, float tz) {
-			Matrix44 translate;
+		static Matrix& Matrix::AddTranslate(Matrix* matrix, float tx, float ty, float tz) {
+			Matrix translate;
 			translate.SetTranslate(&translate, tx, ty, tz);
 			*matrix = translate * (*matrix);
 			return *matrix;
@@ -730,10 +732,10 @@ namespace Nyx  {
 
 		/**
 		* 平行移動行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Vector3f& 平行移動ベクトル
 		*/
-		static Matrix44& Matrix44::AddTranslate(Matrix44* matrix,  const Vector3f& tv) {
+		static Matrix& Matrix::AddTranslate(Matrix* matrix,  const Vector3f& tv) {
 			return AddTranslate(matrix, tv.x, tv.y, tv.z);
 		}
 
@@ -742,12 +744,12 @@ namespace Nyx  {
 		//--------------------------------------------------------------------------------------
 		/**
 		* 拡大縮小行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float scaleX
 		* @param float scaleY
 		* @param float scaleZ
 		*/
-		static Matrix44& Matrix44::SetScale(Matrix44* matrix, float sx, float sy, float sz) {
+		static Matrix& Matrix::SetScale(Matrix* matrix, float sx, float sy, float sz) {
 			matrix->Set(sx, 0.f, 0.f, 0.f,
 				0.f, sy , 0.f, 0.f,
 				0.f, 0.f, sz , 0.f,
@@ -758,22 +760,22 @@ namespace Nyx  {
 
 		/**
 		* 拡大縮小行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Vector3f& スケーリングベクトル
 		*/
-		static Matrix44& Matrix44::SetScale(Matrix44* matrix, const Vector3f& sv) {
+		static Matrix& Matrix::SetScale(Matrix* matrix, const Vector3f& sv) {
 			return SetScale(matrix, sv.x, sv.y, sv.z);
 		}
 
 		/**
 		* 拡大縮小を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float scaleX
 		* @param float scaleY
 		* @param float scaleZ
 		*/
-		static Matrix44& Matrix44::AddScale(Matrix44* matrix, float sx, float sy, float sz) {
-			Matrix44 scale;
+		static Matrix& Matrix::AddScale(Matrix* matrix, float sx, float sy, float sz) {
+			Matrix scale;
 			scale.SetScale(&scale, sx, sy, sz);
 			*matrix = scale * (*matrix);
 			return  *matrix;
@@ -782,10 +784,10 @@ namespace Nyx  {
 
 		/**
 		* 拡大縮小行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Vector3f& スケーリングベクトル
 		*/
-		static Matrix44& Matrix44::AddScale(Matrix44* matrix, const Vector3f& sv) {
+		static Matrix& Matrix::AddScale(Matrix* matrix, const Vector3f& sv) {
 			return AddScale(matrix, sv.x, sv.y, sv.z);
 		}
 
@@ -794,10 +796,10 @@ namespace Nyx  {
 		//--------------------------------------------------------------------------------------
 		/**
 		* X軸回転行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::SetRotateX(Matrix44* matrix, float angle) {
+		static Matrix& Matrix::SetRotateX(Matrix* matrix, float angle) {
 			float c = Math::Cos(angle);
 			float s = Math::Sin(angle);
 
@@ -811,11 +813,11 @@ namespace Nyx  {
 
 		/**
 		* X軸回転行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::AddRotateX(Matrix44* matrix, float angle) {
-			Matrix44 rotation;
+		static Matrix& Matrix::AddRotateX(Matrix* matrix, float angle) {
+			Matrix rotation;
 			rotation.SetRotateX(&rotation, angle);
 			*matrix = rotation * (*matrix);
 			return *matrix;
@@ -824,10 +826,10 @@ namespace Nyx  {
 
 		/**
 		* Y軸回転行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::SetRotateY(Matrix44* matrix, float angle) {
+		static Matrix& Matrix::SetRotateY(Matrix* matrix, float angle) {
 			float c = Math::Cos(angle);
 			float s = Math::Sin(angle);
 
@@ -841,11 +843,11 @@ namespace Nyx  {
 
 		/**
 		* Y軸回転行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::AddRotateY(Matrix44* matrix, float angle) {
-			Matrix44 rotation ;
+		static Matrix& Matrix::AddRotateY(Matrix* matrix, float angle) {
+			Matrix rotation ;
 			rotation.SetRotateY(&rotation, angle);
 			*matrix = rotation * (*matrix);
 			return *matrix;
@@ -854,10 +856,10 @@ namespace Nyx  {
 
 		/**
 		* Z軸回転行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::SetRotateZ(Matrix44* matrix, float angle) {
+		static Matrix& Matrix::SetRotateZ(Matrix* matrix, float angle) {
 			float c = Math::Cos(angle);
 			float s = Math::Sin(angle);
 
@@ -872,11 +874,11 @@ namespace Nyx  {
 
 		/**
 		* Z軸回転行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::AddRotateZ(Matrix44* matrix, float angle) {
-			Matrix44 rotation ;
+		static Matrix& Matrix::AddRotateZ(Matrix* matrix, float angle) {
+			Matrix rotation ;
 			rotation.SetRotateZ(&rotation, angle);
 			*matrix = rotation * (*matrix);
 			return *matrix;
@@ -885,13 +887,13 @@ namespace Nyx  {
 
 		/**
 		* ３軸回転行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param float ロール角
 		* @param float ピッチ角
 		* @param float ヨー角
 		*/
-		static Matrix44& Matrix44::SetRotateZXY(Matrix44* matrix, float roll, float pitch, float yaw) {
-			Matrix44 tmp ;
+		static Matrix& Matrix::SetRotateZXY(Matrix* matrix, float roll, float pitch, float yaw) {
+			Matrix tmp ;
 			*matrix *= SetRotateZ(&tmp,roll);
 			*matrix *= SetRotateX(&tmp,pitch);
 			*matrix *= SetRotateY(&tmp,yaw);
@@ -902,21 +904,21 @@ namespace Nyx  {
 
 		/**
 		* ３軸回転行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Vector3f& 回転ベクトル
 		*/
-		static Matrix44& Matrix44::SetRotateZXY(Matrix44* matrix, const Vector3f& rv) {
+		static Matrix& Matrix::SetRotateZXY(Matrix* matrix, const Vector3f& rv) {
 			return SetRotateZXY(matrix, rv.x, rv.y, rv.z);
 		}
 
 
 		/**
 		* 任意軸回転行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Axis3f scaleX
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::SetRotateAxis(Matrix44* matrix, const Axis3f& axis, float angle) {
+		static Matrix& Matrix::SetRotateAxis(Matrix* matrix, const Axis3f& axis, float angle) {
 			float c = Math::Cos(angle);
 			float s = Math::Sin(angle);
 			float xx = axis.x * axis.x;
@@ -937,12 +939,12 @@ namespace Nyx  {
 
 		/**
 		* 任意軸回転行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param constAxis3f 軸
 		* @param float 回転角
 		*/
-		static Matrix44& Matrix44::AddRotateAxis(Matrix44* matrix, const Axis3f& axis, float angle) {
-			Matrix44 rotation;
+		static Matrix& Matrix::AddRotateAxis(Matrix* matrix, const Axis3f& axis, float angle) {
+			Matrix rotation;
 			rotation.SetRotateAxis(&rotation, axis, angle);
 			*matrix = rotation * (*matrix);
 			return *matrix;
@@ -951,10 +953,10 @@ namespace Nyx  {
 
 		/**
 		* 四元数から回転行列を生成します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Quaternion<float>& quoternion
 		*/		
-		static Matrix44& Matrix44::SetRotationQuaternion(Matrix44* matrix, const Quaternion<float>& quaternion) {
+		static Matrix& Matrix::SetRotationQuaternion(Matrix* matrix, const Quaternion<float>& quaternion) {
 			float x2 = quaternion.x + quaternion.x;
 			float y2 = quaternion.y + quaternion.y;
 			float z2 = quaternion.z + quaternion.z;
@@ -979,11 +981,11 @@ namespace Nyx  {
 
 		/**
 		* 四元数から回転行列を追加します
-		* @param Matrix44* 出力行列
+		* @param Matrix* 出力行列
 		* @param const Quaternion<float>& quoternion
 		*/
-		static Matrix44& Matrix44::AddRotationQuaternion(Matrix44* matrix, const Quaternion<float>& quoternion) {
-			Matrix44 rotation;
+		static Matrix& Matrix::AddRotationQuaternion(Matrix* matrix, const Quaternion<float>& quoternion) {
+			Matrix rotation;
 			rotation.SetRotationQuaternion(&rotation, quoternion);
 			*matrix = rotation * (*matrix);
 
@@ -991,7 +993,8 @@ namespace Nyx  {
 		}
 	};
 
-
+	//別名定義
+	typedef Matrix Matrix44;
 }
 //-----------------------------------------------------
 #endif
