@@ -23,6 +23,8 @@ namespace Nyx {
 	struct EventArgs;
 	class IControl;
 
+	typedef std::function<void(std::shared_ptr<IControl>, EventArgs)> GUICallback;
+
 	///ディスパッチャインタフェース
 	class IDispatcher {
 	public:
@@ -39,15 +41,15 @@ namespace Nyx {
 		//---------------------------------------------------------------------------------------
 		/**
 		* ディスパッチャにデリゲートオブジェクトを登録する
-		* @param Delegate2<IControl*, EventArgs*>* delegate
+		* @param Delegate2<std::shared_ptr<IControl>, EventArgs&>* delegate
 		*/
-		virtual void Add(IControl* control, Delegate2<IControl*, EventArgs*>* delegate) = 0 ;
+		virtual void Add(std::shared_ptr<IControl> control, GUICallback callback) = 0 ;
 
 		/**
 		* ディスパッチャに登録されているデリゲートオブジェクトを削除する
 		* @param uint id
 		*/
-		virtual void Del(IControl* control) = 0 ;
+		virtual void Del(std::shared_ptr<IControl> control) = 0 ;
 
 		/**
 		* ディスパッチャに登録されているデリゲートオブジェクトをクリアする
@@ -57,19 +59,19 @@ namespace Nyx {
 		/**
 		* ディスパッチャに登録されているデリゲートオブジェクトを取得する
 		* @param uint id
-		* @return Delegate2<IControl*, EventArgs*>* デリゲートオブジェクト
+		* @return GUICallback デリゲートオブジェクト
 		*/
-		virtual Delegate2<IControl*, EventArgs*>* Get(IControl* control) = 0;
+		virtual GUICallback GetCallback(const std::shared_ptr<IControl> control) = 0;
 
 		//---------------------------------------------------------------------------------------
 		//イベントの割り当て
 		//---------------------------------------------------------------------------------------
 		/**
 		* イベントの割り当て
-		* @param IControl* sender
-		* @param EventArgs* e
+		* @param std::shared_ptr<IControl> sender
+		* @param EventArgs& e
 		*/
-		virtual void Dispatch(IControl*  sender, EventArgs* e) = 0;
+		virtual void Dispatch(std::shared_ptr<IControl>  sender, EventArgs& e) = 0;
 	};
 }
 

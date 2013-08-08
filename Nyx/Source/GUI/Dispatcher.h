@@ -22,15 +22,11 @@
 #include "Object/NonCopyable.h"
 #include "Object/Delegate.h"
 namespace Nyx {
-	//前方宣言
-	class IControl;
-	struct EventArgs;
 
 	///ディスパッチャ
-	class Dispatcher : public IDispatcher, private NonCopyable 
-	{
-		typedef std::unordered_map<uint, Delegate2<IControl*, EventArgs*>*> HookList;
-		typedef std::unordered_map<uint, Delegate2<IControl*, EventArgs*>*>::iterator HookListIterator;
+	class Dispatcher : public IDispatcher, private NonCopyable {
+		typedef std::unordered_map<uint, GUICallback> HookList;
+		typedef std::unordered_map<uint, GUICallback>::iterator HookListIterator;
 	public:
 		//---------------------------------------------------------------------------------------
 		//構築・破壊
@@ -50,15 +46,15 @@ namespace Nyx {
 		//---------------------------------------------------------------------------------------
 		/**
 		* ディスパッチャにコントロールを登録する
-		* @param Delegate2<IControl*, EventArgs*>* 
+		* @param GUICallback
 		*/
-		void Add(IControl* control, Delegate2<IControl*, EventArgs*>* delegate);
+		void Add(std::shared_ptr<IControl> control, GUICallback callback);
 
 		/**
 		* ディスパッチャに登録されているコントロールを削除する
 		* @param uint id
 		*/
-		void Del(IControl* control);
+		void Del(std::shared_ptr<IControl> control);
 
 		/**
 		* ディスパッチャに登録されているコントロールをクリアする
@@ -68,19 +64,19 @@ namespace Nyx {
 		/**
 		* ディスパッチャに登録されているコントロールを取得する
 		* @param uint id
-		* @return Delegate2<IControl*, EventArgs*>* 
+		* @return Delegate2<std::shared_ptr<IControl>, EventArgs*>* 
 		*/
-		Delegate2<IControl*, EventArgs*>* Get(IControl* control);
+		GUICallback GetCallback(const std::shared_ptr<IControl> control);
 		
 		//---------------------------------------------------------------------------------------
 		//イベントの割り当て
 		//---------------------------------------------------------------------------------------
 		/**
 		* イベントの割り当て
-		* @param IControl* sender
+		* @param std::shared_ptr<IControl> sender
 		* @param EventArgs* e
 		*/
-		void Dispatch(IControl* control, EventArgs* e);
+		void Dispatch(std::shared_ptr<IControl> control, EventArgs& e);
 	private:
 		///ディスパッチャにフックされているコントロールのリスト
 		HookList hooklist;

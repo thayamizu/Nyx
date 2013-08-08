@@ -22,8 +22,7 @@
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	Dispatcher::Dispatcher() 
-		:IDispatcher()
-	{
+		:IDispatcher() {
 
 	}
 
@@ -35,13 +34,13 @@ namespace Nyx {
 
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Add(IControl* control, Delegate2<IControl*, EventArgs*>*  delegate) {
+	void Dispatcher::Add(std::shared_ptr<IControl> control, GUICallback delegate) {
 		uint index = control->GetID();
 		hooklist[index] = delegate;
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Del(IControl* control) {
+	void Dispatcher::Del(std::shared_ptr<IControl> control) {
 		HookListIterator it = hooklist.find(control->GetID());
 		if (it != hooklist.end()) {
 			hooklist.erase(it);
@@ -50,28 +49,25 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	void Dispatcher::Clear() {
-		HookListIterator it;
-		for (it = hooklist.begin(); it!=hooklist.end(); it++) {
-			SafeDelete(it->second);
-		}
 		hooklist.clear();
 	}
 	
 	//-----------------------------------------------------------------------------------------
-	Delegate2<IControl*, EventArgs*>*  Dispatcher::Get(IControl* control) {
-		HookListIterator it = hooklist.find(control->GetID());
+	GUICallback   Dispatcher::GetCallback(std::shared_ptr<IControl> control) {
+		size_t id = control->GetID();
+		HookListIterator it = hooklist.find(id);
 		if (it == hooklist.end()) {
-			return NULL;
+			return nullptr;
 		}
 		return it->second;
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Dispatch(IControl* sender, EventArgs* e) {
-		uint index = sender->GetID();
-		Delegate2<IControl*, EventArgs*>* callback = hooklist[index];
-		if (callback != NULL) {
-			callback->Call(sender, e);
+	void Dispatcher::Dispatch(std::shared_ptr<IControl> sender, EventArgs& e) {
+		size_t id = sender->GetID();
+		GUICallback callback = hooklist[id];
+		if (callback != nullptr) {
+			callback(sender, e);
 		}
 	}
 }

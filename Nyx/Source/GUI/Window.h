@@ -22,10 +22,10 @@
 namespace Nyx {
 
 	///ウインドウ
-	class Window : public IWindow 
+	class Window : public IWindow, private std::enable_shared_from_this<Window>
 	{
-		typedef std::unordered_map<uint, IControl*> HookList;
-		typedef std::unordered_map<uint, IControl*>::iterator HookListIterator;
+		typedef std::unordered_map<uint, std::shared_ptr<IControl>> HookList;
+		typedef std::unordered_map<uint, std::shared_ptr<IControl>>::iterator HookListIterator;
 	public:
 		//---------------------------------------------------------------------------------------
 		//生成・破壊
@@ -101,19 +101,19 @@ namespace Nyx {
 		* コントロールのタイプを取得する
 		* @return ControlType::enum_tの値
 		*/
-		ControlType::enum_t GetType() const;
+		ControlType GetType() const;
 
 		/**
 		* ユーザーデータを取得する
 		* @return void*
 		*/
-		void* GetUserData() const;
+		std::shared_ptr<void> GetUserData() const;
 
 		/**
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void SetUserData(void * data) ;
+		void SetUserData(std::shared_ptr<void> data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -131,7 +131,7 @@ namespace Nyx {
 		* ウインドウのクライアント領域のサイズを取得する
 		* @param Rect2i* ウインドウのクライアント領域のサイズ
 		*/
-		void GetSize(Rect2i* rect) const;
+		void GetSize(Rect2i& rect) const;
 
 		/**
 		* ウインドウのクライアント領域のサイズを設定する
@@ -141,9 +141,9 @@ namespace Nyx {
 
 		/**
 		* ウインドウの位置を取得する
-		* @param Point2i* p
+		* @param Point2i& p
 		*/
-		void GetPosition(Point2i* p) const;
+		void GetPosition(Point2i& p) const;
 
 		/**
 		* ウインドウの位置を設定する
@@ -155,12 +155,12 @@ namespace Nyx {
 		/**
 		* コントロールの登録
 		*/
-		void Regist(IControl* control);
+		void Register(std::shared_ptr<IControl> control);
 
 		/**
 		*　コントロールの削除
 		*/
-		void Unregist(IControl* control);
+		void Unregister(std::shared_ptr<IControl> control);
 
 		//---------------------------------------------------------------------------------------
 		//イベントの登録と削除
@@ -168,12 +168,12 @@ namespace Nyx {
 		/**
 		*
 		*/
-		void AddGUIEvent(IControl* colntrol, Delegate2<IControl*, EventArgs*>* fp);
+		void AddGUIEvent(std::shared_ptr<IControl> colntrol, GUICallback callback);
 
 		/**
 		*
 		*/
-		void DelGUIEvent(IControl* colntrol);
+		void DelGUIEvent(std::shared_ptr<IControl> colntrol);
 
 		/**
 		*
@@ -183,12 +183,12 @@ namespace Nyx {
 		/**
 		*
 		*/
-		void AddUserEvent(IControl* control, Delegate2<IControl*, EventArgs*>* fp);
+		void AddUserEvent(std::shared_ptr<IControl> control, GUICallback callback);
 
 		/**
 		*
 		*/
-		void DelUserEvent(IControl* colntrol);
+		void DelUserEvent(std::shared_ptr<IControl> colntrol);
 
 		/**
 		*
@@ -243,23 +243,23 @@ namespace Nyx {
 		///ウインドウの表示状態
 		bool isShow;
 		/// ハンドルインスタンス
-		HWND hwnd;
+		HWND hwnd_;
 		///ウインドウID
-		uint id;
+		uint id_;
 		///ウインドウスタイル
-		ulong style;
+		ulong style_;
 		///アトム
-		ATOM atom;
+		ATOM atom_;
 		///タイトル
-		std::wstring title;
+		std::wstring caption_;
 		///ユーザーデータ
-		void* userData;
+		std::shared_ptr<void> userData_;
 		///ウインドウに結びつけらている子コントロールのリスト
-		HookList hooklist;
+		HookList childControl_;
 		///ディスパッチャにフックされているGUIイベントのリスト
-		Dispatcher* guiEventList;
+		std::shared_ptr<Dispatcher> guiEventList_;
 		///ディスパッチャにフックされているユーザーイベントのリスト
-		Dispatcher* userEventList;
+		std::shared_ptr<Dispatcher> userEventList_;
 	};
 }
 

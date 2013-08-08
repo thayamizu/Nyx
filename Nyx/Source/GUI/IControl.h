@@ -8,28 +8,49 @@ namespace Nyx
 {
 
 	///GUIコントロールの種別
-	struct ControlType {
-		enum enum_t {
-			Window,
-			CheckBox,
-			Combobox,
-			ListBox,
-			PushButton,
-			RadioButton,
-			ControlTypeNum,
-		};
+	enum ControlType {
+		ControlType_Window,
+		ControlType_CheckBox,
+		ControlType_Combobox,
+		ControlType_ListBox,
+		ControlType_PushButton,
+		ControlType_RadioButton,
+		ControlType_ControlTypeNum,
 	};
 
 	///イベント引数
 	struct EventArgs {
+		/**
+		 *デフォルトコンストラクタ
+		 */
+		EventArgs():
+			message(0), wparam(NULL), lparam(NULL), result(nullptr) {
+		}
+
+		
+		/**
+		 *コンストラクタ
+		 * @param uint
+		 * @param WPARAM
+		 * @param LPARAM
+		 * @param result*
+		 */
 		EventArgs(uint msg, WPARAM wParam, LPARAM lParam, bool* res) 
 			:message(msg), wparam(wParam), lparam(lParam), result(res) {}
 
+		//メッセージ
 		uint message;
+
+		//WPARAM
 		WPARAM wparam;
+
+		//LPARAM
 		LPARAM lparam;
+
+		//
 		bool * result;
 	};
+
 
 	///コントロールインタフェース
 	class IControl {
@@ -51,10 +72,14 @@ namespace Nyx
 		* ウインドウを表示する
 		*/
 		virtual void Show() = 0;
+
+
 		/**
 		* ウインドウを隠す
 		*/
 		virtual void Hide() = 0;
+		
+		
 		/**
 		* ウインドウを更新する
 		*/
@@ -92,37 +117,43 @@ namespace Nyx
 		* コントロールのタイプを取得する
 		* @return ControlType::enum_tの値
 		*/
-		virtual ControlType::enum_t GetType() const = 0;
+		virtual ControlType GetType() const = 0;
 		
+
 		/**
 		* ユーザーデータを取得する
 		* @return void*
 		*/
-		virtual void* GetUserData() const = 0;
+		virtual std::shared_ptr<void> GetUserData() const = 0;
+
 
 		/**
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		virtual void SetUserData(void * data)  = 0;
+		virtual void SetUserData(std::shared_ptr<void> data)  = 0;
 		
+
 		/**
 		* コントロールのIDを取得する
 		* @return uint コントロールのID
 		*/
 		virtual uint GetID() const = 0;
 
+		
 		/**
 		* コントロールのIDを設定する
 		* @return コントロールのID
 		*/
-		virtual void SetID(uint id)   = 0;
+		virtual void SetID(size_t id)   = 0;
+
 
 		/**
 		* ウインドウのクライアント領域のサイズを取得する
 		* @param Rect2i* ウインドウのクライアント領域のサイズ
 		*/
-		virtual void GetSize(Rect2i* rect) const = 0;
+		virtual void GetSize(Rect2i& rect) const = 0;
+
 
 		/**
 		* ウインドウのクライアント領域のサイズを設定する
@@ -130,11 +161,13 @@ namespace Nyx
 		*/
 		virtual void SetSize(const Rect2i& rect) = 0;
 
+
 		/**
 		* ウインドウの位置を取得する
-		* @param Point2i* p
+		* @param Point2i& p
 		*/
-		virtual void GetPosition(Point2i* p) const = 0;
+		virtual void GetPosition(Point2i& p) const = 0;
+
 
 		/**
 		* ウインドウの位置を設定する

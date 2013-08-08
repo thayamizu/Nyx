@@ -22,38 +22,30 @@
 #include "Primitive/Rect.h"
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	Window::Window(HWND hWnd, std::wstring caption_, int x, int y, int width, int height, int id_)
-		:title(caption_), id(id_),hooklist(), guiEventList(NULL), userEventList(NULL)  {
+	Window::Window(HWND hWnd, std::wstring caption, int x, int y, int width, int height, int id)
+		:caption_(caption_), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
 			//フックリストが初期化されていなければ、初期化する
-			if (guiEventList ==NULL) {
-				guiEventList = new Dispatcher();
-			}
-			//フックリストが初期化されていなければ、初期化する
-			if (userEventList ==NULL) {
-				userEventList = new Dispatcher();
-			}
-
-			//メンバの初期化
-			title += TEXT("　 (C)opyright t.hayamizu.");
+			guiEventList_ = std::make_shared<Dispatcher>();
 			
+			//フックリストが初期化されていなければ、初期化する
+			userEventList_ = std::make_shared<Dispatcher>();
+
+			//コントロールの生成
 			OnCreate(hWnd,x, y, width, height);
 	}    
 
 	//-----------------------------------------------------------------------------------------
 	//
 	Window::~Window() {
-		if (atom) {
-			::UnregisterClass((LPCTSTR)atom, ::GetModuleHandle(NULL));
+		if (atom_) {
+			::UnregisterClass((LPCTSTR)atom_, ::GetModuleHandle(NULL));
 		}
-
-		SafeDelete(guiEventList);
-		SafeDelete(userEventList);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Window::OnCreate(HWND _hwnd, int x, int y, int width, int height) {
+	bool Window::OnCreate(HWND hwnd, int x, int y, int width, int height) {
 		//ウインドウクラスの作成
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		WNDCLASSEX winc;
@@ -66,35 +58,34 @@ namespace Nyx {
 		winc.hCursor		= LoadCursor(NULL , IDC_ARROW);
 		winc.hbrBackground	= (HBRUSH)COLOR_BACKGROUND + 1;
 		winc.lpszMenuName	= NULL;
-		winc.lpszClassName	= title.c_str();
+		winc.lpszClassName	= caption_.c_str();
 		winc.hIconSm		= NULL;
-		atom = RegisterClassEx(&winc);
+		atom_ = RegisterClassEx(&winc);
 
 		//ウインドウの生成
-		hwnd = CreateWindowEx(
+		hwnd_ = CreateWindowEx(
 			WS_EX_LEFT,
-			title.c_str(),
-			title.c_str(), //タイトルバーにこの名前が表示されます
+			caption_.c_str(),
+			caption_.c_str(), //タイトルバーにこの名前が表示されます
 			WS_OVERLAPPEDWINDOW , //ウィンドウの種類
-			//WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU, //ウィンドウの種類
 			x,	//Ｘ座標
 			y,	//Ｙ座標
 			width,	//幅
 			height,	//高さ
-			_hwnd, //親ウィンドウのハンドル、親を作るときはNULL
+			hwnd, //親ウィンドウのハンドル、親を作るときはNULL
 			NULL, //メニューハンドル、クラスメニューを使うときはNULL
 			hInstance, //インスタンスハンドル
 			NULL);
 
-		if (!hwnd) {
+		if (!hwnd_) {
 			::MessageBox(NULL, TEXT("失敗しました"), TEXT("error"), MB_OK);
 			return false;
 		}
 
-		::SetWindowLong(hwnd, GWL_USERDATA, (long)this);
+		::SetWindowLong(hwnd_, GWL_USERDATA, (long)this);
 		
 		//自分をフックする
-		Regist(this);
+		Register(shared_from_this());
 		
 		Show();
 		return true;
@@ -103,28 +94,28 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	HWND Window::GetHandle() {
-		Assert(hwnd != NULL);
-		return hwnd;
+		Assert(hwnd_ != NULL);
+		return hwnd_;
 	}
 
 	//----------------------------------------------------------------
 	void Window::Show(){
-		Assert(hwnd != NULL);
+		Assert(hwnd_ != NULL);
 		isShow = true;
-		::ShowWindow(hwnd, SW_SHOW);
+		::ShowWindow(hwnd_, SW_SHOW);
 	}
 
 	//----------------------------------------------------------------
 	void Window::Hide(){
-		Assert(hwnd != NULL);
+		Assert(hwnd_ != NULL);
 		isShow = false;
-		::ShowWindow(hwnd, SW_HIDE);
+		::ShowWindow(hwnd_, SW_HIDE);
 	}
 
 	//----------------------------------------------------------------
 	void Window::Update() {
-		Assert(hwnd != NULL);
-		::UpdateWindow(hwnd);
+		Assert(hwnd_ != NULL);
+		::UpdateWindow(hwnd_);
 	}
 
 	//----------------------------------------------------------------
@@ -134,99 +125,100 @@ namespace Nyx {
 
 	//----------------------------------------------------------------
 	void Window::Activate() {
-		Assert(hwnd != NULL);
-		::EnableWindow(hwnd, true);
+		Assert(hwnd_ != NULL);
+		::EnableWindow(hwnd_, true);
 	}
 
 	//----------------------------------------------------------------
 	void Window::Unactivate() {
-		Assert(hwnd != NULL);
-		::EnableWindow(hwnd, false);
+		Assert(hwnd_ != NULL);
+		::EnableWindow(hwnd_, false);
 	}
 
 	//----------------------------------------------------------------
 	bool Window::IsActivate() const {
-		Assert(hwnd != NULL);
-		return ::IsWindowEnabled(hwnd) != 0;
+		Assert(hwnd_ != NULL);
+		return ::IsWindowEnabled(hwnd_) != 0;
 	}
 
 
 	//----------------------------------------------------------------
-	ControlType::enum_t Window::GetType() const{
-		return ControlType::Window;
+	ControlType Window::GetType() const{
+		return ControlType_Window;
 	}
 
 	//----------------------------------------------------------------
-	void* Window::GetUserData() const {
-		return userData;
+	std::shared_ptr<void> Window::GetUserData() const {
+		return userData_;
 	}
 
 	//----------------------------------------------------------------
-	void Window::SetUserData(void * data) {
-		userData = data;
+	void Window::SetUserData(std::shared_ptr<void> data) {
+		userData_ = data;
 
 	}
 
 	//----------------------------------------------------------------
 	uint Window::GetID() const {
-		return id;
+		return id_;
 	}
 
 	//----------------------------------------------------------------
-	void Window::SetID(uint _id)  {
-		id = _id;
+	void Window::SetID(uint id)  {
+		id_ = id;
 	}
 
 	//----------------------------------------------------------------
-	void Window::GetSize(Rect2i* rect) const {
-		Assert(hwnd != NULL);
+	void Window::GetSize(Rect2i& rect) const {
+		Assert(hwnd_ != NULL);
 		RECT _r;
-		::GetWindowRect(hwnd, &_r);
+		::GetWindowRect(hwnd_, &_r);
 
 		//
-		rect->x = _r.left;
-		rect->y = _r.top;
-		rect->width  = _r.right  - _r.left;
-		rect->height = _r.bottom - _r.top;
+		rect.x      = _r.left;
+		rect.y      = _r.top;
+		rect.width  = _r.right  - _r.left;
+		rect.height = _r.bottom - _r.top;
 	}
+
 
 	//----------------------------------------------------------------
 	void Window::SetSize(const Rect2i& rect) {
-		Assert(hwnd != NULL);
-		::SetWindowPos(hwnd, NULL, rect.x, rect.y, rect.width, rect.height, SWP_SHOWWINDOW);
+		Assert(hwnd_ != NULL);
+		::SetWindowPos(hwnd_, NULL, rect.x, rect.y, rect.width, rect.height, SWP_SHOWWINDOW);
 	}
 
 	//----------------------------------------------------------------
-	void Window::GetPosition(Point2i* p) const {
-		Assert(hwnd != NULL);
+	void Window::GetPosition(Point2i& p) const {
+		Assert(hwnd_ != NULL);
 		RECT _r;
-		::GetWindowRect(hwnd, &_r);
+		::GetWindowRect(hwnd_, &_r);
 
-		p->x = _r.left;
-		p->y = _r.top;
+		p.x = _r.left;
+		p.y = _r.top;
 	}
 
 	//----------------------------------------------------------------
 	void Window::SetPosition(const Point2i& p) {
-		Assert(hwnd != NULL);
+		Assert(hwnd_ != NULL);
 
 		//現在のウインドウの幅・高さを取得する
 		Rect2i r;
-		GetSize(&r);
+		GetSize(r);
 
-		::SetWindowPos(hwnd, NULL, p.x, p.y, r.width, r.height, SWP_SHOWWINDOW);
+		::SetWindowPos(hwnd_, NULL, p.x, p.y, r.width, r.height, SWP_SHOWWINDOW);
 	}
 
 	//----------------------------------------------------------------
 	HMENU Window::GetMenu() {
-		Assert(hwnd != NULL);
-		return ::GetMenu(hwnd);
+		Assert(hwnd_ != NULL);
+		return ::GetMenu(hwnd_);
 	}
 
 	//----------------------------------------------------------------
 	void Window::SetMenu(HMENU menu) {
-		Assert(hwnd != NULL);
-		::SetMenu(hwnd, menu);
+		Assert(hwnd_ != NULL);
+		::SetMenu(hwnd_, menu);
 	}
 
 	//----------------------------------------------------------------
@@ -236,63 +228,64 @@ namespace Nyx {
 
 	//----------------------------------------------------------------
 	void Window::SetIcon(std::wstring icon) {
-		Assert(userEventList != NULL);
+		Assert(userEventList_ != NULL);
 		LoadIcon(GetModuleHandle(NULL), icon.c_str());
 	}
 
 	//----------------------------------------------------------------
-	void Window::Regist(IControl* control) {
+	void Window::Register(std::shared_ptr<IControl> control) {
 		uint key = control->GetID();
-		HookListIterator it = hooklist.find(key);
-		if (it == hooklist.end()) {
-			hooklist[key] = control;
+		auto it = childControl_.find(key);
+		if (it == childControl_.end()) {
+			childControl_[key] = control;
 		}
 	}
 
 	//----------------------------------------------------------------
-	void Window::Unregist(IControl* control) {
-		HookListIterator it = hooklist.find(control->GetID());
-		if (it != hooklist.end()) {
-			hooklist.erase(it);
+	void Window::Unregister(std::shared_ptr<IControl> control) {
+		auto id = control->GetID();
+		auto it = childControl_.find(id);
+		if (it != childControl_.end()) {
+			childControl_.erase(it);
 		}
 	}
 
 	//----------------------------------------------------------------
-	void Window::AddGUIEvent(IControl* control, Delegate2<IControl*, EventArgs*>* fp) {
-		Assert(guiEventList != NULL);
-		Regist(control);
-		guiEventList->Add(control, fp);
+	void Window::AddGUIEvent(std::shared_ptr<IControl> control, GUICallback fp) {
+		Assert(guiEventList_ != NULL);
+		Register(control);
+		guiEventList_->Add(control, fp);
 	}
 
 	//----------------------------------------------------------------
-	void Window::DelGUIEvent(IControl* control) {
-		Assert(guiEventList != NULL);
-		guiEventList->Del(control);
+	void Window::DelGUIEvent(std::shared_ptr<IControl> control) {
+		Assert(guiEventList_ != NULL);
+		guiEventList_->Del(control);
 	}
 
 	//----------------------------------------------------------------
 	void Window::ClearGUIEvent() {
-		Assert(guiEventList != NULL);
-		guiEventList->Clear();
+		Assert(guiEventList_ != NULL);
+		guiEventList_->Clear();
 	}
 
 	//----------------------------------------------------------------
-	void Window::AddUserEvent(IControl* control, Delegate2<IControl*, EventArgs*>* fp) {
-		Assert(userEventList != NULL);
-		Regist(control);
-		userEventList->Add(control, fp);
+	void Window::AddUserEvent(std::shared_ptr<IControl> control, GUICallback fp) {
+		Assert(userEventList_ != NULL);
+		Register(control);
+		userEventList_->Add(control, fp);
 	}
 
 	//----------------------------------------------------------------
-	void Window::DelUserEvent(IControl* control) {
-		Assert(userEventList != NULL);
-		userEventList->Del(control);
+	void Window::DelUserEvent(std::shared_ptr<IControl> control) {
+		Assert(userEventList_ != NULL);
+		userEventList_->Del(control);
 	}
 
 	//----------------------------------------------------------------
 	void Window::ClearUserEvent() {
-		Assert(userEventList != NULL);
-		userEventList->Clear();
+		Assert(userEventList_ != NULL);
+		userEventList_->Clear();
 	}
 
 	//----------------------------------------------------------------
@@ -341,31 +334,27 @@ namespace Nyx {
 		}
 
 		//メッセージ送ってきたコントロールを特定
-		HookListIterator it = window->hooklist.find(LOWORD(wParam));
-		if (it == window->hooklist.end()) {
+		HookListIterator it = window->childControl_.find(LOWORD(wParam));
+		if (it == window->childControl_.end()) {
 			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
 
 		//メッセージディスパッチ
 		bool result = false;
 		EventArgs event(msg, wParam, lParam, &result);
-		IControl * control = it->second;
+		auto control = it->second;
 
 		//-------------------------------------------------------------------------------------
 		//GUIイベントメッセージ処理
 		//-------------------------------------------------------------------------------------
-		window->guiEventList->Dispatch(control, &event);
-		if (result) {
-			return 0;
-		}
+		window->guiEventList_->Dispatch(control, event);
+		
 
 		//-------------------------------------------------------------------------------------
 		//ユーザーイベントメッセージ処理
 		//-------------------------------------------------------------------------------------
-		window->userEventList->Dispatch(control, &event);
-		if (result) {
-			return 0;
-		}
+		window->userEventList_->Dispatch(control, event);
+		
 
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}

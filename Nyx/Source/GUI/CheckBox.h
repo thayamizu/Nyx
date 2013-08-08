@@ -95,19 +95,19 @@ namespace Nyx {
 		* コントロールのタイプを取得する
 		* @return ControlType::enum_tの値
 		*/
-		ControlType::enum_t GetType() const;
+		ControlType GetType() const;
 
 		/**
 		* ユーザーデータを取得する
 		* @return void*
 		*/
-		void* GetUserData() const;
+		std::shared_ptr<void> GetUserData() const;
 
 		/**
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void SetUserData(void * data) ;
+		void SetUserData(std::shared_ptr<void> data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -123,9 +123,9 @@ namespace Nyx {
 
 		/**
 		* ウインドウのクライアント領域のサイズを取得する
-		* @param Rect2i* ウインドウのクライアント領域のサイズ
+		* @param Rect2i& ウインドウのクライアント領域のサイズ
 		*/
-		void GetSize(Rect2i* rect) const;
+		void GetSize(Rect2i& rect) const;
 
 		/**
 		* ウインドウのクライアント領域のサイズを設定する
@@ -137,7 +137,7 @@ namespace Nyx {
 		* ウインドウの位置を取得する
 		* @param Point2i* p
 		*/
-		void GetPosition(Point2i* p) const;
+		void GetPosition(Point2i& p) const;
 
 		/**
 		* ウインドウの位置を設定する
@@ -166,18 +166,17 @@ namespace Nyx {
 		bool IsChecked() const;
 	private:
 		/// ハンドルインスタンス
-		HWND hwnd;
+		HWND hwnd_;
 		///チェックボックスのラベル
-		std::wstring label;
+		std::wstring label_;
 		///チェックボックスのID
-		int id;
+		int id_;
 		///アトム
-		ATOM atom;
+		ATOM atom_;
 		///表示されているかどうか
-		bool isShow;
+		bool isShow_;
 		///ユーザーデータ
-		void * userData;
+		std::shared_ptr<void> userData_;
 	};
 }
 #endif
-#include <comdef.h>

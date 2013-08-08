@@ -137,7 +137,7 @@ namespace Nyx {
 
 		//クライアントウインドウのサイズを覚えておく
 		Rect2i clientSize;
-		window->GetSize(&clientSize);
+		window->GetSize(clientSize);
 		SetRect(&clientRect_, 0, 0, clientSize.width, clientSize.height);
 
 		Assert(graphBuilder_  != nullptr);
