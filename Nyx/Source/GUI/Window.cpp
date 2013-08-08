@@ -22,8 +22,8 @@
 #include "Primitive/Rect.h"
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
-	Window::Window(HWND hWnd, std::wstring caption, int x, int y, int width, int height, int id)
-		:caption_(caption_), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
+	Window::Window(HWND hWnd, std::wstring caption, std::wstring icon, int x, int y, int width, int height, int id)
+		:caption_(caption), icon_(icon), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
 			//フックリストが初期化されていなければ、初期化する
 			guiEventList_ = std::make_shared<Dispatcher>();
 			
@@ -31,7 +31,7 @@ namespace Nyx {
 			userEventList_ = std::make_shared<Dispatcher>();
 
 			//コントロールの生成
-			OnCreate(hWnd,x, y, width, height);
+			OnCreate(hWnd, x, y, width, height);
 	}    
 
 	//-----------------------------------------------------------------------------------------
@@ -48,23 +48,20 @@ namespace Nyx {
 	bool Window::OnCreate(HWND hwnd, int x, int y, int width, int height) {
 		//ウインドウクラスの作成
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
-		WNDCLASSEX winc;
-		winc.cbSize			= sizeof(WNDCLASSEX);
+		WNDCLASS winc;
 		winc.style			= CS_HREDRAW | CS_VREDRAW;
 		winc.lpfnWndProc	= GlobalProcedure;
 		winc.cbClsExtra		= winc.cbWndExtra	= 0;
 		winc.hInstance		= hInstance;
-		winc.hIcon			= LoadIcon(NULL , IDI_APPLICATION);
+		winc.hIcon			= LoadIcon(NULL , icon_.c_str());
 		winc.hCursor		= LoadCursor(NULL , IDC_ARROW);
 		winc.hbrBackground	= (HBRUSH)COLOR_BACKGROUND + 1;
 		winc.lpszMenuName	= NULL;
 		winc.lpszClassName	= caption_.c_str();
-		winc.hIconSm		= NULL;
-		atom_ = RegisterClassEx(&winc);
+		atom_ = RegisterClass(&winc);
 
 		//ウインドウの生成
-		hwnd_ = CreateWindowEx(
-			WS_EX_LEFT,
+		hwnd_ = CreateWindow(
 			caption_.c_str(),
 			caption_.c_str(), //タイトルバーにこの名前が表示されます
 			WS_OVERLAPPEDWINDOW , //ウィンドウの種類
@@ -83,9 +80,6 @@ namespace Nyx {
 		}
 
 		::SetWindowLong(hwnd_, GWL_USERDATA, (long)this);
-		
-		//自分をフックする
-		Register(shared_from_this());
 		
 		Show();
 		return true;
@@ -221,18 +215,7 @@ namespace Nyx {
 		::SetMenu(hwnd_, menu);
 	}
 
-	//----------------------------------------------------------------
-	HICON Window::GetIcon() {
-		return NULL;
-	}
-
-	//----------------------------------------------------------------
-	void Window::SetIcon(std::wstring icon) {
-		Assert(userEventList_ != NULL);
-		LoadIcon(GetModuleHandle(NULL), icon.c_str());
-	}
-
-	//----------------------------------------------------------------
+		//----------------------------------------------------------------
 	void Window::Register(std::shared_ptr<IControl> control) {
 		uint key = control->GetID();
 		auto it = childControl_.find(key);

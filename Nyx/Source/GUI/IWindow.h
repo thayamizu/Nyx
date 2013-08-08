@@ -50,17 +50,6 @@ namespace Nyx {
 		virtual void SetMenu(HMENU menu) = 0;
 		
 		/**
-		* アイコンを取得する
-		*/
-		virtual HICON GetIcon() = 0;
-
-		/**
-		* アイコンを設定する
-		* @pram HMENU メニュー
-		*/
-		virtual void SetIcon(std::wstring iconName) = 0;
-
-		/**
 		* メッセージ処理
 		* @retur bool
 		*/

@@ -142,7 +142,6 @@
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
     <ClInclude Include="..\Source\GUI\ICheckBox.h" />
-    <ClInclude Include="..\Source\GUI\IComboBox.h" />
     <ClInclude Include="..\Source\GUI\IControl.h" />
     <ClInclude Include="..\Source\GUI\IDispatcher.h" />
     <ClInclude Include="..\Source\GUI\IListBox.h" />

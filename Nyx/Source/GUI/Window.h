@@ -22,7 +22,7 @@
 namespace Nyx {
 
 	///ウインドウ
-	class Window : public IWindow, private std::enable_shared_from_this<Window>
+	class Window : public IWindow
 	{
 		typedef std::unordered_map<uint, std::shared_ptr<IControl>> HookList;
 		typedef std::unordered_map<uint, std::shared_ptr<IControl>>::iterator HookListIterator;
@@ -33,7 +33,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Window(HWND hWnd, std::wstring caption, int x=0,int y=0, int width=800, int height=600,int id=0);
+		Window(HWND hWnd, const std::wstring caption, std::wstring icon,  int x=0,int y=0, int width=800, int height=600,int id=0);
 		/**
 		*
 		*/
@@ -210,17 +210,6 @@ namespace Nyx {
 		void SetMenu(HMENU menu);
 
 		/**
-		* メニューを取得する
-		*/
-		HICON GetIcon();
-
-		/**
-		* メニューを設定する
-		* 
-		*/
-		void SetIcon(std::wstring iconName);
-
-		/**
 		* メッセージ処理
 		* @return bool
 		*/
@@ -252,6 +241,8 @@ namespace Nyx {
 		ATOM atom_;
 		///タイトル
 		std::wstring caption_;
+		///アイコンリソース
+		std::wstring icon_;
 		///ユーザーデータ
 		std::shared_ptr<void> userData_;
 		///ウインドウに結びつけらている子コントロールのリスト
