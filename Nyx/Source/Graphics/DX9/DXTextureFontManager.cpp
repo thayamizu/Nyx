@@ -24,6 +24,7 @@
 #include "Primitive/Matrix44.h"
 #include "Primitive/Color4.h"
 #include "Thread/Thread.h"
+
 namespace Nyx {
 	namespace DX9 {
 

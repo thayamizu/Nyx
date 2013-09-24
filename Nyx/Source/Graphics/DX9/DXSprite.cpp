@@ -19,6 +19,7 @@
 #include "Debug/DebugOutput.h"
 #include "IO/File.h"
 #include "Graphics/ISprite.h"
+
 #include "Graphics/DX9/DirectGraphicsDevice.h"
 #include "Graphics/DX9/DXSprite.h"
 

@@ -17,7 +17,8 @@
 #include "PCH/PCH.h"
 #include "Input/Mouse.h"
 #include "Debug/Assert.h"
-
+//DirectX
+#include "Graphics/DirectXDefinition.h"
 namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//

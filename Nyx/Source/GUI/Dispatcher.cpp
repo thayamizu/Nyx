@@ -63,7 +63,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Dispatch(std::shared_ptr<IControl> sender, EventArgs& e) {
+	void Dispatcher::Dispatch(std::shared_ptr<IControl> sender, EventArgs e) {
 		size_t id = sender->GetID();
 		GUICallback callback = hooklist[id];
 		if (callback != nullptr) {

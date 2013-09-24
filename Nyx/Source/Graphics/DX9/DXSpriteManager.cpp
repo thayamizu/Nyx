@@ -17,6 +17,7 @@
 #include "PCH/PCH.h"
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
+
 #include "Graphics/DX9/DirectGraphicsDevice.h"
 #include "Graphics/DX9/DXSprite.h"
 #include "Graphics/DX9/DXSpriteManager.h"

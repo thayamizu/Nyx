@@ -76,7 +76,7 @@ namespace Nyx {
 		* @param std::shared_ptr<IControl> sender
 		* @param EventArgs* e
 		*/
-		void Dispatch(std::shared_ptr<IControl> control, EventArgs& e);
+		void Dispatch(std::shared_ptr<IControl> control, EventArgs e);
 	private:
 		///ディスパッチャにフックされているコントロールのリスト
 		HookList hooklist;

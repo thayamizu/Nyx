@@ -80,6 +80,7 @@
 			MemoryState now, diff;
 			_CrtMemCheckpoint(&now);
 			if (_CrtMemDifference(&diff, &old, &now)) {   
+				_CrtDumpMemoryLeaks();
 				DebugOutput::GetInstance()->PrintThickLine();
 				DebugOutput::GetInstance()->PrintLn("ƒƒ‚ƒŠ[ƒŠ[ƒN");
 				DebugOutput::GetInstance()->PrintThinLine();

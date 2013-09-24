@@ -18,7 +18,8 @@
 #include "Debug/Assert.h"
 #include "Input/IKeyBase.h"
 #include "Input/Keyboard.h"
-
+//DirectX
+#include "Graphics/DirectXDefinition.h"
 namespace Nyx {
 	Keyboard::Keyboard(HWND hwnd_) : IKeyBase(), isAcquire(false) {
 

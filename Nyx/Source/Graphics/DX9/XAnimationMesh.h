@@ -21,7 +21,8 @@
 #include "Graphics/DX9/XMesh.h"
 #include "Primitive/Vector3.h"
 #include "Primitive/Matrix44.h"
-
+//DirectX
+#include "Graphics/DirectXDefinition.h"
 namespace Nyx {
 	namespace DX9{
 

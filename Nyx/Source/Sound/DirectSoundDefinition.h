@@ -3,6 +3,7 @@
 #include "PCH/PCH.h"
 
 //--------------------------------------------------------------
+#include <boost/intrusive_ptr.hpp>
 //Direct Sound
 #define DIRECTSOUND_VERSION 0x0900
 #include <dsound.h> 

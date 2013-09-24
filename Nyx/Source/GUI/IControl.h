@@ -4,6 +4,7 @@
 #include "Utility/Type.h"
 #include "Primitive/Vector2.h"
 #include "Primitive/Rect.h"
+#include <Windows.h>
 namespace Nyx 
 {
 
@@ -24,7 +25,7 @@ namespace Nyx
 		 *デフォルトコンストラクタ
 		 */
 		EventArgs():
-			message(0), wparam(NULL), lparam(NULL), result(nullptr) {
+			message(0), wparam(NULL), lparam(NULL){
 		}
 
 		
@@ -33,10 +34,10 @@ namespace Nyx
 		 * @param uint
 		 * @param WPARAM
 		 * @param LPARAM
-		 * @param result*
 		 */
-		EventArgs(uint msg, WPARAM wParam, LPARAM lParam, bool* res) 
-			:message(msg), wparam(wParam), lparam(lParam), result(res) {}
+		EventArgs(uint msg, WPARAM wParam, LPARAM lParam) 
+			:message(msg), wparam(wParam), lparam(lParam) {
+		}
 
 		//メッセージ
 		uint message;
@@ -46,9 +47,6 @@ namespace Nyx
 
 		//LPARAM
 		LPARAM lparam;
-
-		//
-		bool * result;
 	};
 
 

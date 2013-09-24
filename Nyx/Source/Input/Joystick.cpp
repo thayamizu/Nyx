@@ -20,6 +20,8 @@
 #include "Input/IKeyBase.h"
 #include "Input/Joystick.h"
 #include "Debug/Assert.h"
+//DirectX
+#include "Graphics/DirectXDefinition.h"
 namespace Nyx {
 	int Joystick::joystickNum = 0;
 	//-----------------------------------------------------------------------------------------

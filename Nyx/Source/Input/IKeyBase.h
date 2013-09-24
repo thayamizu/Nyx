@@ -17,6 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_IKEY_BASE_H_
 #define NYX_CORE_INCLUDED_IKEY_BASE_H_
 
+
 namespace Nyx {
 	/// キー入力のベースクラス
 	class IKeyBase {

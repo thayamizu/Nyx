@@ -17,6 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_JOYSTICK_H_
 #define NYX_CORE_INCLUDED_JOYSTICK_H_
 
+
 namespace Nyx {
 	/// ジョイスティックインタフェース
 	class IJoystick : public IKeyBase {

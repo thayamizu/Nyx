@@ -20,6 +20,7 @@
 #include "Primitive/Vector3.h"
 
 #include "Primitive/Matrix44.h"
+
 #include "Graphics/IGraphicsDevice.h"
 #include "Graphics/DX9/DirectGraphicsDevice.h"
 

@@ -19,9 +19,9 @@
 #define NYX_CORE_INCLUDED_MEMORY_CHECKER_H_
 
 #ifdef _DEBUG
-#include <crtdbg.h>
 // crtdbg.h をインクルードしたあとに _CRTDBG_MAP_ALLOC を定義してやる
 #define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
 #define new  ::new(_CLIENT_BLOCK, __FILE__, __LINE__)
 
 namespace Nyx {

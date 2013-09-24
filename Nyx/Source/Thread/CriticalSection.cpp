@@ -32,6 +32,7 @@ namespace Nyx
 	CriticalSection::CriticalSection()
 		:pimpl_(new PImpl())
 	{ 
+
 	}
 
 	// デストラクタ

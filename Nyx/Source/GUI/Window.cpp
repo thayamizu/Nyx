@@ -40,6 +40,10 @@ namespace Nyx {
 		if (atom_) {
 			::UnregisterClass((LPCTSTR)atom_, ::GetModuleHandle(NULL));
 		}
+
+		childControl_.clear();
+		userEventList_->Clear();
+		guiEventList_->Clear();
 	}
 
 
@@ -55,7 +59,7 @@ namespace Nyx {
 		winc.hInstance		= hInstance;
 		winc.hIcon			= LoadIcon(NULL , icon_.c_str());
 		winc.hCursor		= LoadCursor(NULL , IDC_ARROW);
-		winc.hbrBackground	= (HBRUSH)COLOR_BACKGROUND + 1;
+		winc.hbrBackground	= (HBRUSH)GetStockObject(WHITE_BRUSH);
 		winc.lpszMenuName	= NULL;
 		winc.lpszClassName	= caption_.c_str();
 		atom_ = RegisterClass(&winc);
@@ -317,27 +321,25 @@ namespace Nyx {
 		}
 
 		//メッセージ送ってきたコントロールを特定
-		HookListIterator it = window->childControl_.find(LOWORD(wParam));
+		uint controlId = LOWORD(wParam);
+		HookListIterator it = window->childControl_.find(controlId);
 		if (it == window->childControl_.end()) {
 			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
 
 		//メッセージディスパッチ
-		bool result = false;
-		EventArgs event(msg, wParam, lParam, &result);
-		auto control = it->second;
+		auto sender = it->second;
+		EventArgs e(msg, wParam, lParam);
 
 		//-------------------------------------------------------------------------------------
 		//GUIイベントメッセージ処理
 		//-------------------------------------------------------------------------------------
-		window->guiEventList_->Dispatch(control, event);
-		
+		window->guiEventList_->Dispatch(sender, e);
 
 		//-------------------------------------------------------------------------------------
 		//ユーザーイベントメッセージ処理
 		//-------------------------------------------------------------------------------------
-		window->userEventList_->Dispatch(control, event);
-		
+		window->userEventList_->Dispatch(sender, e);
 
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}

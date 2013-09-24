@@ -56,9 +56,6 @@
 #include <fstream>
 #include <sstream>
 
-//boost
-#include <boost/intrusive_ptr.hpp>
-
 //Common
 #include "Utility/Common.h"
 #include "Utility/Exception.h"
