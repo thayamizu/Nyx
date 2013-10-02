@@ -71,15 +71,6 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	bool DirectInputMouse::Update() {
-		//値のクリア
-		absolutePos = Point2i::Zero;
-
-		//絶対座標の取得
-		GetCursorPos(reinterpret_cast<POINT*>(&absolutePos.elements));
-		ScreenToClient(hwnd, reinterpret_cast<POINT*>(&absolutePos.elements));
-
-
-		//dinputによる座標・ボタン状態の取得
 		if (isAcquire == false) {
 			//acquireしとらんのか
 			if (!Acquire()) { 
@@ -115,70 +106,34 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	bool DirectInputMouse::GetMouseButton(Nyx::uchar keycode) {
-		if(keycode >= MouseButtonMax) {
-			return false;
-		}
-
-		return (mouseState.rgbButtons[keycode] & 0x80) !=0;
 	}
 	//-------------------------------------------------------------------------------------------------------
 	//
 	Point2i DirectInputMouse::GetRelativePos() {
-		return relativePos;
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	Point2i DirectInputMouse::GetAbsolutePos() {
-		return absolutePos;
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	int DirectInputMouse::GetWheelState() {
-		return wheelState;
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	bool DirectInputMouse::Acquire() {
-		HRESULT hr = mouseDevice->Acquire();
-		if (hr == DI_OK) {
-			isAcquire = true;
-		}
-		else {
-			isAcquire = false;
-		}
-
-		return isAcquire;
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	bool DirectInputMouse::Unacquire(){
-		if (isAcquire == false ) {
-			//acquireされてないんやで
-			return false;
-		}
-
-		HRESULT hr = mouseDevice->Unacquire();
-		if (hr == DI_OK) {
-			isAcquire = false;
-		}
-		else {
-			isAcquire = true;
-		}
-
-		return !isAcquire;
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void DirectInputMouse::Release() {
-		if (mouseDevice) {
-			Unacquire();
-		}
-		SafeRelease(mouseDevice);
-		SafeRelease(mouse);
 	}
 }

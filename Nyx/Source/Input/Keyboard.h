@@ -16,41 +16,64 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_KEYBOARD_H_
 #define NYX_CORE_INCLUDED_KEYBOARD_H_
+#include "InputDeviceDesc.h"
 
 namespace Nyx {
 	///キーボード入力
-	class Keyboard : public IKeyBase {
+	class Keyboard {
 	public:
 		/**
 		*
 		*/
-		Keyboard(HWND hwnd_) ;
+		Keyboard();
+
+		/**
+		*
+		*/
+		Keyboard(const Keyboard& other);
+
+		/**
+		*
+		*/
+		Keyboard(const InputDeviceDesc& desc);
+
 		/**
 		*
 		*/
 		~Keyboard() ;
+
+		/**
+		*
+		*/
+		bool Initialize(const InputDeviceDesc& desc);
+
+		/**
+		*
+		*/
+		bool IsInitialized(); 
+
 		/**
 		*
 		*/
 		bool Update();
+
 		/**
 		*
-
 		*/
 		void Release();
+
 		/**
 		*
 		*/
 		bool Acquire();
+
 		/**
 		*
 		*/
 		bool Unacquire();
 	private:
-
-		bool isAcquire;
-		DirectInput keyboard;
-		DirectInputDevice keyboardDevice;
+		struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 

@@ -16,34 +16,10 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_JOYSTICK_H_
 #define NYX_CORE_INCLUDED_JOYSTICK_H_
-
+#include "IJoystick.h"
+#include <memory>
 
 namespace Nyx {
-	/// ジョイスティックインタフェース
-	class IJoystick : public IKeyBase {
-	public:
-		/**
-		*
-		*/
-		IJoystick():IKeyBase()  { }
-		/**
-		*
-		*/
-		~IJoystick() { }
-
-		/**
-		*
-		*/
-		virtual bool Update() = 0;
-		/**
-		*
-		*/
-		virtual bool SetButtonMax(uchar num) = 0;
-		/**
-		*
-		*/
-		virtual uchar GetButtonMax() = 0;
-	};
 
 	/////ジョイスティックヌルデバイス
 	//class JoystickNullDevice: public IJoystick {
@@ -83,33 +59,53 @@ namespace Nyx {
 		//--------------------------------------------------------
 		Joystick(HWND hwnd_, int range) ;
 		~Joystick() ;
+		/**
+		*
+		*/
+		bool Initialize();
 
-		//--------------------------------------------------------
-		//取得・更新
-		//--------------------------------------------------------
+		/**
+		*
+		*/
+		bool IsInitialized(); 
+
+		/**
+		*
+		*/
 		bool Update();
-		void Release();
-		bool Acquire();
-		bool Unacquire();
-		bool IsInitialized();
-		//--------------------------------------------------------
-		//ボタンの設定
-		//--------------------------------------------------------
-		bool SetButtonMax(uchar );
-		uchar GetButtonMax();
-	public:
-		static int CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, void* pContext);
-		static int CALLBACK EnumAxesCallback(LPCDIDEVICEOBJECTINSTANCE lpddoi, void* pvRef);
 
-		static int joystickNum;
+		/**
+		*
+		*/
+		void Release();
+
+		/**
+		*
+		*/
+		bool Acquire();
+
+		/**
+		*
+		*/
+		bool Unacquire();
+
+		/**
+		*
+		*/
+		bool IsInitialized();
+
+		/**
+		*
+		*/
+		bool SetButtonMax(uchar buttonNum);
+
+		/**
+		*
+		*/
+		uchar GetButtonMax();
 	private:
-		DIDEVCAPS joyCaps;
-		DirectInput joystick;
-		DirectInputDevice joystickDevice;
-		int allowRange;
-		uchar buttonNum;
-		bool isAcquire;
-		bool isInitialized;
+		struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 #endif

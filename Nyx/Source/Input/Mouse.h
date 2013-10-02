@@ -16,58 +16,81 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_MOUSE_H_
 #define NYX_CORE_INCLUDED_MOUSE_H_
-
 #include "Primitive/Vector2.h"
+#include "InputDeviceDesc.h"
 
 namespace Nyx {
 	///ƒ}ƒEƒX“ü—Í
 	class Mouse {
-	public: 
-		static const int BufferSize = 8;
-		static const int InputDeviceNum = 16;
-		static const int MouseButtonMax = 8;
 	public:
 		/**
 		*
 		*/
-		Mouse(HWND hwnd_);
-		/**
-		*
-		*/~Mouse();
-		/**
-		*
-		*/bool GetMouseButton(uchar keycode);
-		/**
-		*
-		*/Point2i GetRelativePos();
-		/**
-		*
-		*/Point2i GetAbsolutePos();
-		/**
-		*
-		*/int GetWheelState();
-		/**
-		*
-		*/bool Update();
-		/**
-		*
-		*/bool Acquire();
-		/**
-		*
-		*/bool Unacquire();
-		/**
-		*
-		*/void Release();
-	private:
-		HWND hwnd;
-		Point2i absolutePos;
-		Point2i relativePos;
-		bool isAcquire;
-		int wheelState;
-		::DIMOUSESTATE2 mouseState;
-		::DirectInput mouse;
-		::DirectInputDevice mouseDevice;
+		Mouse();
 
+		/**
+		*
+		*/
+		Mouse(const InputDeviceDesc& desc);
+
+		/**
+		*
+		*/
+		Mouse(const Mouse& other);
+		
+
+		/**
+		*
+		*/
+		bool Initialize(const InputDeviceDesc& desc);
+		
+		/**
+		*
+		*/
+		bool IsInitialized(); 
+		
+		/**
+		*
+		*/
+		bool GetMouseButton(uchar keycode);
+		
+		/**
+		*
+		*/
+		Point2i GetRelativePos();
+		
+		/**
+		*
+		*/
+		Point2i GetAbsolutePos();
+		
+		/**
+		*
+		*/
+		int GetWheelState();
+		
+		/**
+		*
+		*/
+		bool Update();
+		
+		/**
+		*
+		*/
+		bool Acquire();
+		
+		/**
+		*
+		*/
+		bool Unacquire();
+		
+		/**
+		*
+		*/
+		void Release();
+	private:
+		struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 
 }//END OF NYX

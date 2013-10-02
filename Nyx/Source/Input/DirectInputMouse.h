@@ -14,8 +14,8 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_MOUSE_H_
-#define NYX_CORE_INCLUDED_MOUSE_H_
+#ifndef NYX_CORE_INCLUDED_DIRECTINPUT_MOUSE_H_
+#define NYX_CORE_INCLUDED_DIRECTINPUT_MOUSE_H_
 
 #include "PCH/PCH.h"
 #include "Primitive/Vector2.h"
@@ -66,9 +66,9 @@ namespace Nyx {
 		Point2i relativePos;
 		bool isAcquire;
 		int wheelState;
-		::DIMOUSESTATE2 mouseState;
-		::DirectInput mouse;
-		::DirectInputDevice mouseDevice;
+		DIMOUSESTATE2 mouseState;
+		DirectInput mouse;
+		DirectInputDevice mouseDevice;
 	};
 
 }//END OF NYX

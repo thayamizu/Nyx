@@ -25,20 +25,24 @@ namespace Nyx {
 		/**
 		*
 		*/
-		IKeyBase():flipCounter(1) {
-			::ZeroMemory((void*)&(keyBuffer[0]), bufferSize);
-			::ZeroMemory((void*)&(keyBuffer[1]), bufferSize);
+		IKeyBase() 
+			: flipCounter(1) {
+			ZeroMemory((void*)&(keyBuffer[0]), bufferSize);
+			ZeroMemory((void*)&(keyBuffer[1]), bufferSize);
 		}
+
 		/**
 		*
 		*/
 		uchar* GetKeyBuffer() {
 			return keyBuffer[flipCounter];
 		}
+		
 		/**
 		*
 		*/
 		virtual bool Update() = 0;
+		
 		/**
 		*
 		*/
@@ -64,7 +68,7 @@ namespace Nyx {
 			flipCounter ^= 1;
 		}
 
-		static const int bufferSize=256;
+		static const int bufferSize = 256;
 		uchar keyBuffer[2][bufferSize];
 		int flipCounter;
 	};

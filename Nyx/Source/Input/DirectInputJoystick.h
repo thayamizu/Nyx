@@ -14,8 +14,8 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_JOYSTICK_H_
-#define NYX_CORE_INCLUDED_JOYSTICK_H_
+#ifndef NYX_CORE_INCLUDED_DIRECT_INPUT_JOYSTICK_H_
+#define NYX_CORE_INCLUDED_DIRECT_INPUT_JOYSTICK_H_
 
 #include "PCH/PCH.h"
 #include "IKeyBase.h"
@@ -106,13 +106,8 @@ namespace Nyx {
 
 		static int joystickNum;
 	private:
-		DIDEVCAPS joyCaps;
-		DirectInput joystick;
-		DirectInputDevice joystickDevice;
-		int allowRange;
-		uchar buttonNum;
-		bool isAcquire;
-		bool isInitialized;
+			struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 #endif

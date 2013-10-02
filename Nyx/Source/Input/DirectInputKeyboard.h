@@ -14,8 +14,8 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_KEYBOARD_H_
-#define NYX_CORE_INCLUDED_KEYBOARD_H_
+#ifndef NYX_CORE_INCLUDED_DIRECT_INPUT_KEYBOARD_H_
+#define NYX_CORE_INCLUDED_DIRECT_INPUT_KEYBOARD_H_
 
 #include "PCH/PCH.h"
 #include "IKeyBase.h"
@@ -51,10 +51,8 @@ namespace Nyx {
 		*/
 		bool Unacquire();
 	private:
-
-		bool isAcquire;
-		DirectInput keyboard;
-		DirectInputDevice keyboardDevice;
+	struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 
