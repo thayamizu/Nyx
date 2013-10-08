@@ -29,30 +29,36 @@ namespace Nyx {
 		*
 		*/
 		DirectInputKeyboard(HWND hwnd_) ;
+
 		/**
 		*
 		*/
 		~DirectInputKeyboard() ;
+
 		/**
 		*
 		*/
 		bool Update();
+
 		/**
 		*
-
 		*/
 		void Release();
+
 		/**
 		*
 		*/
 		bool Acquire();
+
+
 		/**
 		*
 		*/
 		bool Unacquire();
 	private:
-	struct PImpl;
-		std::shared_ptr<PImpl> pimpl_;
+		bool isAcquire_;
+		DirectInputPtr keyboard_;
+		DirectInputDevicePtr keyboardDevice_;
 	};
 }
 

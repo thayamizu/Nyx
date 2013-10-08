@@ -97,6 +97,7 @@ namespace Nyx {
 	DirectInputJoystick::~DirectInputJoystick()  {
 		Release();
 	}
+
 	bool DirectInputJoystick::Update() {
 		HRESULT hr;
 		//バッファフリップや

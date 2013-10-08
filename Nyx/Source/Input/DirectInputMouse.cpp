@@ -23,17 +23,19 @@
 namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectInputMouse::DirectInputMouse(HWND hwnd_) {
-		hwnd = hwnd_;
-		isAcquire=false;
+	DirectInputMouse::DirectInputMouse(HWND hwnd) 
+		:hwnd_(hwnd), isAcquire_(false)
+	{
 
 		HRESULT hr;
 		// DirectInputの作成
-		hr = DirectInput8Create(::GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mouse, NULL);
+		LPDIRECTINPUT8 mouse = nullptr;
+		hr = DirectInput8Create(::GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mouse_, NULL);
 		Assert(hr == DI_OK);
 
 		// デバイス・オブジェクトを作成
-		hr = mouse->CreateDevice(GUID_SysMouse, &mouseDevice, NULL); 
+		LPDIRECTINPUTDEVICE8 mouseDevice;
+		hr = mouse_->CreateDevice(GUID_SysMouse, &mouseDevice, NULL); 
 		Assert(hr == DI_OK);
 
 		// データ形式を設定
@@ -60,6 +62,9 @@ namespace Nyx {
 		hr = mouseDevice->SetProperty(DIPROP_BUFFERSIZE, &diprop.diph);
 		Assert(hr == DI_OK);
 
+
+		mouse_ = DirectInputPtr(mouse, false);
+		mouseDevice_ = DirectInputDevicePtr(mouseDevice, false);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
@@ -71,10 +76,10 @@ namespace Nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	bool DirectInputMouse::Update() {
-		if (isAcquire == false) {
+		if (isAcquire_ == false) {
 			//acquireしとらんのか
 			if (!Acquire()) { 
-				::ZeroMemory(&mouseState, sizeof(mouseState));
+				::ZeroMemory(&mouseState_, sizeof(mouseState_));
 				return false;//acuire失敗。
 			}
 
@@ -82,58 +87,92 @@ namespace Nyx {
 		}
 
 
-		HRESULT hr = mouseDevice->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState);
+		HRESULT hr = mouseDevice_->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState_);
 		if (hr == DIERR_INPUTLOST) {
 			if(!Acquire()) {
 				return false;
 			}
-			hr = mouseDevice->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState);
+			hr = mouseDevice_->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState_);
 		}
 		if (hr == DI_OK) {
-			relativePos.x = static_cast<int>(mouseState.lX);
-			relativePos.y = static_cast<int>(mouseState.lY);
-			wheelState = mouseState.lZ;
+			relativePos_.x = static_cast<int>(mouseState_.lX);
+			relativePos_.y = static_cast<int>(mouseState_.lY);
+			wheelState_ = mouseState_.lZ;
 		}
 		else {
 			//	バッファをクリアして戻る。（画面外にフォーカスが移ったときに押しっぱなし
 			//	になるのを防ぐため）
-			::ZeroMemory(&mouseState, sizeof(mouseState));
+			::ZeroMemory(&mouseState_, sizeof(mouseState_));
 			return false;       
 		}
 
 		return true;
 	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	bool DirectInputMouse::GetMouseButton(Nyx::uchar keycode) {
-	}
-	//-------------------------------------------------------------------------------------------------------
-	//
-	Point2i DirectInputMouse::GetRelativePos() {
-	}
+ //-------------------------------------------------------------------------------------------------------
+        //
+        bool DirectInputMouse::GetMouseButton(Nyx::uchar keycode) {
+                if(keycode >= MouseButtonMax) {
+                        return false;
+                }
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	Point2i DirectInputMouse::GetAbsolutePos() {
-	}
+                return (mouseState_.rgbButtons[keycode] & 0x80) !=0;
+        }
+        //-------------------------------------------------------------------------------------------------------
+        //
+        Point2i DirectInputMouse::GetRelativePos() {
+                return relativePos_;
+        }
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	int DirectInputMouse::GetWheelState() {
-	}
+        //-------------------------------------------------------------------------------------------------------
+        //
+        Point2i DirectInputMouse::GetAbsolutePos() {
+                return absolutePos_;
+        }
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	bool DirectInputMouse::Acquire() {
-	}
+        //-------------------------------------------------------------------------------------------------------
+        //
+        int DirectInputMouse::GetWheelState() {
+                return wheelState_;
+        }
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	bool DirectInputMouse::Unacquire(){
-	}
+        //-------------------------------------------------------------------------------------------------------
+        //
+        bool DirectInputMouse::Acquire() {
+                HRESULT hr = mouseDevice_->Acquire();
+                if (hr == DI_OK) {
+                        isAcquire_ = true;
+                }
+                else {
+                        isAcquire_ = false;
+                }
 
-	//-------------------------------------------------------------------------------------------------------
-	//
-	void DirectInputMouse::Release() {
-	}
+                return isAcquire_;
+        }
+
+        //-------------------------------------------------------------------------------------------------------
+        //
+        bool DirectInputMouse::Unacquire(){
+                if (isAcquire_ == false ) {
+                        //acquireされてないんやで
+                        return false;
+                }
+
+                HRESULT hr = mouseDevice_->Unacquire();
+                if (SUCCEEDED(hr)) {
+                        isAcquire_ = false;
+                }
+                else {
+                        isAcquire_ = true;
+                }
+
+                return !isAcquire_;
+        }
+
+        //-------------------------------------------------------------------------------------------------------
+        //
+        void DirectInputMouse::Release() {
+                if (mouseDevice_) {
+                        Unacquire();
+                }
+        }
 }

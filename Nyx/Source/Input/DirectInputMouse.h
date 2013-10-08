@@ -25,14 +25,12 @@ namespace Nyx {
 	///ƒ}ƒEƒX“ü—Í
 	class DirectInputMouse {
 	public: 
-		static const int BufferSize = 8;
-		static const int InputDeviceNum = 16;
-		static const int MouseButtonMax = 8;
+	
 	public:
 		/**
 		*
 		*/
-		DirectInputMouse(HWND hwnd_);
+		DirectInputMouse(HWND hwnd);
 		/**
 		*
 		*/~DirectInputMouse();
@@ -61,14 +59,14 @@ namespace Nyx {
 		*
 		*/void Release();
 	private:
-		HWND hwnd;
-		Point2i absolutePos;
-		Point2i relativePos;
-		bool isAcquire;
-		int wheelState;
-		DIMOUSESTATE2 mouseState;
-		DirectInput mouse;
-		DirectInputDevice mouseDevice;
+		HWND hwnd_;
+		Point2i absolutePos_;
+		Point2i relativePos_;
+		bool isAcquire_;
+		int wheelState_;
+		DIMOUSESTATE2 mouseState_;
+		DirectInputPtr mouse_;
+		DirectInputDevicePtr mouseDevice_;
 	};
 
 }//END OF NYX

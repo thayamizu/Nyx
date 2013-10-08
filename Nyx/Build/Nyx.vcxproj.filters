@@ -118,9 +118,6 @@
     <Filter Include="Input\detail">
       <UniqueIdentifier>{e69bb2af-99fb-4f15-9c53-6726a2ad4fc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input\detail\DirectInput">
-      <UniqueIdentifier>{dbbe5706-7d19-41e2-bacc-abcfe3fa50c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI\detail">
       <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
     </Filter>
@@ -195,6 +192,12 @@
     </Filter>
     <Filter Include="Graphics\detail\DX9">
       <UniqueIdentifier>{3ba3e4eb-64da-4582-954f-19b3d98e2855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Loader">
+      <UniqueIdentifier>{8db84fa7-a24d-4a8a-91eb-5c7663ff8b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\detail\Core">
+      <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -400,15 +403,6 @@
     <ClInclude Include="..\Source\IO\PackedFile.h">
       <Filter>IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Input\IKeyBase.h">
-      <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Input\Joystick.h">
-      <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Input\Keyboard.h">
-      <Filter>Input</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Input\Mouse.h">
       <Filter>Input</Filter>
     </ClInclude>
@@ -538,6 +532,24 @@
     <ClInclude Include="..\Source\Primitive\Matrix33.h">
       <Filter>Primitive</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Input\DirectInputDefinition.h">
+      <Filter>Input\detail\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Keyboard.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\IKeyBase.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\IJoystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\Joystick.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Input\InputDeviceDesc.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -657,12 +669,6 @@
     <ClCompile Include="..\Source\IO\PackedFile.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Input\Joystick.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Input\Keyboard.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Input\Mouse.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -731,6 +737,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp">
       <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Keyboard.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\IKeyBase.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\IJoystick.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Input\Joystick.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

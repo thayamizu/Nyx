@@ -19,67 +19,13 @@
 
 #include "PCH/PCH.h"
 #include "IKeyBase.h"
+#include "IJoystick.h"
 #include "DirectInputDefinition.h"
 
 namespace Nyx {
-	/// ジョイスティックインタフェース
-	class IJoystick : public IKeyBase {
-	public:
-		/**
-		*
-		*/
-		IJoystick():IKeyBase()  { }
-		/**
-		*
-		*/
-		~IJoystick() { }
-
-		/**
-		*
-		*/
-		virtual bool Update() = 0;
-		/**
-		*
-		*/
-		virtual bool SetButtonMax(uchar num) = 0;
-		/**
-		*
-		*/
-		virtual uchar GetButtonMax() = 0;
-	};
-
-	/////ジョイスティックヌルデバイス
-	//class JoystickNullDevice: public IJoystick {
-	//public:
-	//	JoystickNullDevice();
-	//	~JoystickNullDevice();
-	//	/**
-	//	*/
-	//	bool Update();
-	//	bool SetButtonMax(uchar num);
-	//	uchar GetButtonMax();
-	//	uchar GetJoyCount();
-	//};
-
-	//JoystickNullDevice::JoystickNullDevice(){}
-	//JoystickNullDevice::~JoystickNullDevice(){}
-	//
-	//bool JoystickNullDevice::Update() {
-	//	return false;
-	//}
-	//
-	//bool JoystickNullDevice::SetButtonMax(uchar num) {
-	//	return false;
-	//}
-	//
-	//uchar JoystickNullDevice::GetButtonMax() {
-	//	return 0;
-	//}
-
-
 
 	///DirectInputを使ったジョイスティック入力
-	class DirectInputJoystick : public IJoystick {
+	class DirectInputJoystick : public IKeyBase, public IJoystick {
 	public:
 		//--------------------------------------------------------
 		//構築・破壊

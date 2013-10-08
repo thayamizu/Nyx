@@ -25,52 +25,38 @@ namespace Nyx {
 		/**
 		*
 		*/
-		IKeyBase() 
-			: flipCounter(1) {
-			ZeroMemory((void*)&(keyBuffer[0]), bufferSize);
-			ZeroMemory((void*)&(keyBuffer[1]), bufferSize);
-		}
-
+		IKeyBase() ;
+		
 		/**
 		*
 		*/
-		uchar* GetKeyBuffer() {
-			return keyBuffer[flipCounter];
-		}
+		uchar* GetKeyBuffer();
 		
+
 		/**
 		*
 		*/
 		virtual bool Update() = 0;
 		
-		/**
-		*
-		*/
-		virtual bool IsPressed(Nyx::uchar keycode) {
-			return (keyBuffer[flipCounter][keycode] & 0x80) != 0;
-		}
 
 		/**
 		*
 		*/
-		virtual bool IsPushed(Nyx::uchar keycode) {
-			// âüÇ≥ÇÍÇΩèuä‘Ç…trueÇ…Ç∑ÇÈèÍçá
-			if (!(keyBuffer[ flipCounter][keycode])) return false;
-			if (  keyBuffer[1-flipCounter][keycode] ) return false;
-			return true;
-		}
+		bool IsPressed(uchar keycode);
+
+
+		/**
+		*
+		*/
+		 bool IsPushed(uchar keycode);
 
 	protected:
-		/**
-		*
-		*/
-		void Flip() {
-			flipCounter ^= 1;
-		}
+		void Flip();
+		
+		static const int BufferSize = 256;
 
-		static const int bufferSize = 256;
-		uchar keyBuffer[2][bufferSize];
-		int flipCounter;
+		uchar keyBuffer_[2][BufferSize];
+		int flipCounter_;
 	};
 }
 #endif

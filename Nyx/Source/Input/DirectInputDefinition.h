@@ -8,7 +8,7 @@
 
 #include <boost/intrusive_ptr.hpp>
 
-typedef boost::intrusive_ptr< DirectInput >        DirectInputPtr;      ///< DirectInputオブジェクト
-typedef boost::intrusive_ptr< DirectInputDevice >  DirectInputDevicePtr;///< DirectInputDeviceオブジェクト
+typedef boost::intrusive_ptr< IDirectInput8 >  DirectInputPtr;      ///< DirectInputオブジェクト
+typedef boost::intrusive_ptr< IDirectInputDevice8 >  DirectInputDevicePtr;///< DirectInputDeviceオブジェクト
 
 #endif

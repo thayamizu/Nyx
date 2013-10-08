@@ -17,52 +17,21 @@
 #ifndef NYX_CORE_INCLUDED_JOYSTICK_H_
 #define NYX_CORE_INCLUDED_JOYSTICK_H_
 #include "IJoystick.h"
-#include <memory>
 
 namespace Nyx {
-
-	/////ジョイスティックヌルデバイス
-	//class JoystickNullDevice: public IJoystick {
-	//public:
-	//	JoystickNullDevice();
-	//	~JoystickNullDevice();
-	//	/**
-	//	*/
-	//	bool Update();
-	//	bool SetButtonMax(uchar num);
-	//	uchar GetButtonMax();
-	//	uchar GetJoyCount();
-	//};
-
-	//JoystickNullDevice::JoystickNullDevice(){}
-	//JoystickNullDevice::~JoystickNullDevice(){}
-	//
-	//bool JoystickNullDevice::Update() {
-	//	return false;
-	//}
-	//
-	//bool JoystickNullDevice::SetButtonMax(uchar num) {
-	//	return false;
-	//}
-	//
-	//uchar JoystickNullDevice::GetButtonMax() {
-	//	return 0;
-	//}
-
-
-
+	struct InputDeviceDesc;
 	///DirectInputを使ったジョイスティック入力
-	class Joystick : public IJoystick {
+	class Joystick {
 	public:
 		//--------------------------------------------------------
 		//構築・破壊
 		//--------------------------------------------------------
-		Joystick(HWND hwnd_, int range) ;
+		Joystick() ;
 		~Joystick() ;
 		/**
 		*
 		*/
-		bool Initialize();
+		bool Initialize(const InputDeviceDesc& desc);
 
 		/**
 		*
@@ -92,17 +61,34 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool IsInitialized();
+		uchar* GetKeyBuffer();
+	
+		/**
+		*
+		*/
+		float GetAxis();
+		
+		/**
+		*
+		*/
+		bool IsPressed(uchar keycode);
+
 
 		/**
 		*
 		*/
-		bool SetButtonMax(uchar buttonNum);
+		bool IsPushed(uchar keycode);
+
+		
+		/**
+		*
+		*/
+		bool SetButtonMax(size_t buttonNum);
 
 		/**
 		*
 		*/
-		uchar GetButtonMax();
+		size_t GetButtonMax();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

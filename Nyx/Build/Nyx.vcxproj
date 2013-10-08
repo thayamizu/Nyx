@@ -152,7 +152,10 @@
     <ClInclude Include="..\Source\GUI\PushButton.h" />
     <ClInclude Include="..\Source\GUI\RadioButton.h" />
     <ClInclude Include="..\Source\GUI\Window.h" />
+    <ClInclude Include="..\Source\Input\DirectInputDefinition.h" />
+    <ClInclude Include="..\Source\Input\IJoystick.h" />
     <ClInclude Include="..\Source\Input\IKeyBase.h" />
+    <ClInclude Include="..\Source\Input\InputDeviceDesc.h" />
     <ClInclude Include="..\Source\Input\Joystick.h" />
     <ClInclude Include="..\Source\Input\Keyboard.h" />
     <ClInclude Include="..\Source\Input\Mouse.h" />
@@ -250,6 +253,8 @@
     <ClCompile Include="..\Source\GUI\PushButton.cpp" />
     <ClCompile Include="..\Source\GUI\RadioButton.cpp" />
     <ClCompile Include="..\Source\GUI\Window.cpp" />
+    <ClCompile Include="..\Source\Input\IJoystick.cpp" />
+    <ClCompile Include="..\Source\Input\IKeyBase.cpp" />
     <ClCompile Include="..\Source\Input\Joystick.cpp" />
     <ClCompile Include="..\Source\Input\Keyboard.cpp" />
     <ClCompile Include="..\Source\Input\Mouse.cpp" />

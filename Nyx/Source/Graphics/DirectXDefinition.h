@@ -74,9 +74,3 @@ typedef	LPD3DXANIMATIONCONTROLLER     D3DXAnimationController;
 #endif
 
 
-
-//--------------------------------------------------------------
-//Direct Input
-typedef ::LPDIRECTINPUT8 DirectInput;				//DirectInputオブジェウト
-typedef ::LPDIRECTINPUTDEVICE8 DirectInputDevice;	//DirectInputDeviceオブジェクト
-

@@ -23,6 +23,10 @@ namespace Nyx {
 	///ƒ}ƒEƒX“ü—Í
 	class Mouse {
 	public:
+		static const int BufferSize;
+		static const int InputDeviceNum;
+		static const int MouseButtonMax;
+	public:
 		/**
 		*
 		*/

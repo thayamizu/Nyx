@@ -60,6 +60,23 @@ namespace Nyx {
 		/**
 		*
 		*/
+		uchar* GetKeyBuffer();
+	
+		
+		/**
+		*
+		*/
+		bool IsPressed(uchar keycode);
+
+		/**
+		*
+		*/
+		bool IsPushed(uchar keycode);
+
+
+		/**
+		*
+		*/
 		void Release();
 
 		/**
