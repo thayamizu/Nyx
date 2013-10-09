@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_THREAD_H_
 #define NYX_CORE_INCLUDED_THREAD_H_
-#include "PCH/PCH.h"
+#include "Utility/Type.h"
 #include "Object/NonCopyable.h"
 
 namespace Nyx

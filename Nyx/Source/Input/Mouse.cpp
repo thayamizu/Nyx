@@ -110,7 +110,7 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		Mouse::PImpl::~PImpl() {
+		~PImpl() {
 			Release();
 		}
 
@@ -265,6 +265,8 @@ namespace Nyx {
 		}
 
 		pimpl_->Initialize((HWND)desc.handle.get());
+
+		return IsInitialized();
 	}
 
 

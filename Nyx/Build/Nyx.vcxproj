@@ -47,7 +47,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Lib/Debug/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../Lib/Debug/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../Debug/</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Lib/Release/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../Release/</IntDir>
@@ -72,7 +72,7 @@
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>msimg32.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Nyx_MTd.lib</OutputFile>
       <AdditionalLibraryDirectories>..\..\SDKs\SDKs\FBX;$(DXSDK_DIR)Lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
@@ -101,9 +101,9 @@
       <ProgramDataBaseFileName>$(IntDir)Nyx_MT.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>msimg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>msimg32.lib;d3d9.lib;d3dx9.lib%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86\..\..\SDKs\fbx;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86\;..\..\SDKs\fbx;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -120,6 +120,10 @@
     <ClInclude Include="..\Source\Graphics\Camera.h" />
     <ClInclude Include="..\Source\Graphics\DirectXDefinition.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h" />
+    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h" />
     <ClInclude Include="..\Source\Graphics\IAnimationController.h" />
     <ClInclude Include="..\Source\Graphics\IGraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\IMesh.h" />
@@ -134,10 +138,6 @@
     <ClInclude Include="..\Source\Graphics\DX9\DXSprite.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFont.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h" />
-    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h" />
-    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h" />
-    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h" />
-    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h" />
     <ClInclude Include="..\Source\Graphics\SceneNode.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
@@ -234,6 +234,10 @@
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
     <ClCompile Include="..\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp" />
+    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp" />
     <ClCompile Include="..\Source\Graphics\ISprite.cpp" />
     <ClCompile Include="..\Source\Graphics\ITextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\GDI\DIBitmap.cpp" />
@@ -243,10 +247,6 @@
     <ClCompile Include="..\Source\Graphics\DX9\DXSprite.cpp" />
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp" />
-    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp" />
-    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp" />
-    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp" />
-    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp" />
     <ClCompile Include="..\Source\GUI\ListBox.cpp" />

@@ -17,8 +17,6 @@
 #ifndef NYX_CORE_INCLUDED_NYX_CORE_ALL_H_
 #define NYX_CORE_INCLUDED_NYX_CORE_ALL_H_
 
-#include "PCH/PCH.h"
-
 // デバッグ
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
@@ -91,18 +89,18 @@ class SkinMesh;
 #include "Graphics/ISprite.h"
 #include "Graphics/ITexture.h"
 #include "Graphics/ITextureFont.h"
-#include "Graphics/GDI/Pen.h"
-#include "Graphics/GDI/Font.h"
-#include "Graphics/GDI/DIBitmap.h"
-#include "Graphics/DX9/DirectGraphicsDevice.h"
-#include "Graphics/DX9/DXSprite.h"
-#include "Graphics/DX9/DXSpriteManager.h"
-#include "Graphics/DX9/DXTextureFont.h"
-#include "Graphics/DX9/DXTextureFontManager.h"
-#include "Graphics/DX9/XAnimationController.h"
-#include "Graphics/DX9/XAnimationMesh.h"
-#include "Graphics/DX9/XMesh.h"
-#include "Graphics/DX9/XStaticMesh.h"
+//#include "Graphics/GDI/Pen.h"
+//#include "Graphics/GDI/Font.h"
+//#include "Graphics/GDI/DIBitmap.h"
+//#include "Graphics/DX9/DirectGraphicsDevice.h"
+//#include "Graphics/DX9/DXSprite.h"
+//#include "Graphics/DX9/DXSpriteManager.h"
+//#include "Graphics/DX9/DXTextureFont.h"
+//#include "Graphics/DX9/DXTextureFontManager.h"
+//#include "Graphics/DX9/XAnimationController.h"
+//#include "Graphics/DX9/XAnimationMesh.h"
+//#include "Graphics/DX9/XMesh.h"
+//#include "Graphics/DX9/XStaticMesh.h"
 
 //サウンド
 #include "Sound/AudioBuffer.h"
@@ -114,13 +112,14 @@ class SkinMesh;
 #include "Sound/WaveReader.h"
 
 //入力機器 
+#include "Input/IJoystick.h"
 #include "Input/IKeyBase.h"
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
 #include "Input/Joystick.h"
 
 //動画再生
-#include "Movie/MoviePlayer.h"
+//#include "Movie/MoviePlayer.h"
 
 // タイマー
 #include "Timer/ITimer.h"
@@ -142,5 +141,12 @@ class SkinMesh;
 #include "Object/NonCopyable.h"
 #include "Object/IResource.h"
 
+
+//自動リンク
+#if defined(_DEBUG) || defined(DEBUG)
+#pragma comment(lib, "Nyx_MTd.lib")
+#else
+#pragma comment(lib, "Nyx_MT.lib")
+#endif
 
 #endif

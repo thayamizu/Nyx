@@ -18,6 +18,7 @@
 #define NYX_CORE_INCLUDED_LOGGER_H_
 #include "IO/IFile.h"
 #include "Object/NonCopyable.h"
+#include "Utility/Type.h"
 namespace Nyx {
 
 	class File;

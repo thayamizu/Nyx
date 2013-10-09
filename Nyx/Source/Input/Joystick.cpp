@@ -39,7 +39,7 @@ namespace Nyx {
 		}
 		//-----------------------------------------------------------------------------------------
 		//
-		void Initialize(HWND hwnd_, int range, int buttonNum) 
+		void Initialize(HWND hwnd_, float range, int buttonNum) 
 		{
 			//ƒƒ“ƒo‰Šú‰»
 			::ZeroMemory(&joyCaps_, sizeof(joyCaps_));

@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DISPATCHER_H_
 #define NYX_CORE_INCLUDED_DISPATCHER_H_
-
+#include <Windows.h>
 #include <unordered_map>
 #include "GUI/IDispatcher.h"
 #include "Object/NonCopyable.h"

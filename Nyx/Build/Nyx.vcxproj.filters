@@ -231,18 +231,6 @@
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h">
       <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Utility\Random.h">
       <Filter>Utility</Filter>
     </ClInclude>
@@ -550,6 +538,18 @@
     <ClInclude Include="..\Source\Input\InputDeviceDesc.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -577,18 +577,6 @@
       <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp">
       <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Random.cpp">
@@ -749,6 +737,18 @@
     </ClCompile>
     <ClCompile Include="..\Source\Input\Joystick.cpp">
       <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp">
+      <Filter>Graphics\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp">
+      <Filter>Graphics\detail\DX9</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

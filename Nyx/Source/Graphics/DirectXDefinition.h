@@ -19,8 +19,10 @@
 #ifdef USE_DIRECTX9
 #include <d3d9.h>
 #include <d3dx9.h>
-#pragma comment(lib, "d3d9.lib")
-#pragma comment(lib, "d3dx9.lib")
+
+//dx error
+#include <dxerr.h>
+
 #elif USE_DIRECTX10
 //DirectX10以降の機能を利用する
 //固定機能パイプラインが廃止されたため、スプライト一つ描画するごとにシェーダが必要で実装が面倒である
@@ -37,12 +39,7 @@
 #pragma comment( lib, "d3dx10.lib") 
 #endif
 
-//dx error
-#include <dxerr.h>
-#pragma comment( lib, "dxerr.lib")
 
-//dx guid
-#pragma comment( lib, "dxguid.lib")
 
 
 

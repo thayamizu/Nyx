@@ -16,6 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IRESOURCE_H_
 #define NYX_CORE_INCLUDED_IRESOURCE_H_
+#include "Utility/Common.h"
 
 namespace Nyx {
 	///リソースインタフェース

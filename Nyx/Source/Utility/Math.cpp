@@ -1,5 +1,5 @@
-#include "PCH/PCH.h"
 #include "Utility/Math.h"
+#include "PCH/PCH.h"
 
 namespace Nyx {
 	// ƒpƒC

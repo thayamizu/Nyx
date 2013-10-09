@@ -23,7 +23,7 @@
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	Window::Window(HWND hWnd, std::wstring caption, std::wstring icon, int x, int y, int width, int height, int id)
-		:caption_(caption), icon_(icon), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
+		:hwnd_(NULL), caption_(caption), icon_(icon), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
 			//フックリストが初期化されていなければ、初期化する
 			guiEventList_ = std::make_shared<Dispatcher>();
 			
@@ -78,7 +78,7 @@ namespace Nyx {
 			hInstance, //インスタンスハンドル
 			NULL);
 
-		if (!hwnd_) {
+		if (hwnd_ == NULL) {
 			::MessageBox(NULL, TEXT("失敗しました"), TEXT("error"), MB_OK);
 			return false;
 		}

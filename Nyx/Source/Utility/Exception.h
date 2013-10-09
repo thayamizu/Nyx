@@ -1,7 +1,6 @@
 #ifndef NYX_CORE_INCLUDED_EXCEPTION_H_
 #define NYX_CORE_INCLUDED_EXCEPTION_H_
-
-#include "PCH/PCH.h"
+#include <exception>
 
 namespace Nyx 
 {

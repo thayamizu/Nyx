@@ -2,6 +2,7 @@
 #define NYX_CORE_MOVIE_PLAYER_H_
 #include "DirectShowDefinition.h"
 
+
 namespace Nyx
 {
 	class Window;

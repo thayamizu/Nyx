@@ -16,6 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_COLOR3_H_
 #define NYX_CORE_INCLUDED_COLOR3_H_
+#include "Utility/Math.h"
 
 namespace Nyx
 {
