@@ -17,6 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_JOYSTICK_H_
 #define NYX_CORE_INCLUDED_JOYSTICK_H_
 #include "IJoystick.h"
+#include "KeyCode.h"
 
 namespace Nyx {
 	struct InputDeviceDesc;
@@ -71,13 +72,13 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool IsPressed(uchar keycode);
+		bool IsPressed(KeyCode keycode);
 
 
 		/**
 		*
 		*/
-		bool IsPushed(uchar keycode);
+		bool IsPushed(KeyCode keycode);
 
 		
 		/**

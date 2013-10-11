@@ -30,7 +30,8 @@ namespace Nyx {
 		/**
 		*
 		*/
-		ITexture():IResource(){}
+		ITexture():
+			IResource(){}
 		/**
 		*
 		*/

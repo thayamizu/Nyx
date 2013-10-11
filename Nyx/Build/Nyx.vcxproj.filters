@@ -550,6 +550,9 @@
     <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
       <Filter>Graphics\detail\DX9</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Input\KeyCode.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">

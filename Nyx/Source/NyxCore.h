@@ -17,13 +17,29 @@
 #ifndef NYX_CORE_INCLUDED_NYX_CORE_ALL_H_
 #define NYX_CORE_INCLUDED_NYX_CORE_ALL_H_
 
+//自動リンク設定
+#if defined(_DEBUG) || defined(DEBUG)
+#pragma comment(lib, "Nyx_MTd.lib")
+#else
+#pragma comment(lib, "Nyx_MT.lib")
+#endif
+
+//STL 
+#include <map>
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <functional>
+#include <memory>
+#include <iosfwd>
+
 // デバッグ
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "Debug/MemoryChecker.h"
 
 ///GUI
-//GUIはインタフェース化しておくこと
 #include "GUI/IControl.h"
 #include "GUI/ICheckBox.h"
 #include "GUI/IDispatcher.h"
@@ -117,9 +133,10 @@ class SkinMesh;
 #include "Input/Keyboard.h"
 #include "Input/Mouse.h"
 #include "Input/Joystick.h"
+#include "Input/KeyCode.h"
 
 //動画再生
-//#include "Movie/MoviePlayer.h"
+#include "Movie/MoviePlayer.h"
 
 // タイマー
 #include "Timer/ITimer.h"
@@ -135,18 +152,15 @@ class SkinMesh;
 
 //ユーティリティ
 #include "Utility/Common.h"
+#include "Utility/Exception.h"
+#include "Utility/Type.h"
+#include "Utility/Limits.h"
+#include "Utility/Math.h"
+#include "Utility/Random.h"
 
 //オブジェクト
 #include "Object/Delegate.h"
 #include "Object/NonCopyable.h"
 #include "Object/IResource.h"
-
-
-//自動リンク
-#if defined(_DEBUG) || defined(DEBUG)
-#pragma comment(lib, "Nyx_MTd.lib")
-#else
-#pragma comment(lib, "Nyx_MT.lib")
-#endif
 
 #endif

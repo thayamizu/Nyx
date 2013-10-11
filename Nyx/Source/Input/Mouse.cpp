@@ -34,11 +34,11 @@ namespace Nyx {
 		bool isInitialized;
 
 		PImpl() : 
-			hwnd_(NULL), absolutePos_(), relativePos_(), isAcquire_(false),
+			hwnd_(nullptr), position_(), isAcquire_(false), isInitialized(false),
 			wheelState_(),
 			mouseState_(),
-			mouse_(),
-			mouseDevice_()
+			mouse_(nullptr),
+			mouseDevice_(nullptr)
 		{
 
 		}
@@ -50,7 +50,7 @@ namespace Nyx {
 			hwnd_ = hwnd;
 			// DirectInputの作成
 			LPDIRECTINPUT8 mouse = nullptr;
-			HRESULT hr = DirectInput8Create(::GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mouse_, NULL);
+			HRESULT hr = DirectInput8Create(::GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mouse, NULL);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("DirectInputオブジェクトの生成に失敗しました。");
 				throw Nyx::COMException("DirectInputオブジェクトの生成に失敗しました。", hr);
@@ -136,8 +136,6 @@ namespace Nyx {
 				hr = mouseDevice_->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState_);
 			}
 			if (hr == DI_OK) {
-				relativePos_.x = static_cast<int>(mouseState_.lX);
-				relativePos_.y = static_cast<int>(mouseState_.lY);
 				wheelState_ = mouseState_.lZ;
 			}
 			else {
@@ -146,6 +144,8 @@ namespace Nyx {
 				::ZeroMemory(&mouseState_, sizeof(mouseState_));
 				return false;       
 			}
+
+		
 
 			return true;
 		}
@@ -160,14 +160,15 @@ namespace Nyx {
 		}
 		//-------------------------------------------------------------------------------------------------------
 		//
-		Point2i GetRelativePos() {
-			return relativePos_;
-		}
+		Point2l GetPosition() {
+			POINT pos;
+			GetCursorPos(&pos);
+			ScreenToClient(this->hwnd_, &pos);
+			this->position_.x = pos.x;
+			this->position_.y = pos.y;
 
-		//-------------------------------------------------------------------------------------------------------
-		//
-		Point2i GetAbsolutePos() {
-			return absolutePos_;
+			return position_;
+
 		}
 
 		//-------------------------------------------------------------------------------------------------------
@@ -215,13 +216,14 @@ namespace Nyx {
 			if (mouseDevice_) {
 				Unacquire();
 			}
+
 		}
 	private:
-		HWND hwnd_;
-		Point2i absolutePos_;
-		Point2i relativePos_;
+		int  wheelState_;
 		bool isAcquire_;
-		int wheelState_;
+		char align[3];
+		HWND hwnd_;
+		Point2l position_;
 		DIMOUSESTATE2 mouseState_;
 		DirectInputPtr mouse_;
 		DirectInputDevicePtr mouseDevice_;
@@ -264,7 +266,7 @@ namespace Nyx {
 			return IsInitialized();
 		}
 
-		pimpl_->Initialize((HWND)desc.handle.get());
+		pimpl_->Initialize((HWND)desc.handle);
 
 		return IsInitialized();
 	}
@@ -295,22 +297,14 @@ namespace Nyx {
 		return pimpl_->GetMouseButton(keycode);
 	}
 
+	
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Point2i Mouse::GetRelativePos() {
+	Point2l Mouse::GetPosition() {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 
-		return pimpl_->GetRelativePos();
-	}
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	Point2i Mouse::GetAbsolutePos() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
-
-		return pimpl_->GetAbsolutePos();
+		return pimpl_->GetPosition();
 	}
 
 	//-------------------------------------------------------------------------------------------------------

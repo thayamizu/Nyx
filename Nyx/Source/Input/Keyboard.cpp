@@ -58,13 +58,13 @@ namespace Nyx {
 
 
 			// データ形式を設定
-			hr = keyboardDevice_->SetDataFormat(&c_dfDIKeyboard);
+			hr = keyboardDevice->SetDataFormat(&c_dfDIKeyboard);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("データ形式の設定に失敗しました。");
 				throw Nyx::COMException("データ形式の設定に失敗しました。", hr);
 			}
 			//モードを設定（フォアグラウンド＆非排他モード）
-			hr = keyboardDevice_->SetCooperativeLevel(hwnd_, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+			hr = keyboardDevice->SetCooperativeLevel(hwnd_, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("制御モードの設定に失敗しました。");
 				throw Nyx::COMException("制御モードの設定に失敗しました。", hr);
@@ -76,7 +76,7 @@ namespace Nyx {
 			diprop.diph.dwObj	= 0;
 			diprop.diph.dwHow	= DIPH_DEVICE;
 			diprop.dwData = 255;
-			hr = keyboardDevice_->SetProperty(DIPROP_BUFFERSIZE, &diprop.diph);
+			hr = keyboardDevice->SetProperty(DIPROP_BUFFERSIZE, &diprop.diph);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("バッファサイズの設定に失敗しました。");
 				throw Nyx::COMException("バッファサイズの設定に失敗しました。", hr);
@@ -173,10 +173,6 @@ namespace Nyx {
 	}
 
 
-	Keyboard::Keyboard(const Keyboard& other) {
-		this->pimpl_ = other.pimpl_;
-	}
-
 
 	Keyboard::Keyboard(const InputDeviceDesc& desc) 
 		: pimpl_(std::make_shared<PImpl>()) {
@@ -199,7 +195,7 @@ namespace Nyx {
 			return IsInitialized();
 		}		
 
-		pimpl_->Initialize((HWND)desc.handle.get());
+		pimpl_->Initialize((HWND)desc.handle);
 
 		return pimpl_->isInitialized;
 	}
@@ -221,7 +217,7 @@ namespace Nyx {
 	}
 
 
-	bool Keyboard::IsPushed(uchar keycode) {
+	bool Keyboard::IsPushed(KeyCode keycode) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 
@@ -229,7 +225,7 @@ namespace Nyx {
 	}
 
 
-	bool Keyboard::IsPressed(uchar keycode) {
+	bool Keyboard::IsPressed(KeyCode keycode) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 

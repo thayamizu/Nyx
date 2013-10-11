@@ -1,10 +1,9 @@
 #ifndef NYX_CORE_MOVIE_PLAYER_H_
 #define NYX_CORE_MOVIE_PLAYER_H_
-#include "DirectShowDefinition.h"
-
 
 namespace Nyx
 {
+
 	class Window;
 	class MoviePlayer {
 	public:
@@ -21,13 +20,17 @@ namespace Nyx
 		*/
 		MoviePlayer(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName);
 		
+		/**
+		*初期化されているかどうか
+		*/
+		bool IsInitialize();
 
 		/**
 		*初期化
 		* @param const std::shared_ptr<Nyx::Window> ウインドウ
 		* @return bool(trueなら成功)
 		*/
-		void Initialize(const std::shared_ptr<Nyx::Window> window);
+		bool Initialize(const std::shared_ptr<Nyx::Window> window);
 
 
 		/**
@@ -74,15 +77,11 @@ namespace Nyx
 		* @return bool アスペクト比を維持するならtrue
 		*/
 		bool GetAspectRatioMode() const;
+
+		void Release();
 	private:
-		IMediaControlPtr  mediaControl_;
-		IMediaEventExPtr  mediaEvent_;
-		IGraphBuilderPtr  graphBuilder_;
-		IBaseFilterPtr    videoMixingRenderer_;
-		IBaseFilterPtr    sourceFilter_;
-		IVMRWindowlessControlPtr   windowlessControl_;
-		ICaptureGraphBuilder2Ptr   captureGraphBuilder_;
-		RECT clientRect_; 
+		struct PImpl;
+		std::shared_ptr<PImpl> pimpl_;
 	};
 }
 #endif

@@ -61,12 +61,8 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Point2i GetRelativePos();
+		Point2l GetPosition();
 		
-		/**
-		*
-		*/
-		Point2i GetAbsolutePos();
 		
 		/**
 		*

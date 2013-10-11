@@ -17,6 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_KEYBOARD_H_
 #define NYX_CORE_INCLUDED_KEYBOARD_H_
 #include "InputDeviceDesc.h"
+#include "KeyCode.h"
 
 namespace Nyx {
 	///キーボード入力
@@ -30,17 +31,8 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Keyboard(const Keyboard& other);
-
-		/**
-		*
-		*/
 		Keyboard(const InputDeviceDesc& desc);
 
-		/**
-		*
-		*/
-		~Keyboard() ;
 
 		/**
 		*
@@ -66,12 +58,12 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool IsPressed(uchar keycode);
+		bool IsPressed(KeyCode keycode);
 
 		/**
 		*
 		*/
-		bool IsPushed(uchar keycode);
+		bool IsPushed(KeyCode keycode);
 
 
 		/**

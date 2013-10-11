@@ -307,6 +307,10 @@ namespace Nyx
 	typedef Vector2<int>     Point2i;
 	typedef Vector2<int>     Vector2i;
 	typedef Vector2<int>     TexChoord2i;
+	typedef Vector2<long>     Axis2l;
+	typedef Vector2<long>     Point2l;
+	typedef Vector2<long>     Vector2l;
+	typedef Vector2<long>     TexChoord2l;
 	typedef Vector2<float>   Axis2f;
 	typedef Vector2<float>   Point2f;
 	typedef Vector2<float>   Vector2f;

@@ -23,6 +23,7 @@
 #include "Joystick.h"
 #include "InputDeviceDesc.h"
 #include "DirectInputDefinition.h"
+#include "KeyCode.h"
 
 namespace Nyx {
 
@@ -301,7 +302,7 @@ namespace Nyx {
 			return IsInitialized();
 		}		
 
-		pimpl_->Initialize((HWND)desc.handle.get(), desc.range, desc.button);
+		pimpl_->Initialize((HWND)desc.handle, desc.range, desc.button);
 
 		return pimpl_->isInitialized;
 	}
@@ -357,7 +358,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::IsPushed(uchar keycode) {
+	bool Joystick::IsPushed(KeyCode keycode) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 
@@ -366,7 +367,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::IsPressed(uchar keycode) {
+	bool Joystick::IsPressed(KeyCode keycode) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 
