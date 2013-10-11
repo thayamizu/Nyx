@@ -32,6 +32,9 @@ namespace Nyx {
 		T y;///< y値
 		T z;///< z値
 
+
+		///ゼロ定数
+		static const Quaternion<T> Zero;
 		/** 
 		* コンストラクタ
 		*/
@@ -373,5 +376,13 @@ namespace Nyx {
 			(*this) = quaternion.Cross(*this);
 		}
 	};
+
+
+	//--------------------------------------------------------------------------------------
+	// 定数定義
+	//--------------------------------------------------------------------------------------
+	// ゼロ四元数
+	template<typename T>
+	const Quaternion<T>  Quaternion<T>::Zero(0, 0, 0, 0);
 }
 #endif
