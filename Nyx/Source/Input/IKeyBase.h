@@ -42,13 +42,13 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool IsPressed(KeyCode keycode);
+		bool IsPressed(uchar keycode);
 
 
 		/**
 		*
 		*/
-		 bool IsPushed(KeyCode keycode);
+		 bool IsPushed(uchar keycode);
 
 	protected:
 		void Flip();

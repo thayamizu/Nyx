@@ -7,9 +7,6 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{3f8d4bca-c1d5-4a5d-b382-f8f86a80ef31}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\GDI">
-      <UniqueIdentifier>{dcb3b735-18df-479b-b389-6e94d48fce77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{2c25916e-2b58-4e27-91ca-81608c9ca34f}</UniqueIdentifier>
     </Filter>
@@ -69,12 +66,6 @@
     </Filter>
     <Filter Include="Thread">
       <UniqueIdentifier>{89c68295-2bc3-451c-8950-7d3c550f0651}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Animation\interfaces">
-      <UniqueIdentifier>{250f46ad-ae63-4e62-ae11-eaa1c1044edf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Animation\implements">
-      <UniqueIdentifier>{eeebc2e5-08dc-4307-af96-276012c0defa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sound\detail">
       <UniqueIdentifier>{67bcab46-2b96-4374-aceb-1c04a23222c5}</UniqueIdentifier>
@@ -181,23 +172,107 @@
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\detail">
+    <Filter Include="Graphics\GeoMetry">
+      <UniqueIdentifier>{fd85f2c3-343f-4020-9a62-3b028c9b0995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Core\detail">
       <UniqueIdentifier>{659553ff-b780-4c0d-bc20-21b1e9ea348c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\detail\DX10">
+    <Filter Include="Graphics\Core\detail\DX10">
       <UniqueIdentifier>{c37dd47e-38f4-409f-9dff-23f90b2155d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\detail\DX11">
+    <Filter Include="Graphics\Core\detail\DX11">
       <UniqueIdentifier>{d14fc043-6e0e-42ad-b9bf-d0e42b9be716}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\detail\DX9">
+    <Filter Include="Graphics\Core\detail\DX9">
       <UniqueIdentifier>{3ba3e4eb-64da-4582-954f-19b3d98e2855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Core\detail\GDI">
+      <UniqueIdentifier>{dcb3b735-18df-479b-b389-6e94d48fce77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader\detail">
+      <UniqueIdentifier>{ec480f26-6747-4f56-b37b-b1809a6fe2a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\detail\DirectInput">
+      <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader\System">
+      <UniqueIdentifier>{d4bba5a8-761d-40f5-ba2a-8c6c791537dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader\Base">
+      <UniqueIdentifier>{72ae1d12-1ca4-4a3f-8f3d-2de7ba816947}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer\detail">
+      <UniqueIdentifier>{9c8110ec-bf40-41c6-bb75-facf2c8831dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer\Base">
+      <UniqueIdentifier>{8455a122-8d7d-4766-944f-4565c54fa08b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer\System">
+      <UniqueIdentifier>{f326fcec-1cce-4d0d-bde4-d5f5f0a79f40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Camera\detail">
+      <UniqueIdentifier>{154f733f-1a86-4498-8636-72f5d9dd7ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Camera\Base">
+      <UniqueIdentifier>{2ff7e408-af8c-448e-b452-a948b0f73b32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Camera\System">
+      <UniqueIdentifier>{c6f13ccb-4f05-490b-849c-7af6c39dbcfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation\detail">
+      <UniqueIdentifier>{ab44dee2-c102-47b5-add5-b97c5f480737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation\Base">
+      <UniqueIdentifier>{40973268-87d4-4400-abf1-433cfbf2d7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation\System">
+      <UniqueIdentifier>{c438ecf1-b931-4b3f-8729-6b0b1d1ed3b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GeoMetry\detail">
+      <UniqueIdentifier>{c8125336-e501-4b2f-9602-9324e1df5610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GeoMetry\Base">
+      <UniqueIdentifier>{0392c2f7-3c77-426e-830a-7afb8c897634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GeoMetry\System">
+      <UniqueIdentifier>{6acb0121-6117-47db-9a07-6187dac5e251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sprite">
+      <UniqueIdentifier>{8baf611c-8ff9-4aa2-867c-153dde8ba99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sprite\detail">
+      <UniqueIdentifier>{73c5da2e-cb5a-4e3f-92b3-0cafea95f6d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sprite\Base">
+      <UniqueIdentifier>{1e12d315-57d1-4eea-9aea-35be20d1d4db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sprite\System">
+      <UniqueIdentifier>{04641af2-3878-4ae6-bfb0-d17137f091a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Loader">
       <UniqueIdentifier>{8db84fa7-a24d-4a8a-91eb-5c7663ff8b8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input\detail\Core">
-      <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
+    <Filter Include="Graphics\Loader\detail">
+      <UniqueIdentifier>{7a1e186d-fb96-4aed-b0bf-67d99faae68b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Loader\Base">
+      <UniqueIdentifier>{00250a07-f670-4cae-a709-941836cf4f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Loader\System">
+      <UniqueIdentifier>{8fca30c5-e8c4-4e2e-b1b8-f2d983763bcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ParticleSystem">
+      <UniqueIdentifier>{987f769f-c13b-404f-9df0-baba1401bfde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ParticleSystem\detail">
+      <UniqueIdentifier>{3095524e-eb9e-422d-83c2-83e96b40eece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ParticleSystem\System">
+      <UniqueIdentifier>{6542f15b-73c2-47df-8edb-1233accb4c8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ParticleSystem\Base">
+      <UniqueIdentifier>{7ffb8f23-ac56-4585-bd54-ab236eaf1236}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -211,25 +286,25 @@
       <Filter>Debug</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\GDI\DIBitmap.h">
-      <Filter>Graphics\GDI</Filter>
+      <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\GDI\Font.h">
-      <Filter>Graphics\GDI</Filter>
+      <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\GDI\Pen.h">
-      <Filter>Graphics\GDI</Filter>
+      <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DirectGraphicsDevice.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DXSprite.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFont.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Random.h">
       <Filter>Utility</Filter>
@@ -257,7 +332,7 @@
     </ClInclude>
     <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Camera.h">
       <Filter>Graphics\Camera</Filter>
@@ -288,9 +363,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
       <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\IAnimationController.h">
-      <Filter>Graphics\Animation\interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Database\SQLiteDefinition.h">
       <Filter>Database\detail</Filter>
@@ -521,7 +593,7 @@
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\DirectInputDefinition.h">
-      <Filter>Input\detail\Core</Filter>
+      <Filter>Input\detail\DirectInput</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\Keyboard.h">
       <Filter>Input</Filter>
@@ -539,19 +611,22 @@
       <Filter>Input</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XMesh.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\KeyCode.h">
       <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IAnimationController.h">
+      <Filter>Graphics\Animation\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -562,25 +637,25 @@
       <Filter>Debug</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\GDI\DIBitmap.cpp">
-      <Filter>Graphics\GDI</Filter>
+      <Filter>Graphics\Core\detail\GDI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\GDI\Font.cpp">
-      <Filter>Graphics\GDI</Filter>
+      <Filter>Graphics\Core\detail\GDI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\GDI\Pen.cpp">
-      <Filter>Graphics\GDI</Filter>
+      <Filter>Graphics\Core\detail\GDI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DirectGraphicsDevice.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSprite.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFont.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Random.cpp">
       <Filter>Utility</Filter>
@@ -589,7 +664,7 @@
       <Filter>PCH</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\Camera.cpp">
       <Filter>Graphics\Camera</Filter>
@@ -742,16 +817,16 @@
       <Filter>Input</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp">
-      <Filter>Graphics\detail\DX9</Filter>
+      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

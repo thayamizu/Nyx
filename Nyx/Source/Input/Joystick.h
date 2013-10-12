@@ -21,14 +21,28 @@
 
 namespace Nyx {
 	struct InputDeviceDesc;
+
 	///DirectInputを使ったジョイスティック入力
 	class Joystick {
 	public:
 		//--------------------------------------------------------
 		//構築・破壊
 		//--------------------------------------------------------
+		/**
+		*
+		*/
 		Joystick() ;
-		~Joystick() ;
+
+		/**
+		*
+		*/
+		Joystick(const InputDeviceDesc& desc) ;
+		
+		/**
+		*
+		*/
+		~Joystick();
+		
 		/**
 		*
 		*/
@@ -63,28 +77,28 @@ namespace Nyx {
 		*
 		*/
 		uchar* GetKeyBuffer();
-	
+
 		/**
 		*
 		*/
-		float GetAxis();
-		
+		Axis3f GetAxis();
+
 		/**
 		*
 		*/
-		bool IsPressed(KeyCode keycode);
+		bool IsPressed(JoystickButton button);
 
 
 		/**
 		*
 		*/
-		bool IsPushed(KeyCode keycode);
+		bool IsPushed(JoystickButton button);
 
-		
+
 		/**
 		*
 		*/
-		bool SetButtonMax(size_t buttonNum);
+		void SetButtonMax(size_t buttonNum);
 
 		/**
 		*

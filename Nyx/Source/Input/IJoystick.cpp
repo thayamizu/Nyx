@@ -18,6 +18,7 @@
 #include "Debug/Assert.h"
 #include "IJoystick.h"
 
+
 namespace Nyx
 {
 	IJoystick::IJoystick() 
@@ -27,14 +28,14 @@ namespace Nyx
 	/**
 	*
 	*/
-	inline bool IJoystick::SetButtonMax(size_t num) {
+	void IJoystick::SetButtonMax(const size_t num) {
 		buttonNum_ = num;
 	}
 
 	/**
 	*
 	*/
-	inline size_t IJoystick::GetButtonMax() {
+	size_t IJoystick::GetButtonMax() {
 		return buttonNum_;
 	}
 }

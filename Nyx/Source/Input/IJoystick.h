@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_IJOYSTICK_H_
 #define NYX_CORE_INCLUDED_IJOYSTICK_H_
 #include "IKeyBase.h"
+#include "Primitive/Vector3.h"
 
 namespace Nyx
 {
-	
 	/// ジョイスティックインタフェース
 	class IJoystick : public IKeyBase {
 	public:
@@ -33,19 +33,17 @@ namespace Nyx
 		/**
 		*
 		*/
-		virtual float GetAxis() = 0;
+		virtual Axis3f GetAxis() = 0;
 		
 		/**
 		*
 		*/
-		bool SetButtonMax(size_t buttonNum);
+		void SetButtonMax(size_t buttonNum);
 		
 		/**
 		*
 		*/
-		size_t GetButtonMax();
-
-		
+		size_t GetButtonMax();	
 	private:
 		size_t buttonNum_;
 	};

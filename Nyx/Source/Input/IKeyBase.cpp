@@ -38,16 +38,14 @@ namespace Nyx {
 	/**
 	*
 	*/
-	bool IKeyBase::IsPressed(KeyCode keycode_) {
-		int keycode = static_cast<int>(keycode_);
+	bool IKeyBase::IsPressed(uchar keycode) {
 		return (keyBuffer_[flipCounter_][keycode] & 0x80) != 0;
 	}
 
 	/**
 	*
 	*/
-	bool IKeyBase::IsPushed(KeyCode keycode_) {
-		int keycode = static_cast<int>(keycode_);
+	bool IKeyBase::IsPushed(uchar keycode) {
 		// ‰Ÿ‚³‚ê‚½uŠÔ‚Étrue‚É‚·‚éê‡
 		if (!(keyBuffer_[ flipCounter_][keycode])) return false;
 		if (  keyBuffer_[1-flipCounter_][keycode] ) return false;

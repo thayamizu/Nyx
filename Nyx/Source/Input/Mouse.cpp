@@ -151,7 +151,8 @@ namespace Nyx {
 		}
 		//-------------------------------------------------------------------------------------------------------
 		//
-		bool GetMouseButton(Nyx::uchar keycode) {
+		bool GetMouseButton(MouseButton button) {
+			auto keycode = static_cast<uchar>(button);
 			if(keycode >= MouseButtonMax) {
 				return false;
 			}
@@ -290,7 +291,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::GetMouseButton(Nyx::uchar keycode) {
+	bool Mouse::GetMouseButton(MouseButton keycode) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 

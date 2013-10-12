@@ -2,6 +2,57 @@
 #define NYX_CORE_INCLUDED_KEYCODE_H_
 
 namespace Nyx {
+	///ジョイスティック
+	enum class JoystickButton : uchar {
+		BUTTON_1			= 0x00,
+		BUTTON_2			= 0x01,
+		BUTTON_3			= 0x02,
+		BUTTON_4			= 0x03,
+		BUTTON_5			= 0x04,
+		BUTTON_6			= 0x05,
+		BUTTON_7			= 0x06,
+		BUTTON_8			= 0x07,
+		BUTTON_9			= 0x08,
+		BUTTON_10			= 0x09,
+		BUTTON_11			= 0x0A,
+		BUTTON_12			= 0x0B,
+		BUTTON_13			= 0x0C,
+		BUTTON_14			= 0x0D,
+		BUTTON_15			= 0x0E,
+		BUTTON_16			= 0x0F,
+		BUTTON_17			= 0x10,
+		BUTTON_18			= 0x11,
+		BUTTON_19			= 0x12,
+		BUTTON_20			= 0x13,
+		BUTTON_21			= 0x14,
+		BUTTON_22			= 0x15,
+		BUTTON_23			= 0x16,
+		BUTTON_24			= 0x17,
+		BUTTON_25			= 0x18,
+		BUTTON_26			= 0x19,
+		BUTTON_27			= 0x1A,
+		BUTTON_28			= 0x1B,
+		BUTTON_29			= 0x1C,
+		BUTTON_30			= 0x1D,
+		BUTTON_31			= 0x1E,
+		BUTTON_32			= 0x1F
+	};
+
+
+	///マウスボタン
+	enum class MouseButton : uchar {
+		BUTTON_1			= 0x00,
+		BUTTON_2			= 0x01,
+		BUTTON_3			= 0x02,
+		BUTTON_4			= 0x03,
+		BUTTON_5			= 0x04,
+		BUTTON_6			= 0x05,
+		BUTTON_7			= 0x06,
+		BUTTON_8			= 0x07,
+		BUTTON_LEFT         = BUTTON_1,
+		BUTTON_RIGHT        = BUTTON_2,
+		BUTTON_MIDDLE       = BUTTON_3
+	};
 
 	///キーコード
 	enum class KeyCode : uchar{

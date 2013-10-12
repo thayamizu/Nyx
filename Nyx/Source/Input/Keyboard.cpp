@@ -221,7 +221,8 @@ namespace Nyx {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 
-		return pimpl_->IsPushed(keycode);
+		uchar key = static_cast<uchar>(keycode);
+		return pimpl_->IsPushed(key);
 	}
 
 
@@ -229,7 +230,8 @@ namespace Nyx {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized);
 
-		return pimpl_->IsPressed(keycode);
+		uchar key = static_cast<uchar>(keycode);
+		return pimpl_->IsPressed(key);
 	}
 
 

@@ -18,6 +18,8 @@
 #define NYX_CORE_INCLUDED_MOUSE_H_
 #include "Primitive/Vector2.h"
 #include "InputDeviceDesc.h"
+#include "KeyCode.h"
+
 
 namespace Nyx {
 	///ƒ}ƒEƒX“ü—Í
@@ -56,7 +58,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		bool GetMouseButton(uchar keycode);
+		bool GetMouseButton(MouseButton button);
 		
 		/**
 		*
