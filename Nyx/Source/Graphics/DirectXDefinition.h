@@ -62,12 +62,6 @@ typedef LPD3DXMESHCONTAINER           D3DXMeshContainer;
 typedef	LPD3DXANIMATIONCONTROLLER     D3DXAnimationController;
 
 
-#elif USE_DIRECTX10
-//インタフェース
-//構造体
-#elif USE_DIRECTX11
-//インタフェース
-//構造体
 #endif
 
 
