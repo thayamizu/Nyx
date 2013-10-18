@@ -172,9 +172,6 @@
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\GeoMetry">
-      <UniqueIdentifier>{fd85f2c3-343f-4020-9a62-3b028c9b0995}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Core\detail">
       <UniqueIdentifier>{659553ff-b780-4c0d-bc20-21b1e9ea348c}</UniqueIdentifier>
     </Filter>
@@ -229,15 +226,6 @@
     <Filter Include="Graphics\Animation\System">
       <UniqueIdentifier>{c438ecf1-b931-4b3f-8729-6b0b1d1ed3b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\GeoMetry\detail">
-      <UniqueIdentifier>{c8125336-e501-4b2f-9602-9324e1df5610}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\GeoMetry\Base">
-      <UniqueIdentifier>{0392c2f7-3c77-426e-830a-7afb8c897634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\GeoMetry\System">
-      <UniqueIdentifier>{6acb0121-6117-47db-9a07-6187dac5e251}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Sprite">
       <UniqueIdentifier>{8baf611c-8ff9-4aa2-867c-153dde8ba99f}</UniqueIdentifier>
     </Filter>
@@ -274,6 +262,24 @@
     <Filter Include="Graphics\ParticleSystem\Base">
       <UniqueIdentifier>{7ffb8f23-ac56-4585-bd54-ab236eaf1236}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Core\Base">
+      <UniqueIdentifier>{a0c0aaf1-5ccb-47b6-bfd5-a982e932ef54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Geometry">
+      <UniqueIdentifier>{fd85f2c3-343f-4020-9a62-3b028c9b0995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Geometry\detail">
+      <UniqueIdentifier>{c8125336-e501-4b2f-9602-9324e1df5610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Geometry\Base">
+      <UniqueIdentifier>{0392c2f7-3c77-426e-830a-7afb8c897634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Geometry\System">
+      <UniqueIdentifier>{6acb0121-6117-47db-9a07-6187dac5e251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sprite\detail\DX9">
+      <UniqueIdentifier>{592a9fdb-86a7-4bef-b3ad-9ae3452b7535}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -284,27 +290,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Debug\MemoryChecker.h">
       <Filter>Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\GDI\DIBitmap.h">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\GDI\Font.h">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\GDI\Pen.h">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\DirectGraphicsDevice.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\DXSprite.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\DXTextureFont.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\DXTextureFontManager.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Random.h">
       <Filter>Utility</Filter>
@@ -331,38 +316,8 @@
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\NyxCore.h" />
-    <ClInclude Include="..\Source\Graphics\DX9\DXSpriteManager.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\Camera.h">
-      <Filter>Graphics\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\SceneNode.h">
-      <Filter>Graphics\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ITextureFont.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ISprite.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ISurface.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ITexture.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\IGraphicsDevice.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\IMesh.h">
-      <Filter>Graphics\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Collision\BulletDefinition.h">
       <Filter>Collision\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DirectXDefinition.h">
-      <Filter>Graphics\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Database\SQLiteDefinition.h">
       <Filter>Database\detail</Filter>
@@ -610,23 +565,56 @@
     <ClInclude Include="..\Source\Input\InputDeviceDesc.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XAnimationController.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XAnimationMesh.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XMesh.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\DX9\XStaticMesh.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Input\KeyCode.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\IAnimationController.h">
-      <Filter>Graphics\Animation\Base</Filter>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\Font.h">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\Win32Handle.h">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h">
+      <Filter>Graphics\Core\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\DX11\DirectGraphics11Definition.h">
+      <Filter>Graphics\Core\detail\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\DX10\DirectGraphics10Definition.h">
+      <Filter>Graphics\Core\detail\DX10</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GraphicsDevice.h">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GraphicsDeviceCapacity.h">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.h">
+      <Filter>Graphics\Core\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ModelLoader.h">
+      <Filter>Graphics\Loader\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\FBXLoader.h">
+      <Filter>Graphics\Loader\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\MMDLoader.h">
+      <Filter>Graphics\Loader\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\OBJLoader.h">
+      <Filter>Graphics\Loader\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -636,44 +624,11 @@
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\GDI\DIBitmap.cpp">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\GDI\Font.cpp">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\GDI\Pen.cpp">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\DirectGraphicsDevice.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\DXSprite.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\DXTextureFont.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\DXTextureFontManager.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Utility\Random.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\PCH\PCH.cpp">
       <Filter>PCH</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\DXSpriteManager.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\Camera.cpp">
-      <Filter>Graphics\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\ISprite.cpp">
-      <Filter>Graphics\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
-      <Filter>Graphics\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Utility\Math.cpp">
       <Filter>Utility</Filter>
@@ -816,17 +771,32 @@
     <ClCompile Include="..\Source\Input\Joystick.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XAnimationController.cpp">
+    <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\GDI\Font.cpp">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.cpp">
       <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XAnimationMesh.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
+    <ClCompile Include="..\Source\Graphics\FBXLoader.cpp">
+      <Filter>Graphics\Loader\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XMesh.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
+    <ClCompile Include="..\Source\Graphics\MMDLoader.cpp">
+      <Filter>Graphics\Loader\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\DX9\XStaticMesh.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
+    <ClCompile Include="..\Source\Graphics\OBJLoader.cpp">
+      <Filter>Graphics\Loader\detail</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 //Direct Sound
 #define DIRECTSOUND_VERSION 0x0900
 #include <dsound.h> 
+#include <d3dx9.h>
 #pragma comment( lib, "dsound.lib")
 
 typedef boost::intrusive_ptr< IDirectSound8 >           DirectSoundPtr;               ///< DirectSoudオブジェクト

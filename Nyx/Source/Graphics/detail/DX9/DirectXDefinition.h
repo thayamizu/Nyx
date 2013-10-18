@@ -14,40 +14,34 @@
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
-#ifndef NYX_CORE_INCLUDED_XSTATIC_MESH_H_
-#define NYX_CORE_INCLUDED_XSTATIC_MESH_H_
+#ifndef NYX_CORE_INCLUDED_DIRECT_GRAPHICS_9_DEFINITION_H_
+#define NYX_CORE_INCLUDED_DIRECT_GRAPHICS_9_DEFINITION_H_
+#include <memory>
+//boost/intrusive_ptr
+#include <boost/intrusive_ptr.hpp>
 
-namespace Nyx {
-	namespace DX9
-	{
-		class XMesh;
-		class DirectGraphicsDevice;
-		///静的メッシュ
-		class XStaticMesh : public XMesh {
-		public:
-			/**
-			*
-			*/
-			XStaticMesh(std::wstring fileName, DirectGraphicsDevice*);
+//D3D9
+#include <D3D9.h>
+#include <D3DX9.h>
 
-			/**
-			*
-			*/
-			~XStaticMesh();
+//dx error
+#include <DXErr.h>
 
-			/**
-			*
-			*/
-			int GetVertexNum();
-			int GetFaceNum();
-			/**
-			*
-			*/
-			void Render(DirectGraphicsDevice *device, Matrix44* world);
-		private:
-			void LoadFromX(std::wstring fileName, DirectGraphicsDevice*);
-			D3DMesh mesh;
-		};
-	}
-}
+
+
+//型定義
+//--------------------------------------------------------------
+//Direct 3D
+typedef LPDIRECT3D9                   Direct3D;
+typedef LPDIRECT3DDEVICE9             Direct3DDevice;
+typedef	D3DMATERIAL9                  D3DMaterial;
+typedef D3DLIGHT9	                  D3DLight;
+typedef D3DVIEWPORT9                  D3DViewPort;
+typedef	LPD3DXMESH                    D3DMesh;
+typedef	LPDIRECT3DTEXTURE9            D3DTexture;
+typedef LPD3DXFRAME                   D3DXFrame;
+typedef LPD3DXMESHCONTAINER           D3DXMeshContainer;
+typedef	LPD3DXANIMATIONCONTROLLER     D3DXAnimationController;
+
+
 #endif

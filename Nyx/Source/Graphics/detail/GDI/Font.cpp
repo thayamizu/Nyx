@@ -17,7 +17,7 @@
 #include "PCH/PCH.h"
 #include "Utility/Common.h"
 #include "Debug/Assert.h"
-#include "Graphics/GDI/Font.h"
+#include "Graphics/detail/GDI/Font.h"
 
 namespace Nyx {
 	namespace GDI {

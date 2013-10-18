@@ -65,6 +65,6 @@
 #include "Utility/Random.h"
 
 //DirectX
-#include "Graphics/DirectXDefinition.h"
+//#include "Graphics/DirectXDefinition.h"
 
 #endif

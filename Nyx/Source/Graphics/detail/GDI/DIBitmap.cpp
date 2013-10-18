@@ -15,7 +15,7 @@
 *求、損害、その他の義務について何らの責任も負わないものとします。 
 ********************************************************************************/
 #include "PCH/PCH.h"
-#include "Graphics/GDI/DIBitmap.h"
+#include "Graphics/detail/GDI/DIBitmap.h"
 #include "Primitive/Color3.h"
 #include "Debug/Assert.h"
 

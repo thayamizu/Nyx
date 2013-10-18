@@ -98,13 +98,13 @@ class RootNode;
 class Mesh;
 class SkinMesh;
 */
-#include "Graphics/Camera.h"
-#include "Graphics/IAnimationController.h"
-#include "Graphics/IGraphicsDevice.h"
-#include "Graphics/IMesh.h"
-#include "Graphics/ISprite.h"
-#include "Graphics/ITexture.h"
-#include "Graphics/ITextureFont.h"
+//#include "Graphics/Camera.h"
+//#include "Graphics/IAnimationController.h"
+//#include "Graphics/IGraphicsDevice.h"
+//#include "Graphics/IMesh.h"
+//#include "Graphics/ISprite.h"
+//#include "Graphics/ITexture.h"
+//#include "Graphics/ITextureFont.h"
 //#include "Graphics/GDI/Pen.h"
 //#include "Graphics/GDI/Font.h"
 //#include "Graphics/GDI/DIBitmap.h"

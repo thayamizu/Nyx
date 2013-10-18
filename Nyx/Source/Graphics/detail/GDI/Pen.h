@@ -19,17 +19,17 @@
 
 #include "Primitive/Color3.h"
 #include "Primitive/Vector2.h"
+
 namespace Nyx {
 	namespace GDI
 	{  
 		/// ペンスタイル 
-		enum PenStyle
-		{
-			Solid      = 0,
-			Dash       = 1,       
-			Dot        = 2,       
-			DashDot    = 3,       
-			DashDotDot = 4, 
+		enum class PenStyle : uchar {
+			Solid      = 0x00,
+			Dash       = 0x01,       
+			Dot        = 0x02,       
+			DashDot    = 0x03,       
+			DashDotDot = 0x04, 
 			NullPen    = 5,
 			NumPenStyle,
 		};
@@ -41,6 +41,11 @@ namespace Nyx {
 			//---------------------------------------------------------------
 			//構築・破壊
 			//---------------------------------------------------------------
+			/**
+			*
+			*/
+			Pen();
+			
 			/**
 			*
 			*/
@@ -59,6 +64,10 @@ namespace Nyx {
 			*/
 			void Set(PenStyle style, int width, Color3c color);
 
+			/**
+			*
+			*/
+			void Select(HWND hwnd);
 			//---------------------------------------------------------------
 			//描画
 			//--------------------------------------------------------------- 
@@ -85,8 +94,8 @@ namespace Nyx {
 			*/
 			void DrawBezier(HDC hdc, Point2i* p, int num);
 		private:
-			Pen();
-			HPEN pen;
+			HDC hdc_;
+			HPEN pen_;
 		};
 	}
 }
