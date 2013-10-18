@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -28,12 +28,12 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -121,18 +121,18 @@
     <ClInclude Include="..\Source\Graphics\detail\DX11\DirectGraphics11Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h" />
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSprite.h" />
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h" />
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFont.h" />
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Font.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h" />
-    <ClInclude Include="..\Source\Graphics\detail\GDI\Win32Handle.h" />
-    <ClInclude Include="..\Source\Graphics\FBXLoader.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceCapacity.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
-    <ClInclude Include="..\Source\Graphics\MMDLoader.h" />
-    <ClInclude Include="..\Source\Graphics\ModelLoader.h" />
-    <ClInclude Include="..\Source\Graphics\OBJLoader.h" />
+    <ClInclude Include="..\Source\Graphics\Sprite.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
     <ClInclude Include="..\Source\GUI\ICheckBox.h" />
@@ -228,14 +228,16 @@
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp" />
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.cpp" />
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp" />
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp" />
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp" />
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\Font.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp" />
-    <ClCompile Include="..\Source\Graphics\FBXLoader.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
-    <ClCompile Include="..\Source\Graphics\MMDLoader.cpp" />
-    <ClCompile Include="..\Source\Graphics\OBJLoader.cpp" />
+    <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp" />
     <ClCompile Include="..\Source\GUI\ListBox.cpp" />

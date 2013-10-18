@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_DIRECT_GRAPHICS_SPRITE_MANAGER_H_
 #define NYX_CORE_INCLUDED_DIRECT_GRAPHICS_SPRITE_MANAGER_H_
 
-#include "Graphics/DX9/DXSprite.h"
+#include "Graphics/detail/DX9/DXSprite.h"
 namespace Nyx {
 	namespace DX9 {
 

@@ -20,8 +20,8 @@
 #include "IO/File.h"
 #include "Graphics/ISprite.h"
 
-#include "Graphics/DX9/DirectGraphicsDevice.h"
-#include "Graphics/DX9/DXSprite.h"
+#include "Graphics/detail/DX9/DirectGraphicsDevice.h"
+#include "Graphics/detail/DX9/DXSprite.h"
 
 namespace Nyx {
 	namespace DX9 {

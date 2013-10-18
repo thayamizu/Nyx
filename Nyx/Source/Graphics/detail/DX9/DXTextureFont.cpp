@@ -18,9 +18,9 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "Graphics/ITextureFont.h"
-#include "Graphics/DX9/DirectGraphicsDevice.h"
-#include "Graphics/DX9/DXTextureFont.h"
-#include "Graphics/GDI/Font.h"
+#include "Graphics/detail/DX9/DirectGraphicsDevice.h"
+#include "Graphics/detail/DX9/DXTextureFont.h"
+#include "Graphics/detail/GDI/Font.h"
 #include "Primitive/Matrix44.h"
 #include "Primitive/Color4.h"
 
