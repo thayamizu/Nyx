@@ -8,3 +8,5 @@
 *.pch
 *.user
 *.unsuccessfulbuild
+*.sdf
+*.opensdf

@@ -49,17 +49,11 @@
     <Filter Include="Graphics\Camera">
       <UniqueIdentifier>{3d3db83e-9af0-4c1e-aa1a-8da528671e7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Renderer">
-      <UniqueIdentifier>{188e22da-c8e5-4568-9888-b6d72ea638db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Utiltiy">
       <UniqueIdentifier>{661fab4c-b31d-48d0-8401-eaae6af06048}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Core">
       <UniqueIdentifier>{30c428a5-9e68-45ee-a903-8a90d5740b24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Shader">
-      <UniqueIdentifier>{59e187d4-35d1-4065-805c-e542b0c9e21c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Movie">
       <UniqueIdentifier>{2b9a50a9-e9ec-411d-a61b-e814cc5af50e}</UniqueIdentifier>
@@ -187,26 +181,8 @@
     <Filter Include="Graphics\Core\detail\GDI">
       <UniqueIdentifier>{dcb3b735-18df-479b-b389-6e94d48fce77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Shader\detail">
-      <UniqueIdentifier>{ec480f26-6747-4f56-b37b-b1809a6fe2a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Input\detail\DirectInput">
       <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Shader\System">
-      <UniqueIdentifier>{d4bba5a8-761d-40f5-ba2a-8c6c791537dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Shader\Base">
-      <UniqueIdentifier>{72ae1d12-1ca4-4a3f-8f3d-2de7ba816947}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Renderer\detail">
-      <UniqueIdentifier>{9c8110ec-bf40-41c6-bb75-facf2c8831dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Renderer\Base">
-      <UniqueIdentifier>{8455a122-8d7d-4766-944f-4565c54fa08b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Renderer\System">
-      <UniqueIdentifier>{f326fcec-1cce-4d0d-bde4-d5f5f0a79f40}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Camera\detail">
       <UniqueIdentifier>{154f733f-1a86-4498-8636-72f5d9dd7ce8}</UniqueIdentifier>
@@ -237,18 +213,6 @@
     </Filter>
     <Filter Include="Graphics\Sprite\System">
       <UniqueIdentifier>{04641af2-3878-4ae6-bfb0-d17137f091a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Loader">
-      <UniqueIdentifier>{8db84fa7-a24d-4a8a-91eb-5c7663ff8b8c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Loader\detail">
-      <UniqueIdentifier>{7a1e186d-fb96-4aed-b0bf-67d99faae68b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Loader\Base">
-      <UniqueIdentifier>{00250a07-f670-4cae-a709-941836cf4f05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Loader\System">
-      <UniqueIdentifier>{8fca30c5-e8c4-4e2e-b1b8-f2d983763bcf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\ParticleSystem">
       <UniqueIdentifier>{987f769f-c13b-404f-9df0-baba1401bfde}</UniqueIdentifier>
@@ -577,9 +541,6 @@
     <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h">
       <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\GDI\Win32Handle.h">
-      <Filter>Graphics\Core\detail\GDI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h">
       <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
@@ -604,17 +565,20 @@
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.h">
       <Filter>Graphics\Core\detail\DX9</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ModelLoader.h">
-      <Filter>Graphics\Loader\Base</Filter>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSprite.h">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\FBXLoader.h">
-      <Filter>Graphics\Loader\detail</Filter>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\MMDLoader.h">
-      <Filter>Graphics\Loader\detail</Filter>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFont.h">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\OBJLoader.h">
-      <Filter>Graphics\Loader\detail</Filter>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Sprite.h">
+      <Filter>Graphics\Sprite\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -789,14 +753,20 @@
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.cpp">
       <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\FBXLoader.cpp">
-      <Filter>Graphics\Loader\detail</Filter>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\MMDLoader.cpp">
-      <Filter>Graphics\Loader\detail</Filter>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\OBJLoader.cpp">
-      <Filter>Graphics\Loader\detail</Filter>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp">
+      <Filter>Graphics\Sprite\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Sprite.cpp">
+      <Filter>Graphics\Sprite\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

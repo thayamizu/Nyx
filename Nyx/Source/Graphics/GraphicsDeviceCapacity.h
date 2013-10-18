@@ -6,12 +6,14 @@ namespace Nyx {
 	class GraphicsDeviceCapacity
 	{
 	public:
-		static void LookupGraphicsDeviceCapacity();
-	private:
 		GraphicsDeviceCapacity();
+		void LookupGraphicsDeviceCapacity();
+	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;
 	};
+
+	
 
 }
 #endif
