@@ -580,6 +580,9 @@
     <ClInclude Include="..\Source\Graphics\Sprite.h">
       <Filter>Graphics\Sprite\Base</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h">
+      <Filter>Graphics\Core\detail\GDI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">

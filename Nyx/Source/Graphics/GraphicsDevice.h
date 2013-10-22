@@ -1,29 +1,47 @@
 #ifndef NYX_CORE_INCLUDED_GRAPHICS_DEVICE_H_
 #define NYX_CORE_INCLUDED_GRAPHICS_DEVICE_H_
+#include "Primitive/Rect.h"
+#include "Primitive/Color4.h"
 
 namespace Nyx {
 
-	class GraphicsDevice
+	class Window;
+	enum class WindowMode;
+
+	///DirectGraphicsデバイス
+	class GraphicsDevice 
 	{
 	public:
+		/**
+		* コンストラクタ
+		*/
 		GraphicsDevice();
-		GraphicsDevice(int);
-		bool Initialize();
-		bool Finalize();
+		
+		
+		/**
+		* コンストラクタ
+		* @param std::sahred_ptr<Window>　描画ウインドウ
+		* @param WindowMode ウインドウモード
+		*/
+		GraphicsDevice(std::shared_ptr<Window> window, WindowMode windowMode);
 
-		void SetWidownMode(bool isWindowed);
-		void SetSamplerState();
-		void GetSamplerState();
-		void SetClientRect();
-		void GetClientRect();
-		void GetSurface();
-		void invalidateState();
-		void Reset();
-		void Preset();
-		void Clear();
+
+		/**
+		* 初期化
+		* @param std::sahred_ptr<Window>　描画ウインドウ
+		* @param WindowMode ウインドウモード
+		*/
+		bool Initialize(std::shared_ptr<Window> window, WindowMode windowMode);
+
+
+		void Render(const Color4c& color);
+
+		void OnRender(std::function<void(void)> render);
+
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;
+
 	};
 
 }

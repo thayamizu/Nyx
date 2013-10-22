@@ -53,7 +53,7 @@ namespace Nyx {
 			* Direct3Dデバイスを返します。
 			* @return Direct3DDevice  
 			*/
-			Direct3DDevice GetDevice();
+			D3dDevice9Ptr GetDevice();
 
 			/**
 			*　カーソルの表示・非表示を切り替えます
@@ -80,6 +80,10 @@ namespace Nyx {
 			bool IsFullScreen();
 			
 			
+			
+			//---------------------------------------------------------------------------
+			//サンプラーステート
+			//---------------------------------------------------------------------------
 			/**
 			*　現在のサンプラーステートの取得
 			* @param DWORD サンプラーステートインデックス
@@ -88,6 +92,7 @@ namespace Nyx {
 			*/
 			void GetSamplerState(DWORD sampler,D3DSAMPLERSTATETYPE type, DWORD* value);
 
+
 			/**
 			* サンプラーステートの設定
 			* @param DWORD サンプラーステートインデックス
@@ -95,11 +100,15 @@ namespace Nyx {
 			* @param DWORD 設定するステート値
 			*/
 			void SetSamplerState(DWORD sampler,D3DSAMPLERSTATETYPE type, DWORD value);
-
+			
+			
+			//---------------------------------------------------------------------------
+			//ライト
+			//---------------------------------------------------------------------------
 			/**
 			*ライトを取得
 			*/
-			void GetLight(D3DLight*);
+			void GetLight(D3DLIGHT9 *);
 
 			/**
 			* ライトを設定
@@ -120,13 +129,15 @@ namespace Nyx {
 			* @param D3DTRANSFORMSTATETYPE トランスフォームステートの値
 			* @param const Matrix44トランスフォーム行列
 			*/
-			void SetTransform(  D3DTRANSFORMSTATETYPE state, const Matrix44 * matrix);
+			void SetTransform(D3DTRANSFORMSTATETYPE state, const Matrix44 * matrix);
+
+
 			/**
 			*デバイスのトランスフォーム関連ステートを取得する
 			* @param D3DTRANSFORMSTATETYPE トランスフォームステートの値
 			* @param Matrix44トランスフォーム行列
 			*/
-			void GetTransform(  D3DTRANSFORMSTATETYPE state, Matrix44 * matrix);
+			void GetTransform(D3DTRANSFORMSTATETYPE state, Matrix44 * matrix);
 
 			//---------------------------------------------------------------------------
 			//ビューポート
@@ -135,7 +146,7 @@ namespace Nyx {
 			* ビューポートを取得
 			* @param D3DVeiwPort ビューポート
 			*/
-			void GetViewPort(D3DViewPort*);
+			void GetViewPort(D3DVIEWPORT9* viewport);
 
 			/**
 			*　ビューポートの設定
@@ -160,10 +171,40 @@ namespace Nyx {
 			* @return bool シーンの開始に失敗した場合にはfalseが返ります
 			*/
 			bool BeginScene();
+
 			/**
 			* シーンの終了
 			*/
 			void EndScene();
+
+			void RenderPrimitive();
+
+			//---------------------------------------------------------------------------
+			//ステートブロック
+			//---------------------------------------------------------------------------
+			void BeginStateBlock();
+			void EndStateBlock();
+
+
+			//---------------------------------------------------------------------------
+			//頂点記述
+			//---------------------------------------------------------------------------
+			void CreateVertexDeclaration();
+			
+			//---------------------------------------------------------------------------
+			//頂点バッファの生成
+			//---------------------------------------------------------------------------
+			void CreateVertexBuffer();
+			
+			//---------------------------------------------------------------------------
+			//フォグ
+			//---------------------------------------------------------------------------
+			void SetFog();
+
+			//---------------------------------------------------------------------------
+			//Zテスト
+			//---------------------------------------------------------------------------
+			void SetZTest();
 
 			//---------------------------------------------------------------------------
 			//修復
@@ -184,9 +225,9 @@ namespace Nyx {
 			bool isShowCursor;
 
 			HWND hwnd;
-			Direct3D d3d;
+			D3d9Ptr d3d_;
 			HMENU hMenu;
-			Direct3DDevice d3dDevice;
+			D3dDevice9Ptr d3dDevice_;
 			D3DPRESENT_PARAMETERS presentParameter;
 		};
 	}

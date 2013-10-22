@@ -10,3 +10,5 @@
 *.unsuccessfulbuild
 *.sdf
 *.opensdf
+*.idb
+*.ipch

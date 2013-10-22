@@ -98,7 +98,9 @@ class RootNode;
 class Mesh;
 class SkinMesh;
 */
-//#include "Graphics/Camera.h"
+#include "Graphics/GraphicsDevice.h"
+#include "Graphics/GraphicsDeviceType.h"
+
 //#include "Graphics/IAnimationController.h"
 //#include "Graphics/IGraphicsDevice.h"
 //#include "Graphics/IMesh.h"

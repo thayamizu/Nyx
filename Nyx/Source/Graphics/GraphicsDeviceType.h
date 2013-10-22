@@ -6,12 +6,21 @@ namespace Nyx {
 	///グラフィクスデバイスの種類
 	enum class GraphicsDeviceType 
 	{
-		DX9				= 0x00,
-		DX10			= 0x01,
-		DX11			= 0x02,
-		OepnGL			= 0x03,
+		NoSupport       = 0x00,
+		DX9				= 0x01,
+		DX10			= NoSupport,
+		DX11			= NoSupport,
+		OepnGL			= NoSupport
 	};
 
+
+	///
+	enum class WindowMode
+	{
+		Default         = 1,
+		FullScreen      = 2,
+		Windowed		= Default,
+	};
 	
 	///サンプラーステート
 	enum class SamplerState
@@ -32,7 +41,11 @@ namespace Nyx {
 	///ミップマップレベル
 	typedef int MipmapLevel;
 	
+
+	///異方性フィルタリングレベル
+	typedef int AnisotropyLevel;
 	
+
 	///アドレッシングモード
 	enum class AddressingMode
 	{
@@ -62,6 +75,23 @@ namespace Nyx {
 		Inverse		= 0x04,
 		NoBlend		= 0x05
 	};
+
+
+	///ライトの種類
+	enum class LightType
+	{
+		DirectionalLight,
+		PointLight,
+		SpotLight
+	};
+
+	///マテリアルカラーの種類
+	enum class MaterialColor
+	{
+		Ambient,
+		Diffuse,
+		Specular,
+	};	
 
 }
 #endif
