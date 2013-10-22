@@ -32,16 +32,9 @@
 //Œ^’è‹`
 //--------------------------------------------------------------
 //Direct 3D
-typedef LPDIRECT3D9                   Direct3D;
-typedef LPDIRECT3DDEVICE9             Direct3DDevice;
-typedef	D3DMATERIAL9                  D3DMaterial;
-typedef D3DLIGHT9	                  D3DLight;
-typedef D3DVIEWPORT9                  D3DViewPort;
-typedef	LPD3DXMESH                    D3DMesh;
-typedef	LPDIRECT3DTEXTURE9            D3DTexture;
-typedef LPD3DXFRAME                   D3DXFrame;
-typedef LPD3DXMESHCONTAINER           D3DXMeshContainer;
-typedef	LPD3DXANIMATIONCONTROLLER     D3DXAnimationController;
+typedef boost::intrusive_ptr<IDirect3D9>			D3d9Ptr;
+typedef boost::intrusive_ptr<IDirect3DDevice9>		D3dDevice9Ptr;
+typedef	LPDIRECT3DTEXTURE9					D3DTexture;
 
 
 #endif

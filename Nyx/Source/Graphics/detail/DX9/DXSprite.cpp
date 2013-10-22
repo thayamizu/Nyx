@@ -34,7 +34,7 @@ namespace Nyx {
 			:ISprite()
 		{
 			//デバイスの取得
-			Direct3DDevice d3dDevice = device.GetDevice();
+			LPDIRECT3DDEVICE9 d3dDevice = device.GetDevice().get();
 
 			// スプライトの作成
 			HRESULT hr = D3DXCreateSprite(d3dDevice,&sprite);
@@ -58,7 +58,7 @@ namespace Nyx {
 				SetChipSize(cw, ch);
 
 				//デバイスの取得
-				Direct3DDevice d3dDevice = device.GetDevice();
+				LPDIRECT3DDEVICE9 d3dDevice = device.GetDevice().get();
 
 				// スプライトの作成
 				HRESULT hr = D3DXCreateSprite(d3dDevice,&sprite);
@@ -87,7 +87,7 @@ namespace Nyx {
 				SetChipSize(cw, ch);
 
 				///デバイスの取得
-				Direct3DDevice d3dDevice = device.GetDevice();
+				auto d3dDevice = device.GetDevice().get();
 
 				// スプライトの作成
 				HRESULT hr = D3DXCreateSprite(d3dDevice,&sprite);
@@ -116,7 +116,7 @@ namespace Nyx {
 			buffer = new uchar[size];
 			GetResourceData(&buffer);
 
-			Direct3DDevice d3dDevice;
+			LPDIRECT3DDEVICE9 d3dDevice;
 			HRESULT hr = sprite->GetDevice(&d3dDevice);
 			Assert(SUCCEEDED(hr));
 			int w = this->GetWidth();
@@ -230,7 +230,7 @@ namespace Nyx {
 		//-----------------------------------------------------------------------------------------
 		//
 		HRESULT DXSprite::CreateSprite(DirectGraphicsDevice& device) {
-			return D3DXCreateSprite(device.GetDevice(),&sprite);
+			return D3DXCreateSprite(device.GetDevice().get(),&sprite);
 		}
 	}
 }

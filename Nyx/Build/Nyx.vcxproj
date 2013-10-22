@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -127,6 +127,7 @@
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Font.h" />
+    <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceCapacity.h" />

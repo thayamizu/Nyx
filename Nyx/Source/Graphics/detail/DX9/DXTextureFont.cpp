@@ -91,7 +91,7 @@ namespace Nyx {
 			ReleaseDC(NULL, hdc);
 
 			// テクスチャ作成
-			Direct3DDevice d3dDevice = device.GetDevice();
+			LPDIRECT3DDEVICE9 d3dDevice = device.GetDevice().get();
 			SetWidth( fontSize);
 			SetHeight(fontSize);
 
