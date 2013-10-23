@@ -19,7 +19,7 @@
 #include <memory>
 //boost/intrusive_ptr
 #include <boost/intrusive_ptr.hpp>
-
+#include <boost/noncopyable.hpp>
 //D3D9
 #include <D3D9.h>
 #include <D3DX9.h>
@@ -29,12 +29,35 @@
 
 
 
-//型定義
-//--------------------------------------------------------------
-//Direct 3D
-typedef boost::intrusive_ptr<IDirect3D9>			D3d9Ptr;
-typedef boost::intrusive_ptr<IDirect3DDevice9>		D3dDevice9Ptr;
-typedef	LPDIRECT3DTEXTURE9					D3DTexture;
 
+namespace Nyx {
+	//型定義
+	//--------------------------------------------------------------
+	//Direct 3D
+	typedef boost::intrusive_ptr<IDirect3D9>			D3d9Ptr;
+	typedef boost::intrusive_ptr<IDirect3DDevice9>		D3dDevice9Ptr;
+	typedef	LPDIRECT3DTEXTURE9					D3DTexture;
+
+
+	///d3d9オブジェクトのシングルトン
+	class D3d9Driver : boost::noncopyable
+	{
+	public:
+		static D3d9Ptr GetD3d9() {
+			if (d3d9Ptr_ == nullptr) {
+				auto  d3d = Direct3DCreate9(D3D_SDK_VERSION);
+				d3d9Ptr_ = D3d9Ptr(d3d, true);
+			}
+
+			return d3d9Ptr_;
+		}
+	private:
+		D3d9Driver() {
+
+		}
+
+		static D3d9Ptr d3d9Ptr_;
+	};
+}
 
 #endif
