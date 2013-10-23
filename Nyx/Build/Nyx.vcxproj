@@ -229,6 +229,7 @@
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp" />
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.cpp" />
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp" />
