@@ -771,5 +771,8 @@
     <ClCompile Include="..\Source\Graphics\Sprite.cpp">
       <Filter>Graphics\Sprite\Base</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp">
+      <Filter>Graphics\Core\detail\DX9</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
