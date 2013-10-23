@@ -26,22 +26,33 @@ namespace Nyx {
 		GraphicsDevice(std::shared_ptr<Window> window, WindowMode windowMode);
 
 
+
 		/**
-		* 初期化
+		* グラフィックデバイスを初期化します
 		* @param std::sahred_ptr<Window>　描画ウインドウ
 		* @param WindowMode ウインドウモード
 		*/
 		bool Initialize(std::shared_ptr<Window> window, WindowMode windowMode);
 
 
-		void Render(const Color4c& color);
+
+		/**
+		* ビューポートを設定します
+		* @param const Rect2i& クライアント領域
+		* @param float 
+		* @param float
+		*/
+		void SetViewport(const Rect2i clientRect, float minZ, float maxZ);
+
+		void Clear(const Color4c& color);
+
+		void Render();
 
 		void OnRender(std::function<void(void)> render);
 
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;
-
 	};
 
 }
