@@ -37,6 +37,13 @@ namespace Nyx {
 		SRGBTexture		= 12
 	};
 
+	///フォーマットタイプ
+	typedef uint       FormatType;
+	typedef FormatType BackBufferFormat;
+	typedef FormatType DisplayFormat;
+	typedef FormatType IndexBufferFormat;
+	typedef FormatType StencilBufferFormat;
+	typedef FormatType VertexBufferFormat;
 
 	///ミップマップレベル
 	typedef int MipmapLevel;
