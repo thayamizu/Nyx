@@ -5,18 +5,6 @@ namespace Nyx {
 
 	struct GraphicsDeviceDesc
 	{
-		int clientWidth, clientHeight;
-		int x, y;
-		int viewport, samplerState;
-	    int clippingRect;
-		int sharedermodel;
-		int windowsize;
-		std::wstring devicename;
-		int vram;
-		int mipmaplevel;
-		int ganmalevel;
-		int hz;
-
 	};
 
 }
