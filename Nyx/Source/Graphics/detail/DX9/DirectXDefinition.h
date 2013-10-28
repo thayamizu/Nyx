@@ -26,9 +26,7 @@
 
 //dx error
 #include <DXErr.h>
-
-
-
+#include "Debug/Assert.h"
 
 namespace Nyx {
 	//Œ^’è‹`
@@ -51,12 +49,13 @@ namespace Nyx {
 
 			return d3d9Ptr_;
 		}
+	
 	private:
 		D3d9Driver() {
-
+			
 		}
 
-		static D3d9Ptr d3d9Ptr_;
+		static D3d9Ptr        d3d9Ptr_;
 	};
 }
 
