@@ -120,7 +120,12 @@ namespace Nyx {
 	bool Window::IsShow() {
 		return isShow;
 	}
-
+	
+	//----------------------------------------------------------------
+	void Window::ShowCursor(bool isShowCursor) {
+		::ShowCursor(isShowCursor);
+	}
+	
 	//----------------------------------------------------------------
 	void Window::Activate() {
 		Assert(hwnd_ != NULL);
