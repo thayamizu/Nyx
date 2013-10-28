@@ -8,11 +8,20 @@ namespace Nyx {
 	{
 	public:
 		GraphicsDeviceCapacity();
-		void LookupGraphicsDeviceCapacity(uint adapterIndex);
-		BackBufferFormat GetBackBufferFormat(uint adapterIndex, WindowMode windowMode);
-		StencilBufferFormat GetStencilBufferFormat();
 
+		void SetAdapterIndex(uint adapterIndex);
+		
+		void SetWindowMode(WindowMode windowMode); 
 
+		void LookupGraphicsDeviceCapacity();
+		
+		uint GetAdapterCount();
+		
+		BackBufferFormat GetBackBufferFormat();
+		
+		StencilBufferFormat GetDepthStencilBufferFormat();
+		
+		bool GetSupportedMultiSamplingQuality(ulong samplingLevel, FormatType formatType, ulong* quality);
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl>  pimpl_;
