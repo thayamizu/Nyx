@@ -24,7 +24,7 @@ namespace Nyx {
 	namespace GDI
 	{  
 		/// ペンスタイル 
-		enum class PenStyle : uchar {
+		enum class PenStyle {
 			Solid      = 0x00,
 			Dash       = 0x01,       
 			Dot        = 0x02,       
