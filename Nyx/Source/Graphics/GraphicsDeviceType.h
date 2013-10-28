@@ -14,7 +14,7 @@ namespace Nyx {
 	};
 
 
-	///
+	///ウインドウモード
 	enum class WindowMode
 	{
 		Default         = 1,
@@ -37,20 +37,36 @@ namespace Nyx {
 		SRGBTexture		= 12
 	};
 
+	///リソースタイプ
+	enum class ResourceType 
+	{
+		Surface,
+		Volume,
+		Texture,
+		VolumeTextre,
+		CubeTexture,
+		VertexBuffer,
+		IndexBuffer
+
+	};
+
+
 	///フォーマットタイプ
-	typedef uint       FormatType;
+	typedef ulong      FormatType;
 	typedef FormatType BackBufferFormat;
 	typedef FormatType DisplayFormat;
 	typedef FormatType IndexBufferFormat;
 	typedef FormatType StencilBufferFormat;
 	typedef FormatType VertexBufferFormat;
 
-	///ミップマップレベル
-	typedef int MipmapLevel;
-	
+	///サンプリングレベル
+	typedef ulong MultiSamplingLevel;
 
+	///ミップマップレベル
+	typedef ulong MipmapLevel;
+	
 	///異方性フィルタリングレベル
-	typedef int AnisotropyLevel;
+	typedef ulong AnisotropyLevel;
 	
 
 	///アドレッシングモード
