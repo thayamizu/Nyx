@@ -134,6 +134,10 @@
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
     <ClInclude Include="..\Source\Graphics\IResource.h" />
+    <ClInclude Include="..\Source\Graphics\ISprite.h" />
+    <ClInclude Include="..\Source\Graphics\ISurface.h" />
+    <ClInclude Include="..\Source\Graphics\ITexture.h" />
+    <ClInclude Include="..\Source\Graphics\ITextureFont.h" />
     <ClInclude Include="..\Source\Graphics\ResourceCache.h" />
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
@@ -239,6 +243,7 @@
     <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
+    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
