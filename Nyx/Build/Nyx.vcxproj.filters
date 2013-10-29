@@ -244,6 +244,15 @@
     <Filter Include="Graphics\Sprite\detail\DX9">
       <UniqueIdentifier>{592a9fdb-86a7-4bef-b3ad-9ae3452b7535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Texture">
+      <UniqueIdentifier>{406f78f2-5dcf-4ed8-8663-b982d413dbd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Texture\Base">
+      <UniqueIdentifier>{f6b9dbf2-954b-4da2-89ed-24ac3688f6cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Texture\detail">
+      <UniqueIdentifier>{82ba1463-ad88-4c1e-a6f3-7357a9d875c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -583,6 +592,18 @@
     <ClInclude Include="..\Source\Utility\NonCopyable.h">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ITexture.h">
+      <Filter>Graphics\Texture\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ITextureFont.h">
+      <Filter>Graphics\Texture\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ISprite.h">
+      <Filter>Graphics\Sprite\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ISurface.h">
+      <Filter>Graphics\Core\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -773,6 +794,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp">
       <Filter>Graphics\Utiltiy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
+      <Filter>Graphics\Texture\Base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
