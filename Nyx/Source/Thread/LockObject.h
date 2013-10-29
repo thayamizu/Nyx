@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_LOCK_OBJECT_H_
 #define NYX_CORE_INCLUDED_LOCK_OBJECT_H_
-#include "Object/NonCopyable.h"
+#include "Utility/NonCopyable.h"
 namespace Nyx 
 {
 	/// ロックオブジェクト

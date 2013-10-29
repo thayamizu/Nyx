@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_FPS_TIMER_H_ 
 #define NYX_CORE_INCLUDED_FPS_TIMER_H_
 #include "Timer/ITimer.h"
-#include "Object/NonCopyable.h"
+#include "Utility/NonCopyable.h"
 namespace Nyx {
 
 	///FPSタイマー
