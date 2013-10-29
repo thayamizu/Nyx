@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_WIN32_THREAD_H_
 #define NYX_CORE_INCLUDED_WIN32_THREAD_H_
 #include "PCH/PCH.h"
-#include "Object/NonCopyable.h"
+#include "Utility/NonCopyable.h"
 
 namespace Nyx
 {

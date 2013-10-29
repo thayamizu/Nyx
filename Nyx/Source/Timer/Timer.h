@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_TIMER_H_
 #define NYX_CORE_INCLUDED_TIMER_H_
-#include "Object/NonCopyable.h"
+#include "Utility/NonCopyable.h"
 namespace Nyx {
 	class ITimer;
 	///独立タイマー
