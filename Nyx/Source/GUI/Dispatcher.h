@@ -19,8 +19,7 @@
 #include <Windows.h>
 #include <unordered_map>
 #include "GUI/IDispatcher.h"
-#include "Object/NonCopyable.h"
-#include "Object/Delegate.h"
+#include "Utility/NonCopyable.h"
 namespace Nyx {
 
 	///ディスパッチャ

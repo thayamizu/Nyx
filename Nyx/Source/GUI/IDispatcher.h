@@ -16,7 +16,6 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IDISPATCHER_H_
 #define NYX_CORE_INCLUDED_IDISPATCHER_H_
-#include "Object/Delegate.h"
 
 namespace Nyx {
 	//ëOï˚êÈåæ

@@ -133,6 +133,9 @@
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceCapacity.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
+    <ClInclude Include="..\Source\Graphics\IResource.h" />
+    <ClInclude Include="..\Source\Graphics\ResourceCache.h" />
+    <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
@@ -166,8 +169,6 @@
     <ClInclude Include="..\Source\Network\WinsockTCPClientSocket.h" />
     <ClInclude Include="..\Source\Network\WinsockTCPServerSocket.h" />
     <ClInclude Include="..\Source\Network\WinsockUDPSocket.h" />
-    <ClInclude Include="..\Source\Object\ResourceCache.h" />
-    <ClInclude Include="..\Source\Object\ResourceHandle.h" />
     <ClInclude Include="..\Source\Primitive\Color3.h" />
     <ClInclude Include="..\Source\Primitive\Color4.h" />
     <ClInclude Include="..\Source\Primitive\EulerAngles.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="..\Source\Utility\Exception.h" />
     <ClInclude Include="..\Source\Utility\Limits.h" />
     <ClInclude Include="..\Source\Utility\Math.h" />
+    <ClInclude Include="..\Source\Utility\NonCopyable.h" />
     <ClInclude Include="..\Source\Utility\Random.h" />
     <ClInclude Include="..\Source\Timer\FixedTimer.h" />
     <ClInclude Include="..\Source\Timer\FPSTimer.h" />
@@ -210,8 +212,6 @@
     <ClInclude Include="..\Source\Timer\PerformanceTimer.h" />
     <ClInclude Include="..\Source\Timer\Timer.h" />
     <ClInclude Include="..\Source\PCH\PCH.h" />
-    <ClInclude Include="..\Source\Object\Delegate.h" />
-    <ClInclude Include="..\Source\Object\IResource.h" />
     <ClInclude Include="..\Source\Object\NonCopyable.h" />
     <ClInclude Include="..\Source\Primitive\Matrix44.h" />
     <ClInclude Include="..\Source\Primitive\Plane.h" />
@@ -239,6 +239,8 @@
     <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
+    <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
+    <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp" />
@@ -259,8 +261,6 @@
     <ClCompile Include="..\Source\Network\WinsockTCPClientSocket.cpp" />
     <ClCompile Include="..\Source\Network\WinsockTCPServerSocket.cpp" />
     <ClCompile Include="..\Source\Network\WinsockUDPSocket.cpp" />
-    <ClCompile Include="..\Source\Object\ResourceCache.cpp" />
-    <ClCompile Include="..\Source\Object\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Primitive\Matrix33.cpp" />
     <ClCompile Include="..\Source\Sound\AudioCache.cpp" />
     <ClCompile Include="..\Source\Sound\AudioManager.cpp" />

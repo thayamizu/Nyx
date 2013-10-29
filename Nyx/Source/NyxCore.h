@@ -100,25 +100,16 @@ class SkinMesh;
 */
 #include "Graphics/GraphicsDevice.h"
 #include "Graphics/GraphicsDeviceType.h"
+#include "Graphics/ResourceCache.h"
+#include "Graphics/ResourceHandle.h"
+#include "Graphics/IResource.h"
+#include "Graphics/IAnimationController.h"
+#include "Graphics/IGraphicsDevice.h"
+#include "Graphics/IMesh.h"
+#include "Graphics/ISprite.h"
+#include "Graphics/ITexture.h"
+#include "Graphics/ITextureFont.h"
 
-//#include "Graphics/IAnimationController.h"
-//#include "Graphics/IGraphicsDevice.h"
-//#include "Graphics/IMesh.h"
-//#include "Graphics/ISprite.h"
-//#include "Graphics/ITexture.h"
-//#include "Graphics/ITextureFont.h"
-//#include "Graphics/GDI/Pen.h"
-//#include "Graphics/GDI/Font.h"
-//#include "Graphics/GDI/DIBitmap.h"
-//#include "Graphics/DX9/DirectGraphicsDevice.h"
-//#include "Graphics/DX9/DXSprite.h"
-//#include "Graphics/DX9/DXSpriteManager.h"
-//#include "Graphics/DX9/DXTextureFont.h"
-//#include "Graphics/DX9/DXTextureFontManager.h"
-//#include "Graphics/DX9/XAnimationController.h"
-//#include "Graphics/DX9/XAnimationMesh.h"
-//#include "Graphics/DX9/XMesh.h"
-//#include "Graphics/DX9/XStaticMesh.h"
 
 //サウンド
 #include "Sound/AudioBuffer.h"
@@ -159,10 +150,7 @@ class SkinMesh;
 #include "Utility/Limits.h"
 #include "Utility/Math.h"
 #include "Utility/Random.h"
+#include "Utility/NonCopyable.h"
 
-//オブジェクト
-#include "Object/Delegate.h"
-#include "Object/NonCopyable.h"
-#include "Object/IResource.h"
 
 #endif

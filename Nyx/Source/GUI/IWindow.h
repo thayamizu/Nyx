@@ -16,7 +16,6 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IWINDOW_H_
 #define NYX_CORE_INCLUDED_IWINDOW_H_
-#include "Object/Delegate.h"
 #include "GUI/IControl.h"
 namespace Nyx {
 	class IWinHook;

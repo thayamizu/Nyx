@@ -1,6 +1,5 @@
 #ifndef NYX_CORE_INCLUDED_ICONTROL_H_
 #define NYX_CORE_INCLUDED_ICONTROL_H_
-#include "Object/Delegate.h"
 #include "Utility/Type.h"
 #include "Primitive/Vector2.h"
 #include "Primitive/Rect.h"
