@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_AUDIO_CACHE_H_
 #define NYX_CORE_INCLUDED_AUDIO_CACHE_H_
-#include "Object/NonCopyable.h"
+#include "Utility/NonCopyable.h"
 
 namespace Nyx
 {

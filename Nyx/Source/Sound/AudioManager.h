@@ -16,7 +16,7 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
 #define NYX_CORE_INCLUDED_AUDIO_MANAGER_H_
-#include "Object/NonCopyable.h"
+#include "Utility/NonCopyable.h"
 #include "IAudioManager.h"
 
 namespace Nyx {

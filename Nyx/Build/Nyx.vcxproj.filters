@@ -355,18 +355,6 @@
     <ClInclude Include="..\Source\Sound\IAudioListener.h">
       <Filter>Sound\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Object\ResourceCache.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\ResourceHandle.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\IResource.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Object\Delegate.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Object\NonCopyable.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -583,6 +571,18 @@
     <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h">
       <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IResource.h">
+      <Filter>Graphics\Utiltiy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ResourceCache.h">
+      <Filter>Graphics\Utiltiy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ResourceHandle.h">
+      <Filter>Graphics\Utiltiy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\NonCopyable.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -641,12 +641,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Sound\AudioUtility.cpp">
       <Filter>Sound\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Object\ResourceCache.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Object\ResourceHandle.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\IO\File.cpp">
       <Filter>IO</Filter>
@@ -773,6 +767,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp">
       <Filter>Graphics\Core\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\ResourceCache.cpp">
+      <Filter>Graphics\Utiltiy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp">
+      <Filter>Graphics\Utiltiy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
