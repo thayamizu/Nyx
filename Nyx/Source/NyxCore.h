@@ -104,7 +104,6 @@ class SkinMesh;
 #include "Graphics/ResourceHandle.h"
 #include "Graphics/IResource.h"
 #include "Graphics/IAnimationController.h"
-#include "Graphics/IGraphicsDevice.h"
 #include "Graphics/IMesh.h"
 #include "Graphics/ISprite.h"
 #include "Graphics/ITexture.h"
