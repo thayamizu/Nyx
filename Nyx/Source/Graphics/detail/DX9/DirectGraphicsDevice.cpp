@@ -21,7 +21,6 @@
 
 #include "Primitive/Matrix44.h"
 
-#include "Graphics/IGraphicsDevice.h"
 #include "Graphics/detail/DX9/DirectXDefinition.h"
 #include "Graphics/detail/DX9/DirectGraphicsDevice.h"
 
