@@ -119,7 +119,6 @@
     <ClInclude Include="..\Source\Debug\MemoryChecker.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX10\DirectGraphics10Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX11\DirectGraphics11Definition.h" />
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXSprite.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h" />
@@ -232,7 +231,6 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp" />
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp" />

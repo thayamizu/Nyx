@@ -23,8 +23,6 @@ namespace Nyx
 		bool isShowCursor_;
 		std::shared_ptr<Window> window_;
 		std::shared_ptr<GraphicsDeviceCapacity> capacity_;
-		D3d9Ptr d3d_;
-		D3dDevice9Ptr d3dDevice_;
 		MultiSamplingLevel multiSamplingLevel_;
 		PImpl()
 			:isInitialized_(false), capacity_(std::make_shared<GraphicsDeviceCapacity>()) {
@@ -39,16 +37,16 @@ namespace Nyx
 		//
 		bool Initialize(std::shared_ptr<Window> window, WindowMode windowMode, MultiSamplingLevel samplingLevel) {
 			window_ = window;
-			auto hwnd = window->GetHandle();
-			Assert(hwnd != nullptr);
+			Assert(window_ != nullptr);
 
 			//ウインドウ情報
 			window->GetSize(windowSize_);
 			windowMode_ = windowMode;
-			//
+			
+			//デバイスロスト
 			isLostDevice_ = false;
 
-			//
+			//サンプリングレベル
 			multiSamplingLevel_ = samplingLevel;
 
 			//デバイスキャパシティの取得
@@ -56,42 +54,8 @@ namespace Nyx
 			capacity_->SetWindowMode(windowMode_);
 			capacity_->LookupGraphicsDeviceCapacity();
 
-			// Direct3Dオブジェクトの作成
-			auto  d3d = D3d9Driver::GetD3d9();
-			Assert(d3d != NULL);
 
-			//Direct3DDeviceオブジェクトの生成
-			D3DPRESENT_PARAMETERS presentParameter = BuildPresentParameter(samplingLevel);
-			LPDIRECT3DDEVICE9 d3dDevice = nullptr;
-			auto hr = d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
-				D3DCREATE_HARDWARE_VERTEXPROCESSING,
-				&presentParameter, &d3dDevice );
-			if( FAILED(hr)) {  
-				hr = d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
-					D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-					&presentParameter, &d3dDevice);
-				if( FAILED(hr)) {	  
-					hr = d3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, hwnd,
-						D3DCREATE_HARDWARE_VERTEXPROCESSING,
-						&presentParameter, &d3dDevice);
-					if( FAILED(hr)){
-						hr = d3d->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, hwnd,
-							D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-							&presentParameter, &d3dDevice);
-						Assert(hr == S_OK);
-					}
-				}
-			}
-			hr = d3dDevice->Reset(&presentParameter);
-			if (FAILED(hr)) {
-				DebugOutput::Trace("デバイスのリセットに失敗しました。[%s][%s]",__FILE__, __LINE__);
-				throw Nyx::COMException("デバイスのリセットに失敗しました。", hr);
-			}
-
-			d3dDevice_ = D3dDevice9Ptr(d3dDevice, true);
-			d3dDevice_->ShowCursor(FALSE);
-
-			return isInitialized_ = true;
+			return isInitialized_ = InitializeD3d9(window_, windowMode_, capacity_,  multiSamplingLevel_);
 		}
 
 
@@ -107,9 +71,9 @@ namespace Nyx
 		//-----------------------------------------------------------------------------------
 		//
 		void Clear(const Color4c& clearColor) {
-			Assert(d3dDevice_ != nullptr);
 
-			d3dDevice_->Clear(
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			d3dDevice->Clear(
 				NULL, 
 				NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
 				D3DCOLOR_ARGB(clearColor.a, clearColor.r, clearColor.g, clearColor.b), 
@@ -121,15 +85,15 @@ namespace Nyx
 		//-----------------------------------------------------------------------------------
 		//
 		void Render() {
-			Assert(d3dDevice_ != nullptr);
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
-			d3dDevice_->BeginScene();
+			d3dDevice->BeginScene();
 
 			render_();
 
-			d3dDevice_->EndScene();
+			d3dDevice->EndScene();
 
-			auto hr = d3dDevice_->Present( NULL , NULL , NULL , NULL );
+			auto hr = d3dDevice->Present( NULL , NULL , NULL , NULL );
 			if (hr == D3DERR_DEVICELOST) {
 				OnDeviceLost();
 			}
@@ -177,7 +141,9 @@ namespace Nyx
 			vp.Height = rect.height;
 			vp.MinZ=minZ;
 			vp.MaxZ=maxZ;
-			d3dDevice_->SetViewport(&vp);
+
+			
+			D3d9Driver::GetD3dDevice9()->SetViewport(&vp);
 		}
 
 
@@ -192,8 +158,8 @@ namespace Nyx
 		//-----------------------------------------------------------------------------------
 		//
 		bool OnDeviceReset() {
-			auto d3dpp = BuildPresentParameter(multiSamplingLevel_);
-			auto hr = d3dDevice_->Reset(&d3dpp);
+			auto d3dpp = BuildPresentParameter(window_, windowMode_, capacity_, multiSamplingLevel_);
+			auto hr = D3d9Driver::GetD3dDevice9()->Reset(&d3dpp);
 			auto result = true;
 
 			switch(hr) {
@@ -221,7 +187,8 @@ namespace Nyx
 		//
 		bool OnDeviceLost() {
 			// デバイスのリセットが出来るかを調べる
-			if (d3dDevice_->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			if (d3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
 				// デバイスをリセットする
 				if (OnDeviceReset()) {
 					isLostDevice_ = false;
@@ -234,45 +201,6 @@ namespace Nyx
 				return false;
 			}
 			return true;;
-		}
-
-
-		//-----------------------------------------------------------------------------------
-		//
-		D3DPRESENT_PARAMETERS BuildPresentParameter(MultiSamplingLevel samplingLevel) {
-
-			// D3DPresentParametersの設定
-			D3DPRESENT_PARAMETERS presentParameter = {};
-			ZeroMemory(&presentParameter, sizeof(D3DPRESENT_PARAMETERS));
-
-			//パラメータの取得
-			auto backbufferFormat    = capacity_->GetBackBufferFormat();
-			auto stencilBufferFormat = capacity_->GetDepthStencilBufferFormat();
-			auto level = static_cast<D3DMULTISAMPLE_TYPE>(samplingLevel);
-			ulong quality = NULL;
-			capacity_->GetSupportedMultiSamplingQuality(samplingLevel, backbufferFormat, &quality);
-			if (quality != NULL) {
-				--quality;
-			}
-
-			//パラメータの設定
-			presentParameter.BackBufferWidth			= windowSize_.width;
-			presentParameter.BackBufferHeight			= windowSize_.height;
-			presentParameter.BackBufferFormat			= static_cast<D3DFORMAT>(backbufferFormat);
-			presentParameter.BackBufferCount			= 1;
-			presentParameter.MultiSampleType			= level;
-			presentParameter.MultiSampleQuality			= quality;
-			presentParameter.SwapEffect					= D3DSWAPEFFECT_DISCARD;
-			presentParameter.hDeviceWindow				= window_->GetHandle();
-			presentParameter.Windowed					= windowMode_ == WindowMode::Default ? true: false;
-			presentParameter.EnableAutoDepthStencil		= true;
-			presentParameter.AutoDepthStencilFormat		= static_cast<D3DFORMAT>(stencilBufferFormat);
-			presentParameter.Flags						= NULL;
-			presentParameter.FullScreen_RefreshRateInHz = NULL;
-			presentParameter.PresentationInterval		= D3DPRESENT_INTERVAL_IMMEDIATE;
-
-
-			return presentParameter;
 		}
 	};
 

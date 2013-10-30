@@ -39,7 +39,15 @@ namespace Nyx {
 		*/
 		bool Initialize(std::shared_ptr<Window> window, WindowMode windowMode, MultiSamplingLevel level);
 
+		/**
+		* 現在のウインドウモードを取得します
+		* @return WindowMode
+		*/
 		WindowMode GetWindowMode();
+		
+		/**
+		* ウインドウモードを変更します
+		*/
 		void ChangeWindowMode();
 
 		/**

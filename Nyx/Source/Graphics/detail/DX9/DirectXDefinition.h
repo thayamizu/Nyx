@@ -20,6 +20,8 @@
 //boost/intrusive_ptr
 #include <boost/intrusive_ptr.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
+
 //D3D9
 #include <D3D9.h>
 #include <D3DX9.h>
@@ -28,35 +30,69 @@
 #include <DXErr.h>
 #include "Debug/Assert.h"
 
+
+#include "Graphics/GraphicsDeviceCapacity.h"
+#include "Graphics/GraphicsDeviceType.h"
 namespace Nyx {
 	//型定義
 	//--------------------------------------------------------------
 	//Direct 3D
 	typedef boost::intrusive_ptr<IDirect3D9>			D3d9Ptr;
 	typedef boost::intrusive_ptr<IDirect3DDevice9>		D3dDevice9Ptr;
-	typedef	LPDIRECT3DTEXTURE9					D3DTexture;
+	typedef	LPDIRECT3DTEXTURE9							D3DTexture;
 
-
+	class Window;
+	class GraphicsDeviceCapacity;
+	
 	///d3d9オブジェクトのシングルトン
 	class D3d9Driver : boost::noncopyable
 	{
 	public:
+	
+		/**
+		* IDirect3D9インタフェースを取得します
+		*/
 		static D3d9Ptr GetD3d9() {
 			if (d3d9Ptr_ == nullptr) {
 				auto  d3d = Direct3DCreate9(D3D_SDK_VERSION);
 				d3d9Ptr_ = D3d9Ptr(d3d, true);
 			}
-
 			return d3d9Ptr_;
 		}
-	
-	private:
-		D3d9Driver() {
-			
-		}
 
+		/**
+		* IDirect3DDevice9インタフェースを取得します
+		*/
+		static D3dDevice9Ptr GetD3dDevice9() {
+			Assert(d3dDevice9Ptr_ != nullptr);
+			return d3dDevice9Ptr_;
+		}
+	private:
+		friend bool InitializeD3d9(std::shared_ptr<Window> window, WindowMode windowMode, std::shared_ptr<GraphicsDeviceCapacity> capacity, MultiSamplingLevel samplingLevel);
+	
 		static D3d9Ptr        d3d9Ptr_;
+		static D3dDevice9Ptr  d3dDevice9Ptr_;
 	};
+
+
+	/**
+	* DirectGraphics9を初期化します
+	* @param std::shared_ptr<Window>
+	* @param WinodwMode
+	* @param std::shared_ptr<GraphicsDeviceCapacity>
+	* @param MutiSamplingLevel
+	*/
+	bool InitializeD3d9(std::shared_ptr<Window> window, WindowMode windowMode, std::shared_ptr<GraphicsDeviceCapacity> capacity, MultiSamplingLevel samplingLevel);
+	
+
+	/**
+	* PRESENT_PARAMETER構造体を構築します
+	* @param std::shared_ptr<Window>
+	* @param WinodwMode
+	* @param std::shared_ptr<GraphicsDeviceCapacity>
+	* @param MutiSamplingLevel
+	*/
+	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<Window> window, WindowMode windowMode, std::shared_ptr<GraphicsDeviceCapacity> capacity,  MultiSamplingLevel samplingLevel);
 }
 
 #endif
