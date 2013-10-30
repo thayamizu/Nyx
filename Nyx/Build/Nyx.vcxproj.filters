@@ -568,9 +568,6 @@
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h">
       <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\Sprite.h">
-      <Filter>Graphics\Sprite\Base</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h">
       <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
@@ -603,6 +600,15 @@
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h">
       <Filter>Graphics\Texture\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Sprite.h">
+      <Filter>Graphics\Sprite\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\SpriteLoader.h">
+      <Filter>Graphics\Sprite\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\SpriteCache.h">
+      <Filter>Graphics\Sprite\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -774,9 +780,6 @@
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp">
       <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\Sprite.cpp">
-      <Filter>Graphics\Sprite\Base</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp">
       <Filter>Graphics\Core\detail\DX9</Filter>
     </ClCompile>
@@ -794,6 +797,15 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp">
       <Filter>Graphics\Texture\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\SpriteCache.cpp">
+      <Filter>Graphics\Sprite\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Sprite.cpp">
+      <Filter>Graphics\Sprite\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\SpriteLoader.cpp">
+      <Filter>Graphics\Sprite\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

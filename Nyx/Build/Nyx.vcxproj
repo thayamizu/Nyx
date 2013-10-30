@@ -140,6 +140,8 @@
     <ClInclude Include="..\Source\Graphics\ResourceCache.h" />
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
+    <ClInclude Include="..\Source\Graphics\SpriteCache.h" />
+    <ClInclude Include="..\Source\Graphics\SpriteLoader.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
     <ClInclude Include="..\Source\GUI\ICheckBox.h" />
@@ -245,6 +247,8 @@
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
+    <ClCompile Include="..\Source\Graphics\SpriteCache.cpp" />
+    <ClCompile Include="..\Source\Graphics\SpriteLoader.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp" />
     <ClCompile Include="..\Source\GUI\ListBox.cpp" />
