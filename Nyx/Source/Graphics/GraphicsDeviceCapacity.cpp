@@ -126,6 +126,7 @@ namespace Nyx
 				} 
 
 				result = depthStencilFormat;
+				break;
 			}
 
 			return result;

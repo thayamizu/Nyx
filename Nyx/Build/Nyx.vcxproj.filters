@@ -253,6 +253,9 @@
     <Filter Include="Graphics\Texture\detail">
       <UniqueIdentifier>{82ba1463-ad88-4c1e-a6f3-7357a9d875c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Texture\detail\DX9">
+      <UniqueIdentifier>{002c05c6-d9c2-4eb7-a73c-1332de65f46c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -559,19 +562,10 @@
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h">
       <Filter>Graphics\Core\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.h">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXSprite.h">
       <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFont.h">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h">
       <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Sprite.h">
@@ -603,6 +597,12 @@
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\ISurface.h">
       <Filter>Graphics\Core\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFont.h">
+      <Filter>Graphics\Texture\detail\DX9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h">
+      <Filter>Graphics\Texture\detail\DX9</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -768,19 +768,10 @@
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp">
       <Filter>Graphics\Core\Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DirectGraphicsDevice.cpp">
-      <Filter>Graphics\Core\detail\DX9</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp">
       <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp">
       <Filter>Graphics\Sprite\detail\DX9</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\Sprite.cpp">
@@ -797,6 +788,12 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
       <Filter>Graphics\Texture\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp">
+      <Filter>Graphics\Texture\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp">
+      <Filter>Graphics\Texture\detail\DX9</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
