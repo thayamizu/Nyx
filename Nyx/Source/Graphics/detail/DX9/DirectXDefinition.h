@@ -51,6 +51,7 @@ namespace Nyx {
 	
 		/**
 		* IDirect3D9インタフェースを取得します
+		* @return D3d9Ptr
 		*/
 		static D3d9Ptr GetD3d9() {
 			if (d3d9Ptr_ == nullptr) {
@@ -62,6 +63,7 @@ namespace Nyx {
 
 		/**
 		* IDirect3DDevice9インタフェースを取得します
+		* @return D3dDevice9Ptr;
 		*/
 		static D3dDevice9Ptr GetD3dDevice9() {
 			Assert(d3dDevice9Ptr_ != nullptr);
