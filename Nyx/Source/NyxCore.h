@@ -108,7 +108,7 @@ class SkinMesh;
 #include "Graphics/ISprite.h"
 #include "Graphics/ITexture.h"
 #include "Graphics/ITextureFont.h"
-
+#include "Graphics/Sprite.h"
 
 //ƒTƒEƒ“ƒh
 #include "Sound/AudioBuffer.h"
