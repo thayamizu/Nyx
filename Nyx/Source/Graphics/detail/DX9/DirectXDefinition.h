@@ -39,6 +39,7 @@ namespace Nyx {
 	//Direct 3D
 	typedef boost::intrusive_ptr<IDirect3D9>			D3d9Ptr;
 	typedef boost::intrusive_ptr<IDirect3DDevice9>		D3dDevice9Ptr;
+	typedef boost::intrusive_ptr<ID3DXSprite>           D3dXSprite9Ptr;
 	typedef	LPDIRECT3DTEXTURE9							D3DTexture;
 
 	class Window;
