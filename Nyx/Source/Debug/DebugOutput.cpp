@@ -54,7 +54,7 @@ namespace Nyx {
 		static const int length = 1024;
 		static char tmp[length];
 		vsprintf_s(tmp, length, format, list);
-		::MessageBoxA(NULL, tmp, "★デバッグなう★", MB_OK);
+		::MessageBoxA(NULL, tmp, "★デバッグ★", MB_OK);
 		va_end(list);
 
 	}
