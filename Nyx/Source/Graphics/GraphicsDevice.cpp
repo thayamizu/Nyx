@@ -164,14 +164,14 @@ namespace Nyx
 
 			switch(hr) {
 			case D3DERR_INVALIDCALL: 
-				DebugOutput::DebugMessage("無効な呼び出しです");
+				DebugOutput::Trace("無効な呼び出しです");
 				result =  false;
 			case D3DERR_DEVICELOST:
-				DebugOutput::DebugMessage("デバイスロスト");
+				DebugOutput::Trace("デバイスロスト");
 				isLostDevice_= true;
 				result =  false;
 			case D3DERR_DRIVERINTERNALERROR: 
-				DebugOutput::DebugMessage("ドライバー内部エラー");
+				DebugOutput::Trace("ドライバー内部エラー");
 				PostQuitMessage(0);//強制終了
 				result =  false;
 			}
@@ -265,5 +265,12 @@ namespace Nyx
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized_);
 		pimpl_->SetViewport(rect, minZ, maxZ);
+	}
+
+	void GraphicsDevice::OnRender(std::function<void(void)> scene)
+	{
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->SetRenderer(scene);
 	}
 }
