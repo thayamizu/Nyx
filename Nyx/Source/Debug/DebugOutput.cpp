@@ -17,21 +17,35 @@
 
 #include "PCH/PCH.h"
 #include "Debug/DebugOutput.h"
-
+#include <iostream>
 
 using Nyx::Logger;
 namespace Nyx {
-	//----------------------------------------------------------------------------------------------
-	//
-	Logger* DebugOutput::logger = NULL;
+	static void TraceLog(char* string) {
+		DebugOutput::GetLogger()->PrintLn(string);
+	}
+
+	static void TraceConsole(char* string) {
+		::OutputDebugStringA(string);
+		::OutputDebugStringA("\n");
+	}
+
+	static void TraceStdErr(char* string) {
+		std::cout << string << std::endl;
+	}
 
 	//----------------------------------------------------------------------------------------------
 	//
-	Logger* DebugOutput::GetInstance() {
-		if (logger == NULL) {
-			logger = new Logger(L"NyxDebugOut.txt");
+	OutputMode DebugOutput::outputMode_ = OutputMode::StdOut;
+	Logger* DebugOutput::logger_ = NULL;
+
+	//----------------------------------------------------------------------------------------------
+	//
+	Logger* DebugOutput::GetLogger() {
+		if (logger_ == NULL) {
+			logger_ = new Logger(L"NyxDebugOut.txt");
 		}
-		return logger;
+		return logger_;
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -40,10 +54,27 @@ namespace Nyx {
 		va_list list;
 		va_start(list, format);
 		static const int length = 1024;
-		static char tmp[length];
-		vsprintf_s(tmp, length, format, list);
-		GetInstance()->PrintLn(tmp);
+		static char buffer[length];
+		vsprintf_s(buffer, length, format, list);
 		va_end(list);
+
+		switch(outputMode_) {
+		case OutputMode::StdOut:
+			TraceStdErr(buffer);
+			break;
+		case OutputMode::Console:
+			TraceConsole(buffer);
+			break;
+		case OutputMode::File:
+			TraceLog(buffer);
+			break;
+		}
+	}
+
+	//----------------------------------------------------------------------------------------------
+	//
+	void DebugOutput::SetOutput(OutputMode mode) {
+		outputMode_ =  mode;
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -62,6 +93,6 @@ namespace Nyx {
 	//----------------------------------------------------------------------------------------------
 	//
 	void DebugOutput::DeleteInstance() {
-		SafeDelete(logger);
+		SafeDelete(logger_);
 	}
 }
