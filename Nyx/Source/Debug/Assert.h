@@ -25,8 +25,7 @@
 #ifdef _DEBUG
 #define Assert(expression) \
 	if (!(expression)) {\
-	Nyx::DebugOutput::GetInstance()->PrintfLn("アサート失敗 %s(%d行目)", __FILE__, __LINE__);\
-	Nyx::DebugOutput::DebugMessage("アサート失敗 %s(%d行目)", __FILE__, __LINE__);\
+	Nyx::DebugOutput::Trace("アサート失敗 %s(%d行目)", __FILE__, __LINE__);\
 	_asm {int 3}\
 	}
 //リリース時は、アサートを切る
