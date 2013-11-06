@@ -8,20 +8,9 @@
 
 namespace Nyx  {
 
-	ResourceHandle::ResourceHandle(size_t bufferSize, std::wstring guid, std::shared_ptr<void> resource)
-		: bufferSize_(bufferSize), uuid_(L""), resource_(resource)
+	ResourceHandle::ResourceHandle(std::wstring uuid, const std::shared_ptr<void>& resource)
+		: uuid_(uuid), resource_(resource)
 	{
-		using namespace boost;
-		using namespace boost::uuids;
-
-		try {
-			auto guid = random_generator()();
-			uuid_ = lexical_cast<std::wstring>(guid);
-		}
-		catch (std::exception e) {
-			DebugOutput::Trace("bad cast[%s:%s]", __FILE__, __LINE__);
-			throw e;
-		}
 	}
 
 }
