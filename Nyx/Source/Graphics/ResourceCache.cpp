@@ -7,12 +7,14 @@
 namespace Nyx {
 
 	ResourceCache::ResourceCache()
-		:cache_() {
+		:cache_()
+	{
 	}
-
-	void ResourceCache::Add(std::shared_ptr<ResourceHandle> handle)  {
+	ResourceCache::~ResourceCache() {
+		Clear();
+	}
+	void ResourceCache::Add(std::wstring key, const std::shared_ptr<ResourceHandle>& handle)  {
 		Assert(handle != nullptr);
-		auto key = handle->GetId();
 		cache_[key] = handle;
 	}
 
@@ -27,4 +29,11 @@ namespace Nyx {
 		cache_.clear();
 	}
 
+	std::shared_ptr<ResourceHandle> ResourceCache::GetCacheItem(std::wstring key) {
+		auto it = cache_.find(key);
+		if (it != cache_.end()) {
+			return it->second;
+		}
+		return nullptr;
+	}
 }
