@@ -81,15 +81,15 @@
 			_CrtMemCheckpoint(&now);
 			if (_CrtMemDifference(&diff, &old, &now)) {   
 				_CrtDumpMemoryLeaks();
-				DebugOutput::GetInstance()->PrintThickLine();
-				DebugOutput::GetInstance()->PrintLn("メモリーリーク");
-				DebugOutput::GetInstance()->PrintThinLine();
+				DebugOutput::GetLogger()->PrintThickLine();
+				DebugOutput::GetLogger()->PrintLn("メモリーリーク");
+				DebugOutput::GetLogger()->PrintThinLine();
 				_CrtMemDumpAllObjectsSince(&diff);
-				DebugOutput::GetInstance()->PrintThinLine();
+				DebugOutput::GetLogger()->PrintThinLine();
 				_CrtMemDumpStatistics(&diff);
-				DebugOutput::GetInstance()->PrintThinLine();
-				DebugOutput::GetInstance()->PrintLn("メモリーリーク");
-				DebugOutput::GetInstance()->PrintThickLine();
+				DebugOutput::GetLogger()->PrintThinLine();
+				DebugOutput::GetLogger()->PrintLn("メモリーリーク");
+				DebugOutput::GetLogger()->PrintThickLine();
 
 				return true;
 			}
