@@ -22,19 +22,33 @@
 namespace Nyx  {
 	class Nyx::Logger;
 
+	///出力先種別
+	enum class OutputMode {
+		StdOut,
+		Console, 
+		File,
+	};
+
 	///デバッグ出力
 	class DebugOutput {
 	public:
 		/**
-		* DebugOutputのシングルトンオブジェクトを取得する
+		* DebugOutputのロガーオブジェクトを取得する
 		*/
-		static Nyx::Logger* GetInstance();
-		
+		static Nyx::Logger* GetLogger();
+
 		/**
 		* トレース出力
 		*/
 		static void Trace(char* format, ...);
 
+		/**
+		* 出力先を設定します
+		* @param OutputMode 出力先
+		*/
+		static void SetOutput(OutputMode mode);
+
+		
 		/**
 		* DebugOutputのシングルトンオブジェクトを削除する
 		*/
@@ -47,8 +61,8 @@ namespace Nyx  {
 	private:
 		DebugOutput();//生成禁止
 		DebugOutput(const DebugOutput& d);
-		static Nyx::Logger* logger;
-
+		static Nyx::Logger* logger_;
+		static OutputMode outputMode_;
 	};
 }
 #endif
