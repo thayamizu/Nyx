@@ -16,39 +16,36 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_ITEXTURE_H_
 #define NYX_CORE_INCLUDED_ITEXTURE_H_
-#include "Graphics/IResource.h"
-#include "Primitive/Matrix44.h"
+#include "Graphics/ISurface.h"
 #include "Primitive/Color4.h"
 
 namespace Nyx {
-	using Nyx::IResource;
-
-
+	
 	///テクスチャインタフェース
-	class ITexture:public IResource{
+	class ITexture:public ISurface{
 	public:
-		/**
-		*
-		*/
-		ITexture():
-			IResource(){}
 		/**
 		*
 		*/
 		virtual ~ITexture(){}
 
+
 		/**
 		*
 		*/
-		virtual int GetWidth()  = 0;
+		virtual void SetColor(const Color4c& color) = 0;
+		
+		
 		/**
 		*
 		*/
-		virtual int GetHeight() = 0;
+		virtual Color4c GetColor() const = 0;
+		
+		
 		/**
 		*
 		*/
-		virtual void Render(Matrix44&, Color4c color) = 0;
+		virtual void Fill(const Color4c& color) = 0;
 	};
 }
 
