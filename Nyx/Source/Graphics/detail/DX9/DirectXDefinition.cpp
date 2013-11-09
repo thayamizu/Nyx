@@ -50,7 +50,7 @@ namespace Nyx
 				throw Nyx::COMException("デバイスのリセットに失敗しました。", hr);
 			}
 
-			D3d9Driver::d3dDevice9Ptr_ = D3dDevice9Ptr(d3dDevice, true);
+			D3d9Driver::d3dDevice9Ptr_ = D3dDevice9Ptr(d3dDevice, false);
 			Assert(D3d9Driver::d3d9Ptr_ != nullptr);
 			Assert(D3d9Driver::d3dDevice9Ptr_ != nullptr);
 
