@@ -22,8 +22,20 @@ namespace Nyx {
 	///リソースインタフェース
 	class IResource {
 	public:
+
+		/*
+		*　デストラクタ
+		*/
 		virtual ~IResource() {}
+		
+		/*
+		*　キャッシュからリソースを開放します
+		*/
 		virtual void Release() = 0;
+
+		/*
+		*　キャッシュからリソースを復元します
+		*/
 		virtual void Recovery() = 0;
 	};
 }
