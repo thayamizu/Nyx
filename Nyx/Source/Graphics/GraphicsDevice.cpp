@@ -217,18 +217,24 @@ namespace Nyx
 		//-----------------------------------------------------------------------------------
 		//
 		bool OnDeviceReset() {
+			D3d9ResourceCache::GetCache()->Release();
+
 			auto d3dpp = BuildPresentParameter(window_, windowMode_, capacity_, multiSamplingLevel_);
 			auto hr = D3d9Driver::GetD3dDevice9()->Reset(&d3dpp);
 			auto result = true;
-			
+
 			if (FAILED(hr)) {
 				DebugOutput::Trace("デバイスリセットに失敗しました。[%s][%s][%d]", DXGetErrorStringA(hr), __FILE__, __LINE__);
 				result = false;
 			}
+			else {
+				//ビューポートの設定
+				SetViewport(windowSize_, 0.f, 1.f);
 
-			//ビューポートの設定
-			SetViewport(windowSize_, 0.f, 1.f);
+				D3d9ResourceCache::GetCache()->Recovery();
+			}
 
+			
 			return result;
 		}
 
