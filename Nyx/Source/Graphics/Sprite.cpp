@@ -17,7 +17,7 @@ namespace Nyx{
 		Color4c color_;
 		D3dTexture9Ptr texture_;///<
 		D3dXSprite9Ptr sprite_;///<
-		std::wstring fileName_ ;
+		std::wstring fileName_;
 
 		//----------------------------------------------------------------------------------------
 		//
@@ -47,13 +47,13 @@ namespace Nyx{
 
 			// スプライトの作成
 			ID3DXSprite *sprite = NULL;
-			auto hr = D3DXCreateSprite(d3dDevice.get() , &sprite);
+			auto hr = D3DXCreateSprite(d3dDevice.get(), &sprite);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("スプライトの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
 				throw COMException("スプライトの作成に失敗しました。", hr);
 			}
 
-			sprite_  = D3dXSprite9Ptr(sprite, false);
+			sprite_ = D3dXSprite9Ptr(sprite, false);
 		}
 
 
@@ -63,7 +63,7 @@ namespace Nyx{
 			//「テクスチャオブジェクト」の作成
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
-			auto hr = D3DXCreateTexture(d3dDevice.get(), width, height, NULL, NULL,	D3DFMT_UNKNOWN, D3DPOOL_MANAGED, &texture);
+			auto hr = D3DXCreateTexture(d3dDevice.get(), width, height, NULL, NULL, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, &texture);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("テクスチャの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
 				throw COMException("テクスチャの作成に失敗しました。", hr);
@@ -80,8 +80,8 @@ namespace Nyx{
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 			auto hr = D3DXCreateTextureFromFileEx(
 				d3dDevice.get(), fileName.c_str(), NULL, NULL, NULL, NULL, D3DFMT_UNKNOWN,
-				D3DPOOL_MANAGED, D3DX_FILTER_NONE,D3DX_DEFAULT,
-				0xFF,NULL,NULL,&texture);
+				D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT,
+				0xFF, NULL, NULL, &texture);
 			if (FAILED(hr)) {
 				DebugOutput::Trace("テクスチャの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
 				throw COMException("テクスチャの作成に失敗しました。", hr);
@@ -157,72 +157,122 @@ namespace Nyx{
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void Render(const Matrix44& matrix) {	
+		void Render(const Matrix44& matrix) {
 			D3DXMATRIX world;
 			::CopyMemory(&world, matrix.Mat, sizeof(D3DXMATRIX));
 
 			sprite_->SetTransform(&world);
 			sprite_->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE);
 			{
-				RECT rect = {rect_.x, rect_.y, rect_.width -rect_.x, rect_.height -rect_.y};
-				const auto center   = D3DXVECTOR3(rect_.width/2.f, rect_.height/2.f, 0.f);
+				RECT rect = { rect_.x, rect_.y, rect_.width - rect_.x, rect_.height - rect_.y };
+				const auto center = D3DXVECTOR3(rect_.width / 2.f, rect_.height / 2.f, 0.f);
 				sprite_->Draw(texture_.get(), &rect, &center, NULL, D3DCOLOR_RGBA(color_.r, color_.g, color_.b, color_.a));
 			}
 			sprite_->End();
 		}
 
+
+		void Release() {
+			sprite_->OnLostDevice();
+			texture_.reset();
+		}
+
+		void Recovery(){
+			sprite_->OnResetDevice();
+			if (fileName_ == L"") {
+				LoadTexture(rect_.width, rect_.height);
+				Fill(color_);
+			}
+			else {
+				LoadTexture(fileName_);
+			}
+		}
+
 	};
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	Sprite::Sprite(int width,  int height, const Color4c& color)
 		:pimpl_(std::make_shared<Sprite::PImpl>(width, height, color)) {
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	Sprite::Sprite(int width,  int height, const std::wstring& fileName)
 		:pimpl_(std::make_shared<Sprite::PImpl>( width, height, fileName)) {
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	Sprite::~Sprite() {
 		pimpl_->Finalize();
-		DebugOutput::Trace("call destructor.");
 	}
 
 
+	//----------------------------------------------------------------------------------------
+	//
 	void Sprite::Fill(const Color4c& color) {
 		Assert(pimpl_ != nullptr);
 		pimpl_->Fill(color);
 
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	void Sprite::SetColor(const Color4c& color) {
 		Assert(pimpl_ != nullptr);
 		pimpl_->SetColor(color);
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	Color4c Sprite::GetColor() const {
 		Assert(pimpl_ != nullptr);
 		return pimpl_->GetColor();
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	void Sprite::SetRect(const Rect2i& rect) {
 		Assert(pimpl_ != nullptr);
 		pimpl_->SetRect(rect);
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	Rect2i Sprite::GetRect() const {
 		Assert(pimpl_ != nullptr);
 		return pimpl_->GetRect();
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	void Sprite::Render(const Matrix44& matrix) const {
 		Assert(pimpl_ != nullptr);
 		pimpl_->Render(matrix);
 	}
 
+
+	//----------------------------------------------------------------------------------------
+	//
 	void Sprite::Release() {
 		Assert(pimpl_ != nullptr);
+		pimpl_->Release();
 	}
 	
+
+	//----------------------------------------------------------------------------------------
+	//
 	void Sprite::Recovery(){
 		Assert(pimpl_ != nullptr);
+		pimpl_->Recovery();
 	}
 }
