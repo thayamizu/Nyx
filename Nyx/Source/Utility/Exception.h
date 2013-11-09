@@ -1,6 +1,7 @@
 #ifndef NYX_CORE_INCLUDED_EXCEPTION_H_
 #define NYX_CORE_INCLUDED_EXCEPTION_H_
 #include <exception>
+#include <stdexcept>
 #include <Windows.h>
 
 namespace Nyx 
