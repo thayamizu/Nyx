@@ -143,7 +143,6 @@
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sphere.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
-    <ClInclude Include="..\Source\Graphics\SpriteCache.h" />
     <ClInclude Include="..\Source\Graphics\SpriteManager.h" />
     <ClInclude Include="..\Source\Graphics\TextureFont.h" />
     <ClInclude Include="..\Source\Graphics\TextureText.h" />
@@ -247,7 +246,6 @@
     <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
-    <ClCompile Include="..\Source\Graphics\SpriteCache.cpp" />
     <ClCompile Include="..\Source\Graphics\SpriteManager.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureText.cpp" />
