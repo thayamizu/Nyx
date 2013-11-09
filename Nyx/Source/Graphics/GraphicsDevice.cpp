@@ -5,9 +5,8 @@
 #include "GUI/Window.h"
 #include "GraphicsDevice.h"
 #include "GraphicsDeviceCapacity.h"
-#include "GraphicsDeviceDesc.h"
 #include "GraphicsDeviceType.h"
-#include "detail/DX9/DirectGraphicsDevice.h"
+#include "detail/DX9/DirectXDefinition.h"
 #include "Primitive/Color4.h"
 
 namespace Nyx
@@ -15,6 +14,7 @@ namespace Nyx
 	//実装
 	struct GraphicsDevice::PImpl
 	{
+		std::vector<Vector3f> verticies_;
 		std::function<void(void)> render_;
 		Rect2i windowSize_;
 		bool isInitialized_;
@@ -24,10 +24,11 @@ namespace Nyx
 		std::shared_ptr<Window> window_;
 		std::shared_ptr<GraphicsDeviceCapacity> capacity_;
 		MultiSamplingLevel multiSamplingLevel_;
+		D3dStateBlock9Ptr stateBlock_;
 		PImpl()
-			:isInitialized_(false), capacity_(std::make_shared<GraphicsDeviceCapacity>()) {
+			:isInitialized_(false), capacity_(std::make_shared<GraphicsDeviceCapacity>()), stateBlock_(nullptr) {
 
-				render_ = [](){};
+			
 				isLostDevice_ = false;
 
 		}
@@ -87,13 +88,11 @@ namespace Nyx
 		void Render() {
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
-			d3dDevice->BeginScene();
-
+			auto hr = d3dDevice->BeginScene();
 			render_();
-
 			d3dDevice->EndScene();
-
-			auto hr = d3dDevice->Present( NULL , NULL , NULL , NULL );
+			
+			hr = d3dDevice->Present( NULL , NULL , NULL , NULL );
 			if (hr == D3DERR_DEVICELOST) {
 				OnDeviceLost();
 			}
@@ -146,8 +145,68 @@ namespace Nyx
 			D3d9Driver::GetD3dDevice9()->SetViewport(&vp);
 		}
 
+		
+		//-----------------------------------------------------------------------------------
+		//
+		void SetWorldMatrix(const Matrix44& world) {
+			D3DXMATRIX w = {};
+			CopyMemory(&w, world.Mat, sizeof(D3DMATRIX));
 
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			d3dDevice->SetTransform(D3DTS_WORLD, &w);
+		}
 
+		//-----------------------------------------------------------------------------------
+		//
+		void SetProjectionMatrix(const Matrix44& proj) {
+			D3DXMATRIX p = {};
+			CopyMemory(&p, proj.Mat, sizeof(D3DMATRIX));
+
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			d3dDevice->SetTransform(D3DTS_PROJECTION, &p);
+		}
+
+		//-----------------------------------------------------------------------------------
+		//
+		void SetViewMatrix(const Matrix44& view) {
+			D3DXMATRIX v = {};
+			CopyMemory(&v, view.Mat, sizeof(D3DMATRIX));
+
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			d3dDevice->SetTransform(D3DTS_VIEW, &v);
+		}
+
+		void EnableZBuffer(bool enable) {
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			d3dDevice->SetRenderState(D3DRS_ZENABLE, enable);
+		}
+		//-----------------------------------------------------------------------------------
+		//
+		void BeginStateBlock() {
+			LPDIRECT3DSTATEBLOCK9 stateBlock;
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			d3dDevice->CreateStateBlock(D3DSBT_ALL, &stateBlock);
+
+			stateBlock_ = D3dStateBlock9Ptr(stateBlock, false);
+		}
+
+		//-----------------------------------------------------------------------------------
+		//
+		void EndStateBlock() {
+			stateBlock_.reset();
+		}
+
+		//-----------------------------------------------------------------------------------
+		//
+		void ApplyStateBlock() {
+			if (stateBlock_ == nullptr) {
+				return;
+			}
+
+			auto d3dDevice = D3d9Driver::GetD3dDevice9();
+			LPDIRECT3DSTATEBLOCK9 stateBlock;
+			stateBlock_->Apply();
+		}
 		//-----------------------------------------------------------------------------------
 		//
 		void OnRender(std::function<void(void)> render) {
@@ -161,19 +220,10 @@ namespace Nyx
 			auto d3dpp = BuildPresentParameter(window_, windowMode_, capacity_, multiSamplingLevel_);
 			auto hr = D3d9Driver::GetD3dDevice9()->Reset(&d3dpp);
 			auto result = true;
-
-			switch(hr) {
-			case D3DERR_INVALIDCALL: 
-				DebugOutput::Trace("無効な呼び出しです");
-				result =  false;
-			case D3DERR_DEVICELOST:
-				DebugOutput::Trace("デバイスロスト");
-				isLostDevice_= true;
-				result =  false;
-			case D3DERR_DRIVERINTERNALERROR: 
-				DebugOutput::Trace("ドライバー内部エラー");
-				PostQuitMessage(0);//強制終了
-				result =  false;
+			
+			if (FAILED(hr)) {
+				DebugOutput::Trace("デバイスリセットに失敗しました。[%s][%s][%d]", DXGetErrorStringA(hr), __FILE__, __LINE__);
+				result = false;
 			}
 
 			//ビューポートの設定
@@ -259,6 +309,12 @@ namespace Nyx
 		pimpl_->Render();
 	}
 
+	void GraphicsDevice::OnRender(std::function<void(void)> scene)
+	{
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->SetRenderer(scene);
+	}
 
 	void GraphicsDevice::SetViewport(const Rect2i& rect, float minZ, float maxZ)
 	{
@@ -267,10 +323,52 @@ namespace Nyx
 		pimpl_->SetViewport(rect, minZ, maxZ);
 	}
 
-	void GraphicsDevice::OnRender(std::function<void(void)> scene)
-	{
+
+	//ステート
+	void GraphicsDevice::EnableZBuffer(bool enable) {
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized_);
-		pimpl_->SetRenderer(scene);
+		pimpl_->EnableZBuffer(enable);
 	}
+	
+
+	//トランスフォーム
+	void GraphicsDevice::SetWorldMatrix(const Matrix44& world) {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->SetWorldMatrix(world);
+	}
+
+	void GraphicsDevice::SetModelViewMatrix(const Matrix44& view) {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->SetViewMatrix(view);
+
+	}
+	void GraphicsDevice::SetProjectionMatrix(const Matrix44& proj) {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->SetProjectionMatrix(proj);
+	}
+
+	void GraphicsDevice::BeginStateBlock() {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->BeginStateBlock();
+	}
+	void GraphicsDevice::EndStateBlock() {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->EndStateBlock();
+	}
+	void GraphicsDevice::ApplyStateBlock() {
+		Assert(pimpl_ != nullptr);
+		Assert(pimpl_->isInitialized_);
+		pimpl_->ApplyStateBlock();
+	}
+
+	void GraphicsDevice::SetVertexBuffer(std::vector<Vector3f> verticies) {
+		pimpl_->verticies_ = verticies;
+	}
+
 }

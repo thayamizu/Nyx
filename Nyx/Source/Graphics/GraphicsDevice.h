@@ -71,32 +71,33 @@ namespace Nyx {
 		*/
 		void SetLight(const Vector3f& pos, const Vector3f& dir, const Color3f& diffuse, const Color3f& specular, float range, LightType lightType);
 		
-		//ステート
-		void SetBlendeState();
-		void SetSamplerState();
-		void SetAddressingMode();
-		void SetZTest();
-		void SetFog();
-
 		//トランスフォーム
 		void SetWorldMatrix(const Matrix44& world);
 		void SetModelViewMatrix(const Matrix44& view);
 		void SetProjectionMatrix(const Matrix44& proj);
 
+		//ステート
+		void EnableZBuffer(bool enalbe);
 		//ステートブロック
-		void CreateStateBlock();
+		void ApplyStateBlock();
 		void BeginStateBlock();
 		void EndStateBlock();
-		void ApplyStateBlock();
+
+		void SetIndexBuffer(std::vector<Vector3f> index);
+		void SetVertexBuffer(std::vector<Vector3f> vertex);
 
 		//レンダリング関係
 		void Clear(const Color4c& color);
 		void Render();
 		void OnRender(std::function<void(void)> scene);
+
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;
 	};
+
+	
+
 
 }
 #endif
