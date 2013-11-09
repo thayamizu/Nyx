@@ -2,7 +2,6 @@
 #include "Debug/Assert.h"
 #include "Debug/DebugOutput.h"
 #include "Utility/Exception.h"
-#include "GraphicsDeviceDesc.h"
 #include "GraphicsDeviceCapacity.h"
 #include "detail/DX9/DirectXDefinition.h"
 
@@ -98,7 +97,6 @@ namespace Nyx
 
 			//ディスプレイのアダプタに最適なステンシルバッファフォーマットを取得する
 			StencilBufferFormat result = 0; 
-			auto isWindowed    = (windowMode_ == WindowMode::Windowed);
 			auto displayFormat = displayMode_.Format;
 			for (auto it = depthStencilFormatList.begin(); it != depthStencilFormatList.end(); ++it) {
 				auto depthStencilFormat = *it;
