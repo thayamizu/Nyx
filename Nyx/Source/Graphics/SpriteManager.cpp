@@ -1,7 +1,8 @@
 #include "PCH/PCH.h"
 #include "Sprite.h"
-#include "SpriteCache.h"
 #include "SpriteManager.h"
+#include "ResourceCache.h"
+#include "ResourceHandle.h"
 
 namespace Nyx {
 	SpriteManager::SpriteManager() {}
@@ -15,14 +16,16 @@ namespace Nyx {
 		return std::make_shared<Sprite>(width, height, fileName);
 	}
 
-	std::shared_ptr<SpriteCache> SpriteManager::Load(const std::wstring& fileName, int width, int height) {
-		auto cache = std::make_shared<SpriteCache>();
+	std::shared_ptr<ResourceCache> SpriteManager::Load(const std::wstring& fileName, int width, int height) {
+		auto cache = std::make_shared<ResourceCache>();
 
 		std::wstring line;
 		std::wifstream ifs;
 		ifs.open(fileName);
 		while (ifs >> line) {
-			cache->Add(line, std::make_shared<Sprite>( width, height, line));
+			auto resource = std::make_shared<Sprite>(width, height, line);
+
+			cache->Add(std::make_shared<ResourceHandle>(line, resource));
 		}
 		return cache;
 	}
