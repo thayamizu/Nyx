@@ -13,9 +13,9 @@ namespace Nyx {
 	ResourceCache::~ResourceCache() {
 		Clear();
 	}
-	void ResourceCache::Add(std::wstring key, const std::shared_ptr<ResourceHandle>& handle)  {
+	void ResourceCache::Add(const std::shared_ptr<ResourceHandle>& handle)  {
 		Assert(handle != nullptr);
-		cache_[key] = handle;
+		cache_[handle->GetId()] = handle;
 	}
 
 	void ResourceCache::Delete(std::wstring key) {
