@@ -24,7 +24,8 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		Font::Font(const int height_, const int angle_, const std::wstring face_) {
+		Font::Font(const int height_, const int angle_, const std::wstring face_) 
+		:font(NULL){
 			Set(height_, angle_, face_);   
 
 
@@ -32,9 +33,10 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		Font::Font(const int height_, const int angle_, const int weight_, 
-			const bool isItalic_, const bool isUnderLine_, const bool isStrike_, 
-			const int charset_, const std::wstring face_) 
+		Font::Font(const int height_, const int angle_, const int weight_,
+			const bool isItalic_, const bool isUnderLine_, const bool isStrike_,
+			const int charset_, const std::wstring face_)
+			:font(NULL)
 		{
 			Set(height_, angle_, weight_, isItalic_, isUnderLine_,isStrike_, charset_ ,face_);
 		}
