@@ -99,16 +99,22 @@ class Mesh;
 class SkinMesh;
 */
 #include "Graphics/GraphicsDevice.h"
+#include "Graphics/GraphicsDeviceCapacity.h"
 #include "Graphics/GraphicsDeviceType.h"
 #include "Graphics/ResourceCache.h"
 #include "Graphics/ResourceHandle.h"
 #include "Graphics/IResource.h"
 #include "Graphics/IAnimationController.h"
 #include "Graphics/IMesh.h"
-#include "Graphics/ISprite.h"
+#include "Graphics/IRenderable.h"
+#include "Graphics/ISurface.h"
 #include "Graphics/ITexture.h"
-#include "Graphics/ITextureFont.h"
+#include "Graphics/FontInfo.h"
+#include "Graphics/TextureFont.h"
+#include "Graphics/TextureText.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/SpriteCache.h"
+#include "Graphics/SpriteManager.h"
 
 //ƒTƒEƒ“ƒh
 #include "Sound/AudioBuffer.h"
