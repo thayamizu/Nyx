@@ -27,7 +27,7 @@ namespace Nyx {
 		* コンストラクタ
 		* @param ushort ポート番号
 		*/
-		WinsockTCPServerSocket(ushort port=8080) ;
+		WinsockTCPServerSocket(size_t port=8080) ;
 
 
 		/**
@@ -86,7 +86,7 @@ namespace Nyx {
 		*/
 		int Recieve(char *buffer, size_t bufferSize) const;
 	private:
-		ushort port_;
+		size_t port_;
 		size_t maxConnect_;
 		SOCKET source_, destination_;
 		sockaddr_in address_;
