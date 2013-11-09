@@ -11,10 +11,5 @@ namespace Nyx {
 		std::wstring   fontFace;///フォントフェイス
 		Color4c fontColor;///フォントカラー
 	};
-
-	class FontCache {
-
-
-	};
 }
 #endif
