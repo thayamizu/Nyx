@@ -25,7 +25,7 @@ namespace Nyx {
 		/**
 		*　コンストラクタ
 		*/
-		WinsockUDPSocket(const char* address, unsigned short port, ulong blockingMode = 1);
+		WinsockUDPSocket(const char* address, size_t port, size_t blockingMode = 1);
 
 
 		/**
@@ -39,7 +39,7 @@ namespace Nyx {
 		* @param const char* アドレス
 		* @param ushort ポート番号
 		*/
-		bool Bind(const char* address, unsigned short port);
+		bool Bind(const char* address, size_t port);
 
 
 		/**

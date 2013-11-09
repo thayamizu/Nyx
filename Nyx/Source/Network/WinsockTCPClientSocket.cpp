@@ -41,7 +41,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool WinsockTCPClientSocket::Connect(const char* address, const ushort port) {
+	bool WinsockTCPClientSocket::Connect(const char* address, size_t port) {
 		// Ú‘±æw’è—p\‘¢‘Ì‚Ì€”õ
 		address_.sin_family           = AF_INET;
 		address_.sin_port             = htons(port);
@@ -67,7 +67,7 @@ namespace Nyx {
 	
 	//-----------------------------------------------------------------------------------------
 	//
-	bool WinsockTCPClientSocket::Connect(const std::string& address, const ushort port) {
+	bool WinsockTCPClientSocket::Connect(const std::string& address, size_t port) {
 		return Connect(address.c_str(), port);
 	}
 

@@ -21,7 +21,7 @@
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockTCPServerSocket::WinsockTCPServerSocket(ushort port) 
+	WinsockTCPServerSocket::WinsockTCPServerSocket(size_t port) 
 		: port_(port), maxConnect_(1) {
 			// ソケットの作成
 			source_ = socket(AF_INET, SOCK_STREAM, 0);

@@ -39,7 +39,7 @@ namespace Nyx {
 		* @param const char* アドレス
 		* @param const int ポート番号
 		*/
-		bool Connect(const char* address, ushort port);
+		bool Connect(const char* address, size_t port);
 		
 		
 		/**
@@ -47,7 +47,7 @@ namespace Nyx {
 		* @param const std::string& アドレス
 		* @param int ポート番号
 		*/
-		bool Connect(const std::string&  address, ushort port);
+		bool Connect(const std::string&  address, size_t port);
 		
 		
 		/**

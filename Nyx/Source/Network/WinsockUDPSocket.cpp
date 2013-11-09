@@ -20,7 +20,7 @@
 namespace Nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockUDPSocket::WinsockUDPSocket(const char* address, const unsigned short port, const ulong blockingMode)
+	WinsockUDPSocket::WinsockUDPSocket(const char* address, const size_t port, const size_t blockingMode)
 		: socket_(NULL), address_() {
 			socket_ = socket(AF_INET, SOCK_DGRAM, 0);
 			if (socket_ == INVALID_SOCKET) {
@@ -41,7 +41,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool WinsockUDPSocket::Bind(const char* address, unsigned short port) {
+	bool WinsockUDPSocket::Bind(const char* address, size_t port) {
 		// ローカルサーバのアドレスを指定
 		address_.sin_family           = AF_INET;
 		address_.sin_port			  = htons(port);
