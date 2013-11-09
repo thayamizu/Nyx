@@ -33,6 +33,9 @@
 
 #include "Graphics/GraphicsDeviceCapacity.h"
 #include "Graphics/GraphicsDeviceType.h"
+#include "Graphics/IResource.h"
+#include "Graphics/ResourceCache.h"
+#include "Graphics/ResourceHandle.h"
 namespace Nyx {
 	//型定義
 	//--------------------------------------------------------------
@@ -80,6 +83,19 @@ namespace Nyx {
 	};
 
 
+	///リソースキャッシュ
+	class D3d9ResourceCache {
+	public:
+		static std::shared_ptr<ResourceCache> GetCache() {
+			if (cache_ == nullptr) {
+				cache_ = std::make_shared<ResourceCache>();
+			}
+			return cache_;
+		}
+	private:
+		static std::shared_ptr<ResourceCache> cache_;
+	};
+	
 	/**
 	* DirectGraphics9を初期化します
 	* @param std::shared_ptr<Window>
