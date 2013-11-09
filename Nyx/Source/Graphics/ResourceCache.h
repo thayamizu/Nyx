@@ -17,6 +17,8 @@ namespace Nyx
 
 		void Clear();
 
+		void Release();
+		void Recovery();
 		std::shared_ptr<ResourceHandle> GetCacheItem(std::wstring key);
 	private:
 		Cache cache_;

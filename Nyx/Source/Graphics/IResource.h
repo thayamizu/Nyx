@@ -22,68 +22,9 @@ namespace Nyx {
 	///リソースインタフェース
 	class IResource {
 	public:
-		/**
-		*　コンストラクタ
-		*/
-		IResource():bufferSize(0), bufferData(NULL), resourceName() {}
-
-		/**
-		* デストラクタ
-		*/virtual IResource::~IResource() 
-		{
-			if (bufferData != NULL) {
-				SafeDelete(bufferData);
-			}
-		}
-
-		/**
-		* リソースデータをバックアップする
-		* @param std::wstring　リソース名
-		* @param uint リソースサイズ
-		* @param uchar* リソースデータ
-		*/
-		virtual void SetResourceData(std::wstring name, uint size, uchar* data) 
-		{
-			resourceName = name;
-			bufferSize   = size;
-			bufferData   = new uchar[bufferSize];
-
-			memcpy(bufferData, data, size);
-		}
-
-		/**
-		* リソースの大きさを取得
-		* @param int リソースサイズ
-		*/
-		virtual int GetResourceSize() {
-			return bufferSize;
-		}
-
-		/**
-		* リソースデータを取得
-		* @param uchar** リソースデータ
-		*/
-		virtual void GetResourceData(uchar** data) 
-		{
-			*data = bufferData;
-		}
-
-		/**
-		* リソース名を取得
-		* @return std::wstring リソース名
-		*/
-		virtual std::wstring GerResourceName() {
-			return resourceName;
-		}
-
-		/**
-		* レストア
-		*/
-		virtual void Restore() = 0;
-	private:
-		uint bufferSize;
-		uchar* bufferData;
-		std::wstring resourceName;
+		virtual ~IResource() {}
+		virtual void Release() = 0;
+		virtual void Recovery() = 0;
 	};
 }
 #endif

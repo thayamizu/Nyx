@@ -36,4 +36,18 @@ namespace Nyx {
 		}
 		return nullptr;
 	}
+
+
+	void ResourceCache::Release() {
+		for (auto it : cache_) {
+			auto item = it.second->GetResource();
+			item->Release();
+		}
+	}
+	void ResourceCache::Recovery() {
+		for (auto it : cache_) {
+			auto item = it.second->GetResource();
+			item->Recovery();
+		}
+	}
 }
