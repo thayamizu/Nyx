@@ -16,21 +16,33 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_TEXTURE_FONT_H_
 #define NYX_CORE_INCLUDED_TEXTURE_FONT_H_
-#include "FontInfo.h"
-#include "ITexture.h"
+#include "IRenderable.h"
+#include "IResource.h"
+#include "Primitive/Color4.h"
+#include "Primitive/Rect.h"
 
 namespace Nyx {
 
-	class TextureFont : public IRenderable {
+	class FontInfo;
+	
+	///ƒtƒHƒ“ƒg
+	class TextureFont : public IRenderable, public IResource {
 	public:
-		TextureFont(char character, const FontInfo& fontInfo);
-		void SetRect();
-		void GetRect();
-		void SetColor();
-		void GetColor();
+		TextureFont();
+		TextureFont(wchar_t character, const FontInfo& fontInfo);
+		void Set(wchar_t character, const FontInfo& fontInfo);
+		void Initialize(wchar_t character, const FontInfo& fontInfo);
+		void SetRect(const Rect2i& rect);
+		Rect2i GetRect() const;
+
+		void SetColor(const Color4c& color);
+		Color4c GetColor() const;
 		void SetFontInfo(const FontInfo& fontInfo);
 		FontInfo GetFontInfo() const;
-		void Render(const Matrix44& matrix);
+		void Render(const Matrix44& matrix) const;
+
+		void Release();
+		void Recovery();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;
