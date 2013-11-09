@@ -15,12 +15,16 @@
 /// boost::intrusive_ptr
 ///----------------------------------------------------------------------------------
 inline void intrusive_ptr_add_ref( IUnknown* ptr ) {
-	ptr->AddRef();
+	if (ptr != nullptr) {
+		ptr->AddRef();
+	}
 }
 
 
 inline void intrusive_ptr_release( IUnknown* ptr ) {
-	ptr->Release();
+	if (ptr != nullptr) {
+		ptr->Release();
+	}
 }
 
 namespace Nyx {
