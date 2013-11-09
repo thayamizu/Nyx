@@ -69,37 +69,6 @@ namespace Nyx {
 	typedef ulong AnisotropyLevel;
 	
 
-	///アドレッシングモード
-	enum class AddressingMode
-	{
-		Wrap			= 1,
-		Mirror			= 2,
-		Clamp			= 3,
-		Border			= 4,
-		MirrorOnce		= 5
-	};
-
-
-	///テクスチャフィルタリングモード
-	enum class TextureFilteringMode
-	{
-		Linear			= 0x00,
-		Bilinear        = 0x01
-	};
-
-
-	///ブレンディングモード
-	enum class BlendingMode
-	{
-		Alpha		= 0x00,
-		Add			= 0x01,
-		Sub			= 0x02,
-		Mul			= 0x03,
-		Inverse		= 0x04,
-		NoBlend		= 0x05
-	};
-
-
 	///ライトの種類
 	enum class LightType
 	{
@@ -107,14 +76,5 @@ namespace Nyx {
 		PointLight,
 		SpotLight
 	};
-
-	///マテリアルカラーの種類
-	enum class MaterialColor
-	{
-		Ambient,
-		Diffuse,
-		Specular,
-	};	
-
 }
 #endif
