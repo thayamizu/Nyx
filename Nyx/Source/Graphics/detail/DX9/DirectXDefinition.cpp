@@ -12,6 +12,7 @@ namespace Nyx
 	D3d9Ptr D3d9Driver::d3d9Ptr_             = nullptr;
 	D3dDevice9Ptr D3d9Driver::d3dDevice9Ptr_ = nullptr;
 
+	std::shared_ptr<ResourceCache> D3d9ResourceCache::cache_ = nullptr;
 
 
 	//-----------------------------------------------------------------------------------
