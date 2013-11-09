@@ -184,9 +184,6 @@
     <Filter Include="Input\detail\DirectInput">
       <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Camera\detail">
-      <UniqueIdentifier>{154f733f-1a86-4498-8636-72f5d9dd7ce8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Camera\Base">
       <UniqueIdentifier>{2ff7e408-af8c-448e-b452-a948b0f73b32}</UniqueIdentifier>
     </Filter>
@@ -205,9 +202,6 @@
     <Filter Include="Graphics\Sprite">
       <UniqueIdentifier>{8baf611c-8ff9-4aa2-867c-153dde8ba99f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Sprite\detail">
-      <UniqueIdentifier>{73c5da2e-cb5a-4e3f-92b3-0cafea95f6d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Sprite\Base">
       <UniqueIdentifier>{1e12d315-57d1-4eea-9aea-35be20d1d4db}</UniqueIdentifier>
     </Filter>
@@ -216,9 +210,6 @@
     </Filter>
     <Filter Include="Graphics\ParticleSystem">
       <UniqueIdentifier>{987f769f-c13b-404f-9df0-baba1401bfde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\ParticleSystem\detail">
-      <UniqueIdentifier>{3095524e-eb9e-422d-83c2-83e96b40eece}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\ParticleSystem\System">
       <UniqueIdentifier>{6542f15b-73c2-47df-8edb-1233accb4c8f}</UniqueIdentifier>
@@ -232,17 +223,11 @@
     <Filter Include="Graphics\Geometry">
       <UniqueIdentifier>{fd85f2c3-343f-4020-9a62-3b028c9b0995}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Geometry\detail">
-      <UniqueIdentifier>{c8125336-e501-4b2f-9602-9324e1df5610}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Geometry\Base">
       <UniqueIdentifier>{0392c2f7-3c77-426e-830a-7afb8c897634}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Geometry\System">
       <UniqueIdentifier>{6acb0121-6117-47db-9a07-6187dac5e251}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Sprite\detail\DX9">
-      <UniqueIdentifier>{592a9fdb-86a7-4bef-b3ad-9ae3452b7535}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Texture">
       <UniqueIdentifier>{406f78f2-5dcf-4ed8-8663-b982d413dbd5}</UniqueIdentifier>
@@ -250,11 +235,8 @@
     <Filter Include="Graphics\Texture\Base">
       <UniqueIdentifier>{f6b9dbf2-954b-4da2-89ed-24ac3688f6cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Texture\detail">
-      <UniqueIdentifier>{82ba1463-ad88-4c1e-a6f3-7357a9d875c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Texture\detail\DX9">
-      <UniqueIdentifier>{002c05c6-d9c2-4eb7-a73c-1332de65f46c}</UniqueIdentifier>
+    <Filter Include="Graphics\Texture\System">
+      <UniqueIdentifier>{3fed7b1f-1d8a-46d0-8db3-b88d3d7710cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -559,15 +541,6 @@
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h">
       <Filter>Graphics\Core\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h">
-      <Filter>Graphics\Core\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSprite.h">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h">
       <Filter>Graphics\Core\detail\GDI</Filter>
     </ClInclude>
@@ -583,29 +556,53 @@
     <ClInclude Include="..\Source\Utility\NonCopyable.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ITexture.h">
-      <Filter>Graphics\Texture\Base</Filter>
+    <ClInclude Include="..\Source\Graphics\SpriteManager.h">
+      <Filter>Graphics\Sprite\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ITextureFont.h">
-      <Filter>Graphics\Texture\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ISprite.h">
-      <Filter>Graphics\Sprite\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ISurface.h">
+    <ClInclude Include="..\Source\Graphics\IRenderable.h">
       <Filter>Graphics\Core\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFont.h">
-      <Filter>Graphics\Texture\detail\DX9</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h">
-      <Filter>Graphics\Texture\detail\DX9</Filter>
+    <ClInclude Include="..\Source\Graphics\FontInfo.h">
+      <Filter>Graphics\Texture\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Sprite.h">
-      <Filter>Graphics\Sprite\System</Filter>
+      <Filter>Graphics\Sprite\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\SpriteLoader.h">
-      <Filter>Graphics\Sprite\System</Filter>
+    <ClInclude Include="..\Source\Graphics\TextureText.h">
+      <Filter>Graphics\Texture\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\TextureFont.h">
+      <Filter>Graphics\Texture\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Particle.h">
+      <Filter>Graphics\ParticleSystem\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ParticleSystem.h">
+      <Filter>Graphics\ParticleSystem\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ParticleDesc.h">
+      <Filter>Graphics\ParticleSystem\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\AABB.h">
+      <Filter>Graphics\Geometry\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\OBB.h">
+      <Filter>Graphics\Geometry\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\BoundingSphere.h">
+      <Filter>Graphics\Geometry\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Sphere.h">
+      <Filter>Graphics\Geometry\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Cylinder.h">
+      <Filter>Graphics\Geometry\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Box.h">
+      <Filter>Graphics\Geometry\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Corn.h">
+      <Filter>Graphics\Geometry\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\SpriteCache.h">
       <Filter>Graphics\Sprite\System</Filter>
@@ -774,37 +771,28 @@
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp">
       <Filter>Graphics\Core\Base</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp">
-      <Filter>Graphics\Sprite\detail\DX9</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp">
       <Filter>Graphics\Core\detail\DX9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp">
+      <Filter>Graphics\Sprite\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\Sprite.cpp">
+      <Filter>Graphics\Sprite\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\TextureFont.cpp">
+      <Filter>Graphics\Texture\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\TextureText.cpp">
+      <Filter>Graphics\Texture\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp">
       <Filter>Graphics\Utiltiy</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp">
-      <Filter>Graphics\Utiltiy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp">
-      <Filter>Graphics\Texture\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp">
-      <Filter>Graphics\Texture\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp">
-      <Filter>Graphics\Texture\detail\DX9</Filter>
+    <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp">
+      <Filter>Graphics\ParticleSystem\System</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\SpriteCache.cpp">
-      <Filter>Graphics\Sprite\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\Sprite.cpp">
-      <Filter>Graphics\Sprite\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\SpriteLoader.cpp">
       <Filter>Graphics\Sprite\System</Filter>
     </ClCompile>
   </ItemGroup>

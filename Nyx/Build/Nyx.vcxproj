@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -117,31 +117,36 @@
     <ClInclude Include="..\Source\Debug\Assert.h" />
     <ClInclude Include="..\Source\Debug\DebugOutput.h" />
     <ClInclude Include="..\Source\Debug\MemoryChecker.h" />
+    <ClInclude Include="..\Source\Graphics\AABB.h" />
+    <ClInclude Include="..\Source\Graphics\BoundingSphere.h" />
+    <ClInclude Include="..\Source\Graphics\Box.h" />
+    <ClInclude Include="..\Source\Graphics\Corn.h" />
+    <ClInclude Include="..\Source\Graphics\Cylinder.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX10\DirectGraphics10Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX11\DirectGraphics11Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h" />
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSprite.h" />
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXSpriteManager.h" />
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFont.h" />
-    <ClInclude Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Font.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h" />
+    <ClInclude Include="..\Source\Graphics\FontInfo.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceCapacity.h" />
-    <ClInclude Include="..\Source\Graphics\GraphicsDeviceDesc.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
+    <ClInclude Include="..\Source\Graphics\IRenderable.h" />
     <ClInclude Include="..\Source\Graphics\IResource.h" />
-    <ClInclude Include="..\Source\Graphics\ISprite.h" />
-    <ClInclude Include="..\Source\Graphics\ISurface.h" />
-    <ClInclude Include="..\Source\Graphics\ITexture.h" />
-    <ClInclude Include="..\Source\Graphics\ITextureFont.h" />
+    <ClInclude Include="..\Source\Graphics\OBB.h" />
+    <ClInclude Include="..\Source\Graphics\Particle.h" />
+    <ClInclude Include="..\Source\Graphics\ParticleDesc.h" />
+    <ClInclude Include="..\Source\Graphics\ParticleSystem.h" />
     <ClInclude Include="..\Source\Graphics\ResourceCache.h" />
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
+    <ClInclude Include="..\Source\Graphics\Sphere.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
     <ClInclude Include="..\Source\Graphics\SpriteCache.h" />
-    <ClInclude Include="..\Source\Graphics\SpriteLoader.h" />
+    <ClInclude Include="..\Source\Graphics\SpriteManager.h" />
+    <ClInclude Include="..\Source\Graphics\TextureFont.h" />
+    <ClInclude Include="..\Source\Graphics\TextureText.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
     <ClInclude Include="..\Source\GUI\ICheckBox.h" />
@@ -234,21 +239,18 @@
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp" />
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp" />
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSprite.cpp" />
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXSpriteManager.cpp" />
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFont.cpp" />
-    <ClCompile Include="..\Source\Graphics\detail\DX9\DXTextureFontManager.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\Font.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
-    <ClCompile Include="..\Source\Graphics\ITextureFont.cpp" />
+    <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
-    <ClCompile Include="..\Source\Graphics\ResourceHandle.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
     <ClCompile Include="..\Source\Graphics\SpriteCache.cpp" />
-    <ClCompile Include="..\Source\Graphics\SpriteLoader.cpp" />
+    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp" />
+    <ClCompile Include="..\Source\Graphics\TextureFont.cpp" />
+    <ClCompile Include="..\Source\Graphics\TextureText.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp" />
     <ClCompile Include="..\Source\GUI\ListBox.cpp" />
