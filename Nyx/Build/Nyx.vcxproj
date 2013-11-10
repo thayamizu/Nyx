@@ -70,12 +70,15 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)Nyx_MTd.pdb</ProgramDataBaseFileName>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>msimg32.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Nyx_MTd.lib</OutputFile>
       <AdditionalLibraryDirectories>..\..\SDKs\SDKs\FBX;$(DXSDK_DIR)Lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -113,15 +116,10 @@
   <ItemGroup>
     <ClInclude Include="..\Source\Collision\BulletDefinition.h" />
     <ClInclude Include="..\Source\Database\IDatabaseConnector.h" />
-    <ClInclude Include="..\Source\Database\SQLiteDefinition.h" />
     <ClInclude Include="..\Source\Debug\Assert.h" />
     <ClInclude Include="..\Source\Debug\DebugOutput.h" />
     <ClInclude Include="..\Source\Debug\MemoryChecker.h" />
-    <ClInclude Include="..\Source\Graphics\AABB.h" />
-    <ClInclude Include="..\Source\Graphics\BoundingSphere.h" />
     <ClInclude Include="..\Source\Graphics\Box.h" />
-    <ClInclude Include="..\Source\Graphics\Corn.h" />
-    <ClInclude Include="..\Source\Graphics\Cylinder.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX10\DirectGraphics10Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX11\DirectGraphics11Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h" />
@@ -130,12 +128,12 @@
     <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h" />
     <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h" />
     <ClInclude Include="..\Source\Graphics\FontInfo.h" />
+    <ClInclude Include="..\Source\Graphics\FontManager.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDevice.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceCapacity.h" />
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
     <ClInclude Include="..\Source\Graphics\IRenderable.h" />
     <ClInclude Include="..\Source\Graphics\IResource.h" />
-    <ClInclude Include="..\Source\Graphics\OBB.h" />
     <ClInclude Include="..\Source\Graphics\Particle.h" />
     <ClInclude Include="..\Source\Graphics\ParticleDesc.h" />
     <ClInclude Include="..\Source\Graphics\ParticleSystem.h" />
@@ -205,7 +203,6 @@
     <ClInclude Include="..\Source\Sound\SoundReader.h" />
     <ClInclude Include="..\Source\Sound\WaveFileHeader.h" />
     <ClInclude Include="..\Source\Sound\WaveReader.h" />
-    <ClInclude Include="..\Source\SQLiteDatabase.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32CriticalSection.h" />
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h" />
     <ClInclude Include="..\Source\Timer\detail\Win32\Win32Timer.h" />
@@ -221,7 +218,6 @@
     <ClInclude Include="..\Source\Timer\PerformanceTimer.h" />
     <ClInclude Include="..\Source\Timer\Timer.h" />
     <ClInclude Include="..\Source\PCH\PCH.h" />
-    <ClInclude Include="..\Source\Object\NonCopyable.h" />
     <ClInclude Include="..\Source\Primitive\Matrix44.h" />
     <ClInclude Include="..\Source\Primitive\Plane.h" />
     <ClInclude Include="..\Source\Primitive\Quaternion.h" />
@@ -241,6 +237,7 @@
     <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\Font.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp" />
+    <ClCompile Include="..\Source\Graphics\FontManager.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
     <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp" />
