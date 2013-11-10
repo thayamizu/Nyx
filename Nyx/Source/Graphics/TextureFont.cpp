@@ -27,7 +27,7 @@ namespace Nyx {
 		FontInfo fontInfo_;
 		D3dXSprite9Ptr sprite_;
 		D3dTexture9Ptr texture_;
-
+		Rect2i         rect_;
 		//-----------------------------------------------------------------------------------------
 		//
 		PImpl()
@@ -78,7 +78,7 @@ namespace Nyx {
 
 			//DCの取得とフォントの生成
 			HDC hdc = GetDC(NULL);
-			Font font(fontInfo_.fontSize, 0, 400, false, false, false, SHIFTJIS_CHARSET, fontInfo_.fontFace.c_str());
+			Font font(fontInfo_.fontSize, 0, 500, false, false, false, SHIFTJIS_CHARSET, fontInfo_.fontFace.c_str());
 			HFONT oldFont = (HFONT)SelectObject(hdc, font.GetFont());
 
 			// フォントビットマップ取得
@@ -145,6 +145,7 @@ namespace Nyx {
 				}
 			}
 
+			rect_ = Rect2i(0, 0, GM.gmCellIncX, TM.tmHeight);
 			//スマートポインタの管理下に置く
 			texture_ = D3dTexture9Ptr(texture, false);
 		}
@@ -156,6 +157,11 @@ namespace Nyx {
 			LoadTexture();
 		}
 
+		//-----------------------------------------------------------------------------------------
+		//
+		Rect2i GetRect() {
+			return rect_;
+		}
 
 		//-----------------------------------------------------------------------------------------
 		//
@@ -166,9 +172,9 @@ namespace Nyx {
 			sprite_->SetTransform(&world);
 			sprite_->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE);
 			{
-				const auto center = D3DXVECTOR3(fontInfo_.fontSize / 2.f, fontInfo_.fontSize / 2.f, 0.f);
+				const auto center = D3DXVECTOR3(rect_.width / 2.f, rect_.height / 2.f, 0.f);
 				sprite_->Draw(
-					texture_.get(), NULL, NULL, NULL,
+					texture_.get(), NULL, &center, NULL,
 					D3DCOLOR_RGBA(
 					fontInfo_.fontColor.r, fontInfo_.fontColor.g,
 					fontInfo_.fontColor.b, fontInfo_.fontColor.a));
@@ -211,6 +217,12 @@ namespace Nyx {
 		pimpl_->Initialize();
 	}
 
+	//-----------------------------------------------------------------------------------------
+	//
+	Rect2i TextureFont::GetRect() const {
+		Assert(pimpl_ != nullptr);
+		return pimpl_->GetRect();
+	}
 
 	//-----------------------------------------------------------------------------------------
 	//
@@ -226,22 +238,6 @@ namespace Nyx {
 		Assert(pimpl_ != nullptr);
 		return pimpl_->fontInfo_;
 	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	void TextureFont::SetRect(const Rect2i& rect) {
-		Assert(pimpl_ != nullptr);
-	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	Rect2i TextureFont::GetRect() const {
-		Assert(pimpl_ != nullptr);
-		return Rect2i();
-	}
-
 
 
 	//-----------------------------------------------------------------------------------------
