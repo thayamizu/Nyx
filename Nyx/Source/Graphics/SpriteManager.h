@@ -40,6 +40,12 @@ namespace Nyx {
 		* @return std::vector<std::shared_ptr<Sprite>>
 		*/
 		SpriteCache Load(const std::wstring& txtFileName, int width, int height);
+
+		/**
+		* キャッシュから指定したリソースを削除します
+		* @param const std::wstring& ファイル名
+		*/
+		void Delete(const std::wstring& fileName);
 	};
 }
 #endif
