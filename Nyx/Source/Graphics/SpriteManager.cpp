@@ -49,4 +49,11 @@ namespace Nyx {
 
 		return cache;
 	}
+
+	//----------------------------------------------------------------------------------------
+	//
+	void Delete(const std::wstring& fileName) {
+		auto d3dcache = D3d9ResourceCache::GetCache();///d3dƒŠƒ\[ƒX‚ÌŠÇ—
+		d3dcache->Delete(fileName);
+	}
 }
