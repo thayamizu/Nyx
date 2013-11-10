@@ -23,7 +23,7 @@
 
 namespace Nyx {
 
-	class FontInfo;
+	struct FontInfo;
 	
 	///ƒtƒHƒ“ƒg
 	class TextureFont : public IRenderable, public IResource {
@@ -32,9 +32,7 @@ namespace Nyx {
 		TextureFont(wchar_t character, const FontInfo& fontInfo);
 		void Set(wchar_t character, const FontInfo& fontInfo);
 		void Initialize(wchar_t character, const FontInfo& fontInfo);
-		void SetRect(const Rect2i& rect);
 		Rect2i GetRect() const;
-
 		void SetColor(const Color4c& color);
 		Color4c GetColor() const;
 		void SetFontInfo(const FontInfo& fontInfo);
