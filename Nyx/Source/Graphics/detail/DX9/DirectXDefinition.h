@@ -36,6 +36,8 @@
 #include "Graphics/IResource.h"
 #include "Graphics/ResourceCache.h"
 #include "Graphics/ResourceHandle.h"
+
+
 namespace Nyx {
 	//Œ^’è‹`
 	//--------------------------------------------------------------
