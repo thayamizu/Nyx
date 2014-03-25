@@ -29,10 +29,10 @@ namespace Nyx {
 
 		}
 
-		void Open()  = 0;
-		void Close() = 0;
+		virtual void Open()  = 0;
+		virtual void Close() = 0;
 
-		void ToString() = 0;
+		virtual void ToString() = 0;
 
 		std::wstring address; ///< 接続先データベースのアドレス情報
 
@@ -43,10 +43,9 @@ namespace Nyx {
 	public:
 		IDatabaseConnector();
 		virtual ~IDatabaseConnector() {
-			Close();
 		}
 
-		bool Connect() = 0;
+		virtual bool Connect() = 0;
 	};
 
 	///< クエリーを表現する
@@ -62,7 +61,7 @@ namespace Nyx {
 
 		}
 
-		IDatabaseQuery MakeQuery(std::wstring ) = 0;
+		virtual IDatabaseQuery MakeQuery(std::wstring ) = 0;
 	};
 
 	///<

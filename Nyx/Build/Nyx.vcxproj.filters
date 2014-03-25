@@ -234,9 +234,6 @@
     <ClInclude Include="..\Source\Debug\MemoryChecker.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Utility\Random.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\PCH\PCH.h">
       <Filter>PCH</Filter>
     </ClInclude>
@@ -532,17 +529,11 @@
     <ClInclude Include="..\Source\Utility\NonCopyable.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\SpriteManager.h">
-      <Filter>Graphics\SpriteSystem\System</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\IRenderable.h">
       <Filter>Graphics\Core\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\Sprite.h">
       <Filter>Graphics\SpriteSystem\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\TextureText.h">
-      <Filter>Graphics\Font\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\TextureFont.h">
       <Filter>Graphics\Font\Base</Filter>
@@ -565,6 +556,9 @@
     <ClInclude Include="..\Source\Graphics\ParticleDesc.h">
       <Filter>Graphics\ParticleSystem\Base</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Graphics\TextureText.h">
+      <Filter>Graphics\Font\Base</Filter>
+    </ClInclude>
     <ClInclude Include="..\Source\Graphics\FontManager.h">
       <Filter>Graphics\Font\System</Filter>
     </ClInclude>
@@ -575,9 +569,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp">
       <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Utility\Random.cpp">
-      <Filter>Utility</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\PCH\PCH.cpp">
       <Filter>PCH</Filter>
@@ -735,16 +726,10 @@
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp">
       <Filter>Graphics\Core\Base\detail\DX9</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp">
-      <Filter>Graphics\SpriteSystem\System</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Graphics\Sprite.cpp">
       <Filter>Graphics\SpriteSystem\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\TextureFont.cpp">
-      <Filter>Graphics\Font\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\TextureText.cpp">
       <Filter>Graphics\Font\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp">
@@ -752,6 +737,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp">
       <Filter>Graphics\ParticleSystem\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\TextureText.cpp">
+      <Filter>Graphics\Font\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\FontManager.cpp">
       <Filter>Graphics\Font\System</Filter>

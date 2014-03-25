@@ -17,7 +17,7 @@ namespace Nyx {
 		* @param int スプライトの高さ
 		* @param std::wstring ファイル名
 		*/
-		Sprite(int width, int height, const std::wstring& fileName);
+		Sprite(const std::wstring& fileName);
 		
 		
 		/*

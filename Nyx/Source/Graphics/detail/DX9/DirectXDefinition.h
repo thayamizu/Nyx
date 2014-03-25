@@ -78,7 +78,10 @@ namespace Nyx {
 			return d3dDevice9Ptr_;
 		}
 	private:
-		friend bool InitializeD3d9(std::shared_ptr<Window> window, WindowMode windowMode, std::shared_ptr<GraphicsDeviceCapacity> capacity, MultiSamplingLevel samplingLevel);
+		friend bool InitializeD3d9(
+			std::shared_ptr<Window> window, WindowMode windowMode, 
+			std::shared_ptr<GraphicsDeviceCapacity> capacity, 
+			MultiSamplingLevel samplingLevel);
 	
 		static D3d9Ptr        d3d9Ptr_;
 		static D3dDevice9Ptr  d3dDevice9Ptr_;
@@ -86,17 +89,8 @@ namespace Nyx {
 
 
 	///リソースキャッシュ
-	class D3d9ResourceCache {
-	public:
-		static std::shared_ptr<ResourceCache> GetCache() {
-			if (cache_ == nullptr) {
-				cache_ = std::make_shared<ResourceCache>();
-			}
-			return cache_;
-		}
-	private:
-		static std::shared_ptr<ResourceCache> cache_;
-	};
+	static std::shared_ptr<ResourceCache> g_cache;
+	
 	
 	/**
 	* DirectGraphics9を初期化します

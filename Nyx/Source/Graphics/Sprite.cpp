@@ -32,8 +32,8 @@ namespace Nyx{
 
 		//----------------------------------------------------------------------------------------
 		//
-		PImpl(int width, int height, const std::wstring& fileName)
-			:fileName_(fileName), rect_(0, 0, width, height), color_(Color4c::White), texture_(nullptr), sprite_(nullptr)
+		PImpl(const std::wstring& fileName)
+			:fileName_(fileName), rect_(0, 0, 0, 0), color_(Color4c::White), texture_(nullptr), sprite_(nullptr)
 		{
 			CreateSprite();
 			LoadTexture(fileName);
@@ -164,9 +164,14 @@ namespace Nyx{
 			sprite_->SetTransform(&world);
 			sprite_->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE);
 			{
-				RECT rect = { rect_.x, rect_.y, rect_.width - rect_.x, rect_.height - rect_.y };
 				const auto center = D3DXVECTOR3(rect_.width / 2.f, rect_.height / 2.f, 0.f);
-				sprite_->Draw(texture_.get(), &rect, &center, NULL, D3DCOLOR_RGBA(color_.r, color_.g, color_.b, color_.a));
+				if (rect_.width == 0 && rect_.height == 0) {
+					sprite_->Draw(texture_.get(), NULL, NULL, NULL, D3DCOLOR_RGBA(color_.r, color_.g, color_.b, color_.a));
+				}
+				else {
+					RECT rect = { rect_.x, rect_.y, rect_.width - rect_.x, rect_.height - rect_.y };
+					sprite_->Draw(texture_.get(), &rect, NULL, NULL, D3DCOLOR_RGBA(color_.r, color_.g, color_.b, color_.a));
+				}
 			}
 			sprite_->End();
 		}
@@ -200,8 +205,8 @@ namespace Nyx{
 
 	//----------------------------------------------------------------------------------------
 	//
-	Sprite::Sprite(int width,  int height, const std::wstring& fileName)
-		:pimpl_(std::make_shared<Sprite::PImpl>( width, height, fileName)) {
+	Sprite::Sprite(const std::wstring& fileName)
+		:pimpl_(std::make_shared<Sprite::PImpl>(fileName)) {
 	}
 
 

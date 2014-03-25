@@ -5,27 +5,86 @@
 #include "IRenderable.h"
 
 namespace Nyx {
+
+	typedef std::vector< std::shared_ptr<TextureFont> > TextureFontList;
 	class TextureText : public IRenderable, public IResource {
 	public:
-		TextureText(std::wstring text, const FontInfo& fontInfo);
-		void Set(std::wstring text, const FontInfo& fontInfo);
+		/**
+		*
+		*/
+		explicit TextureText(const TextureFontList& text);
+
+		/**
+		*
+		*/
+		void Set(const TextureFontList& text);
 		
+
+		/**
+		*
+		*/
 		void SetRect(const Rect2i& rect);
+		
+
+		/**
+		*
+		*/
 		Rect2i GetRect() const ;
 		
+
+		/**
+		*
+		*/
 		void SetTextSpeed(size_t speed);
+		
+		
+		/**
+		*
+		*/
 		size_t GetTextSpeed() const;
 
-		void SetFontInfo(size_t index, const FontInfo& color);
-		FontInfo GetFontInfo(size_t index);
-		
-		void SetColor(size_t index, const Color4c& color);
-		Color4c GetColor(size_t index);
-		
-		void Render(const Matrix44& matrix) const;
-		std::shared_ptr<TextureFont> GetChar(size_t index);
 
+		/**
+		*
+		*/
+		void SetFontInfo(const FontInfo& color);
+		
+		
+		/**
+		*
+		*/
+		void SetColor(const Color4c& color);
+		
+		
+		/**
+		*
+		*/
+		void NextText();
+
+		/**
+		*
+		*/
+		void SetTransparency(uchar transparency);
+
+
+		/**
+		*
+		*/
+		uchar GetTransparency() const;
+
+		/**
+		*
+		*/
+		void Render(const Matrix44& matrix) const;
+		
+		/**
+		*
+		*/
 		void Release();
+		
+		/**
+		*
+		*/
 		void Recovery();
 	private:
 		struct PImpl;

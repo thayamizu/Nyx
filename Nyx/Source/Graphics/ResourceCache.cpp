@@ -5,10 +5,11 @@
 #include "Graphics/ResourceHandle.h"
 
 namespace Nyx {
+	CacheMap  ResourceCache::cacheMap_ = CacheMap();
+
 	//----------------------------------------------------------------------------------------
 	//
 	ResourceCache::ResourceCache()
-		:cache_()
 	{
 	}
 
@@ -22,30 +23,37 @@ namespace Nyx {
 	//
 	void ResourceCache::Add(const std::shared_ptr<ResourceHandle>& handle)  {
 		Assert(handle != nullptr);
-		cache_[handle->GetId()] = handle;
+		cacheMap_[handle->GetId()] = handle;
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
 	void ResourceCache::Delete(const std::wstring& key) {
-		auto it = cache_.find(key);
-		if (it != cache_.end()) {
-			cache_.erase(it);
+		auto it = cacheMap_.find(key);
+		if (it != cacheMap_.end()) {
+			cacheMap_.erase(it);
 		} 
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
 	void ResourceCache::Clear() {
-		cache_.clear();
+		cacheMap_.clear();
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<ResourceHandle> ResourceCache::GetCacheItem(const std::wstring& key) {
-		auto it = cache_.find(key);
-		if (it != cache_.end()) {
+	bool ResourceCache::Find(const std::wstring& resourceName) {
+		auto it = cacheMap_.find(resourceName);
+		return it != cacheMap_.end();
+	}
+
+	//----------------------------------------------------------------------------------------
+	//
+	std::shared_ptr<ResourceHandle> ResourceCache::GetHandle(const std::wstring& key) {
+		auto it = cacheMap_.find(key);
+		if (it != cacheMap_.end()) {
 			return it->second;
 		}
 		return nullptr;
@@ -54,16 +62,17 @@ namespace Nyx {
 	//----------------------------------------------------------------------------------------
 	//
 	void ResourceCache::Release() {
-		for (auto it : cache_) {
+		for (auto it : cacheMap_) {
 			auto item = it.second->GetResource();
 			item->Release();
 		}
 	}
 
+
 	//----------------------------------------------------------------------------------------
 	//
 	void ResourceCache::Recovery() {
-		for (auto it : cache_) {
+		for (auto it : cacheMap_) {
 			auto item = it.second->GetResource();
 			item->Recovery();
 		}

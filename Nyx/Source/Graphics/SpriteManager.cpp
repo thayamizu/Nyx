@@ -6,54 +6,49 @@
 namespace Nyx {
 	//----------------------------------------------------------------------------------------
 	//
-	SpriteManager::SpriteManager() {
-	}
-
-
-	//----------------------------------------------------------------------------------------
-	//
 	std::shared_ptr<Sprite> SpriteManager::CreateSprite(int width, int height, const Color4c& color) {
-		auto cache = D3d9ResourceCache::GetCache();
 		auto resource = std::make_shared<Sprite>(width, height, color);
-		
-		cache->Add(std::make_shared<ResourceHandle>(L"0", resource));
+		ResourceCache::Add(std::make_shared<ResourceHandle>(L"0" , resource));
 		return resource;
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<Sprite> SpriteManager::CreateSprite(int width, int height, const std::wstring& fileName)
+	std::shared_ptr<Sprite> SpriteManager::CreateSprite(const std::wstring& fileName)
 	{
-		auto cache = D3d9ResourceCache::GetCache();
-		auto resource = std::make_shared<Sprite>(width, height, fileName);
+		if (ResourceCache::Find(fileName)) {
+			return std::static_pointer_cast<Sprite>(ResourceCache::GetHandle(fileName)->GetResource());
+		}
 
-		cache->Add(std::make_shared<ResourceHandle>(fileName, resource));
+		auto resource = std::make_shared<Sprite>(fileName);
+		ResourceCache::Add(std::make_shared<ResourceHandle>(fileName, resource));
 		return resource;
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	SpriteCache  SpriteManager::Load(const std::wstring& fileName, int width, int height) {
-		auto d3dcache = D3d9ResourceCache::GetCache();///d3dリソースの管理
-		SpriteCache cache;
-
+	void  SpriteManager::Load(const std::wstring& fileName) {
 		std::wstring line;
 		std::wifstream ifs;
 		ifs.open(fileName);
 		while (ifs >> line) {
-			auto resource = std::make_shared<Sprite>(width, height, line);
-			d3dcache->Add(std::make_shared<ResourceHandle>(line, resource));
-			cache.push_back(resource);
-		}
+			if (ResourceCache::Find(line)) {
+				continue;
+			}
 
-		return cache;
+			auto resource = std::make_shared<Sprite>(line);
+			ResourceCache::Add(std::make_shared<ResourceHandle>(line, resource));
+		}
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Delete(const std::wstring& fileName) {
-		auto d3dcache = D3d9ResourceCache::GetCache();///d3dリソースの管理
-		d3dcache->Delete(fileName);
+	void SpriteManager::Delete(const std::wstring& fileName) {
+		ResourceCache::Delete(fileName);
+	}
+
+	std::shared_ptr<Sprite> SpriteManager::GetItem(const std::wstring& resourceName) {
+		return std::static_pointer_cast<Sprite>(ResourceCache::GetHandle(resourceName)->GetResource());
 	}
 }
