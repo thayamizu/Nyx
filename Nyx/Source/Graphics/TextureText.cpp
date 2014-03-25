@@ -1,4 +1,5 @@
 #include "PCH/PCH.h"
+#include "Utility/Limits.h"
 #include "TextureFont.h"
 #include "TextureText.h"
 #include "detail/DX9/DirectXDefinition.h"
@@ -7,53 +8,60 @@ namespace Nyx
 {
 	struct TextureText::PImpl
 	{
-		size_t speed_ = 50;
-		size_t rendered_  = 0; 
-		Rect2i rect_   = Rect2i();
+		size_t speed_ = 25;
+		size_t rendered_ = 0;
+		size_t columns_ = 0;
+		size_t rows_ = 0;
+		uchar transparency_ = Limits::UCharMax;
+		Rect2i rect_ = Rect2i();
+		TextureFontList text_;
 
-		typedef std::deque<std::shared_ptr<TextureFont>> TextureText;
-		TextureText text_;
+		void Set(const TextureFontList & text) {
+			text_ = text;
+		}
 
-		void Set(std::wstring text, const FontInfo& fontInfo) {
-			for (auto chara : text) {
-				text_.push_back(std::make_shared<TextureFont>(chara, fontInfo));
-			}
+		void SetTransparency(uchar transparency) {
+			using std::swap;
+			swap(transparency_, transparency);
+		}
+		uchar GetTransparency() {
+			return transparency_;
 		}
 
 		void SetSpeed(size_t speed) {
-			speed_ = speed;
+			using std::swap;
+			swap(speed_, speed);
 		}
-		
+
 		size_t GetSpeed() const {
 			return speed_;
 		}
 
 		void SetRect(const Rect2i& rect) {
 			rect_ = rect;
+			const size_t width = rect.width;
+			const size_t height = rect.height;
+			const size_t fontSize = text_[0]->GetFontInfo().fontSize;
+
+			columns_ = width / (fontSize);
+			rows_ = height / (fontSize);
 		}
 
 		Rect2i GetRect() const {
 			return rect_;
 		}
 
-		void SetColor(size_t index, const Color4c& color) {
-			auto chara = text_.at(index);
-			chara->SetColor(color);
+		void SetColor(const Color4c& color) {
+			for (auto item : text_) {
+				item->SetColor(color);
+			}
 		}
 
-		Color4c GetColor(size_t index) const {
-			auto chara = text_.at(index);
-			return chara->GetColor();
-		}
 
-		void SetFontInfo(size_t index, const FontInfo& info) {
-			auto chara = text_.at(index);
-			chara->SetFontInfo(info);
-		}
-
-		FontInfo GetFontInfo(size_t index) const {
-			auto chara = text_.at(index);
-			return chara->GetFontInfo();
+		void SetFontInfo(const FontInfo& info) {
+			for (auto item : text_) {
+				item->SetFontInfo(info);
+			}
 		}
 
 		void Render(const Matrix44& matrix) {
@@ -70,12 +78,13 @@ namespace Nyx
 
 			//テキストスピードに合わせて少しずつ不透明度を上げていく
 			auto color = text_[rendered_]->GetColor();
-			color.a = (uchar)(((color.a + speed_) >= 255) ? 255 : color.a + speed_);
+			color.a = (uchar)(((color.a + speed_) >= transparency_) ? transparency_ : color.a + speed_);
 			text_[rendered_]->SetColor(color);
+			text_[rendered_]->Render(world);
 			Matrix44::AddTranslate(&world, (float)text_[rendered_]->GetRect().width, 0, 0);
 
 			//255になったら次へ行く
-			if (color.a >= 255) {
+			if (color.a >= transparency_) {
 				++rendered_;
 			}
 		}
@@ -99,17 +108,17 @@ namespace Nyx
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TextureText::TextureText(std::wstring text, const FontInfo& fontInfo)
+	TextureText::TextureText(const TextureFontList&text)
 		:pimpl_(std::make_shared<PImpl>()) {
-		
-		pimpl_->Set(text, fontInfo);
+
+		pimpl_->Set(text);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::Set(std::wstring text, const FontInfo& fontInfo) {
+	void TextureText::Set(const TextureFontList&text ) {
 		Assert(pimpl_ != nullptr);
-		pimpl_->Set(text, fontInfo);
+		pimpl_->Set(text);
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -129,16 +138,9 @@ namespace Nyx
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::SetColor(size_t index, const Color4c& color) {
+	void TextureText::SetColor(const Color4c& color) {
 		Assert(pimpl_ != nullptr);
-		pimpl_->SetColor(index, color);
-	}
-
-	//-----------------------------------------------------------------------------------------
-	//
-	Color4c TextureText::GetColor(size_t index) {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetColor(index);
+		pimpl_->SetColor(color);
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -148,12 +150,6 @@ namespace Nyx
 		pimpl_->Render(matrix);
 	}
 
-	//-----------------------------------------------------------------------------------------
-	//
-	std::shared_ptr<TextureFont> TextureText::GetChar(size_t index) {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->text_[index];
-	}
 
 	//-----------------------------------------------------------------------------------------
 	//
@@ -169,24 +165,39 @@ namespace Nyx
 		return pimpl_->GetSpeed();
 	}
 
+
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::SetFontInfo(size_t index, const FontInfo& info) {
+	void TextureText::SetTransparency(uchar transparency) {
 		Assert(pimpl_ != nullptr);
-		pimpl_->SetFontInfo(index, info);
+		pimpl_->SetTransparency(transparency);
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	uchar TextureText::GetTransparency() const {
+		Assert(pimpl_ != nullptr);
+		return pimpl_->GetTransparency();
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void TextureText::SetFontInfo(const FontInfo& info) {
+		Assert(pimpl_ != nullptr);
+		pimpl_->SetFontInfo(info);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	FontInfo TextureText::GetFontInfo(size_t index) {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetFontInfo(index);
-	}
-
 	void TextureText::Release() {
 		Assert(pimpl_ != nullptr);
 		pimpl_->Release();
 	}
+
+	//-----------------------------------------------------------------------------------------
+	//
 	void TextureText::Recovery() {
 		Assert(pimpl_ != nullptr);
 		pimpl_->Recovery();

@@ -14,6 +14,8 @@ namespace Nyx {
 	///DirectGraphicsデバイス
 	class GraphicsDevice 
 	{
+		friend class Sprite;
+		friend class Texture;
 	public:
 		/**
 		* コンストラクタ
@@ -89,8 +91,8 @@ namespace Nyx {
 		//レンダリング関係
 		void Clear(const Color4c& color);
 		void Render();
-		void OnRender(std::function<void(void)> scene);
-
+		void OnRender(std::function<void(std::shared_ptr<void>)> scene);
+		void SetScene(std::shared_ptr<void> sceneobj);
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

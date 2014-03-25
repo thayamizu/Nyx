@@ -141,7 +141,6 @@
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sphere.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
-    <ClInclude Include="..\Source\Graphics\SpriteManager.h" />
     <ClInclude Include="..\Source\Graphics\TextureFont.h" />
     <ClInclude Include="..\Source\Graphics\TextureText.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
@@ -211,7 +210,6 @@
     <ClInclude Include="..\Source\Utility\Limits.h" />
     <ClInclude Include="..\Source\Utility\Math.h" />
     <ClInclude Include="..\Source\Utility\NonCopyable.h" />
-    <ClInclude Include="..\Source\Utility\Random.h" />
     <ClInclude Include="..\Source\Timer\FixedTimer.h" />
     <ClInclude Include="..\Source\Timer\FPSTimer.h" />
     <ClInclude Include="..\Source\Timer\ITimer.h" />
@@ -243,7 +241,6 @@
     <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
-    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureText.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
@@ -285,7 +282,6 @@
     <ClCompile Include="..\Source\Timer\detail\Win32\Win32Timer.cpp" />
     <ClCompile Include="..\Source\Utility\Limits.cpp" />
     <ClCompile Include="..\Source\Utility\Math.cpp" />
-    <ClCompile Include="..\Source\Utility\Random.cpp" />
     <ClCompile Include="..\Source\Timer\FixedTimer.cpp" />
     <ClCompile Include="..\Source\Timer\FPSTimer.cpp" />
     <ClCompile Include="..\Source\Timer\PerformanceTimer.cpp" />

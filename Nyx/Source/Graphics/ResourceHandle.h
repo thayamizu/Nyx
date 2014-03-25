@@ -29,9 +29,10 @@ namespace Nyx
 		std::shared_ptr<IResource> GetResource() const {
 			return resource_;
 		}
+
 	private:
 		std::wstring name_;
-		std::shared_ptr<IResource> resource_;
+	    std::shared_ptr<IResource> resource_;
 	};
 
 }

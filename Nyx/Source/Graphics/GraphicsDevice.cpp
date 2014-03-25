@@ -15,7 +15,8 @@ namespace Nyx
 	struct GraphicsDevice::PImpl
 	{
 		std::vector<Vector3f> verticies_;
-		std::function<void(void)> render_;
+		std::shared_ptr<void> obj_;
+		std::function<void(std::shared_ptr<void>)> render_;
 		Rect2i windowSize_;
 		bool isInitialized_;
 		WindowMode windowMode_;
@@ -89,7 +90,7 @@ namespace Nyx
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
 			auto hr = d3dDevice->BeginScene();
-			render_();
+			render_(obj_);
 			d3dDevice->EndScene();
 			
 			hr = d3dDevice->Present( NULL , NULL , NULL , NULL );
@@ -98,7 +99,7 @@ namespace Nyx
 			}
 		}
 
-		void SetRenderer(std::function<void(void)> render) {
+		void SetRenderer(std::function<void(std::shared_ptr<void>)> render) {
 			render_ = render;
 		}
 
@@ -202,14 +203,12 @@ namespace Nyx
 			if (stateBlock_ == nullptr) {
 				return;
 			}
-
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
-			LPDIRECT3DSTATEBLOCK9 stateBlock;
 			stateBlock_->Apply();
 		}
 		//-----------------------------------------------------------------------------------
 		//
-		void OnRender(std::function<void(void)> render) {
+		void OnRender(std::function<void(std::shared_ptr<void>)> render) {
 			render_ = render;
 		}
 
@@ -217,7 +216,7 @@ namespace Nyx
 		//-----------------------------------------------------------------------------------
 		//
 		bool OnDeviceReset() {
-			D3d9ResourceCache::GetCache()->Release();
+			ResourceCache::Release();
 
 			auto d3dpp = BuildPresentParameter(window_, windowMode_, capacity_, multiSamplingLevel_);
 			auto hr = D3d9Driver::GetD3dDevice9()->Reset(&d3dpp);
@@ -231,7 +230,7 @@ namespace Nyx
 				//ビューポートの設定
 				SetViewport(windowSize_, 0.f, 1.f);
 
-				D3d9ResourceCache::GetCache()->Recovery();
+				ResourceCache::Recovery();
 			}
 
 			
@@ -315,7 +314,7 @@ namespace Nyx
 		pimpl_->Render();
 	}
 
-	void GraphicsDevice::OnRender(std::function<void(void)> scene)
+	void GraphicsDevice::OnRender(std::function<void(std::shared_ptr<void>)> scene)
 	{
 		Assert(pimpl_ != nullptr);
 		Assert(pimpl_->isInitialized_);
@@ -377,4 +376,7 @@ namespace Nyx
 		pimpl_->verticies_ = verticies;
 	}
 
+	void GraphicsDevice::SetScene(std::shared_ptr<void> obj) {
+		pimpl_->obj_ = obj;
+	}
 }

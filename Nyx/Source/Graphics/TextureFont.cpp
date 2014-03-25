@@ -77,9 +77,16 @@ namespace Nyx {
 			using Nyx::GDI::Font;
 
 			//DCの取得とフォントの生成
+			wchar_t fontFace[32] = {};
+			wcsncpy_s(fontFace, 32, fontInfo_.fontFace.c_str(), fontInfo_.fontFace.length());
 			HDC hdc = GetDC(NULL);
-			Font font(fontInfo_.fontSize, 0, 500, false, false, false, SHIFTJIS_CHARSET, fontInfo_.fontFace.c_str());
-			HFONT oldFont = (HFONT)SelectObject(hdc, font.GetFont());
+
+			LOGFONT lf = { fontInfo_.fontSize, 0, 0, 0, 0, 0, 0, 0, SHIFTJIS_CHARSET, OUT_TT_ONLY_PRECIS,
+				CLIP_DEFAULT_PRECIS, PROOF_QUALITY, FIXED_PITCH | FF_MODERN, fontFace[0] };
+			HFONT hFont;
+			if (!(hFont = CreateFontIndirect(&lf))){
+			}
+			HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
 
 			// フォントビットマップ取得
 			TEXTMETRIC TM;
@@ -93,6 +100,7 @@ namespace Nyx {
 			GetGlyphOutline(hdc, (UINT)character_, GGO_GRAY4_BITMAP, &GM, size, ptr.get(), &Mat);
 
 			SelectObject(hdc, oldFont);
+			DeleteObject(hFont);
 			ReleaseDC(NULL, hdc);
 
 			//テクスチャの生成
@@ -110,7 +118,7 @@ namespace Nyx {
 			{
 				//テクスチャサーフェイスをロック
 				D3DLOCKED_RECT LockedRect = {};
-				hr = texture->LockRect(0, &LockedRect, NULL, 0);
+				hr = texture->LockRect(0, &LockedRect, NULL, D3DLOCK_DISCARD);
 				if (FAILED(hr)) {
 					DebugOutput::Trace("テクスチャのロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
 					throw COMException("テクスチャのロックに失敗しました。", hr);
