@@ -32,9 +32,6 @@
     <ClInclude Include="..\Source\Utility\LimitsUnitTest.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Utility\RandomUnitTest.h">
-      <Filter>Utility</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Utility\UnitTestAll.h">
       <Filter>Utility</Filter>
     </ClInclude>
