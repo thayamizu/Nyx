@@ -12,3 +12,4 @@
 *.opensdf
 *.idb
 *.ipch
+Lib/Debug/Nyx_MTd.lib

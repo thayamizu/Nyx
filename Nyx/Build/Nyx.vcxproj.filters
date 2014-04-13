@@ -166,15 +166,6 @@
     <Filter Include="Graphics\Camera\System">
       <UniqueIdentifier>{c6f13ccb-4f05-490b-849c-7af6c39dbcfc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\ParticleSystem">
-      <UniqueIdentifier>{987f769f-c13b-404f-9df0-baba1401bfde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\ParticleSystem\System">
-      <UniqueIdentifier>{6542f15b-73c2-47df-8edb-1233accb4c8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\ParticleSystem\Base">
-      <UniqueIdentifier>{7ffb8f23-ac56-4585-bd54-ab236eaf1236}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Core\Base">
       <UniqueIdentifier>{a0c0aaf1-5ccb-47b6-bfd5-a982e932ef54}</UniqueIdentifier>
     </Filter>
@@ -538,12 +529,6 @@
     <ClInclude Include="..\Source\Graphics\TextureFont.h">
       <Filter>Graphics\Font\Base</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\Particle.h">
-      <Filter>Graphics\ParticleSystem\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ParticleSystem.h">
-      <Filter>Graphics\ParticleSystem\System</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\Sphere.h">
       <Filter>Graphics\Geometry\Base</Filter>
     </ClInclude>
@@ -552,9 +537,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\FontInfo.h">
       <Filter>Graphics\Font\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ParticleDesc.h">
-      <Filter>Graphics\ParticleSystem\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\TextureText.h">
       <Filter>Graphics\Font\Base</Filter>
@@ -734,9 +716,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp">
       <Filter>Graphics\Core\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp">
-      <Filter>Graphics\ParticleSystem\System</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\TextureText.cpp">
       <Filter>Graphics\Font\Base</Filter>
