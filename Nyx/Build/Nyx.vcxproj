@@ -134,9 +134,6 @@
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
     <ClInclude Include="..\Source\Graphics\IRenderable.h" />
     <ClInclude Include="..\Source\Graphics\IResource.h" />
-    <ClInclude Include="..\Source\Graphics\Particle.h" />
-    <ClInclude Include="..\Source\Graphics\ParticleDesc.h" />
-    <ClInclude Include="..\Source\Graphics\ParticleSystem.h" />
     <ClInclude Include="..\Source\Graphics\ResourceCache.h" />
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sphere.h" />
@@ -238,7 +235,6 @@
     <ClCompile Include="..\Source\Graphics\FontManager.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
-    <ClCompile Include="..\Source\Graphics\ParticleSystem.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureFont.cpp" />
