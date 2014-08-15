@@ -18,20 +18,20 @@
 #define NYX_CORE_WINSOCK_TCP_CLIENT_SOCKET_H_
 #include "WinsockInitializer.h"
 
-namespace Nyx {
+namespace nyx {
 	///TCPクライアントソケット
-	class WinsockTCPClientSocket {
+	class winsock_tcp_client_socket {
 	public:
 		/*
 		* コンストラクタ
 		*/
-		WinsockTCPClientSocket();
+		winsock_tcp_client_socket();
 
 
 		/**
 		* デストラクタ
 		*/
-		~WinsockTCPClientSocket();
+		~winsock_tcp_client_socket();
 
 
 		/**
@@ -39,7 +39,7 @@ namespace Nyx {
 		* @param const char* アドレス
 		* @param const int ポート番号
 		*/
-		bool Connect(const char* address, size_t port);
+		bool connect(const char* address, size_t port);
 		
 		
 		/**
@@ -47,13 +47,13 @@ namespace Nyx {
 		* @param const std::string& アドレス
 		* @param int ポート番号
 		*/
-		bool Connect(const std::string&  address, size_t port);
+		bool connect(const std::string&  address, size_t port);
 		
 		
 		/**
 		* サーバーへの接続を切断する
 		*/
-		void Disconnect();
+		void disconnect();
 
 
 		/**
@@ -62,7 +62,7 @@ namespace Nyx {
 		* @param 送信バッファの長さ
 		* @return 送信バイト数
 		*/
-		size_t Send(char* buffer, size_t bufferSize) const;
+		size_t send(char* buffer, size_t bufferSize) const;
 
 
 		/**
@@ -71,7 +71,7 @@ namespace Nyx {
 		* @param 受信バッファの長さ
 		* @return 受信バイト数
 		*/
-		size_t Recieve(char* buffer, size_t bufferSize) const;
+		size_t recieve(char* buffer, size_t bufferSize) const;
 	private:
 		SOCKET  destination_;///< 接続先のソケット
 		sockaddr_in address_;///< サーバのアドレス情報

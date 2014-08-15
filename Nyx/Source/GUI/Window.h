@@ -19,13 +19,13 @@
 #include "GUI/Dispatcher.h"
 #include "GUI/IWindow.h"
 
-namespace Nyx {
+namespace nyx {
 
 	///ウインドウ
-	class Window : public IWindow
+	class window : public iwindow
 	{
-		typedef std::unordered_map<uint, std::shared_ptr<IControl>> HookList;
-		typedef std::unordered_map<uint, std::shared_ptr<IControl>>::iterator HookListIterator;
+		typedef std::unordered_map<uint32_t, std::shared_ptr<iwidget>> hook_list;
+		typedef std::unordered_map<uint32_t, std::shared_ptr<iwidget>>::iterator hook_list_iterator;
 	public:
 		//---------------------------------------------------------------------------------------
 		//生成・破壊
@@ -33,16 +33,16 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Window(HWND hWnd, const std::wstring caption, std::wstring icon,  int x=0,int y=0, int width=800, int height=600,int id=0);
+		window(HWND hWnd, const std::wstring caption, std::wstring icon,  int x=0,int y=0, int width=800, int height=600,int id=0);
 		/**
 		*
 		*/
-		~Window();
+		~window();
 
 		/**
 		*
 		*/
-		bool OnCreate(HWND hwnd, int x=0, int y=0, int width=800, int height=600);
+		bool on_create(HWND hwnd, int x=0, int y=0, int width=800, int height=600);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -51,7 +51,7 @@ namespace Nyx {
 		* ウインドウハンドルの取得
 		* @return HWND
 		*/
-		HWND GetHandle();
+		window_handle get_handle();
 
 		//---------------------------------------------------------------------------------------
 		//描画・更新
@@ -59,20 +59,20 @@ namespace Nyx {
 		/**
 		* ウインドウを表示する
 		*/
-		void Show();
+		void show();
 		/**
 		* ウインドウを隠す
 		*/
-		void Hide();
+		void hide();
 		/**
 		* ウインドウを更新する
 		*/
-		void Update();
+		void update();
 		/**
 		* ウインドウが表示されているか
 		* @return trueならウインドウは表示されている
 		*/
-		bool IsShow();
+		bool is_show();
 
 		void ShowCursor(bool isShowCursor);
 
@@ -82,18 +82,18 @@ namespace Nyx {
 		/**
 		* コントロールを有効化する
 		*/
-		void Activate();
+		void activate();
 
 		/**
 		* コントロールを無効化する
 		*/
-		void Unactivate();
+		void unactivate();
 
 		/**
 		* コントロールが有効かどうか
 		* @return bool trueならコントロールは有効
 		*/
-		bool IsActivate() const;
+		bool is_activate() const;
 
 
 		//---------------------------------------------------------------------------------------
@@ -103,66 +103,66 @@ namespace Nyx {
 		* コントロールのタイプを取得する
 		* @return ControlType::enum_tの値
 		*/
-		ControlType GetType() const;
+		WIDGET_TYPE get_type() const;
 
 		/**
 		* ユーザーデータを取得する
 		* @return void*
 		*/
-		std::shared_ptr<void> GetUserData() const;
+		std::shared_ptr<void> get_user_data() const;
 
 		/**
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void SetUserData(std::shared_ptr<void> data) ;
+		void set_user_data(std::shared_ptr<void> data) ;
 
 		/**
 		* コントロールのIDを取得する
 		* @return uint コントロールのID
 		*/
-		uint GetID() const;
+		uint32_t get_id() const;
 
 		/**
 		* コントロールのIDを設定する
 		* @return コントロールのID
 		*/
-		void SetID(uint id)  ;
+		void set_id(uint32_t id)  ;
 
 		/**
 		* ウインドウのクライアント領域のサイズを取得する
 		* @param Rect2i* ウインドウのクライアント領域のサイズ
 		*/
-		void GetSize(Rect2i& rect) const;
+		void get_size(rect2i& rect) const;
 
 		/**
 		* ウインドウのクライアント領域のサイズを設定する
 		* @param Rect2i& ウインドウのクライアント領域のサイズ
 		*/
-		void SetSize(const Rect2i& rect);
+		void set_size(const rect2i& rect);
 
 		/**
 		* ウインドウの位置を取得する
 		* @param Point2i& p
 		*/
-		void GetPosition(Point2i& p) const;
+		void get_position(point2i& p) const;
 
 		/**
 		* ウインドウの位置を設定する
 		*/
-		void SetPosition(const Point2i& p);
+		void set_position(const point2i& p);
 		//---------------------------------------------------------------------------------------
 		//コントロールの登録と削除
 		//---------------------------------------------------------------------------------------
 		/**
 		* コントロールの登録
 		*/
-		void Register(std::shared_ptr<IControl> control);
+		void register_widget(std::shared_ptr<iwidget> control);
 
 		/**
 		*　コントロールの削除
 		*/
-		void Unregister(std::shared_ptr<IControl> control);
+		void unregister_widget(std::shared_ptr<iwidget> control);
 
 		//---------------------------------------------------------------------------------------
 		//イベントの登録と削除
@@ -170,32 +170,32 @@ namespace Nyx {
 		/**
 		*
 		*/
-		void AddGUIEvent(std::shared_ptr<IControl> colntrol, GUICallback callback);
+		void add_event(std::shared_ptr<iwidget> colntrol, gui_callback callback);
 
 		/**
 		*
 		*/
-		void DelGUIEvent(std::shared_ptr<IControl> colntrol);
+		void del_event(std::shared_ptr<iwidget> colntrol);
 
 		/**
 		*
 		*/
-		void ClearGUIEvent();
+		void clear_event();
 
 		/**
 		*
 		*/
-		void AddUserEvent(std::shared_ptr<IControl> control, GUICallback callback);
+		void add_user_event(std::shared_ptr<iwidget> control, gui_callback callback);
 
 		/**
 		*
 		*/
-		void DelUserEvent(std::shared_ptr<IControl> colntrol);
+		void del_user_event(std::shared_ptr<iwidget> colntrol);
 
 		/**
 		*
 		*/
-		void ClearUserEvent();
+		void clear_user_event();
 
 		//----------------------------------------------------------------
 		//ウインドウ固有の操作
@@ -203,19 +203,19 @@ namespace Nyx {
 		/**
 		* メニューを取得する
 		*/
-		HMENU GetMenu();
+		HMENU get_menu();
 
 		/**
 		* メニューを設定する
 		* 
 		*/
-		void SetMenu(HMENU menu);
+		void set_menu(HMENU menu);
 
 		/**
 		* メッセージ処理
 		* @return bool
 		*/
-		bool ProcessMessage();
+		bool process_message();
 
 
 	private:
@@ -228,7 +228,7 @@ namespace Nyx {
 		* @param LPARAM
 		* @return LRESULT
 		*/
-		static LRESULT __stdcall GlobalProcedure(HWND hWnd, UINT msg,WPARAM wParam, LPARAM lParam);
+		static LRESULT __stdcall global_procedure(HWND hWnd, UINT msg,WPARAM wParam, LPARAM lParam);
 
 	private:
 		///ウインドウの表示状態
@@ -236,9 +236,9 @@ namespace Nyx {
 		/// ハンドルインスタンス
 		HWND hwnd_;
 		///ウインドウID
-		uint id_;
+		uint32_t id_;
 		///ウインドウスタイル
-		ulong style_;
+		uint64_t style_;
 		///アトム
 		ATOM atom_;
 		///タイトル
@@ -248,7 +248,7 @@ namespace Nyx {
 		///ユーザーデータ
 		std::shared_ptr<void> userData_;
 		///ウインドウに結びつけらている子コントロールのリスト
-		HookList childControl_;
+		hook_list childControl_;
 		///ディスパッチャにフックされているGUIイベントのリスト
 		std::shared_ptr<Dispatcher> guiEventList_;
 		///ディスパッチャにフックされているユーザーイベントのリスト

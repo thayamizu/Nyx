@@ -18,30 +18,30 @@
 #include "Debug/DebugOutput.h"
 #include "Network/WinsockTCPClientSocket.h"
 
-namespace Nyx {
+namespace nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockTCPClientSocket::WinsockTCPClientSocket()
+	winsock_tcp_client_socket::winsock_tcp_client_socket()
 	:destination_(NULL), address_() {
 		// ソケットの作成
 		destination_ = socket(AF_INET, SOCK_STREAM, 0);
 		if(destination_ < 0){
 			int result = ::WSAGetLastError();
-			DebugOutput::Trace("Winsockソケットの作成に失敗しました。");
-			throw Nyx::Win32Exception("Winsockソケットの作成に失敗しました。", result);
+			debug_out::trace("Winsockソケットの作成に失敗しました。");
+			throw nyx::win32_exception("Winsockソケットの作成に失敗しました。", result);
 		}
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockTCPClientSocket::~WinsockTCPClientSocket() {
-		Disconnect();
+	winsock_tcp_client_socket::~winsock_tcp_client_socket() {
+		disconnect();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool WinsockTCPClientSocket::Connect(const char* address, size_t port) {
+	bool winsock_tcp_client_socket::connect(const char* address, size_t port) {
 		// 接続先指定用構造体の準備
 		address_.sin_family           = AF_INET;
 		address_.sin_port             = htons(port);
@@ -59,7 +59,7 @@ namespace Nyx {
 		}
 
 		//サーバーへ接続
-		int result = connect(destination_, (sockaddr *)&address_, sizeof(address_));
+		int result = ::connect(destination_, (sockaddr *)&address_, sizeof(address_));
 
 		return (result == 0) ? true : false;
 	}
@@ -67,30 +67,30 @@ namespace Nyx {
 	
 	//-----------------------------------------------------------------------------------------
 	//
-	bool WinsockTCPClientSocket::Connect(const std::string& address, size_t port) {
-		return Connect(address.c_str(), port);
+	bool winsock_tcp_client_socket::connect(const std::string& address, size_t port) {
+		return connect(address.c_str(), port);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void WinsockTCPClientSocket::Disconnect() {
+	void winsock_tcp_client_socket::disconnect() {
 		if (destination_ != NULL) {
-			closesocket(destination_);
+			::closesocket(destination_);
 		}
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	size_t WinsockTCPClientSocket::Send(char *buffer, const size_t bufferSize) const {
-		return send(destination_, buffer, bufferSize, 0);
+	size_t winsock_tcp_client_socket::send(char *buffer, const size_t bufferSize) const {
+		return ::send(destination_, buffer, bufferSize, 0);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//受信
-	size_t WinsockTCPClientSocket::Recieve(char *buffer, const size_t bufferSize) const {
-		return recv(destination_, buffer, bufferSize, 0);
+	size_t winsock_tcp_client_socket::recieve(char *buffer, const size_t bufferSize) const {
+		return ::recv(destination_, buffer, bufferSize, 0);
 	}
 }

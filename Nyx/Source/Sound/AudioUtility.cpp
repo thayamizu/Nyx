@@ -18,25 +18,25 @@
 #include "AudioUtility.h"
 #include "WaveFileHeader.h"
 
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const double AudioUtility::DefaultBitRate      = 16;
+	const double AudioUtility::DEFAULT_BIT_RATE      = 16;
 
-	const double AudioUtility::DefaultSamplingRate = 44100;
+	const double AudioUtility::DEFAULT_SAMPLING_RATE = 44100;
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	long AudioUtility::VolumeToDecibel(long volume) {
-		volume  = Math::Clamp(volume, 1L, 100L);
-		return static_cast<long>(33.2f * Math::Log10((float)volume/100) * 100);
+	long AudioUtility::volume_to_decibel(long volume) {
+		volume  = math::clamp(volume, 1L, 100L);
+		return static_cast<long>(33.2f * math::log10((float)volume/100) * 100);
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	long AudioUtility::DecibelToVolume(long decibel) {
-		decibel = Math::Clamp(decibel, -10000L, 10000L);
+	long AudioUtility::decibel_to_volume(long decibel) {
+		decibel = math::clamp(decibel, -10000L, 10000L);
 		if (decibel <= -10000L) {
 			return 0L;
 		}
@@ -45,13 +45,13 @@ namespace Nyx {
 		}
 		
 
-		return static_cast<long>(Math::Pow(10, (float)(decibel / 33.2/100)) * 100);
+		return static_cast<long>(math::power(10, (float)(decibel / 33.2/100)) * 100);
 	}
 
 	
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioUtility::BuildWaveFormatEx(WAVEFORMATEX* wfx, const WaveFileHeader& waveHeader){
+	void AudioUtility::build_wav_format_ex(WAVEFORMATEX* wfx, const wav_file_header& waveHeader){
 		//Waveフォーマットのセットアップ
 		ZeroMemory(wfx, sizeof(WAVEFORMATEX));
 		wfx->wFormatTag      = waveHeader.formatChunk.formatTag;

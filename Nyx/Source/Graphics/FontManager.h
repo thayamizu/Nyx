@@ -4,9 +4,9 @@
 #include "TextureFont.h"
 #include "TextureText.h"
 
-namespace Nyx {
+namespace nyx {
 
-	class FontManager {
+	class font_factory {
 	public:
 
 		/**
@@ -15,7 +15,7 @@ namespace Nyx {
 		* @param const FontInfo& フォント情報
 		* @return std::shared_ptr<TextureFont>
 		*/
-		static std::shared_ptr<TextureFont> CreateChar(wchar_t chara, const FontInfo& fontInfo);
+		static std::shared_ptr<texture_font> make_texture_char(wchar_t chara, const font_info& fontInfo);
 		
 
 		/**
@@ -24,25 +24,25 @@ namespace Nyx {
 		* @param const FontInfo& フォント情報
 		* @return std::shared_ptr<TextureFont>
 		*/
-		static std::shared_ptr<TextureText> CreateText(const std::wstring& text,  const FontInfo& fontInfo);
+		static std::shared_ptr<texture_text> make_texture_text(const std::wstring& text,  const font_info& fontInfo);
 
 
 		/**
 		* キャッシュから指定したリソースを削除します
 		* @param const std::wstring& ファイル名
 		*/
-		static void Delete(const std::wstring& key);
+		static void remove(const std::wstring& key);
 
 
 		/**
 		*
 		*/
-		static std::shared_ptr<TextureFont> GetItem(wchar_t chara);
+		static std::shared_ptr<texture_font> get_item(wchar_t chara);
 	private:
 		/**
 		* コンストラクタ
 		*/
-		FontManager() {}
+		font_factory() {}
 		std::wstring txtFileName_;
 	};
 }

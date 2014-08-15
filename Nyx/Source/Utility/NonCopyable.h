@@ -18,23 +18,23 @@
 #define NYX_CORE_INCLUDED_NONCOPYABLE_H_
 
 
-namespace Nyx
+namespace nyx
 {
 	///NonCopyableインタフェース
-	class NonCopyable {
+	class noncopyable {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		NonCopyable () {}
+		noncopyable () {}
 	protected:
 		/**
 		* デストラクタ
 		*/
-		~NonCopyable (){} // protected な非仮想デストラクタ
+		~noncopyable (){} // protected な非仮想デストラクタ
 	private: 
-		NonCopyable (const NonCopyable &);
-		NonCopyable & operator = (const NonCopyable &);
+		noncopyable (const noncopyable &);
+		noncopyable & operator = (const noncopyable &);
 	};
 
 }

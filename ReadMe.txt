@@ -7,4 +7,4 @@ This is a Simple 2D game library and is released in open source under MIT Licens
 ¡Bug Reports
 Author:t.hayamizu
 TEL   :090-9629-1634 
-E-Mail:t.hayamizu@outlook.com 
+E-Mail:desu.ex.machina.ele—gmail.com(—‚ğ”¼Šp‚É‚µ‚Ä‚­‚¾‚³‚¢) 

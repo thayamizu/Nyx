@@ -18,11 +18,11 @@
 #include "Thread/Thread.h"
 #include "Thread/detail/Win32/Win32Thread.h"
 
-namespace Nyx {
+namespace nyx {
 	
 	//-----------------------------------------------------------------------------
 	// コンストラクタ
-	Win32Thread::Win32Thread(void * fp,  void* param, ulong stackSize, ulong flag) {
+	win32_thread::win32_thread(void * fp,  void* param, uint64_t stackSize, uint64_t flag) {
 		thread = CreateThread(NULL, stackSize, 
 			static_cast<LPTHREAD_START_ROUTINE>(fp), param, flag, &id);
 	}
@@ -30,50 +30,50 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------
 	// デストラクタ
-	Win32Thread::~Win32Thread() {
+	win32_thread::~win32_thread() {
 		CloseHandle(thread);
 	}
 
 	//-----------------------------------------------------------------------------
 	// スレッドのレジューム
-	ulong Win32Thread::Resume() {
+	uint64_t win32_thread::resume() {
 		return ResumeThread(thread);
 	}
 
 	//-----------------------------------------------------------------------------
 	// スレッドのサスペンド
-	ulong Win32Thread::Suspend() {
+	uint64_t win32_thread::suspend() {
 		return SuspendThread(thread);
 	}
 
 	//-----------------------------------------------------------------------------
 	// IDの取得
-	ulong Win32Thread::GetID() {
+	uint64_t win32_thread::get_id() {
 		return id; 
 	}
 
 	//-----------------------------------------------------------------------------
 	// 優先順位の取得
-	int Win32Thread::GetPriority() { 
+	int win32_thread::get_priority() { 
 		return GetThreadPriority(thread); 
 	}
 
 	//-----------------------------------------------------------------------------
 	// 優先順位の設定
-	void Win32Thread::SetPriority(int priority) { 
+	void win32_thread::set_priority(int priority) { 
 		SetThreadPriority(thread, priority); 
 	}
 
 	//-----------------------------------------------------------------------------
 	// 終了の待機
-	bool Win32Thread::Join(ulong millisecond) {
+	bool win32_thread::join(uint64_t millisecond) {
 		return WaitForSingleObject(thread, millisecond) == WAIT_OBJECT_0;
 	}
 
 	//-----------------------------------------------------------------------------
 	// 終了コードの取得
-	ulong Win32Thread::GetExitCode() { 
-		ulong res; 
+	uint64_t win32_thread::get_exit_code() { 
+		uint64_t res; 
 		GetExitCodeThread(thread, &res); 
 
 		return res; 
@@ -81,13 +81,13 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------
 	// ハンドルの取得
-	HANDLE Win32Thread::GetHandle() {
+	HANDLE win32_thread::get_handle() {
 		return thread;
 	}
 
 	//-----------------------------------------------------------------------------
 	// スリープ
-	void Win32Thread::Sleep(ulong time) {
+	void win32_thread::sleep(uint64_t time) {
 		::Sleep(time);
 	}   
 

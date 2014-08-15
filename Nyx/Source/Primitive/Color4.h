@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_COLOR4_H_
 #define NYX_CORE_INCLUDED_COLOR4_H_
 
-namespace Nyx
+namespace nyx
 {
 	template <typename T>
-	class Color4 {
+	class color4 {
 		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type");
 	public:
 		//--------------------------------------------------------------------------------------
@@ -44,116 +44,116 @@ namespace Nyx
 		// íËêî
 		//--------------------------------------------------------------------------------------
 		///
-		static const Color4<T> White;
+		static const color4<T> WHITE;
 
 		///
-		static const Color4<T> Gray;
+		static const color4<T> GRAY;
 
 		///
-		static const Color4<T> Black;
+		static const color4<T> BLACK;
 
 		///
-		static const Color4<T> Red;
+		static const color4<T> RED;
 
 		///
-		static const Color4<T> Green;
+		static const color4<T> GREEN;
 
 		///
-		static const Color4<T> Blue;
+		static const color4<T> BLUE;
 
 		///
-		static const Color4<T> Cyan;
+		static const color4<T> CYAN;
 
 		///
-		static const Color4<T> Magenta;
+		static const color4<T> MAGENTA;
 
 		///
-		static const Color4<T> Yellow;
+		static const color4<T> YELLOW;
 
 		/**
 		*
 		*/
-		Color4<T>() {
-			Set(0, 0, 0, 0);
+		color4<T>() {
+			set(0, 0, 0, 0);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T>(const T red, const T green, const T blue, const T alpha) {
-			Set(red, green, blue, alpha);
+		color4<T>(const T red, const T green, const T blue, const T alpha) {
+			set(red, green, blue, alpha);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T>(const Color4<T>& color) {
-			Set(color.r, color.g, color.b, color.a);
+		color4<T>(const color4<T>& color) {
+			set(color.r, color.g, color.b, color.a);
 		}
 
 
 		/**
 		*
 		*/
-		void Set(const T red, const T green, const T blue, const T alpha) {
+		void set(const T red, const T green, const T blue, const T alpha) {
 			this->r = red;
 			this->g = green;
 			this->b = blue;
 			this->a = alpha;
-			Clamp();
+			clamp();
 		}
 
 
 		/**
 		*
 		*/
-		void Clamp() {
-			r = Math::Clamp<T>(r, 0, 255);
-			g = Math::Clamp<T>(g, 0, 255);
-			b = Math::Clamp<T>(b, 0, 255);
-			a = Math::Clamp<T>(a, 0, 255);
+		void clamp() {
+			r = math::clamp<T>(r, 0, 255);
+			g = math::clamp<T>(g, 0, 255);
+			b = math::clamp<T>(b, 0, 255);
+			a = math::clamp<T>(a, 0, 255);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T> operator +(const Color4<T>& color) const {
-			return Color4<T>(r + color.r, g + color.g, b + color.b, a + color.a);
+		color4<T> operator +(const color4<T>& color) const {
+			return color4<T>(r + color.r, g + color.g, b + color.b, a + color.a);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T> operator -(const Color4<T>& color) const {
-			return Color4<T>(r - color.r, g - color.g, b - color.b, a - color.a);
+		color4<T> operator -(const color4<T>& color) const {
+			return color4<T>(r - color.r, g - color.g, b - color.b, a - color.a);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T> operator *(T value) const {
-			return Color4<T>(r * value, g * value, b * value, a * value);
+		color4<T> operator *(T value) const {
+			return color4<T>(r * value, g * value, b * value, a * value);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T> operator /(T value) const {
-			return Color4<T>(r / value, g / value, b / value, a / value);
+		color4<T> operator /(T value) const {
+			return color4<T>(r / value, g / value, b / value, a / value);
 		}
 
 
 		/**
 		*
 		*/
-		Color4<T>& operator +=(const Color4<T>& color) {
-			Set(r + color.r, g + color.g, b + color.b, a + color.a);
+		color4<T>& operator +=(const color4<T>& color) {
+			set(r + color.r, g + color.g, b + color.b, a + color.a);
 			return *this;
 		}
 
@@ -161,8 +161,8 @@ namespace Nyx
 		/**
 		*
 		*/
-		Color4<T>& operator -=(const Color4<T>& color) {
-			Set(r - color.r, g - color.g, b - color.b, a - color.a);
+		color4<T>& operator -=(const color4<T>& color) {
+			set(r - color.r, g - color.g, b - color.b, a - color.a);
 			return *this;
 		}
 
@@ -170,8 +170,8 @@ namespace Nyx
 		/**
 		*
 		*/
-		Color4<T>& operator *=(T value) {
-			Set(r * value, g * value, b * value, a * value);
+		color4<T>& operator *=(T value) {
+			set(r * value, g * value, b * value, a * value);
 			return *this;
 		}
 
@@ -179,8 +179,8 @@ namespace Nyx
 		/**
 		*
 		*/
-		Color4<T>& operator /=(T value) {
-			Set(r / value, g / value, b / value, a / value);
+		color4<T>& operator /=(T value) {
+			set(r / value, g / value, b / value, a / value);
 			return *this;
 		}
 
@@ -188,19 +188,19 @@ namespace Nyx
 		/**
 		*
 		*/
-		bool operator ==(const Color4<T>& color) {
+		bool operator ==(const color4<T>& color) {
 			return (
-				Math::Abs(r - color.r) <= Math::Epsilon &&
-				Math::Abs(g - color.g) <= Math::Epsilon &&
-				Math::Abs(b - color.b) <= Math::Epsilon &&
-				Math::Abs(a - color.a) <= Math::Epsilon);
+				math::abs(r - color.r) <= math::EPSILON &&
+				math::abs(g - color.g) <= math::EPSILON &&
+				math::abs(b - color.b) <= math::EPSILON &&
+				math::abs(a - color.a) <= math::EPSILON);
 		}
 
 
 		/**
 		*
 		*/
-		bool operator !=(const Color4<T>& color) {
+		bool operator !=(const color4<T>& color) {
 			return !(*this == color);
 		}
 	};
@@ -208,18 +208,18 @@ namespace Nyx
 	//--------------------------------------------------------------------------------------
 	// ï ñºíËã`
 	//--------------------------------------------------------------------------------------
-	typedef Color4<uchar> Color4c;
-	typedef Color4<float> Color4f;
+	typedef color4<uint8_t> color4c;
+	typedef color4<float>   color4f;
 
 	//--------------------------------------------------------------------------------------
 	// ì¡éÍâª
 	//--------------------------------------------------------------------------------------
 	template<>
-	void Color4f::Clamp() {
-		r = Math::Clamp<float>(r, 0.f, 1.f); 
-		g = Math::Clamp<float>(g, 0.f, 1.f); 
-		b = Math::Clamp<float>(b, 0.f, 1.f); 
-		a = Math::Clamp<float>(a, 0.f, 1.f); 
+	void color4f::clamp() {
+		r = math::clamp<float>(r, 0.f, 1.f); 
+		g = math::clamp<float>(g, 0.f, 1.f); 
+		b = math::clamp<float>(b, 0.f, 1.f); 
+		a = math::clamp<float>(a, 0.f, 1.f); 
 	}
 
 
@@ -227,65 +227,65 @@ namespace Nyx
 	// íËêîíËã`
 	//--------------------------------------------------------------------------------------
 	template <typename T>
-	const Color4<T> Color4<T>::White(255 , 255, 255, 255);
+	const color4<T> color4<T>::WHITE(255 , 255, 255, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Gray(128, 128, 128, 255);
+	const color4<T> color4<T>::GRAY(128, 128, 128, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Black(0, 0, 0, 255);
+	const color4<T> color4<T>::BLACK(0, 0, 0, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Red(255, 0, 0, 255);
+	const color4<T> color4<T>::RED(255, 0, 0, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Green(0, 255, 0, 255);
+	const color4<T> color4<T>::GREEN(0, 255, 0, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Blue(0, 0, 255, 255);
+	const color4<T> color4<T>::BLUE(0, 0, 255, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Cyan(0, 255, 255, 255);
+	const color4<T> color4<T>::CYAN(0, 255, 255, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Magenta(255, 0, 255, 255);
+	const color4<T> color4<T>::MAGENTA(255, 0, 255, 255);
 
 	///
 	template <typename T>
-	const Color4<T> Color4<T>::Yellow(255, 255, 0, 255);
+	const color4<T> color4<T>::YELLOW(255, 255, 0, 255);
 
 	///
-	const Color4f Color4f::White(1.f, 1.f, 1.f, 1.f);
+	const color4f color4f::WHITE(1.f, 1.f, 1.f, 1.f);
 
 	///
-	const Color4f  Color4f::Gray(0.5f, 0.5f, 0.5f, 1.f);
+	const color4f  color4f::GRAY(0.5f, 0.5f, 0.5f, 1.f);
 
 	///
-	const Color4f  Color4f::Black(0.f, 0.f, 0.f, 1.f);
+	const color4f  color4f::BLACK(0.f, 0.f, 0.f, 1.f);
 
 	///
-	const Color4f  Color4f::Red(1.f, 0.f, 0.f, 1.f);
+	const color4f  color4f::RED(1.f, 0.f, 0.f, 1.f);
 
 	///
-	const Color4f  Color4f::Green(0, 1.f, 0, 1.f);
+	const color4f  color4f::GREEN(0, 1.f, 0, 1.f);
 
 	///
-	const Color4f  Color4f::Blue(0, 0, 1.f, 1.f);
+	const color4f  color4f::BLUE(0, 0, 1.f, 1.f);
 
 	///
-	const Color4f  Color4f::Cyan(0, 1.f, 1.f, 1.f);
+	const color4f  color4f::CYAN(0, 1.f, 1.f, 1.f);
 
 	///
-	const Color4f Color4f::Magenta(1.f, 0, 1.f, 1.f);
+	const color4f color4f::MAGENTA(1.f, 0, 1.f, 1.f);
 
 	///
-	const Color4f  Color4f::Yellow(1.f, 1.f, 0, 1.f);
+	const color4f  color4f::YELLOW(1.f, 1.f, 0, 1.f);
 }
 #endif

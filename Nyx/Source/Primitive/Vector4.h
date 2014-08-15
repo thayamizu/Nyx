@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_VECTOR4_H_
 #define NYX_CORE_INCLUDED_VECTOR4_H_
 
-namespace Nyx
+namespace nyx
 {
 	template <typename T>
-	class Vector4 {
+	class vector4 {
 		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
 		union {
@@ -38,23 +38,23 @@ namespace Nyx
 			T elements[4];
 		};
 
-		static const Vector4<T> Zero;  ///< ゼロベクトル
+		static const vector4<T> ZERO;  ///< ゼロベクトル
 
-		static const Vector4<T> UnitX; ///< X軸単位ベクトル
+		static const vector4<T> UNIT_X; ///< X軸単位ベクトル
 
-		static const Vector4<T> UnitY; ///< Y軸単位ベクトル
+		static const vector4<T> UNIT_Y; ///< Y軸単位ベクトル
 
-		static const Vector4<T> UnitZ; ///< Z軸単位ベクトル
+		static const vector4<T> UNIT_Z; ///< Z軸単位ベクトル
 
-		static const Vector4<T> UnitW; ///< W軸単位ベクトル
+		static const vector4<T> UNIT_W; ///< W軸単位ベクトル
 
-		static const Vector4<T> ScaleUnit; ///< スケール単位ベクトル 
+		static const vector4<T> SCALE_UNIT; ///< スケール単位ベクトル 
 
 
 		/**
 		*デフォルトコンストラクタ
 		*/
-		Vector4<T>()
+		vector4<T>()
 			:x(0), y(0), z(0), w(0){
 		}
 
@@ -65,7 +65,7 @@ namespace Nyx
 		* @param y
 		* @param z
 		*/
-		Vector4<T>(T x_, T y_, T z_, T w_) 
+		vector4<T>(T x_, T y_, T z_, T w_) 
 			: x(x_), y(y_), z(z_), w(w_) {
 		}
 
@@ -74,7 +74,7 @@ namespace Nyx
 		* コピーコンストラクタ
 		* @param Vector4<T>
 		*/
-		Vector4<T>(const Vector4<T> & u)
+		vector4<T>(const vector4<T> & u)
 			: x(u.x), y(u.y), z(u.z) ,w(u.w){
 		}
 
@@ -82,7 +82,7 @@ namespace Nyx
 		/**
 		* 値の設定
 		*/
-		void Set(T x_, T y_, T z_, T w_) {
+		void set(T x_, T y_, T z_, T w_) {
 			x = x_;
 			y = y_;
 			z = z_;
@@ -95,8 +95,8 @@ namespace Nyx
 		* @param 右辺値  
 		* @return　加算結果 
 		*/
-		Vector4<T> operator +(const Vector4<T>& u) const {
-			return Vector4<T>( x + u.x, y + u.y, z + u.z, w + u.w); 
+		vector4<T> operator +(const vector4<T>& u) const {
+			return vector4<T>( x + u.x, y + u.y, z + u.z, w + u.w); 
 		}
 
 
@@ -105,8 +105,8 @@ namespace Nyx
 		* @param　右辺値  
 		* @return 減算結果
 		*/
-		Vector4<T> operator -(const Vector4<T>& u) const {
-			return Vector4<T>( x - u.x, y - u.y, z - u.z, w - u.w); 
+		vector4<T> operator -(const vector4<T>& u) const {
+			return vector4<T>( x - u.x, y - u.y, z - u.z, w - u.w); 
 		}
 
 
@@ -115,8 +115,8 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Vector4<T> operator *(const T u) const {
-			return Vector4<T>( x * u, y * u, z * u, w * u);
+		vector4<T> operator *(const T u) const {
+			return vector4<T>( x * u, y * u, z * u, w * u);
 		}
 
 
@@ -125,8 +125,8 @@ namespace Nyx
 		* @param 右辺値  
 		* @return 除算結果
 		*/
-		Vector4<T> operator /(const T u) const {
-			return Vector4<T>( x / u, y / u, z / u, w / u);
+		vector4<T> operator /(const T u) const {
+			return vector4<T>( x / u, y / u, z / u, w / u);
 
 		}
 
@@ -136,7 +136,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 加算結果
 		*/
-		Vector4<T>& operator +=(const Vector4<T>& u) {
+		vector4<T>& operator +=(const vector4<T>& u) {
 			x += u.x;
 			y += u.y;
 			z += u.z;
@@ -150,7 +150,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 減算結果
 		*/
-		Vector4<T>& operator -=(const Vector4<T>& u) {
+		vector4<T>& operator -=(const vector4<T>& u) {
 			x -= u.x;
 			y -= u.y;
 			z -= u.z;
@@ -165,7 +165,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 乗算結果
 		*/
-		Vector4<T>& operator *=(const T u) {
+		vector4<T>& operator *=(const T u) {
 			x *= u;
 			y *= u;
 			z *= u;
@@ -180,7 +180,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 除算結果
 		*/
-		Vector4<T>& operator /=(const T u) {
+		vector4<T>& operator /=(const T u) {
 			x /= u;
 			y /= u;
 			z /= u;
@@ -194,7 +194,7 @@ namespace Nyx
 		* @param 右辺値
 		* @return 代入結果
 		*/
-		Vector4<T>& operator =(Vector4<T>& u) {
+		vector4<T>& operator =(vector4<T>& u) {
 			x = u.x;
 			y = u.y;
 			z = u.z;
@@ -207,7 +207,7 @@ namespace Nyx
 		* 反転 
 		* @param 反転結果
 		*/
-		Vector4<T>& operator ~() {
+		vector4<T>& operator ~() {
 			x = - x;
 			y = - y;
 			z = - z;
@@ -221,7 +221,7 @@ namespace Nyx
 		* @param 右辺値
 		* @return 内積
 		*/
-		T Dot(Vector4<T>& u) {
+		T dot(vector4<T>& u) {
 			return (x * u.x + y * u.y + z * u.z + w*u.w);
 		}
 
@@ -230,8 +230,8 @@ namespace Nyx
 		* ベクトルの長さ
 		* @return  長さ
 		*/
-		float Length() {
-			return Math::Sqrt(x * x + y * y + z * z+ w * w);
+		float norm() {
+			return math::sqrt(x * x + y * y + z * z+ w * w);
 		}
 
 
@@ -239,7 +239,7 @@ namespace Nyx
 		* ベクトルの長さの二乗値
 		* @return  長さ
 		*/
-		float SquaredLength() {
+		float squared_norm() {
 			return static_cast<float>(x * x + y * y + z * z + w * w);
 
 		}
@@ -248,27 +248,27 @@ namespace Nyx
 		/**
 		* ベクトルの正規化
 		*/
-		void Normalize() {
-			T abs = Length(); 
+		void normalize() {
+			T abs = norm(); 
 
-			if (abs <= Math::Epsilon) { abs = 1.f;}
+			if (abs <= math::EPSILON) { abs = 1.f;}
 
 			x /= abs;
 			y /= abs;
 			z /= abs;
 			w /= abs;
 
-			if (Math::Abs(x) < Math::Epsilon) {x = 0.f;}
-			if (Math::Abs(y) < Math::Epsilon) {y = 0.f;}
-			if (Math::Abs(z) < Math::Epsilon) {z = 0.f;}
-			if (Math::Abs(w) < Math::Epsilon) {w = 0.f;}
+			if (math::abs(x) < math::EPSILON) {x = 0.f;}
+			if (math::abs(y) < math::EPSILON) {y = 0.f;}
+			if (math::abs(z) < math::EPSILON) {z = 0.f;}
+			if (math::abs(w) < math::EPSILON) {w = 0.f;}
 		}
 
 
 		/**
 		* ベクトルの反転
 		*/
-		void Inverse() {
+		void inverse() {
 			x = - x;
 			y = - y;
 			z = - z;
@@ -278,8 +278,8 @@ namespace Nyx
 		/**
 		* 線形補間
 		*/
-		Vector4<T> Lerp(const Vector4<T>& v1, const Vector4<T>& v2, float s) {
-			Vector4<T> lerp;
+		vector4<T> lerp(const vector4<T>& v1, const vector4<T>& v2, float s) {
+			vector4<T> lerp;
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
 			lerp.x = v1.x * (1 - s) + v2.x * s;
@@ -288,28 +288,28 @@ namespace Nyx
 			lerp.w = v1.w * (1 - s) + v2.w * s;
 
 
-			return lerp;	
+			return std::move(lerp);	
 		}
 		
 		
 		/** 
 		* @return ゼロベクトルならtrue
 		*/
-		bool IsZero() const {
+		bool is_zero() const {
 			return (
-				Math::Abs(x) <= Math::Epsilon &&
-				Math::Abs(y) <= Math::Epsilon &&
-				Math::Abs(z) <= Math::Epsilon &&
-				Math::Abs(w) <= Math::Epsilon);
+				math::abs(x) <= math::EPSILON &&
+				math::abs(y) <= math::EPSILON &&
+				math::abs(z) <= math::EPSILON &&
+				math::abs(w) <= math::EPSILON);
 		}
 
 
 		/** 
 		* @return 単位ベクトルならtrue
 		*/
-		bool IsUnit() const {
-			const float value = Math::Sqrt(x*x + y*y + z*z + w*w);
-			return (Math::Abs(value - 1.f) <= Math::Epsilon);
+		bool is_unit() const {
+			const float value = math::sqrt(x*x + y*y + z*z + w*w);
+			return (math::abs(value - 1.f) <= math::EPSILON);
 		}
 
 
@@ -318,12 +318,12 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 比較結果が等しいならばtrue
 		*/
-		bool operator==(const Vector4<T>& u) const {
+		bool operator==(const vector4<T>& u) const {
 			return (
-				Math::Abs(x - u.x) <= Math::Epsilon &&
-				Math::Abs(y - u.y) <= Math::Epsilon &&
-				Math::Abs(z - u.z) <= Math::Epsilon &&
-				Math::Abs(w - u.w) <= Math::Epsilon);
+				math::abs(x - u.x) <= math::EPSILON &&
+				math::abs(y - u.y) <= math::EPSILON &&
+				math::abs(z - u.z) <= math::EPSILON &&
+				math::abs(w - u.w) <= math::EPSILON);
 		}
 
 
@@ -332,52 +332,52 @@ namespace Nyx
 		* @param 右辺値 
 		* @return　比較結果が等しくないならばtrue
 		*/
-		bool operator !=(const Vector4<T>& u) const {
+		bool operator !=(const vector4<T>& u) const {
 			return !(*this == u);
 		}
 	};
 	//--------------------------------------------------------------------------------------
 	// 別名定義
 	//--------------------------------------------------------------------------------------
-	typedef Vector4<int>     Axis4i;
-	typedef Vector4<int>     Point4i;
-	typedef Vector4<int>     Vector4i;
-	typedef Vector4<int>     TexChoord4i;
-	typedef Vector4<float>   Axis4f;
-	typedef Vector4<float>   Point4f;
-	typedef Vector4<float>   Vector4f;
-	typedef Vector4<float>   TexChoord4f;
-	typedef Vector4<double>  Axis4d;
-	typedef Vector4<double>  Point4d;
-	typedef Vector4<double>  Vector4d;
-	typedef Vector4<double>  TexChoord4d;
+	typedef vector4<int>     axis4i;
+	typedef vector4<int>     point4i;
+	typedef vector4<int>     vector4i;
+	typedef vector4<int>     tex_choord4i;
+	typedef vector4<float>   axis4f;
+	typedef vector4<float>   point4f;
+	typedef vector4<float>   vector4f;
+	typedef vector4<float>   tex_choord_4f;
+	typedef vector4<double>  axis4d;
+	typedef vector4<double>  point4d;
+	typedef vector4<double>  vector4d;
+	typedef vector4<double>  tex_choord4d;
 
 	//--------------------------------------------------------------------------------------
 	// 定数定義
 	//--------------------------------------------------------------------------------------
 	// ゼロベクトル
 	template<typename T>
-	const Vector4<T> Vector4<T>::Zero = Vector4(0, 0, 0, 0);  
+	const vector4<T> vector4<T>::ZERO = vector4(0, 0, 0, 0);  
 
 	// X軸単位ベクトル
 	template<typename T>
-	const Vector4<T> Vector4<T>::UnitX = Vector4(1, 0, 0, 0);
+	const vector4<T> vector4<T>::UNIT_X = vector4(1, 0, 0, 0);
 
 	// Y軸単位ベクトル
 	template<typename T>
-	const Vector4<T> Vector4<T>::UnitY = Vector4(0, 1, 0, 0); 
+	const vector4<T> vector4<T>::UNIT_Y = vector4(0, 1, 0, 0); 
 
 	// Z軸ベクトル
 	template<typename T>
-	const Vector4<T> Vector4<T>::UnitZ = Vector4(0, 0, 1, 0); 
+	const vector4<T> vector4<T>::UNIT_Z = vector4(0, 0, 1, 0); 
 	
 	// W軸ベクトル
 	template<typename T>
-	const Vector4<T> Vector4<T>::UnitW = Vector4(0, 0, 0, 1); 
+	const vector4<T> vector4<T>::UNIT_W = vector4(0, 0, 0, 1); 
 	
 	// スケール単位ベクトル
 	template<typename T>
-	const Vector4<T> Vector4<T>::ScaleUnit = Vector4(1, 1, 1, 1);
+	const vector4<T> vector4<T>::SCALE_UNIT = vector4(1, 1, 1, 1);
 }
 
 

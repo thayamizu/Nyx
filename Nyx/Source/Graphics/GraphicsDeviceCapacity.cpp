@@ -5,9 +5,9 @@
 #include "GraphicsDeviceCapacity.h"
 #include "detail/DX9/DirectXDefinition.h"
 
-namespace Nyx
+namespace nyx
 {
-	struct GraphicsDeviceCapacity::PImpl
+	struct graphics_capacity::PImpl
 	{
 		PImpl():
 			isInitialized_(false), adapterIndex_(0), adapterCount_(), deviceCaps_(), displayMode_()
@@ -26,33 +26,33 @@ namespace Nyx
 			ZeroMemory(&displayMode_,sizeof(D3DDISPLAYMODE));
 			auto hr = d3d->GetAdapterDisplayMode(adapter, &displayMode_);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("プライマリディスプレイのアダプタの取得に失敗しました。[%s][%s]", __FILE__, __LINE__);
-				throw Nyx::COMException("プライマリディスプレイのアダプタの取得に失敗しました。", hr);
+				debug_out::trace("プライマリディスプレイのアダプタの取得に失敗しました。[%s][%s]", __FILE__, __LINE__);
+				throw nyx::com_exception("プライマリディスプレイのアダプタの取得に失敗しました。", hr);
 			}
 
 			//デバイス能力の取得
 			ZeroMemory(&deviceCaps_,sizeof(D3DCAPS9));
 			hr = d3d->GetDeviceCaps(adapter, D3DDEVTYPE_HAL, &deviceCaps_);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("プライマリディスプレイのアダプタの取得に失敗しました。[%s][%s]", __FILE__, __LINE__);
-				throw Nyx::COMException("プライマリディスプレイのアダプタの取得に失敗しました。", hr);
+				debug_out::trace("プライマリディスプレイのアダプタの取得に失敗しました。[%s][%s]", __FILE__, __LINE__);
+				throw nyx::com_exception("プライマリディスプレイのアダプタの取得に失敗しました。", hr);
 			}
 		}
 
-		void SetAdapterIndex(uint adapterIndex) {
+		void SetAdapterIndex(uint32_t adapterIndex) {
 			adapterIndex_ = adapterIndex;
 		}
 		
-		void SetWindowMode(WindowMode windowMode) {
+		void SetWindowMode(WINDOW_MODE windowMode) {
 			windowMode_ = windowMode;
 		}
 
 
-		BackBufferFormat GetBackBufferFormat() {
+		back_buffer_format GetBackBufferFormat() {
 			auto d3d = D3d9Driver::GetD3d9();
 
 			std::vector<D3DFORMAT> backbufferFormatList;
-			if (windowMode_ == WindowMode::FullScreen) {
+			if (windowMode_ == WINDOW_MODE::WINDOW_MODE_FULL_SCREEN) {
 				backbufferFormatList.push_back(D3DFMT_A2B10G10R10);
 			}
 			backbufferFormatList.push_back(D3DFMT_A8R8G8B8);
@@ -63,9 +63,9 @@ namespace Nyx
 
 
 			//ディスプレイのアダプタに最適なバックバッファフォーマットを取得する
-			BackBufferFormat result = 0; 
+			back_buffer_format result = 0; 
 			auto adapter    = adapterIndex_;
-			auto isWindowed = (windowMode_ == WindowMode::Windowed);
+			auto isWindowed = (windowMode_ == WINDOW_MODE::WINDOW_MODE_WINDOWED);
 			auto displayFormat = displayMode_.Format;
 			for (auto it = backbufferFormatList.begin(); it != backbufferFormatList.end(); ++it) {
 				auto backbufferFormat = *it;
@@ -85,7 +85,7 @@ namespace Nyx
 		}
 
 
-		StencilBufferFormat GetDepthStencilFormat() {
+		stencil_buffeR_format GetDepthStencilFormat() {
 			auto d3d = D3d9Driver::GetD3d9();
 
 			std::vector<D3DFORMAT> depthStencilFormatList;
@@ -96,7 +96,7 @@ namespace Nyx
 
 
 			//ディスプレイのアダプタに最適なステンシルバッファフォーマットを取得する
-			StencilBufferFormat result = 0; 
+			stencil_buffeR_format result = 0; 
 			auto displayFormat = displayMode_.Format;
 			for (auto it = depthStencilFormatList.begin(); it != depthStencilFormatList.end(); ++it) {
 				auto depthStencilFormat = *it;
@@ -131,8 +131,8 @@ namespace Nyx
 		}
 
 
-		bool CheckBufferFormat(const FormatType backBufferFormat) {
-			auto isWindowed = windowMode_ == WindowMode::Default ? true: false;
+		bool CheckBufferFormat(const format_type backBufferFormat) {
+			auto isWindowed = windowMode_ == WINDOW_MODE::WINDOW_MODE_DEFAULT ? true: false;
 			auto format     = static_cast<D3DFORMAT>(backBufferFormat);
 
 			auto d3d = D3d9Driver::GetD3d9();
@@ -147,10 +147,10 @@ namespace Nyx
 		}
 
 
-		bool GetSupportedMultiSamplingQuality(ulong samplingLevel, FormatType formatType, ulong* quality) {
+		bool GetSupportedMultiSamplingQuality(uint64_t samplingLevel, format_type formatType, uint64_t* quality) {
 			auto d3d    = D3d9Driver::GetD3d9();
 			auto format = static_cast<D3DFORMAT>(formatType);
-			auto isWindowed = windowMode_ == WindowMode::Default;
+			auto isWindowed = windowMode_ == WINDOW_MODE::WINDOW_MODE_DEFAULT;
 			auto hr  = d3d->CheckDeviceMultiSampleType(
 				adapterIndex_, 
 				D3DDEVTYPE_HAL, 
@@ -161,38 +161,38 @@ namespace Nyx
 			return SUCCEEDED(hr);
 		}
 
-		uint			 adapterIndex_;
+		uint32_t			 adapterIndex_;
 		bool             isInitialized_;
-		uint             adapterCount_;
+		uint32_t             adapterCount_;
 		D3DCAPS9         deviceCaps_;
 		D3DDISPLAYMODE   displayMode_;
-		WindowMode       windowMode_;
+		WINDOW_MODE       windowMode_;
 	};
 
-	GraphicsDeviceCapacity::GraphicsDeviceCapacity()
+	graphics_capacity::graphics_capacity()
 		: pimpl_ (std::make_shared<PImpl>())
 	{
-		Assert(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_ != nullptr);
 	}
 
 
-	void GraphicsDeviceCapacity::SetAdapterIndex(uint adapterIndex) {
-		Assert(pimpl_->isInitialized_ == true);
+	void graphics_capacity::set_adapter_index(uint32_t adapterIndex) {
+		NYX_ASSERT(pimpl_->isInitialized_ == true);
 		pimpl_->SetAdapterIndex(adapterIndex);
 	}
 
 
-	void GraphicsDeviceCapacity::SetWindowMode(WindowMode windowMode) {
-		Assert(pimpl_->isInitialized_ == true);
+	void graphics_capacity::set_window_mode(WINDOW_MODE windowMode) {
+		NYX_ASSERT(pimpl_->isInitialized_ == true);
 		pimpl_->SetWindowMode(windowMode);
 	}
 
-	void GraphicsDeviceCapacity::LookupGraphicsDeviceCapacity()
+	void graphics_capacity::lookup_graphics_device()
 	{	
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized_);
-		Assert(pimpl_->adapterIndex_ >= 0);
-		Assert(pimpl_->adapterIndex_ <  pimpl_->adapterCount_);
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized_);
+		NYX_ASSERT(pimpl_->adapterIndex_ >= 0);
+		NYX_ASSERT(pimpl_->adapterIndex_ <  pimpl_->adapterCount_);
 
 		pimpl_->LookupGraphicsDeviceCapacity();
 	}	
@@ -200,29 +200,29 @@ namespace Nyx
 
 	//-----------------------------------------------------------------------------------
 	//
-	uint GraphicsDeviceCapacity::GetAdapterCount() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized_);
+	uint32_t graphics_capacity::get_adapter_count() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized_);
 		return pimpl_->adapterCount_;
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	BackBufferFormat GraphicsDeviceCapacity::GetBackBufferFormat()
+	back_buffer_format graphics_capacity::get_back_buffer_format()
 	{
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized_);
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized_);
 		return pimpl_->GetBackBufferFormat();
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	BackBufferFormat GraphicsDeviceCapacity::GetDepthStencilBufferFormat()
+	back_buffer_format graphics_capacity::get_depth_stencil_buffer_format()
 	{
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized_);
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized_);
 		return pimpl_->GetDepthStencilFormat();
 	}
 	
@@ -230,10 +230,10 @@ namespace Nyx
 
 	//-----------------------------------------------------------------------------------
 	//
-	bool GraphicsDeviceCapacity::GetSupportedMultiSamplingQuality(ulong samplingLevel, FormatType formatType, ulong* quality) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized_);
-		Assert(0 <= samplingLevel && samplingLevel < 16);
+	bool graphics_capacity::get_supported_multisampling_level(uint64_t samplingLevel, format_type formatType, uint64_t* quality) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized_);
+		NYX_ASSERT(0 <= samplingLevel && samplingLevel < 16);
 
 		return pimpl_->GetSupportedMultiSamplingQuality(samplingLevel, formatType, quality);
 	}

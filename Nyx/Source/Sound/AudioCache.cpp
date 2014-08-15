@@ -20,12 +20,12 @@
 #include "AudioUtility.h"
 #include "IAudioBuffer.h"
 
-namespace Nyx {
+namespace nyx {
 //-------------------------------------------------------------------------------------------------------
 	//
-	struct AudioCache::PImpl {
-		typedef std::vector<std::shared_ptr<IAudioBuffer> > AudioBufferList;
-		typedef std::map<std::wstring,  std::shared_ptr<IAudioBuffer>> AudioBufferMap;
+	struct audio_cache::PImpl {
+		typedef std::vector<std::shared_ptr<iaudio_buffer> > AudioBufferList;
+		typedef std::map<std::wstring,  std::shared_ptr<iaudio_buffer>> AudioBufferMap;
 		AudioBufferList audioBufferList_;
 		AudioBufferMap  audioBufferMap_;
 	};
@@ -33,7 +33,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioCache::AudioCache()
+	audio_cache::audio_cache()
 		:pimpl_(new PImpl()) {
 
 	}
@@ -41,7 +41,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioCache::AudioCache(size_t cacheSize) 
+	audio_cache::audio_cache(size_t cacheSize) 
 		:pimpl_(new PImpl()) {
 		pimpl_->audioBufferList_.resize(cacheSize);
 	}
@@ -49,7 +49,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> AudioCache::operator[](const std::wstring& fileName) {
+	std::shared_ptr<iaudio_buffer> audio_cache::operator[](const std::wstring& fileName) {
 		size_t begin = fileName.find_last_of(L"\\/");
 		size_t end = fileName.find_last_of(L".");
 		size_t num = end - begin - 1;
@@ -60,8 +60,8 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Add(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::add(const std::wstring& fileName, std::shared_ptr<iaudio_buffer> audioBuffer) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		
 		size_t begin = fileName.find_last_of(L"\\/");
 		size_t end = fileName.find_last_of(L".");
@@ -74,8 +74,8 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Remove(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::remove(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		
 		size_t begin = fileName.find_last_of(L"\\/");
 		size_t end = fileName.find_last_of(L".");
@@ -102,8 +102,8 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Clear() {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::clear() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		pimpl_->audioBufferList_.clear();
 		pimpl_->audioBufferMap_.clear();
 	}
@@ -111,80 +111,80 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Play(const std::wstring& fileName, const bool isLoop) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::play(const std::wstring& fileName, const bool isLoop) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
-			it->second->Play(isLoop);
+			it->second->play(isLoop);
 		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::PlayAll(const bool isLoop) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::play_all(const bool isLoop) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		std::for_each(pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end(), 
-			[&isLoop](std::shared_ptr<IAudioBuffer> buffer) {
-				buffer->Play(isLoop);
+			[&isLoop](std::shared_ptr<iaudio_buffer> buffer) {
+				buffer->play(isLoop);
 		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Stop(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::stop(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
-			it->second->Stop();
+			it->second->stop();
 		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::StopAll() {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::stop_all() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		std::for_each(pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end(), 
-			[](std::shared_ptr<IAudioBuffer> buffer) {
-				buffer->Stop();
+			[](std::shared_ptr<iaudio_buffer> buffer) {
+				buffer->stop();
 		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Resume(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::resume(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
-			it->second->Resume();
+			it->second->resume();
 		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::ResumeAll() {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::resume_all() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		std::for_each(pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end(), 
-			[](std::shared_ptr<IAudioBuffer> buffer) {
-				buffer->Resume();
+			[](std::shared_ptr<iaudio_buffer> buffer) {
+				buffer->resume();
 		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::Reset(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::reset(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
-			it->second->Reset();
+			it->second->reset();
 		}
 
 	}
@@ -192,64 +192,64 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::ResetAll() {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::reset_all() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		std::for_each(pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end(), 
-			[](std::shared_ptr<IAudioBuffer> buffer) {
-				buffer->Reset();
+			[](std::shared_ptr<iaudio_buffer> buffer) {
+				buffer->reset();
 		});
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::SetEffect(const std::wstring& fileName, const AudioEffectDesc& effectDesc) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::set_effect(const std::wstring& fileName, const audio_effect_desc& effectDesc) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
-			it->second->SetEffect(effectDesc);
+			it->second->set_effect(effectDesc);
 		}
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::SetEffectAll(const AudioEffectDesc& effectDesc) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::set_effect_all(const audio_effect_desc& effectDesc) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		std::for_each(pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end(), 
-			[&effectDesc](std::shared_ptr<IAudioBuffer> buffer) {
-				buffer->SetEffect(effectDesc);
+			[&effectDesc](std::shared_ptr<iaudio_buffer> buffer) {
+				buffer->set_effect(effectDesc);
 		});
 	}
 	
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::ResetEffect(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::reset_effect(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
-			it->second->ResetEffect();
+			it->second->reset_effect();
 		}
 
 	}
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioCache::ResetEffectAll() {
-		Assert(pimpl_ != nullptr);
+	void audio_cache::reset_effect_all() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		std::for_each(pimpl_->audioBufferList_.begin(), 
 			pimpl_->audioBufferList_.end(), 
-			[](std::shared_ptr<IAudioBuffer> buffer) {
-				buffer->ResetEffect();
+			[](std::shared_ptr<iaudio_buffer> buffer) {
+				buffer->reset_effect();
 		});
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const std::shared_ptr<IAudioBuffer> AudioCache::GetAudioBuffer(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
+	const std::shared_ptr<iaudio_buffer> audio_cache::get_audio_buffer(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		auto it = pimpl_->audioBufferMap_.find(fileName);
 		if (it != pimpl_->audioBufferMap_.end()) {
 			return it->second;

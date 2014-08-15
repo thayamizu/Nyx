@@ -21,75 +21,75 @@
 #include "KeyCode.h"
 
 
-namespace Nyx {
+namespace nyx {
 	///ƒ}ƒEƒX“ü—Í
-	class Mouse {
+	class mouse {
 	public:
-		static const int BufferSize;
-		static const int InputDeviceNum;
-		static const int MouseButtonMax;
+		static const int BUFFER_SIZE;
+		static const int INPUT_DEVICE_NUM;
+		static const int MOUSE_BUTTON_MAX;
 	public:
 		/**
 		*
 		*/
-		Mouse();
+		mouse();
 
 		/**
 		*
 		*/
-		Mouse(const InputDeviceDesc& desc);
+		mouse(const input_device_desc& desc);
 
 		/**
 		*
 		*/
-		Mouse(const Mouse& other);
+		mouse(const mouse& other);
 		
 
 		/**
 		*
 		*/
-		bool Initialize(const InputDeviceDesc& desc);
+		bool initialize(const input_device_desc& desc);
 		
 		/**
 		*
 		*/
-		bool IsInitialized(); 
+		bool is_initialized(); 
 		
 		/**
 		*
 		*/
-		bool GetMouseButton(MouseButton button);
+		bool get_mouse_button(MOUSE_BUTTON button);
 		
 		/**
 		*
 		*/
-		Point2l GetPosition();
+		point2i get_position();
 		
 		
 		/**
 		*
 		*/
-		int GetWheelState();
+		int get_wheel_state();
 		
 		/**
 		*
 		*/
-		bool Update();
+		bool update();
 		
 		/**
 		*
 		*/
-		bool Acquire();
+		bool acquire();
 		
 		/**
 		*
 		*/
-		bool Unacquire();
+		bool unacquire();
 		
 		/**
 		*
 		*/
-		void Release();
+		void release();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_PLANE_H_
 #define NYX_CORE_INCLUDED_PLANE_H_
 
-namespace Nyx {
+namespace nyx {
 
 	template <typename T>
-	class Plane{
+	class plane{
 		static_assert(std::is_arithmetic<T>::value,"T required arithmetic type.");
 	public:
 		union {
@@ -42,7 +42,7 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Plane() 
+		plane() 
 			: a(0), b(0), c(0), d(0) {
 
 		} 
@@ -51,15 +51,15 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Plane(T a, T b, T c, T d) {
-				Set(a, b, c, d);
+		plane(T a, T b, T c, T d) {
+				set(a, b, c, d);
 		}
 
 
 		/**
 		*
 		*/
-		void Set(T a, T b, T c, T d) {
+		void set(T a, T b, T c, T d) {
 			this->a = a;
 			this->b = b;
 			this->c = c;
@@ -70,21 +70,21 @@ namespace Nyx {
 		/**
 		*
 		*/
-		void Normalize(){
-			float distance = Math::Abs(Math::Sqrt(a*a + b*b + c*c));
-			Assert(distance != 0);
+		void normalize(){
+			float distance = math::abs(math::sqrt(a*a + b*b + c*c));
+			NYX_ASSERT(distance != 0);
 
 			a /= distance;
 			b /= distance;
 			c /= distance;
 
-			if (Math::Abs(a) <= Math::Epsilon) {
+			if (math::abs(a) <= math::EPSILON) {
 				a = 0.f;
 			}
-			if (Math::Abs(b) <= Math::Epsilon) {
+			if (math::abs(b) <= math::EPSILON) {
 				b = 0.f;
 			}
-			if (Math::Abs(c) <= Math::Epsilon) {
+			if (math::abs(c) <= math::EPSILON) {
 				c = 0.f;
 			}
 		}
@@ -93,16 +93,16 @@ namespace Nyx {
 		/**
 		*
 		*/
-		float GetSignedDistance(const Vector3<T>& point) {
-			return Math::Sqrt(a * point.x + b * point.y + c * point.z + d);
+		float get_signed_distance(const vector3<T>& point) {
+			return math::sqrt(a * point.x + b * point.y + c * point.z + d);
 		}
 		
 
 		/**
 		*
 		*/
-		float GetUnsignedDistance(const Vector3<T>& point) {
-			return Math::Abs(GetSignedDistance(point));
+		float get_unsigned_distance(const vector3<T>& point) {
+			return math::abs(get_signed_distance(point));
 		}
 	};
 }

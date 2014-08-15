@@ -21,26 +21,26 @@
 #include "Primitive/Color4.h"
 #include "Primitive/Rect.h"
 
-namespace Nyx {
+namespace nyx {
 
-	struct FontInfo;
+	struct font_info;
 	
 	///ƒtƒHƒ“ƒg
-	class TextureFont : public IRenderable, public IResource {
+	class texture_font : public irenderable, public iresource {
 	public:
-		TextureFont();
-		TextureFont(wchar_t character, const FontInfo& fontInfo);
-		void Set(wchar_t character, const FontInfo& fontInfo);
-		void Initialize(wchar_t character, const FontInfo& fontInfo);
-		Rect2i GetRect() const;
-		void SetColor(const Color4c& color);
-		Color4c GetColor() const;
-		void SetFontInfo(const FontInfo& fontInfo);
-		FontInfo GetFontInfo() const;
-		void Render(const Matrix44& matrix) const;
+		texture_font();
+		texture_font(wchar_t character, const font_info& fontInfo);
+		void set(wchar_t character, const font_info& fontInfo);
+		void initialize(wchar_t character, const font_info& fontInfo);
+		rect2i get_rect() const;
+		void set_color(const color4c& color);
+		color4c get_color() const;
+		void set_font_info(const font_info& fontInfo);
+		font_info get_font_info() const;
+		void render(const matrix& matrix) const;
 
-		void Release();
-		void Recovery();
+		void release();
+		void recovery();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

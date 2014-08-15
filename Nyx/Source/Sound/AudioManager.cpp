@@ -22,47 +22,47 @@
 #include "AudioUtility.h"
 #include "DirectSoundAudioManager.h"
 
-namespace Nyx {
+namespace nyx {
 	
 	//-------------------------------------------------------------------------------------------------------
 	//Pimpl
-	struct AudioManager::PImpl {
+	struct audio_manager::PImpl {
 		PImpl()
 			:isInitialized_(false), audioManager_(nullptr) {
 		}
 		
 		bool isInitialized_;
 		
-		std::shared_ptr<IAudioManager> audioManager_;
+		std::shared_ptr<iaudio_manager> audioManager_;
 	};
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioManager::AudioManager()
+	audio_manager::audio_manager()
 		: pimpl_(new PImpl()){
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioManager::AudioManager(const AudioDesc& desc)
+	audio_manager::audio_manager(const audio_desc& desc)
 		: pimpl_(new PImpl()) {
-			Initialize(desc);
+			initialize(desc);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioManager::Initialize(const AudioDesc& desc) {
-		Assert(pimpl_ != nullptr);
+	void audio_manager::initialize(const audio_desc& desc) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		if (pimpl_->isInitialized_) {
 			return ;
 		}
 		
 		//オーディオマネージャを初期化
-		pimpl_->audioManager_ = std::make_shared<DirectSoundAudioManager>();
-		pimpl_->audioManager_->Initialize(desc);
+		pimpl_->audioManager_ = std::make_shared<dsound_audio_manager>();
+		pimpl_->audioManager_->initialize(desc);
 
 		//初期化フラグ
 		pimpl_->isInitialized_ = true;
@@ -71,27 +71,27 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> AudioManager::CreateAudioBuffer(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->audioManager_ != nullptr);
-		return pimpl_->audioManager_->CreateAudioBuffer(fileName, bufferDesc);
+	std::shared_ptr<iaudio_buffer> audio_manager::create_audio_buffer(const std::wstring& fileName,  const audio_buffer_desc& bufferDesc) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->create_audio_buffer(fileName, bufferDesc);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioListener> AudioManager::CreateAudioListener() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->audioManager_ != nullptr);
-		return pimpl_->audioManager_->CreateAudioListener();
+	std::shared_ptr<iaudio_listener> audio_manager::create_audio_listener() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->create_audio_listener();
 	}	
 	
 	
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<AudioCache> AudioManager::Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->audioManager_ != nullptr);
-		return pimpl_->audioManager_->Load(fileName, bufferDesc);
+	std::shared_ptr<audio_cache> audio_manager::load_audio(const std::wstring& fileName,  const audio_buffer_desc& bufferDesc) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->audioManager_ != nullptr);
+		return pimpl_->audioManager_->load_audio(fileName, bufferDesc);
 	}
 }

@@ -22,64 +22,64 @@
 #include "SoundReader.h"
 #include "DirectSoundStatic3DAudioBuffer.h"
 
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStatic3DAudioBuffer::DirectSoundStatic3DAudioBuffer(
-		const AudioBufferDesc& bufferDesc, 
-		const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader)
-		: DirectSound3DAudioBuffer(), waveReader_(reader), bufferDesc_(bufferDesc){
+	dsound_static_3d_audio_buffer::dsound_static_3d_audio_buffer(
+		const audio_buffer_desc& bufferDesc, 
+		const dsound_ptr dsound, const std::shared_ptr<sound_reader> reader)
+		: dsound_3d_audio_buffer(), waveReader_(reader), bufferDesc_(bufferDesc){
 
-			bufferDesc_.waveFormat = waveReader_->ReadHeader();
+			bufferDesc_.waveFormat = waveReader_->read_header();
 
-			Load(bufferDesc_, dsound);
-			Create3DBuffer();
-			WriteWaveData();
+			load(bufferDesc_, dsound);
+			create_3d_buffer();
+			write_wave_data();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioUtility::BufferType DirectSoundStatic3DAudioBuffer::GetBufferType() const {
-		return AudioUtility::BufferType_Static3DAudioBuffer;
+	AudioUtility::AUDIO_BUFFER_TYPE dsound_static_3d_audio_buffer::get_buffer_type() const {
+		return AudioUtility::AUDIO_BUFFER_TYPE_STATIC_3D;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStatic3DAudioBuffer::WriteWaveData(){
+	void dsound_static_3d_audio_buffer::write_wave_data(){
 		//バッファに波形データの書き込み
 		void* waveData  = nullptr;
-		ulong waveSize  = 0;
-		HRESULT hr = GetHandle()->Lock(0, 0, &waveData, &waveSize, NULL, NULL, DSBLOCK_ENTIREBUFFER);
+		uint64_t waveSize  = 0;
+		HRESULT hr = get_handle()->Lock(0, 0, &waveData, &waveSize, NULL, NULL, DSBLOCK_ENTIREBUFFER);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのロックに失敗しました。", hr);
 		}
 		
-		ulong readBytes;
-		auto buffer= waveReader_->Read(waveSize, &readBytes);
+		uint64_t readBytes;
+		auto buffer= waveReader_->read(waveSize, &readBytes);
 		CopyMemory(waveData, buffer.get(), readBytes);
 
-		hr = GetHandle()->Unlock(waveData, waveSize, NULL, NULL);
+		hr = get_handle()->Unlock(waveData, waveSize, NULL, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStatic3DAudioBuffer::BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx){
-		Assert(waveReader_ != nullptr);
-		const auto waveHeader = waveReader_->ReadHeader();
+	void dsound_static_3d_audio_buffer::build_dsound_buffer_desc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx){
+		NYX_ASSERT(waveReader_ != nullptr);
+		const auto waveHeader = waveReader_->read_header();
 
 		//フラグの設定
 		DWORD flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D | DSBCAPS_CTRLFREQUENCY;
 
 		//フォーカスモードの設定
-		if ( bufferDesc_.focusType == AudioUtility::FocusType_GlobalFocus) {
+		if ( bufferDesc_.focusType == AudioUtility::FOCUS_TYPE_GLOBAL) {
 			flag |= DSBCAPS_GLOBALFOCUS;
 		}
 		else {

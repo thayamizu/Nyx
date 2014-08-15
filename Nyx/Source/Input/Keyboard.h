@@ -19,67 +19,67 @@
 #include "InputDeviceDesc.h"
 #include "KeyCode.h"
 
-namespace Nyx {
+namespace nyx {
 	///キーボード入力
-	class Keyboard {
+	class keyboard {
 	public:
 		/**
 		*
 		*/
-		Keyboard();
+		keyboard();
 
 		/**
 		*
 		*/
-		Keyboard(const InputDeviceDesc& desc);
+		keyboard(const input_device_desc& desc);
 
 
 		/**
 		*
 		*/
-		bool Initialize(const InputDeviceDesc& desc);
+		bool initialize(const input_device_desc& desc);
 
 		/**
 		*
 		*/
-		bool IsInitialized(); 
+		bool is_initialized(); 
 
 		/**
 		*
 		*/
-		bool Update();
+		bool update();
 
 		/**
 		*
 		*/
-		uchar* GetKeyBuffer();
+		uint8_t* get_key_buffer();
 	
 		
 		/**
 		*
 		*/
-		bool IsPressed(KeyCode keycode);
+		bool is_pressed(KEYCODE keycode);
 
 		/**
 		*
 		*/
-		bool IsPushed(KeyCode keycode);
+		bool is_pushed(KEYCODE keycode);
 
 
 		/**
 		*
 		*/
-		void Release();
+		void release();
 
 		/**
 		*
 		*/
-		bool Acquire();
+		bool acquire();
 
 		/**
 		*
 		*/
-		bool Unacquire();
+		bool unqcquire();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

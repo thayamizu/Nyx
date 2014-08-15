@@ -2,9 +2,9 @@
 #define NYX_CORE_INCLUDED_INPUT_DEVICE_DESC_H_
 #include <memory>
 
-namespace Nyx {
+namespace nyx {
 
-	struct InputDeviceDesc {
+	struct input_device_desc {
 		float range;
 		int   button;
 		void* handle;

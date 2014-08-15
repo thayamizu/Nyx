@@ -30,56 +30,56 @@
 #include "WaveReader.h"
 #include "OggReader.h"
 
-namespace Nyx {
+namespace nyx {
 	//--------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioManager::DirectSoundAudioManager() {
+	dsound_audio_manager::dsound_audio_manager() {
 
 	}
 
 
 	//--------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioManager::DirectSoundAudioManager(const AudioDesc& desc) {
-		Initialize(desc);
+	dsound_audio_manager::dsound_audio_manager(const audio_desc& desc) {
+		initialize(desc);
 	}
 
 
 	//--------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioManager::Initialize(const AudioDesc& desc) {
+	void dsound_audio_manager::initialize(const audio_desc& desc) {
 		//DirectSoundの初期化
 		LPDIRECTSOUND8 directSound;
 		HRESULT hr = ::DirectSoundCreate8(NULL, &directSound ,NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundの初期化に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundの初期化に失敗しました。", hr);
+			debug_out::trace("DirectSoundの初期化に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundの初期化に失敗しました。", hr);
 		}
 
 		auto hwnd = desc.handle;
 		hr = directSound->SetCooperativeLevel(hwnd, DSSCL_EXCLUSIVE|DSSCL_PRIORITY ) ;
 		if (FAILED(hr)){
-			DebugOutput::Trace("DirectSoundの協調レベルが設定出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundの協調レベルが設定出来ませんでした。", hr);
+			debug_out::trace("DirectSoundの協調レベルが設定出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundの協調レベルが設定出来ませんでした。", hr);
 		}
 
 		//スマートポインタの管理下に置く
-		directSound_ = DirectSoundPtr(directSound, true);
+		directSound_ = dsound_ptr(directSound, true);
 	}
 
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
-		std::shared_ptr<IAudioBuffer> audio;
+	std::shared_ptr<iaudio_buffer> dsound_audio_manager::create_audio_buffer(const std::wstring& fileName, const audio_buffer_desc& bufferDesc) {
+		std::shared_ptr<iaudio_buffer> audio;
 		size_t pos = fileName.find_last_of(L".");
 		std::wstring ext = fileName.substr( pos+1, fileName.npos);
 		
 		if (ext == L"wav") {
-			audio = CreateAudioBufferFromWave(fileName, bufferDesc);
+			audio = create_audio_buffer_from_wave(fileName, bufferDesc);
 		}
 		else if (ext == L"ogg") {
-			audio = CreateAudioBufferFromOgg(fileName, bufferDesc);
+			audio = create_audio_buffer_from_ogg(fileName, bufferDesc);
 		}
 		else {
 			audio = nullptr;
@@ -91,21 +91,21 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioListener> DirectSoundAudioManager::CreateAudioListener() {
-		return std::make_shared<DirectSoundAudioListener>(directSound_);
+	std::shared_ptr<iaudio_listener> dsound_audio_manager::create_audio_listener() {
+		return std::make_shared<dsound_audio_listener>(directSound_);
 	}
 
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<AudioCache> DirectSoundAudioManager::Load(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
+	std::shared_ptr<audio_cache> dsound_audio_manager::load_audio(const std::wstring& fileName, const audio_buffer_desc& bufferDesc) {
 		std::wstring line(L"");
 		std::wifstream file(fileName);
-		std::shared_ptr<AudioCache> audioCache(std::make_shared<AudioCache>());
+		std::shared_ptr<audio_cache> audioCache(std::make_shared<audio_cache>());
 
 		while (std::getline(file, line)) {
-			std::shared_ptr<IAudioBuffer> buffer = CreateAudioBuffer(line, bufferDesc);
-			audioCache->Add(line, buffer);
+			std::shared_ptr<iaudio_buffer> buffer = create_audio_buffer(line, bufferDesc);
+			audioCache->add(line, buffer);
 		}
 
 		return audioCache;
@@ -114,31 +114,31 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	const DirectSoundPtr DirectSoundAudioManager::GetHandle() {
+	const dsound_ptr dsound_audio_manager::get_handle() {
 		return directSound_;
 	}
 
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBufferFromWave(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
-		std::shared_ptr<IAudioBuffer> audio;
-		std::shared_ptr<SoundReader> reader = std::make_shared<WaveReader>(fileName);
+	std::shared_ptr<iaudio_buffer> dsound_audio_manager::create_audio_buffer_from_wave(const std::wstring& fileName, const audio_buffer_desc& bufferDesc) {
+		std::shared_ptr<iaudio_buffer> audio;
+		std::shared_ptr<sound_reader> reader = std::make_shared<wave_reader>(fileName);
 		//sound readerは必ず初期化される
-		Assert (reader != nullptr) 
+		NYX_ASSERT (reader != nullptr) 
 
 		switch(bufferDesc.bufferType) {
-		case AudioUtility::BufferType_StaticAudioBuffer :
-			audio = std::make_shared<DirectSoundStaticAudioBuffer>(bufferDesc, directSound_, reader);
+		case AudioUtility::AUDIO_BUFFER_TYPE_STATIC :
+			audio = std::make_shared<dsound_static_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
-		case AudioUtility::BufferType_Static3DAudioBuffer:
-			audio = std::make_shared<DirectSoundStatic3DAudioBuffer>(bufferDesc, directSound_, reader);
+		case AudioUtility::AUDIO_BUFFER_TYPE_STATIC_3D:
+			audio = std::make_shared<dsound_static_3d_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
-		case AudioUtility::BufferType_StreamingAudioBuffer:
-			audio = std::make_shared<DirectSoundStreamingAudioBuffer>(bufferDesc, directSound_, reader);
+		case AudioUtility::AUDIO_BUFFER_TYPE_STREAMING:
+			audio = std::make_shared<dsound_streaming_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
-		case AudioUtility::BufferType_Streaming3DAudioBuffer:
-			audio = std::make_shared<DirectSoundStreaming3DAudioBuffer>(bufferDesc, directSound_, reader);
+		case AudioUtility::AUDIO_BUFFER_TYPE_STREAMING_3D:
+			audio = std::make_shared<dsound_streaming_3d_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
 		default:
 			throw std::invalid_argument("無効な引数が渡されました。");
@@ -149,8 +149,8 @@ namespace Nyx {
 
 	//---------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<IAudioBuffer> DirectSoundAudioManager::CreateAudioBufferFromOgg(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) {
-		Nyx::DebugOutput::Trace("Oggファイルはサポートされていません");
+	std::shared_ptr<iaudio_buffer> dsound_audio_manager::create_audio_buffer_from_ogg(const std::wstring& fileName, const audio_buffer_desc& bufferDesc) {
+		nyx::debug_out::trace("Oggファイルはサポートされていません");
 		fileName, bufferDesc;
 		return nullptr;
 	}

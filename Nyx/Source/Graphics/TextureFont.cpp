@@ -20,14 +20,14 @@
 #include "detail/GDI/Font.h"
 #include "Primitive/Rect.h"
 #include "FontInfo.h"
-namespace Nyx {
-	struct TextureFont::PImpl
+namespace nyx {
+	struct texture_font::PImpl
 	{
 		wchar_t character_;
-		FontInfo fontInfo_;
+		font_info fontInfo_;
 		D3dXSprite9Ptr sprite_;
 		D3dTexture9Ptr texture_;
-		Rect2i         rect_;
+		rect2i         rect_;
 		//-----------------------------------------------------------------------------------------
 		//
 		PImpl()
@@ -37,22 +37,22 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		PImpl(wchar_t ch, const FontInfo& fontInfo)
+		PImpl(wchar_t ch, const font_info& fontInfo)
 			: character_(ch), fontInfo_(fontInfo), sprite_(nullptr), texture_(nullptr) {
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void Set(wchar_t ch, const FontInfo& fontInfo) {
+		void set(wchar_t ch, const font_info& fontInfo) {
 			character_ = ch;
 			fontInfo_ = fontInfo;
 
-			LoadTexture();
+			load_texture();
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void CreateSprite() {
+		void make_sprite() {
 			// D3dDevice9オブジェクトの取得
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
@@ -60,8 +60,8 @@ namespace Nyx {
 			LPD3DXSPRITE sprite = NULL;
 			HRESULT hr = D3DXCreateSprite(d3dDevice.get(), &sprite);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("スプライトの生成に失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("スプライトの生成に失敗しました。", hr);
+				debug_out::trace("スプライトの生成に失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("スプライトの生成に失敗しました。", hr);
 			}
 
 			//スマートポインタの管理下に置く
@@ -70,11 +70,11 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void LoadTexture() {
+		void load_texture() {
 			// D3dDevice9オブジェクトの取得
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
-			using Nyx::GDI::Font;
+			using nyx::gdi::font;
 
 			//DCの取得とフォントの生成
 			wchar_t fontFace[32] = {};
@@ -110,8 +110,8 @@ namespace Nyx {
 				1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED,
 				&texture, NULL);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("テクスチャの生成に失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("テクスチャの生成に失敗しました。", hr);
+				debug_out::trace("テクスチャの生成に失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("テクスチャの生成に失敗しました。", hr);
 			}
 
 			// テクスチャにフォントビットマップ書き込み
@@ -120,8 +120,8 @@ namespace Nyx {
 				D3DLOCKED_RECT LockedRect = {};
 				hr = texture->LockRect(0, &LockedRect, NULL, D3DLOCK_DISCARD);
 				if (FAILED(hr)) {
-					DebugOutput::Trace("テクスチャのロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
-					throw COMException("テクスチャのロックに失敗しました。", hr);
+					debug_out::trace("テクスチャのロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
+					throw com_exception("テクスチャのロックに失敗しました。", hr);
 				}
 
 				//メモリをクリア
@@ -148,34 +148,34 @@ namespace Nyx {
 				//テクスチャサーフェイスをアンロック
 				hr = texture->UnlockRect(NULL);
 				if (FAILED(hr)) {
-					DebugOutput::Trace("テクスチャのアンロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
-					throw COMException("テクスチャのアンロックに失敗しました。", hr);
+					debug_out::trace("テクスチャのアンロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
+					throw com_exception("テクスチャのアンロックに失敗しました。", hr);
 				}
 			}
 
-			rect_ = Rect2i(0, 0, GM.gmCellIncX, TM.tmHeight);
+			rect_ = rect2i(0, 0, GM.gmCellIncX, TM.tmHeight);
 			//スマートポインタの管理下に置く
 			texture_ = D3dTexture9Ptr(texture, false);
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void Initialize() {
-			CreateSprite();
-			LoadTexture();
+		void initialize() {
+			make_sprite();
+			load_texture();
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		Rect2i GetRect() {
+		rect2i get_rect() {
 			return rect_;
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void Render(const Matrix44& matrix) {
+		void render(const matrix& matrix) {
 			D3DXMATRIX world;
-			::CopyMemory(&world, matrix.Mat, sizeof(D3DXMATRIX));
+			::CopyMemory(&world, matrix.mat_, sizeof(D3DXMATRIX));
 
 			sprite_->SetTransform(&world);
 			sprite_->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE);
@@ -194,7 +194,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TextureFont::TextureFont()
+	texture_font::texture_font()
 		:pimpl_(std::make_shared<PImpl>())
 	{
 	}
@@ -202,88 +202,88 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TextureFont::TextureFont(wchar_t character, const FontInfo& fontInfo)
+	texture_font::texture_font(wchar_t character, const font_info& fontInfo)
 		:pimpl_(std::make_shared<PImpl>(character, fontInfo))
 	{
-		Initialize(character, fontInfo);
+		initialize(character, fontInfo);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::Set(wchar_t character, const FontInfo& fontInfo) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Set(character, fontInfo);
+	void texture_font::set(wchar_t character, const font_info& fontInfo) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set(character, fontInfo);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::Initialize(wchar_t character, const FontInfo& fontInfo) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Set(character, fontInfo);
-		pimpl_->Initialize();
+	void texture_font::initialize(wchar_t character, const font_info& fontInfo) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set(character, fontInfo);
+		pimpl_->initialize();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	Rect2i TextureFont::GetRect() const {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetRect();
+	rect2i texture_font::get_rect() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		return pimpl_->get_rect();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::SetFontInfo(const FontInfo& fontInfo){
-		Assert(pimpl_ != nullptr);
+	void texture_font::set_font_info(const font_info& fontInfo){
+		NYX_ASSERT(pimpl_ != nullptr);
 		pimpl_->fontInfo_ = fontInfo;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	FontInfo TextureFont::GetFontInfo() const{
-		Assert(pimpl_ != nullptr);
+	font_info texture_font::get_font_info() const{
+		NYX_ASSERT(pimpl_ != nullptr);
 		return pimpl_->fontInfo_;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::SetColor(const Color4c& color) {
-		Assert(pimpl_ != nullptr);
+	void texture_font::set_color(const color4c& color) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		pimpl_->fontInfo_.fontColor = color;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	Color4c TextureFont::GetColor() const{
-		Assert(pimpl_ != nullptr);
+	color4c texture_font::get_color() const{
+		NYX_ASSERT(pimpl_ != nullptr);
 		return pimpl_->fontInfo_.fontColor;
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::Render(const Matrix44& matrix) const{
-		Assert(pimpl_ != nullptr);
-		pimpl_->Render(matrix);
+	void texture_font::render(const matrix& matrix) const{
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->render(matrix);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::Release() {
-		Assert(pimpl_ != nullptr);
+	void texture_font::release() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		pimpl_->sprite_->OnLostDevice();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureFont::Recovery(){
-		Assert(pimpl_ != nullptr);
+	void texture_font::recovery(){
+		NYX_ASSERT(pimpl_ != nullptr);
 		pimpl_->sprite_->OnResetDevice();
 	}
 }

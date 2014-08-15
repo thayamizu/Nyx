@@ -2,26 +2,26 @@
 #define NYX_CORE_INCLUDED_GRAPHICS_DEVICE_CAPACITY_H_
 #include "GraphicsDeviceType.h"
 
-namespace Nyx {
+namespace nyx {
 
-	class GraphicsDeviceCapacity 
+	class graphics_capacity 
 	{
 	public:
-		GraphicsDeviceCapacity();
+		graphics_capacity();
 
-		void SetAdapterIndex(uint adapterIndex);
+		void set_adapter_index(uint32_t adapterIndex);
 		
-		void SetWindowMode(WindowMode windowMode); 
+		void set_window_mode(WINDOW_MODE windowMode); 
 
-		void LookupGraphicsDeviceCapacity();
+		void lookup_graphics_device();
 		
-		uint GetAdapterCount();
+		uint32_t get_adapter_count();
 		
-		BackBufferFormat GetBackBufferFormat();
+		back_buffer_format get_back_buffer_format();
 		
-		StencilBufferFormat GetDepthStencilBufferFormat();
+		stencil_buffeR_format get_depth_stencil_buffer_format();
 		
-		bool GetSupportedMultiSamplingQuality(ulong samplingLevel, FormatType formatType, ulong* quality);
+		bool get_supported_multisampling_level(uint64_t samplingLevel, format_type formatType, uint64_t* quality);
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl>  pimpl_;

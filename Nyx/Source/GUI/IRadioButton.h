@@ -2,10 +2,10 @@
 #define NYX_CORE_INCLUDED_IRADIO_BUTTON_H_
 #include "GUI/IControl.h"
 #include "Utility/Type.h"
-namespace Nyx 
+namespace nyx 
 {
 	///ラジオボタンインタフェース
-	class IRadioButton : public IControl
+	class IRadioButton : public iwidget
 	{
 	public:
 		//----------------------------------------------------------------
@@ -20,19 +20,19 @@ namespace Nyx
 		* ラベルの取得
 		* @return std::wstring& ラベル
 		*/
-		virtual std::wstring GetLabel() const = 0;
+		virtual std::wstring get_label() const = 0;
 
 		/**
 		* ラベルの設定
 		* @param const std::wstring& ラベル
 		*/
-		virtual void SetLabel(const std::wstring& label) = 0;
+		virtual void set_label(const std::wstring& label) = 0;
 
 		/**
 		* ボタンがチェック状態かどうか
 		* @return bool trueならチェックされている
 		*/
-		virtual bool IsChecked() const = 0;
+		virtual bool is_checked() const = 0;
 	};
 }
 #endif

@@ -2,53 +2,55 @@
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "detail/DX9/DirectXDefinition.h"
+#include "ResourceCache.h"
+#include "ResourceHandle.h"
 
-namespace Nyx {
+namespace nyx {
 	//----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<Sprite> SpriteManager::CreateSprite(int width, int height, const Color4c& color) {
-		auto resource = std::make_shared<Sprite>(width, height, color);
-		ResourceCache::Add(std::make_shared<ResourceHandle>(L"0" , resource));
+	std::shared_ptr<sprite> sprite_factory::make_sprite(int width, int height, const color4c& color) {
+		auto resource = std::make_shared<sprite>(width, height, color);
+		resource_cache::add(std::make_shared<resource_handle>(L"0" , resource));
 		return resource;
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<Sprite> SpriteManager::CreateSprite(const std::wstring& fileName)
+	std::shared_ptr<sprite> sprite_factory::make_sprite(const std::wstring& fileName)
 	{
-		if (ResourceCache::Find(fileName)) {
-			return std::static_pointer_cast<Sprite>(ResourceCache::GetHandle(fileName)->GetResource());
+		if (resource_cache::find(fileName)) {
+			return std::static_pointer_cast<sprite>(resource_cache::get_handle(fileName)->get_resource());
 		}
 
-		auto resource = std::make_shared<Sprite>(fileName);
-		ResourceCache::Add(std::make_shared<ResourceHandle>(fileName, resource));
+		auto resource = std::make_shared<sprite>(fileName);
+		resource_cache::add(std::make_shared<resource_handle>(fileName, resource));
 		return resource;
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void  SpriteManager::Load(const std::wstring& fileName) {
+	void  sprite_factory::load_sprite(const std::wstring& fileName) {
 		std::wstring line;
 		std::wifstream ifs;
 		ifs.open(fileName);
 		while (ifs >> line) {
-			if (ResourceCache::Find(line)) {
+			if (resource_cache::find(line)) {
 				continue;
 			}
 
-			auto resource = std::make_shared<Sprite>(line);
-			ResourceCache::Add(std::make_shared<ResourceHandle>(line, resource));
+			auto resource = std::make_shared<sprite>(line);
+			resource_cache::add(std::make_shared<resource_handle>(line, resource));
 		}
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	void SpriteManager::Delete(const std::wstring& fileName) {
-		ResourceCache::Delete(fileName);
+	void sprite_factory::remove(const std::wstring& fileName) {
+		resource_cache::remove(fileName);
 	}
 
-	std::shared_ptr<Sprite> SpriteManager::GetItem(const std::wstring& resourceName) {
-		return std::static_pointer_cast<Sprite>(ResourceCache::GetHandle(resourceName)->GetResource());
+	std::shared_ptr<sprite> sprite_factory::get_item(const std::wstring& resourceName) {
+		return std::static_pointer_cast<sprite>(resource_cache::get_handle(resourceName)->get_resource());
 	}
 }

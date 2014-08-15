@@ -19,7 +19,7 @@
 
 #include "Primitive/Color4.h"
 
-namespace Nyx {
+namespace nyx {
 	///　メッシュインタフェース
 	class IMesh {
 	public:
@@ -31,29 +31,29 @@ namespace Nyx {
 		/**
 		*
 		*/
-		virtual void GetAmbient(Color4f* ambient, int index) = 0;
+		virtual void GetAmbient(color4f* ambient, int index) = 0;
 		/**
 		*
 		*/
-		virtual void SetAmbient(Color4f& ambient, int index) = 0;
+		virtual void SetAmbient(color4f& ambient, int index) = 0;
 
 		/**
 		*
 		*/
-		virtual void GetSpecular(Color4f* specular, int index) = 0;
+		virtual void GetSpecular(color4f* specular, int index) = 0;
 		/**
 		*
 		*/
-		virtual void SetSpecular(Color4f& specular, int index) = 0;
+		virtual void SetSpecular(color4f& specular, int index) = 0;
 
 		/**
 		*
 		*/
-		virtual void GetDiffuse(Color4f* diffuse, int index) = 0;
+		virtual void GetDiffuse(color4f* diffuse, int index) = 0;
 		/**
 		*
 		*/
-		virtual void SetDiffuse(Color4f& diffuse, int index) = 0;
+		virtual void SetDiffuse(color4f& diffuse, int index) = 0;
 
 		/**
 		*

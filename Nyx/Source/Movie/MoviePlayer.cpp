@@ -5,9 +5,9 @@
 #include "Movie/MoviePlayer.h"
 #include "DirectShowDefinition.h"
 
-namespace Nyx {
+namespace nyx {
 
-	struct MoviePlayer::PImpl {
+	struct movie_player::PImpl {
 		//-----------------------------------------------------------------------------------
 		//
 		PImpl()
@@ -19,18 +19,18 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------
 		//
-		PImpl(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName)
+		PImpl(nyx::window& wnd, const std::wstring& fileName)
 			: mediaControl_(nullptr), mediaEvent_(nullptr), windowlessControl_(nullptr), graphBuilder_(nullptr), 
 			captureGraphBuilder_(nullptr), videoMixingRenderer_(nullptr), sourceFilter_(nullptr), isInitialized_(false) {
 				try {
 					//動画再生用のフィルタグラフを初期化
-					if (Initialize(window)) {
+					if (initialize(wnd)) {
 						//動画を開く
-						Open(fileName);
+						open(fileName);
 					}
 
 				}
-				catch(COMException e) {
+				catch(com_exception e) {
 					throw e;
 				}
 		}
@@ -38,33 +38,33 @@ namespace Nyx {
 		//-----------------------------------------------------------------------------------
 		//
 		~PImpl() {
-			Release();
+			release();
 		}
 
 		//-----------------------------------------------------------------------------------
-		bool IsInitialized() {
+		bool is_initialized() {
 			return isInitialized_;
 		}
 
 		//-----------------------------------------------------------------------------------
 		//
-		bool Initialize(const std::shared_ptr<Nyx::Window> window) {
-			if (IsInitialized()) {
-				return IsInitialized();
+		bool initialize(nyx::window& wnd) {
+			if (is_initialized()) {
+				return is_initialized();
 			}
 
-			Assert(graphBuilder_  == nullptr);
-			Assert(mediaControl_  == nullptr);
-			Assert(mediaEvent_    == nullptr);
-			Assert(windowlessControl_   == nullptr);
+			NYX_ASSERT(graphBuilder_  == nullptr);
+			NYX_ASSERT(mediaControl_  == nullptr);
+			NYX_ASSERT(mediaEvent_    == nullptr);
+			NYX_ASSERT(windowlessControl_   == nullptr);
 
 			//GraphBuilder を構築
 			IGraphBuilder *pGraphBuilder = NULL;
 			HRESULT hr = CoCreateInstance(CLSID_FilterGraph, NULL,
 				CLSCTX_INPROC, IID_IGraphBuilder, (LPVOID *)&pGraphBuilder);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("GraphBuilderの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("GraphBuilderの作成に失敗しました。", hr);
+				debug_out::trace("GraphBuilderの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("GraphBuilderの作成に失敗しました。", hr);
 			}
 			graphBuilder_ = IGraphBuilderPtr(pGraphBuilder);
 
@@ -73,8 +73,8 @@ namespace Nyx {
 			hr = pGraphBuilder->QueryInterface(IID_IMediaControl,
 				(LPVOID *)&pMediaControl);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("IMediaControlインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("IMediaControlインタフェースの取得に失敗しました。", hr);
+				debug_out::trace("IMediaControlインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("IMediaControlインタフェースの取得に失敗しました。", hr);
 			}
 			mediaControl_ = IMediaControlPtr(pMediaControl);
 
@@ -83,8 +83,8 @@ namespace Nyx {
 			hr = pGraphBuilder->QueryInterface(IID_IMediaEventEx,
 				(LPVOID *)&pMediaEvent);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("IMediaEventExインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("IMediaEventExインタフェースの取得に失敗しました。", hr);
+				debug_out::trace("IMediaEventExインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("IMediaEventExインタフェースの取得に失敗しました。", hr);
 			}
 			mediaEvent_ = IMediaEventExPtr(pMediaEvent);
 
@@ -94,8 +94,8 @@ namespace Nyx {
 			hr = CoCreateInstance(CLSID_VideoMixingRenderer, NULL, 
 				CLSCTX_INPROC, IID_IBaseFilter, (void**)&pBaseFilter); 
 			if (FAILED(hr)) {
-				DebugOutput::Trace("IBaseFilterインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("IBaseFilterインタフェースの取得に失敗しました。", hr);
+				debug_out::trace("IBaseFilterインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("IBaseFilterインタフェースの取得に失敗しました。", hr);
 			}
 			videoMixingRenderer_ = IBaseFilterPtr(pBaseFilter);
 
@@ -103,21 +103,21 @@ namespace Nyx {
 			//GraphBuilderに VideoMixingRendererフィルタを追加
 			hr = graphBuilder_->AddFilter(videoMixingRenderer_.get(), L"Video Mixing Renderer9");
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				debug_out::trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("AddFilterメソッドに失敗しました。", hr);
 			}
 
 			// レンダリング モードを設定する。
 			IVMRFilterConfig* pRenderingConfig = NULL;
 			hr = videoMixingRenderer_->QueryInterface(IID_IVMRFilterConfig, (LPVOID*)&pRenderingConfig);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("IVMRFilterConfigインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("IVMRFilterConfigインタフェースの取得に失敗しました。", hr);
+				debug_out::trace("IVMRFilterConfigインタフェースの取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("IVMRFilterConfigインタフェースの取得に失敗しました。", hr);
 			}
 			hr = pRenderingConfig->SetRenderingMode(VMRMode_Windowless);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("SetRenderingModeメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("SetRenderingModeメソッドに失敗しました。", hr);
+				debug_out::trace("SetRenderingModeメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("SetRenderingModeメソッドに失敗しました。", hr);
 			}
 			pRenderingConfig->Release();
 
@@ -126,22 +126,22 @@ namespace Nyx {
 			IVMRWindowlessControl *pWindowlessControl = NULL;
 			hr = videoMixingRenderer_->QueryInterface(IID_IVMRWindowlessControl, (LPVOID*)&pWindowlessControl);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				debug_out::trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("AddFilterメソッドに失敗しました。", hr);
 			}
 			windowlessControl_ = IVMRWindowlessControlPtr(pWindowlessControl);
-			hr = windowlessControl_->SetVideoClippingWindow(window->GetHandle());
+			hr = windowlessControl_->SetVideoClippingWindow(wnd.get_handle());
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				debug_out::trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("AddFilterメソッドに失敗しました。", hr);
 			}
 
 			//CaptureGraphBuilder2インタフェースの取得
 			ICaptureGraphBuilder2 *pCGB2 = NULL;
 			hr = CoCreateInstance( CLSID_CaptureGraphBuilder2, NULL, CLSCTX_INPROC_SERVER, IID_ICaptureGraphBuilder2, (void**)&pCGB2);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				debug_out::trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("AddFilterメソッドに失敗しました。", hr);
 			}
 			captureGraphBuilder_ = ICaptureGraphBuilder2Ptr(pCGB2);
 
@@ -149,21 +149,21 @@ namespace Nyx {
 			//フィルタグラフにグラフビルダーを追加
 			hr = captureGraphBuilder_->SetFiltergraph(graphBuilder_.get());
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddFilterメソッドに失敗しました。", hr);
+				debug_out::trace("AddFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("AddFilterメソッドに失敗しました。", hr);
 			}
 
 			//クライアントウインドウのサイズを覚えておく
-			Rect2i clientSize;
-			window->GetSize(clientSize);
+			rect2i clientSize;
+			wnd.get_size(clientSize);
 			SetRect(&clientRect_, 0, 0, clientSize.width, clientSize.height);
 
-			Assert(graphBuilder_  != nullptr);
-			Assert(mediaControl_  != nullptr);
-			Assert(mediaEvent_    != nullptr);
-			Assert(windowlessControl_     != nullptr);
-			Assert(captureGraphBuilder_   != nullptr);
-			Assert(videoMixingRenderer_   != nullptr);
+			NYX_ASSERT(graphBuilder_  != nullptr);
+			NYX_ASSERT(mediaControl_  != nullptr);
+			NYX_ASSERT(mediaEvent_    != nullptr);
+			NYX_ASSERT(windowlessControl_     != nullptr);
+			NYX_ASSERT(captureGraphBuilder_   != nullptr);
+			NYX_ASSERT(videoMixingRenderer_   != nullptr);
 
 			isInitialized_ = true;
 
@@ -172,13 +172,13 @@ namespace Nyx {
 
 
 		//-----------------------------------------------------------------------------------
-		void Open(const std::wstring& fileName) {
+		void open(const std::wstring& fileName) {
 			//ソースフィルタにファイルを接続する
 			IBaseFilter *pSource = NULL;
 			HRESULT hr  = graphBuilder_->AddSourceFilter(fileName.c_str(), fileName.c_str(), &pSource);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("AddSourceFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("AddSourceFilterメソッドに失敗しました。", hr);
+				debug_out::trace("AddSourceFilterメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("AddSourceFilterメソッドに失敗しました。", hr);
 			}
 			sourceFilter_ = IBaseFilterPtr(pSource);
 
@@ -187,44 +187,44 @@ namespace Nyx {
 			long width, height;
 			hr = windowlessControl_->GetNativeVideoSize(&width, &height, NULL, NULL);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("GetNativeVideoSizeメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("GetNativeVideoSizeメソッドに失敗しました。", hr);
+				debug_out::trace("GetNativeVideoSizeメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("GetNativeVideoSizeメソッドに失敗しました。", hr);
 			}
 
 			//転送元矩形を設定
 			RECT src = {0, 0, width, height};
 			hr = windowlessControl_->SetVideoPosition(&src, &clientRect_);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("SetVideoPositionメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("SetVideoPositionメソッドに失敗しました。", hr);
+				debug_out::trace("SetVideoPositionメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("SetVideoPositionメソッドに失敗しました。", hr);
 			}
 
 
 			//ビデオレンダラにソースフィルタを接続
 			hr = captureGraphBuilder_->RenderStream(0,  &MEDIATYPE_Video, pSource, 0, videoMixingRenderer_.get());
 			if (FAILED(hr)) {
-				DebugOutput::Trace("RenderStreamメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("RenderStreamメソッドに失敗しました。", hr);
+				debug_out::trace("RenderStreamメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("RenderStreamメソッドに失敗しました。", hr);
 			}
 
 
 			//オーディオレンダラにソースフィルタを接続
 			hr = captureGraphBuilder_->RenderStream(0, &MEDIATYPE_Audio, pSource, 0, 0);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("RenderStreamメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("RenderStreamメソッドに失敗しました。", hr);
+				debug_out::trace("RenderStreamメソッドに失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("RenderStreamメソッドに失敗しました。", hr);
 			}
 		}
 
 
 		//-----------------------------------------------------------------------------------
 		//
-		void Play() {
-			Assert(mediaControl_ != nullptr);
+		void play() {
+			NYX_ASSERT(mediaControl_ != nullptr);
 			HRESULT hr = mediaControl_->Run();
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再生に失敗しました。", hr);
+				debug_out::trace("動画の再生に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("動画の再生に失敗しました。", hr);
 			}
 		}
 
@@ -232,44 +232,44 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------
 		//
-		void Stop() {
-			Assert(mediaControl_ != nullptr);
+		void stop() {
+			NYX_ASSERT(mediaControl_ != nullptr);
 			HRESULT hr = mediaControl_->Stop();
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の停止に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の停止に失敗しました。", hr);
+				debug_out::trace("動画の停止に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("動画の停止に失敗しました。", hr);
 			}
 		}
 
 
 		//-----------------------------------------------------------------------------------
 		//
-		void Pause() {
-			Assert(mediaControl_ != nullptr);
+		void pause() {
+			NYX_ASSERT(mediaControl_ != nullptr);
 			HRESULT hr  =mediaControl_->Pause();
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の一時停止に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の一時停止に失敗しました。", hr);
+				debug_out::trace("動画の一時停止に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("動画の一時停止に失敗しました。", hr);
 			}
 		}
 
 
 		//-----------------------------------------------------------------------------------
 		//
-		void Resume() {
-			Assert(mediaControl_ != nullptr);
+		void resume() {
+			NYX_ASSERT(mediaControl_ != nullptr);
 			HRESULT hr = mediaControl_->Run();
 			if (FAILED(hr)) {
-				DebugOutput::Trace("動画の再開に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("動画の再開に失敗しました。", hr);
+				debug_out::trace("動画の再開に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("動画の再開に失敗しました。", hr);
 			}
 		}
 
 
 		//-----------------------------------------------------------------------------------
 		//
-		void SetAspectRatioMode(bool mode) {
-			Assert(windowlessControl_ != nullptr);
+		void set_aspect_ratio_mode(bool mode) {
+			NYX_ASSERT(windowlessControl_ != nullptr);
 			HRESULT hr ;
 			if (mode) {
 				hr = this->windowlessControl_->SetAspectRatioMode(VMR_ARMODE_LETTER_BOX);
@@ -279,27 +279,27 @@ namespace Nyx {
 			}
 
 			if (FAILED(hr)) {
-				DebugOutput::Trace("アスペクト比の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("アスペクト比の設定に失敗しました。", hr);
+				debug_out::trace("アスペクト比の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("アスペクト比の設定に失敗しました。", hr);
 			}
 		}
 
 
 		//-----------------------------------------------------------------------------------
 		//
-		bool GetAspectRatioMode() const {
-			Assert(windowlessControl_ != nullptr);
-			ulong mode = 0;
+		bool get_aspect_ratio_mode() const {
+			NYX_ASSERT(windowlessControl_ != nullptr);
+			uint64_t mode = 0;
 			HRESULT hr = this->windowlessControl_->GetAspectRatioMode(&mode);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("アスペクト比の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("アスペクト比の取得に失敗しました。", hr);
+				debug_out::trace("アスペクト比の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("アスペクト比の取得に失敗しました。", hr);
 			}
 
 			return mode == VMR_ARMODE_LETTER_BOX ? true : false;
 		}
 
-		void Release() {
+		void release() {
 			mediaControl_.reset();
 			mediaEvent_.reset();
 			graphBuilder_.reset();
@@ -322,94 +322,94 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------
 	//
-	MoviePlayer::MoviePlayer()
+	movie_player::movie_player()
 		: pimpl_(std::make_shared<PImpl>()){
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	MoviePlayer::MoviePlayer(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName)
+	movie_player::movie_player(nyx::window& window, const std::wstring& fileName)
 		: pimpl_(std::make_shared<PImpl>(window, fileName)) {
 	}
 
 
 	//-----------------------------------------------------------------------------------
-	bool MoviePlayer::IsInitialize() {
-		return this->pimpl_->IsInitialized();
+	bool movie_player::is_initialized() {
+		return this->pimpl_->is_initialized();
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool MoviePlayer::Initialize(const std::shared_ptr<Nyx::Window> window) {
-		return this->pimpl_->Initialize(window);
-	}
-
-
-	//-----------------------------------------------------------------------------------
-	void MoviePlayer::Open(const std::wstring& fileName) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());
-		this->pimpl_->Open(fileName);
+	bool movie_player::initialize(nyx::window& wnd) {
+		return this->pimpl_->initialize(wnd);
 	}
 
 
 	//-----------------------------------------------------------------------------------
-	//
-	void MoviePlayer::Play() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		this->pimpl_->Play();
-	}
-
-
-
-	//-----------------------------------------------------------------------------------
-	//
-	void MoviePlayer::Stop() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		this->pimpl_->Stop();
+	void movie_player::open(const std::wstring& fileName) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());
+		this->pimpl_->open(fileName);
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	void MoviePlayer::Pause() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		this->pimpl_->Pause();
+	void movie_player::play() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		this->pimpl_->play();
+	}
+
+
+
+	//-----------------------------------------------------------------------------------
+	//
+	void movie_player::stop() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		this->pimpl_->stop();
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	void MoviePlayer::Resume() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		this->pimpl_->Resume();
+	void movie_player::pause() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		this->pimpl_->pause();
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	void MoviePlayer::SetAspectRatioMode(bool mode) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		this->pimpl_->SetAspectRatioMode(mode);
+	void movie_player::resume() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		this->pimpl_->resume();
 	}
 
 
 	//-----------------------------------------------------------------------------------
 	//
-	bool MoviePlayer::GetAspectRatioMode() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		return this->pimpl_->GetAspectRatioMode();
+	void movie_player::set_aspect_ratio_mode(bool mode) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		this->pimpl_->set_aspect_ratio_mode(mode);
 	}
 
-	void MoviePlayer::Release() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->IsInitialized());	
-		this->pimpl_->Release();
+
+	//-----------------------------------------------------------------------------------
+	//
+	bool movie_player::get_aspect_ratio_mode() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		return this->pimpl_->get_aspect_ratio_mode();
+	}
+
+	void movie_player::release() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->is_initialized());	
+		this->pimpl_->release();
 	}
 };

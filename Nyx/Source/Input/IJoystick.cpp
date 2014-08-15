@@ -19,23 +19,23 @@
 #include "IJoystick.h"
 
 
-namespace Nyx
+namespace nyx
 {
-	IJoystick::IJoystick() 
+	ijoystick::ijoystick() 
 		: buttonNum_(16) {
 	}
 
 	/**
 	*
 	*/
-	void IJoystick::SetButtonMax(const size_t num) {
+	void ijoystick::set_button_num(const size_t num) {
 		buttonNum_ = num;
 	}
 
 	/**
 	*
 	*/
-	size_t IJoystick::GetButtonMax() {
+	size_t ijoystick::get_button_num() {
 		return buttonNum_;
 	}
 }

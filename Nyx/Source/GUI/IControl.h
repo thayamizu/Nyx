@@ -4,26 +4,27 @@
 #include "Primitive/Vector2.h"
 #include "Primitive/Rect.h"
 #include <Windows.h>
-namespace Nyx 
+namespace nyx 
 {
+	typedef HWND window_handle;
 
 	///GUIコントロールの種別
-	enum ControlType {
-		ControlType_Window,
-		ControlType_CheckBox,
-		ControlType_Combobox,
-		ControlType_ListBox,
-		ControlType_PushButton,
-		ControlType_RadioButton,
-		ControlType_ControlTypeNum,
+	enum WIDGET_TYPE {
+		WIDGET_TYPE_WINDOW,
+		WIDGET_TYPE_CHECK_BOX,
+		WIDGET_TYPE_COMBO_BOX,
+		WIDGET_TYPE_LIST_BOX,
+		WIDGET_TYPE_BUTTON,
+		WIDGET_TYPE_RADIO_BUTTON,
+		WIDGET_TYPE_NUM,
 	};
 
 	///イベント引数
-	struct EventArgs {
+	struct event_args {
 		/**
 		 *デフォルトコンストラクタ
 		 */
-		EventArgs():
+		event_args():
 			message(0), wparam(NULL), lparam(NULL){
 		}
 
@@ -34,12 +35,12 @@ namespace Nyx
 		 * @param WPARAM
 		 * @param LPARAM
 		 */
-		EventArgs(uint msg, WPARAM wParam, LPARAM lParam) 
+		event_args(uint32_t msg, WPARAM wParam, LPARAM lParam) 
 			:message(msg), wparam(wParam), lparam(lParam) {
 		}
 
 		//メッセージ
-		uint message;
+		uint32_t message;
 
 		//WPARAM
 		WPARAM wparam;
@@ -50,9 +51,9 @@ namespace Nyx
 
 
 	///コントロールインタフェース
-	class IControl {
+	class iwidget {
 	public:
-		virtual ~IControl() {}
+		virtual ~iwidget() {}
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
 		//---------------------------------------------------------------------------------------
@@ -60,7 +61,7 @@ namespace Nyx
 		* ウインドウハンドルの取得
 		* @return HWND
 		*/
-		virtual HWND GetHandle() = 0;
+		virtual window_handle get_handle() = 0;
 
 		//---------------------------------------------------------------------------------------
 		//描画・更新
@@ -68,25 +69,25 @@ namespace Nyx
 		/**
 		* ウインドウを表示する
 		*/
-		virtual void Show() = 0;
+		virtual void show() = 0;
 
 
 		/**
 		* ウインドウを隠す
 		*/
-		virtual void Hide() = 0;
+		virtual void hide() = 0;
 		
 		
 		/**
 		* ウインドウを更新する
 		*/
-		virtual void Update() = 0;
+		virtual void update() = 0;
 
 		/**
 		* ウインドウが表示されているか
 		* @return trueならウインドウは表示されている
 		*/
-		virtual bool IsShow() = 0;
+		virtual bool is_show() = 0;
 
 		//---------------------------------------------------------------------------------------
 		//コントロールの有効化と無効化
@@ -94,18 +95,18 @@ namespace Nyx
 		/**
 		* コントロールを有効化する
 		*/
-		virtual void Activate() = 0;
+		virtual void activate() = 0;
 
 		/**
 		* コントロールを無効化する
 		*/
-		virtual void Unactivate() = 0;
+		virtual void unactivate() = 0;
 
 		/**
 		* コントロールが有効かどうか
 		* @return bool trueならコントロールは有効
 		*/
-		virtual bool IsActivate() const = 0;
+		virtual bool is_activate() const = 0;
 
 		//---------------------------------------------------------------------------------------
 		//値の取得・設定
@@ -114,62 +115,62 @@ namespace Nyx
 		* コントロールのタイプを取得する
 		* @return ControlType::enum_tの値
 		*/
-		virtual ControlType GetType() const = 0;
+		virtual WIDGET_TYPE get_type() const = 0;
 		
 
 		/**
 		* ユーザーデータを取得する
 		* @return void*
 		*/
-		virtual std::shared_ptr<void> GetUserData() const = 0;
+		virtual std::shared_ptr<void> get_user_data() const = 0;
 
 
 		/**
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		virtual void SetUserData(std::shared_ptr<void> data)  = 0;
+		virtual void set_user_data(std::shared_ptr<void> data)  = 0;
 		
 
 		/**
 		* コントロールのIDを取得する
 		* @return uint コントロールのID
 		*/
-		virtual uint GetID() const = 0;
+		virtual uint32_t get_id() const = 0;
 
 		
 		/**
 		* コントロールのIDを設定する
 		* @return コントロールのID
 		*/
-		virtual void SetID(size_t id)   = 0;
+		virtual void set_id(size_t id)   = 0;
 
 
 		/**
 		* ウインドウのクライアント領域のサイズを取得する
 		* @param Rect2i* ウインドウのクライアント領域のサイズ
 		*/
-		virtual void GetSize(Rect2i& rect) const = 0;
+		virtual void get_size(rect2i& rect) const = 0;
 
 
 		/**
 		* ウインドウのクライアント領域のサイズを設定する
 		* @param Rect2i& ウインドウのクライアント領域のサイズ
 		*/
-		virtual void SetSize(const Rect2i& rect) = 0;
+		virtual void set_size(const rect2i& rect) = 0;
 
 
 		/**
 		* ウインドウの位置を取得する
 		* @param Point2i& p
 		*/
-		virtual void GetPosition(Point2i& p) const = 0;
+		virtual void get_position(point2i& p) const = 0;
 
 
 		/**
 		* ウインドウの位置を設定する
 		*/
-		virtual void SetPosition(const Point2i& p) = 0;
+		virtual void set_position(const point2i& p) = 0;
 	};
 };
 #endif

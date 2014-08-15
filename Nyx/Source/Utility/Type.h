@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-namespace Nyx
+namespace nyx
 {
 	///----------------------------------------------------------------------------------
 	///型の別名定義
@@ -11,22 +11,22 @@ namespace Nyx
 	/**
 	* unsigned charの別名定義
 	*/
-	typedef unsigned char uchar;
+	typedef unsigned char uint8_t;
 
 	/**
 	* unsigned shortの別名定義
 	*/
-	typedef unsigned short ushort;
+	typedef unsigned short uint16_t;
 
 	/**
 	* unsigned intの別名定義
 	*/
-	typedef unsigned int uint;
+	typedef unsigned int uint32_t;
 
 	/**
 	* unsigned longの別名定義
 	*/
-	typedef unsigned long ulong;
+	typedef unsigned long uint64_t;
 
 }
 

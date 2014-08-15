@@ -1,0 +1,18 @@
+#ifndef NYX_CORE_INCLUDED_IFILE_H_
+#define NYX_CORE_INCLUDED_IFILE_H_
+#include <Windows.h>
+#include "Utility/Type.h"
+#include "Utility/Limits.h"
+
+namespace nyx {
+
+	typedef HANDLE file_handle;
+	
+	enum FILE_ACCESS_ATTRIBUTE {
+		FILE_ACCESS_ATTRIBUTE_READ  = GENERIC_READ,
+		FILE_ACCESS_ATTRIBUTE_WRITE = GENERIC_WRITE,
+		FILE_ACCESS_ATTRIBUTE_READ_WRITE = GENERIC_WRITE | GENERIC_READ,
+		FILE_ACCESS_ATTRIBUTE_NUM,
+	};
+}
+#endif

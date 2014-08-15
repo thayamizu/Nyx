@@ -4,32 +4,32 @@
 #include "Graphics/ResourceCache.h"
 #include "Graphics/ResourceHandle.h"
 
-namespace Nyx {
-	CacheMap  ResourceCache::cacheMap_ = CacheMap();
+namespace nyx {
+	cache_map  resource_cache::cacheMap_ = cache_map();
 
 	//----------------------------------------------------------------------------------------
 	//
-	ResourceCache::ResourceCache()
+	resource_cache::resource_cache()
 	{
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	ResourceCache::~ResourceCache() {
-		Clear();
+	resource_cache::~resource_cache() {
+		clear();
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	void ResourceCache::Add(const std::shared_ptr<ResourceHandle>& handle)  {
-		Assert(handle != nullptr);
-		cacheMap_[handle->GetId()] = handle;
+	void resource_cache::add(const std::shared_ptr<resource_handle>& handle)  {
+		NYX_ASSERT(handle != nullptr);
+		cacheMap_[handle->get_name()] = handle;
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void ResourceCache::Delete(const std::wstring& key) {
+	void resource_cache::remove(const std::wstring& key) {
 		auto it = cacheMap_.find(key);
 		if (it != cacheMap_.end()) {
 			cacheMap_.erase(it);
@@ -38,20 +38,20 @@ namespace Nyx {
 
 	//----------------------------------------------------------------------------------------
 	//
-	void ResourceCache::Clear() {
+	void resource_cache::clear() {
 		cacheMap_.clear();
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	bool ResourceCache::Find(const std::wstring& resourceName) {
+	bool resource_cache::find(const std::wstring& resourceName) {
 		auto it = cacheMap_.find(resourceName);
 		return it != cacheMap_.end();
 	}
 
 	//----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<ResourceHandle> ResourceCache::GetHandle(const std::wstring& key) {
+	std::shared_ptr<resource_handle> resource_cache::get_handle(const std::wstring& key) {
 		auto it = cacheMap_.find(key);
 		if (it != cacheMap_.end()) {
 			return it->second;
@@ -61,20 +61,20 @@ namespace Nyx {
 
 	//----------------------------------------------------------------------------------------
 	//
-	void ResourceCache::Release() {
+	void resource_cache::release() {
 		for (auto it : cacheMap_) {
-			auto item = it.second->GetResource();
-			item->Release();
+			auto item = it.second->get_resource();
+			item->release();
 		}
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void ResourceCache::Recovery() {
+	void resource_cache::recover() {
 		for (auto it : cacheMap_) {
-			auto item = it.second->GetResource();
-			item->Recovery();
+			auto item = it.second->get_resource();
+			item->recovery();
 		}
 	}
 }

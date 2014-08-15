@@ -24,82 +24,79 @@
 #include <crtdbg.h>
 #define new  ::new(_CLIENT_BLOCK, __FILE__, __LINE__)
 
-namespace Nyx {
+namespace nyx {
 	///メモリの状態
-	typedef ::_CrtMemState MemoryState;
+	typedef ::_CrtMemState memory_state;
 
 	///メモリチェッカー
-	class MemoryChecker {
+	class memory_checker {
 	public:
 		/**
 		* メモリチェッカーの初期化
 		* @return 成功ならtrue
 		*/
-		static bool Initialize();
+		static bool initialize();
 
 		/**
 		* メモリ状態を取得する
 		* @return MemoryState
 		*/
-		static MemoryState GetMemoryState();
+		static memory_state get_memory_state();
 
 		/**
 		*　メモリの詳細ダンプを実行する
 		*/
-		static void DumpDetail();
+		static void dump_detail();
 
 		/*
 		*　メモリの差分詳細ダンプを実行する
 		* @param MemoryState& メモリ状態
 		*/
-		static void DumpDetail(const MemoryState& old);
+		static void dump_detail(const memory_state& old);
 
 
 		/*
 		*　メモリの統計ダンプを実行する
 		*/
-		static void DumpStatistics();
+		static void dump_statics();
 
 		/*
 		*　メモリの差分統計ダンプを実行する
 		* @param const MemoryState メモリ状態
 		*/
-		static void DumpStatistics(const MemoryState& old);
+		static void dump_statics(const memory_state& old);
 
 
 		/*
 		*　メモリリークをチェックする
 		* @param const MemoryState& メモリ状態
 		*/
-		static bool LeakCheck(const MemoryState& state );
+		static bool leak_check(const memory_state& state );
 
 	private:
-		MemoryChecker(){}//生成禁止
+		memory_checker(){}//生成禁止
 		static bool initialized;///< 初期済みかどうか
 	};
-
 }
 #else 
 //リリース時は、メモリチェッカーを切る
-namespace Nyx {
-	typedef ::_CrtMemState MemoryState;
-
-	class MemoryChecker {
+namespace nyx {
+	class memory_checker {
 	public:
-		static bool Initialize();
+		static bool initialize();
 
-		static MemoryState GetMemoryState();
+		static memory_state get_memory_state();
 
-		static void DumpDetail();
-		static void DumpDetail(const MemoryState& old);
+		static void dump_detail();
+		static void dump_detail(const memory_state& old);
 
-		static void DumpStatistics();
-		static void DumpStatistics(const MemoryState& old);
+		static void dump_statics();
+		static void dump_statics(const memory_state& old);
 
-		static bool LeakCheck(const MemoryState& state );
+		static bool leak_check(const memory_state& state );
 
 	private:
-		MemoryChecker(){}//生成禁止
+		memory_checker(){}//生成禁止
 		static bool initialized;
 	};
 

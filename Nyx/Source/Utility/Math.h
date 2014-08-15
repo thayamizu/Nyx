@@ -2,9 +2,9 @@
 #define NYX_CORE_INCLUDED_MATH_H_
 #include <cmath>
 
-namespace Nyx
+namespace nyx
 {
-	class Math  {
+	class math  {
 	public:
 		//--------------------------------------------------------------------------------------
 		//数学定数定義
@@ -22,27 +22,27 @@ namespace Nyx
 		/**
 		* パイ/2
 		*/
-		static const float HalfPI;
+		static const float HALF_PI;
 
 		/**
 		* パイ/4
 		*/
-		static const float QuadraplePI;
+		static const float QUADRAPLE_PI;
 
 		/**
 		* パイ * 2
 		*/
-		static const float DoublePI;
+		static const float DOUBLE_PI;
 
 		/**
 		* パイ * 4
 		*/
-		static const float QuadrantPI;
+		static const float QUADRANT_PI;
 
 		/**
 		* イプシロン
 		*/
-		static const float Epsilon;
+		static const float EPSILON;
 
 
 		//--------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ namespace Nyx
 		* @param  上限
 		*/
 		template <typename T>
-		static T UpperClamp(T value, T upper) {
+		static T upper_clamp(T value, T upper) {
 			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
 			return (value >= upper)? upper: value; 
 		}
@@ -67,7 +67,7 @@ namespace Nyx
 		* @param T lower 下限
 		*/
 		template <typename T>
-		static T LowerClamp(T value, T lower) {
+		static T lower_clamp(T value, T lower) {
 			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
 			return (value <= lower)? lower: value; 
 		}
@@ -80,10 +80,10 @@ namespace Nyx
 		* @param T lower 下限
 		*/
 		template <typename T>
-		static T Clamp(T value, T lower, T upper) {
+		static T clamp(T value, T lower, T upper) {
 			static_assert(std::is_arithmetic<T>::value, "T requires arithmetic type.");
-			value = LowerClamp(value, lower);
-			value = UpperClamp(value, upper);
+			value = lower_clamp(value, lower);
+			value = upper_clamp(value, upper);
 			return value;
 		}
 
@@ -95,7 +95,7 @@ namespace Nyx
 		* @param deg 度数法の角度
 		* @return  float 度数法を弧度法に変換した値
 		*/
-		static float ToRadian(float deg) {
+		static float to_radian(float deg) {
 			return deg * PI / 180.0F ; 
 		}
 
@@ -104,7 +104,7 @@ namespace Nyx
 		* @param rad 弧度法
 		* @return  float 弧度法を度数法に変換した値
 		*/
-		static float ToDegree(float rad) {
+		static float to_degree(float rad) {
 			return rad * 180.0F / PI;
 		}
 
@@ -116,7 +116,7 @@ namespace Nyx
 		* @param  x    絶対値にしたい数字
 		* @return 絶対値
 		*/
-		static int Abs(int x) {
+		static int abs(int x) {
 			return ::abs(x);
 
 		}
@@ -126,7 +126,7 @@ namespace Nyx
 		* @param  x　絶対値にしたい数字
 		* @return 絶対値
 		*/
-		static float Abs(float x) {
+		static float abs(float x) {
 			return ::fabs(x);
 		}
 
@@ -139,7 +139,7 @@ namespace Nyx
 		* @param y 左辺値
 		* @return 大きい方を返す
 		*/
-		static int Max(int x, int y) {
+		static int max_of(int x, int y) {
 			return (x > y) ? x : y;
 		}
 
@@ -149,7 +149,7 @@ namespace Nyx
 		* @param y 左辺値
 		* @return 大きい方を返す
 		*/
-		static float Max(float x, float y) {
+		static float max_of(float x, float y) {
 			return (x > y) ? x : y;
 		}
 
@@ -159,7 +159,7 @@ namespace Nyx
 		* @param y 左辺値
 		* @return　小さい方を返す
 		*/
-		static int Min(int x, int y) {
+		static int min_of(int x, int y) {
 			return  (x > y) ? y : x;
 		}
 
@@ -169,7 +169,7 @@ namespace Nyx
 		* @param y 左辺値
 		* @return　小さい方を返す
 		*/
-		static float Min(float x, float y) {
+		static float min_of(float x, float y) {
 			return (x > y) ? y : x;
 		}
 
@@ -181,7 +181,7 @@ namespace Nyx
 		* @param x 切り捨てたい数
 		* @return 切り捨てた値
 		*/
-		static float Floor(float x) {
+		static float floor(float x) {
 			return ::floorf(x);
 		}
 
@@ -190,7 +190,7 @@ namespace Nyx
 		* @param x 切り上げたい値
 		* @return 切り上げた値
 		*/  
-		static float Ceil(float x) {
+		static float ceil(float x) {
 			return ::ceilf(x);
 		}
 
@@ -202,7 +202,7 @@ namespace Nyx
 		* @param
 		* @return 
 		*/
-		static float Sqrt(float x) {
+		static float sqrt(float x) {
 			return ::sqrtf(x);
 		}
 
@@ -212,7 +212,7 @@ namespace Nyx
 		* @param y 指数
 		* @return xのy乗
 		*/
-		static float Pow(float x, float y) {
+		static float power(float x, float y) {
 			return ::powf(x, y);
 		}
 		/**
@@ -220,7 +220,7 @@ namespace Nyx
 		* @param x 指数
 		* @return 2のx乗
 		*/
-		static float Pow2(float x) {
+		static float power2(float x) {
 			return ::powf(2.0f, x);
 		}
 
@@ -229,7 +229,7 @@ namespace Nyx
 		* @param x 乗数
 		* @return 自然対数の底のx乗
 		*/
-		static float Exp(float x) {
+		static float exponent(float x) {
 			return ::expf(x);
 		}
 
@@ -238,7 +238,7 @@ namespace Nyx
 		* @param x 自然対数を取る対象値
 		* @return 自然対数
 		*/ 
-		static float Log(float x) {
+		static float log(float x) {
 			return ::logf(x);
 		}
 
@@ -247,7 +247,7 @@ namespace Nyx
 		* @param x 常用対数を取る対象値
 		* @return 常用対数
 		*/ 
-		static float Log10(float x) {
+		static float log10(float x) {
 			return ::log10f(x);
 		}
 
@@ -256,7 +256,7 @@ namespace Nyx
 		* @param x 
 		* @return 2の累乗ならtrue
 		*/
-		static bool IsPow2(int x) {
+		static bool is_power2(int x) {
 			return (x & (x-1)) == 0;
 		}
 
@@ -269,7 +269,7 @@ namespace Nyx
 		* @param x 正弦を計算する値
 		* @return xの正弦
 		*/
-		static float Sin(float x) {
+		static float sin(float x) {
 			return ::sinf(x);
 		}
 
@@ -278,7 +278,7 @@ namespace Nyx
 		* @param x 余弦を計算する値
 		* @return xの余弦
 		*/
-		static float Cos(float x) {
+		static float cos(float x) {
 			return ::cosf(x);
 		}
 
@@ -287,7 +287,7 @@ namespace Nyx
 		* @param x 正接を計算する値
 		* @return xの正接
 		*/
-		static float Tan(float x) {
+		static float tan(float x) {
 			return ::tanf(x);
 		}
 
@@ -296,7 +296,7 @@ namespace Nyx
 		* @param x 双曲正弦を計算する値
 		* @return xの双曲正弦
 		*/
-		static float Sinh(float x) {
+		static float sinh(float x) {
 			return ::sinhf(x);  
 		}
 
@@ -305,7 +305,7 @@ namespace Nyx
 		* @param x 双曲余弦を計算する値
 		* @return xの双曲余弦
 		*/
-		static float Cosh(float x) {
+		static float cosh(float x) {
 			return ::coshf(x);
 		}
 		/**
@@ -313,7 +313,7 @@ namespace Nyx
 		* @param x 双曲正接を計算する値
 		* @return xの双曲正接
 		*/
-		static float Tanh(float x) {
+		static float tanh(float x) {
 			return ::tanhf(x);
 		}
 
@@ -322,7 +322,7 @@ namespace Nyx
 		* @param x 逆正弦を計算する値  -1 ～ 1
 		* @return xの逆正弦   -π/2～π/2
 		*/
-		static float Asin(float x) {
+		static float asin(float x) {
 			return ::asinf(x);
 		}
 
@@ -331,7 +331,7 @@ namespace Nyx
 		* @param x 逆余弦を計算する値 -1 ～ 1
 		* @return xの逆余弦-π/2～π/2
 		*/
-		static float Acos(float x) {
+		static float acos(float x) {
 			return ::acosf(x);
 		}
 
@@ -340,7 +340,7 @@ namespace Nyx
 		* @param x 逆正接を計算する値
 		* @return xの逆正接  -π/2～π/2
 		*/
-		static float Atan(float x) {
+		static float atan(float x) {
 			return ::atanf(x);
 		}
 
@@ -350,7 +350,7 @@ namespace Nyx
 		* @param x 逆正接を計算するx値     
 		* @return (x,y)の逆正接 -π～π
 		*/                         
-		static float Atan2(float y, float x) {
+		static float atan2(float y, float x) {
 			return ::atan2f(y, x);
 		}
 	};

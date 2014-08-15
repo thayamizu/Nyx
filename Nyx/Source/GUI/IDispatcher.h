@@ -17,15 +17,15 @@
 #ifndef NYX_CORE_INCLUDED_IDISPATCHER_H_
 #define NYX_CORE_INCLUDED_IDISPATCHER_H_
 
-namespace Nyx {
+namespace nyx {
 	//前方宣言
-	struct EventArgs;
-	class IControl;
+	struct event_args;
+	class iwidget;
 
-	typedef std::function<void(std::shared_ptr<IControl>, EventArgs)> GUICallback;
+	typedef std::function<void(std::shared_ptr<iwidget>, event_args)> gui_callback;
 
 	///ディスパッチャインタフェース
-	class IDispatcher {
+	class idispatcher {
 	public:
 		//---------------------------------------------------------------------------------------
 		//構築・破壊
@@ -33,7 +33,7 @@ namespace Nyx {
 		/**
 		* デストラクタ
 		*/
-		virtual ~IDispatcher() {}
+		virtual ~idispatcher() {}
 
 		//---------------------------------------------------------------------------------------
 		//イベントの追加と削除
@@ -42,25 +42,25 @@ namespace Nyx {
 		* ディスパッチャにデリゲートオブジェクトを登録する
 		* @param Delegate2<std::shared_ptr<IControl>, EventArgs&>* delegate
 		*/
-		virtual void Add(std::shared_ptr<IControl> control, GUICallback callback) = 0 ;
+		virtual void add(std::shared_ptr<iwidget> control, gui_callback callback) = 0 ;
 
 		/**
 		* ディスパッチャに登録されているデリゲートオブジェクトを削除する
 		* @param uint id
 		*/
-		virtual void Del(std::shared_ptr<IControl> control) = 0 ;
+		virtual void remove(std::shared_ptr<iwidget> control) = 0 ;
 
 		/**
 		* ディスパッチャに登録されているデリゲートオブジェクトをクリアする
 		*/
-		virtual void Clear() = 0;
+		virtual void clear() = 0;
 		
 		/**
 		* ディスパッチャに登録されているデリゲートオブジェクトを取得する
 		* @param uint id
 		* @return GUICallback デリゲートオブジェクト
 		*/
-		virtual GUICallback GetCallback(const std::shared_ptr<IControl> control) = 0;
+		virtual gui_callback get_callback(const std::shared_ptr<iwidget> control) = 0;
 
 		//---------------------------------------------------------------------------------------
 		//イベントの割り当て
@@ -70,7 +70,7 @@ namespace Nyx {
 		* @param std::shared_ptr<IControl> sender
 		* @param EventArgs& e
 		*/
-		virtual void Dispatch(std::shared_ptr<IControl>  sender, EventArgs e) = 0;
+		virtual void Dispatch(std::shared_ptr<iwidget>  sender, event_args e) = 0;
 	};
 }
 

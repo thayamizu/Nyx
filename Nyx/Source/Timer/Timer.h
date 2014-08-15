@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_TIMER_H_
 #define NYX_CORE_INCLUDED_TIMER_H_
 #include "Utility/NonCopyable.h"
-namespace Nyx {
-	class ITimer;
+namespace nyx {
+	class itimer;
 	///独立タイマー
-	class Timer : public ITimer,  private NonCopyable{
+	class Timer : public itimer,  private noncopyable{
 	public:
 
 		//------------------------------------------------------------------------
@@ -44,36 +44,36 @@ namespace Nyx {
 		* タイマの時刻をリセットする．
 		*以降、Getを呼ぶとリセットされた時刻からの経過時間が買える
 		*/
-		void Reset();
+		void reset();
 
 		/**
 		* 時刻の取得
 		* @return ulong
 		*/
-		ulong Get();
+		uint64_t get();
 
 		/**
 		*タイマの時刻設定
 		*@param ulong 時刻
 		*/
-		void Set(ulong now);
+		void set(uint64_t now);
 
 		/*
 		* タイマーをポーズする
 		*@param bool ポーズするのであればtrueを指定
 		*/
-		void Pause(bool pause);
+		void pause(bool pause);
 
 		/**
 		* ポーズ中かどうか
 		* @return bool trueならポーズ
 		*/
-		bool IsPause();
+		bool is_pause();
 
 		/**
 		* ポーズ中ならタイマをリスタートさせる．そうでなければなにもしない
 		*/
-		void Restart();
+		void restart();
 	private:
 		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;

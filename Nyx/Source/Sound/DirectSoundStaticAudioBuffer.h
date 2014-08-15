@@ -19,12 +19,12 @@
 #include "DirectSoundDefinition.h"
 #include "DirectSoundStereoAudioBuffer.h"
 
-namespace Nyx {
-	struct AudioBuffeDesc;
-	class SoundReader;
+namespace nyx {
+	struct audio_buffer_desc;
+	class sound_reader;
 
 	///静的バッファ
-	class DirectSoundStaticAudioBuffer : public DirectSoundStereoAudioBuffer {
+	class dsound_static_audio_buffer : public dsound_stereo_audio_buffer {
 	public:
 		/**
 		* コンストラクタ
@@ -32,20 +32,20 @@ namespace Nyx {
 		* @param const DirectSoundPtr 
 		* @param const std::wstring& fileName
 		*/
-		DirectSoundStaticAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> fileName);
+		dsound_static_audio_buffer(const audio_buffer_desc& bufferDesc, const dsound_ptr dsound, const std::shared_ptr<sound_reader> fileName);
 		
 
 		/**
 		* オーディオバッファの状態の取得します
 		* @return AudioUtility::BufferType
 		*/
-		AudioUtility::BufferType GetBufferType() const;
+		AudioUtility::AUDIO_BUFFER_TYPE get_buffer_type() const;
 	private:
 		/**
 		* DirectSoundのセカンダリバッファにwaveデータを書き込みます
 		* @param size_t バッファサイズ
 		*/
-		void WriteWaveData();
+		void write_wave_data();
 
 
 		/**
@@ -53,10 +53,10 @@ namespace Nyx {
 		* @param DSBUFFERDESC*
 		* @param WAVEFORMATEX& wfx
 		*/
-		void BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
+		void build_dsound_buffer_desc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
 	private:
-		AudioBufferDesc bufferDesc_;
-		std::shared_ptr<SoundReader> waveReader_;
+		audio_buffer_desc bufferDesc_;
+		std::shared_ptr<sound_reader> waveReader_;
 	};
 }
 #endif

@@ -19,9 +19,9 @@
 #include "Timer/ITimer.h"
 #include "Win32Timer.h"
 
-namespace Nyx {
+namespace nyx {
 	//---------------------------------------------------------------------------------------
-	Win32Timer::Win32Timer()
+	win32_timer::win32_timer()
 	: offsetTime(0), pauseTime(0), 
 	  isPaused(false),timeCaps(TIMECAPS()) 
 	{
@@ -40,19 +40,19 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	Win32Timer::~Win32Timer() {
+	win32_timer::~win32_timer() {
 		::timeEndPeriod(timeCaps.wPeriodMin);   
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Win32Timer::Reset() {
+	void  win32_timer::reset() {
 		offsetTime = timeGetTime();
 		isPaused  = false;
 	}
 
 	//---------------------------------------------------------------------------------------
-	ulong  Win32Timer::Get() {
-		ulong time = 0;
+	uint64_t  win32_timer::get() {
+		uint64_t time = 0;
 		if (isPaused) {
 			time = pauseTime - offsetTime;
 		}
@@ -63,7 +63,7 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Win32Timer::Set(ulong now) {
+	void  win32_timer::set(uint64_t now) {
 		if (isPaused) {
 			offsetTime = pauseTime - now;
 		}
@@ -73,18 +73,18 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Win32Timer::Pause(bool pause) {
+	void  win32_timer::pause(bool pause) {
 		isPaused   = pause;   
 		pauseTime = ::timeGetTime();
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool  Win32Timer::IsPause() {
+	bool  win32_timer::is_pause() {
 		return isPaused;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Win32Timer::Restart() {
+	void  win32_timer::restart() {
 		if (isPaused == true) {
 			isPaused = false;
 			offsetTime = ::timeGetTime() - pauseTime;

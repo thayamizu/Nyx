@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_VECTOR3_H_
 #define NYX_CORE_INCLUDED_VECTOR3_H_
 
-namespace Nyx
+namespace nyx
 {
 	template<typename T>
-	class Vector3 {
+	class vector3 {
 		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
 		union {
@@ -36,22 +36,22 @@ namespace Nyx
 			T elements[3];
 		};
 
-		static const Vector3<T> Zero;  ///< ゼロベクトル
+		static const vector3<T> ZERO;  ///< ゼロベクトル
 
-		static const Vector3<T> UnitX; ///< X軸単位ベクトル
+		static const vector3<T> UNIT_X; ///< X軸単位ベクトル
 
-		static const Vector3<T> UnitY; ///< Y軸単位ベクトル
+		static const vector3<T> UNIT_Y; ///< Y軸単位ベクトル
 
-		static const Vector3<T> UnitZ; ///< Z軸単位ベクトル
+		static const vector3<T> UNIT_Z; ///< Z軸単位ベクトル
 
-		static const Vector3<T> ScaleUnit; ///< スケール単位ベクトル 
+		static const vector3<T> SCALE_UNIT; ///< スケール単位ベクトル 
 	
 
 		/**
 		*デフォルトコンストラクタ
 		*/
-		Vector3<T>() {
-			Set(0, 0, 0);
+		vector3<T>() {
+			set(0, 0, 0);
 		}
 
 
@@ -61,8 +61,8 @@ namespace Nyx
 		* @param y
 		* @param z
 		*/
-		Vector3<T>(T x, T y, T z) {
-			Set(x, y, z);
+		vector3<T>(T x, T y, T z) {
+			set(x, y, z);
 		}
 
 
@@ -70,15 +70,15 @@ namespace Nyx
 		* コピーコンストラクタ
 		* @param Vector3<T>
 		*/
-		Vector3<T>(const Vector3<T> & u) {
-			Set(u.x, u.y, u.z);
+		vector3<T>(const vector3<T> & u) {
+			set(u.x, u.y, u.z);
 		}
 
 
 		/**
 		* 値の設定
 		*/
-		void Set(T x, T y, T z) {
+		void set(T x, T y, T z) {
 			this->x = x;
 			this->y = y;
 			this->z = z;
@@ -90,8 +90,8 @@ namespace Nyx
 		* @param 右辺値  
 		* @return　加算結果 
 		*/
-		Vector3<T> operator +(const Vector3<T>& u) const {
-			return Vector3<T>( x + u.x, y + u.y, z + u.z); 
+		vector3<T> operator +(const vector3<T>& u) const {
+			return vector3<T>( x + u.x, y + u.y, z + u.z); 
 
 		}
 
@@ -101,8 +101,8 @@ namespace Nyx
 		* @param　右辺値  
 		* @return 減算結果
 		*/
-		Vector3<T> operator -(const Vector3<T>& u) const {
-			return Vector3<T>( x - u.x, y - u.y, z - u.z); 
+		vector3<T> operator -(const vector3<T>& u) const {
+			return vector3<T>( x - u.x, y - u.y, z - u.z); 
 
 		}
 
@@ -112,8 +112,8 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Vector3<T> operator *(const T u) const {
-			return Vector3<T>( x * u, y * u, z * u);
+		vector3<T> operator *(const T u) const {
+			return vector3<T>( x * u, y * u, z * u);
 
 		}
 
@@ -123,11 +123,11 @@ namespace Nyx
 		* @param 右辺値  
 		* @return 除算結果
 		*/
-		Vector3<T> operator /(const T u) const {
-			if (u <= Math::Epsilon) {
+		vector3<T> operator /(const T u) const {
+			if (u <= math::EPSILON) {
 				return *this;
 			}
-			return Vector3<T>( x / u, y / u, z / u);
+			return vector3<T>( x / u, y / u, z / u);
 		}
 
 
@@ -136,7 +136,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 加算結果
 		*/
-		Vector3<T>& operator +=(const Vector3<T>& u) {
+		vector3<T>& operator +=(const vector3<T>& u) {
 			x += u.x;
 			y += u.y;
 			z += u.z;
@@ -149,7 +149,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 減算結果
 		*/
-		Vector3<T>& operator -=(const Vector3<T>& u) {
+		vector3<T>& operator -=(const vector3<T>& u) {
 			x -= u.x;
 			y -= u.y;
 			z -= u.z;
@@ -162,7 +162,7 @@ namespace Nyx
 		* @param  右辺値
 		* @return 乗算結果
 		*/
-		Vector3<T>& operator *=(const T u) {
+		vector3<T>& operator *=(const T u) {
 			x *= u;
 			y *= u;
 			z *= u;
@@ -175,8 +175,8 @@ namespace Nyx
 		* @param  右辺値
 		* @return 除算結果
 		*/
-		Vector3<T>& operator /=(const T u) {
-			Assert(u != 0);
+		vector3<T>& operator /=(const T u) {
+			NYX_ASSERT(u != 0);
 			x /= u;
 			y /= u;
 			z /= u;
@@ -189,7 +189,7 @@ namespace Nyx
 		* @param 右辺値
 		* @return 代入結果
 		*/
-		Vector3<T>& operator =(Vector3<T>& u) {
+		vector3<T>& operator =(vector3<T>& u) {
 			using std::swap;
 			swap(*this, u);
 			return u;
@@ -200,7 +200,7 @@ namespace Nyx
 		* 反転 
 		* @param 反転結果
 		*/
-		Vector3<T>& operator ~() {
+		vector3<T>& operator ~() {
 			Inverse();
 			return *this;
 		}
@@ -211,7 +211,7 @@ namespace Nyx
 		* @param 右辺値
 		* @return T 内積
 		*/
-		T Dot(Vector3<T>& u) {
+		T dot(vector3<T>& u) {
 			return (x * u.x + y * u.y + z * u.z);
 		}
 
@@ -221,8 +221,8 @@ namespace Nyx
 		* @param   右辺値
 		* @return　Vector3<T> クロス積 
 		*/
-		Vector3<T> Cross(Vector3<T>& u) {
-			return Vector3<T>(
+		vector3<T> cross(vector3<T>& u) {
+			return vector3<T>(
 				(y * u.z - z * u.y ),
 				(x * u.z - z * u.x ),
 				(x * u.y - y * u.x ));
@@ -233,7 +233,7 @@ namespace Nyx
 		* ベクトルの長さ
 		* @return  T 長さ
 		*/
-		float Length() {
+		float norm() {
 			return static_cast<float>(sqrt(x * x + y * y + z * z));
 
 		}
@@ -243,7 +243,7 @@ namespace Nyx
 		* ベクトルの長さの二乗値
 		* @return  T 長さ
 		*/
-		float SquaredLength() {
+		float squared_norm() {
 			return static_cast<float>(x * x + y * y + z * z);
 
 		}
@@ -252,25 +252,25 @@ namespace Nyx
 		/**
 		* ベクトルの正規化
 		*/
-		void Normalize() {
-			T abs = Length(); 
+		void normalize() {
+			T abs = norm(); 
 
-			if (abs <= Math::Epsilon) { abs = 1.f;}
+			if (abs <= math::EPSILON) { abs = 1.f;}
 
 			x /= abs;
 			y /= abs;
 			z /= abs;
 
-			if (Math::Abs(x) < Math::Epsilon) {x = 0.f;}
-			if (Math::Abs(y) < Math::Epsilon) {y = 0.f;}
-			if (Math::Abs(z) < Math::Epsilon) {z = 0.f;}
+			if (math::abs(x) < math::EPSILON) {x = 0.f;}
+			if (math::abs(y) < math::EPSILON) {y = 0.f;}
+			if (math::abs(z) < math::EPSILON) {z = 0.f;}
 		}
 
 
 		/**
 		* ベクトルの反転
 		*/
-		void Inverse() {
+		void inverse() {
 			x = - x;
 			y = - y;
 			z = - z;
@@ -283,8 +283,8 @@ namespace Nyx
 		* @param const Vector3<T>& 終点ベクトル
 		* @param T 補間係数
 		*/
-		Vector3<T> Lerp(const Vector3<T>& v1, const Vector3<T>& v2, float s) {
-			Vector3<T> lerp;
+		vector3<T> lerp(const vector3<T>& v1, const vector3<T>& v2, float s) {
+			vector3<T> lerp;
 			if (s > 1) s = 1;
 			if (s < 0) s = 0;
 			lerp.x = v1.x * (1 - s) + v2.x * s;
@@ -298,20 +298,20 @@ namespace Nyx
 		/** 
 		* @return ゼロベクトルならtrue
 		*/
-		bool IsZero() const {
+		bool is_zero() const {
 			return (
-				Math::Abs(x) <= Math::Epsilon &&
-				Math::Abs(y) <= Math::Epsilon &&
-				Math::Abs(z) <= Math::Epsilon);
+				math::abs(x) <= math::EPSILON &&
+				math::abs(y) <= math::EPSILON &&
+				math::abs(z) <= math::EPSILON);
 		}
 
 
 		/** 
 		* @return 単位ベクトルならtrue
 		*/
-		bool IsUnit() const {
-			const auto value = Math::Sqrt(x*x + y*y +z*z);
-			return (Math::Abs(value - 1.f) <= Math::Epsilon);
+		bool is_unit() const {
+			const auto value = math::sqrt(x*x + y*y +z*z);
+			return (math::abs(value - 1.f) <= math::EPSILON);
 		}
 
 
@@ -320,11 +320,11 @@ namespace Nyx
 		* @param 右辺値 
 		* @return 比較結果が等しいならばtrue
 		*/
-		bool operator ==(const Vector3<T>& u) const {	
+		bool operator ==(const vector3<T>& u) const {	
 			return (
-			Math::Abs(x - u.x) <= Math::Epsilon &&
-			Math::Abs(y - u.y) <= Math::Epsilon &&
-			Math::Abs(z - u.z) <= Math::Epsilon);
+			math::abs(x - u.x) <= math::EPSILON &&
+			math::abs(y - u.y) <= math::EPSILON &&
+			math::abs(z - u.z) <= math::EPSILON);
 		}
 
 
@@ -333,25 +333,25 @@ namespace Nyx
 		* @param 右辺値 
 		* @return　比較結果が等しくないならばtrue
 		*/
-		bool operator !=(const Vector3<T>& u) const {
+		bool operator !=(const vector3<T>& u) const {
 			return !(*this == u);
 		}
 	};
 	//--------------------------------------------------------------------------------------
 	// 定数定義
 	//--------------------------------------------------------------------------------------
-	typedef Vector3<int>     Axis3i;
-	typedef Vector3<float>   Axis3f;
-	typedef Vector3<double>  Axis3d;
-	typedef Vector3<int>     Point3i;
-	typedef Vector3<float>   Point3f;
-	typedef Vector3<double>  Point3d;
-	typedef Vector3<int>     Vector3i;
-	typedef Vector3<float>   Vector3f;
-	typedef Vector3<double>  Vector3d;
-	typedef Vector3<int>     TexChoord3i;
-	typedef Vector3<float>   TexChoord3f;
-	typedef Vector3<double>  TexChoord3d;
+	typedef vector3<int>     axis3i;
+	typedef vector3<float>   axis3f;
+	typedef vector3<double>  axis3d;
+	typedef vector3<int>     point3i;
+	typedef vector3<float>   point3f;
+	typedef vector3<double>  point3d;
+	typedef vector3<int>     vector3i;
+	typedef vector3<float>   vector3f;
+	typedef vector3<double>  vector3d;
+	typedef vector3<int>     tex_choord3i;
+	typedef vector3<float>   tex_choord3f;
+	typedef vector3<double>  tex_choord3d;
 
 
 	//--------------------------------------------------------------------------------------
@@ -359,23 +359,23 @@ namespace Nyx
 	//--------------------------------------------------------------------------------------
 	// ゼロベクトル   
 	template<typename T>
-	const Vector3<T> Vector3<T>::Zero = Vector3<T>(0, 0, 0);  
+	const vector3<T> vector3<T>::ZERO = vector3<T>(0, 0, 0);  
 
 	// X軸単位ベクトル
 	template<typename T>
-	const Vector3<T> Vector3<T>::UnitX = Vector3<T>(1, 0, 0);
+	const vector3<T> vector3<T>::UNIT_X = vector3<T>(1, 0, 0);
 
 	// Y軸単位ベクトル
 	template<typename T>
-	const Vector3<T> Vector3<T>::UnitY = Vector3<T>(0, 1, 0); 
+	const vector3<T> vector3<T>::UNIT_Y = vector3<T>(0, 1, 0); 
 
 	// Z軸ベクトル
 	template<typename T>
-	const Vector3<T> Vector3<T>::UnitZ = Vector3<T>(0, 0, 1); 
+	const vector3<T> vector3<T>::UNIT_Z = vector3<T>(0, 0, 1); 
 
 	// スケール単位ベクトル
 	template<typename T>
-	const Vector3<T> Vector3<T>::ScaleUnit = Vector3<T>(1, 1, 1);
+	const vector3<T> vector3<T>::SCALE_UNIT = vector3<T>(1, 1, 1);
 
 }
 

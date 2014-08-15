@@ -3,10 +3,10 @@
 #include "Primitive/Matrix44.h"
 #include "Primitive/Quaternion.h"
 
-namespace Nyx {
+namespace nyx {
 
 	template <typename T = float>
-	class EulerAngles {
+	class euler_angles {
 		static_assert(std::is_floating_point<T>::value, "T required floating_point.");
 	public:
 		T heading;		///ヘディング
@@ -14,13 +14,13 @@ namespace Nyx {
 		T bank;			///バンク
 
 
-		static const EulerAngles<T> Zero;///ゼロ定数
+		static const euler_angles<T> ZERO;///ゼロ定数
 		
 		/**
 		* コンストラクタ
 		*/
-		EulerAngles()  {
-			Set(0, 0, 0);
+		euler_angles()  {
+			set(0, 0, 0);
 		}
 
 
@@ -30,8 +30,8 @@ namespace Nyx {
 		* @param T ピッチ
 		* @param T バンク
 		*/
-		EulerAngles(T heading, T pitch, T bank) {
-			Set(heading, pitch, bank);
+		euler_angles(T heading, T pitch, T bank) {
+			set(heading, pitch, bank);
 		}
 
 
@@ -41,7 +41,7 @@ namespace Nyx {
 		* @param T ピッチ
 		* @param T バンク
 		*/
-		void Set(T heading, T pitch, T bank) {
+		void set(T heading, T pitch, T bank) {
 			this->heading = heading;
 			this->pitch   = pitch;
 			this->bank    = bank;
@@ -51,35 +51,35 @@ namespace Nyx {
 		/**
 		* オイラー角を恒等化します
 		*/
-		void SetupIdentity() {
-			Set(0, 0, 0);
+		void identity() {
+			set(0, 0, 0);
 		}
 
 
 		/**
 		* オイラー角を正準化します
 		*/
-		void Canonize() {
+		void canonize() {
 			//-π～πの範囲にラップするラムダ式
 			auto wrapPI = [](T radian){
-				const float k = 1.0f / Math::PI;
-				radian = radian - Math::DoublePI *Math::Floor((radian +Math::PI)/Math::DoublePI);
+				const float k = 1.0f / math::PI;
+				radian = radian - math::DOUBLE_PI *math::floor((radian +math::PI)/math::DOUBLE_PI);
 				return radian;
 			};
 			pitch = wrapPI(pitch);
 
-			if (pitch < -Math::HalfPI) {
-				heading += Math::PI;
-				pitch    = - Math::PI - pitch;
-				bank    += Math::PI;
+			if (pitch < -math::HALF_PI) {
+				heading += math::PI;
+				pitch    = - math::PI - pitch;
+				bank    += math::PI;
 			}
-			else if (pitch > Math::HalfPI) {
-				heading += Math::PI;
-				pitch    = Math::PI - pitch;
-				bank    += Math::PI;
+			else if (pitch > math::HALF_PI) {
+				heading += math::PI;
+				pitch    = math::PI - pitch;
+				bank    += math::PI;
 			}
 
-			if (Math::Abs(pitch) > Math::HalfPI - 1e-4) {
+			if (math::abs(pitch) > math::HALF_PI - 1e-4) {
 				heading += bank;
 				bank = 0.0;
 			}
@@ -96,6 +96,6 @@ namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	// ゼロ四元数
 	template<typename T>
-	const EulerAngles<T> EulerAngles<T>::Zero = EulerAngles<T>(0, 0, 0, 0);
+	const euler_angles<T> euler_angles<T>::ZERO = euler_angles<T>(0, 0, 0, 0);
 }
 #endif

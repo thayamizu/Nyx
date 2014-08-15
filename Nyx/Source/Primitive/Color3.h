@@ -18,7 +18,7 @@
 #define NYX_CORE_INCLUDED_COLOR3_H_
 #include "Utility/Math.h"
 
-namespace Nyx
+namespace nyx
 {
 	template <typename T>
 	class Color3{
@@ -90,9 +90,9 @@ namespace Nyx
 
 		}
 		void Clamp() {
-			r = Math::Clamp<T>(r, 0, 255); 
-			g = Math::Clamp<T>(g, 0, 255); 
-			b = Math::Clamp<T>(b, 0, 255); 
+			r = math::clamp<T>(r, 0, 255); 
+			g = math::clamp<T>(g, 0, 255); 
+			b = math::clamp<T>(b, 0, 255); 
 		}
 
 		
@@ -142,9 +142,9 @@ namespace Nyx
 		//--------------------------------------------------------------------------------------
 		bool operator ==(const Color3<T>& color) const {
 			return (
-				Math::Abs(r - color.r) <= Math::Epsilon &&
-				Math::Abs(g - color.g) <= Math::Epsilon &&
-				Math::Abs(b - color.b) <= Math::Epsilon);
+				math::abs(r - color.r) <= math::EPSILON &&
+				math::abs(g - color.g) <= math::EPSILON &&
+				math::abs(b - color.b) <= math::EPSILON);
 		}
 		bool operator !=(const Color3<T>& color) const {
 			return !( *this == color);
@@ -155,14 +155,14 @@ namespace Nyx
 	//--------------------------------------------------------------------------------------
 	// •Ê–¼’è‹`
 	//--------------------------------------------------------------------------------------
-	typedef Color3<uchar> Color3c;
-	typedef Color3<float> Color3f;
+	typedef Color3<uint8_t> color3c;
+	typedef Color3<float> color3f;
 
 	template<>
-	void Color3f::Clamp() {
-		r = Math::Clamp<float>(r, 0.f, 1.f); 
-		g = Math::Clamp<float>(g, 0.f, 1.f); 
-		b = Math::Clamp<float>(b, 0.f, 1.f); 
+	void color3f::Clamp() {
+		r = math::clamp<float>(r, 0.f, 1.f); 
+		g = math::clamp<float>(g, 0.f, 1.f); 
+		b = math::clamp<float>(b, 0.f, 1.f); 
 	}
 
 
@@ -205,30 +205,30 @@ namespace Nyx
 	const Color3<T> Color3<T>::Yellow(255, 255, 0);
 
 	///
-	const Color3f Color3f::White(1.f , 1.f, 1.f);
+	const color3f color3f::White(1.f , 1.f, 1.f);
 
 	///
-	const Color3f  Color3f::Gray(0.5f, 0.5f, 0.5f);
+	const color3f  color3f::Gray(0.5f, 0.5f, 0.5f);
 
 	///
-	const Color3f  Color3f::Black(0.f, 0.f, 0.f);
+	const color3f  color3f::Black(0.f, 0.f, 0.f);
 
 	///
-	const Color3f  Color3f::Red(1.f, 0.f, 0.f);
+	const color3f  color3f::Red(1.f, 0.f, 0.f);
 
 	///
-	const Color3f  Color3f::Green(0, 1.f, 0);
+	const color3f  color3f::Green(0, 1.f, 0);
 
 	///
-	const Color3f  Color3f::Blue(0, 0, 1.f);
+	const color3f  color3f::Blue(0, 0, 1.f);
 
 	///
-	const Color3f  Color3f::Cyan(0, 1.f, 1.f);
+	const color3f  color3f::Cyan(0, 1.f, 1.f);
 
 	///
-	const Color3f Color3f::Magenta(1.f, 0, 1.f);
+	const color3f color3f::Magenta(1.f, 0, 1.f);
 
 	///
-	const Color3f  Color3f::Yellow(1.f, 1.f, 0);
+	const color3f  color3f::Yellow(1.f, 1.f, 0);
 }
 #endif

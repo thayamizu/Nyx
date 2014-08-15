@@ -18,41 +18,41 @@
 #define NYX_CORE_INCLUDED_IAUDIO_BUFFER_3D_H
 #include "Primitive/Vector3.h"
 
-namespace Nyx {
+namespace nyx {
 	///3Dサウンドの機能を持つオーディオバッファインタフェース
-	class I3DAudioBuffer{
+	class i3d_audio_buffer{
 	public:
-		virtual Vector3f GetPosition() const = 0;
-		virtual void SetPosition(const Vector3f& velocity) = 0;
-		virtual Vector3f GetVelocity() const = 0;
-		virtual void SetVelocity(const Vector3f& velocity) = 0;
+		virtual vector3f get_position() const = 0;
+		virtual void set_position(const vector3f& velocity) = 0;
+		virtual vector3f get_velocity() const = 0;
+		virtual void set_velocity(const vector3f& velocity) = 0;
 
 		/**
 		* 音源からの最大距離を取得します
 		* @return float 音源からの最大距離
 		*/
-		virtual float GetMaxDistance() const = 0;
+		virtual float get_max_distance() const = 0;
 
 
 		/**
 		* 音源からの最大距離を設定します
 		* @param float  最大距離
 		*/
-		virtual void SetMaxDistance(float maxDistance) = 0;
+		virtual void set_max_distance(float maxDistance) = 0;
 		
 
 		/**
 		* 音源からの最小距離を設定します
 		* @param float  最小距離
 		*/
-		virtual float GetMinDistance() const = 0;
+		virtual float get_min_distance() const = 0;
 
 
 		/**
 		* 音源からの最小距離を取得します
 		* @return float 音源からの最小距離
 		*/
-		virtual void SetMinDistance(float minDistance) = 0;
+		virtual void set_min_distance(float minDistance) = 0;
 	};
 }
 #endif

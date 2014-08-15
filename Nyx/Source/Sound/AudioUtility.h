@@ -19,64 +19,64 @@
 #define NYX_CORE_INCLUDED_AUDIO_UTILITY_H_
 #include "WaveFileHeader.h"
 
-namespace Nyx {
+namespace nyx {
 	///オーディオユーティリティ
+
 	class AudioUtility {
 	public:
-
 		///フォーカスタイプ
-		enum FocusType {
-			FocusType_DefaultFoucus,
-			FocusType_GlobalFocus,
-			FocusType_StickyFocus,
-			FocusType_FocusTypeNum,
+		enum FOCUS_TYPE {
+			FOCUS_TYPE_DEFAULT,
+			FOCUS_TYPE_GLOBAL,
+			FOCUS_TYPE_STICKY,
+			FOCUS_TYPE_NUM,
 		};
 
 
 		///オーディオバッファタイプ
-		enum BufferType{
-			BufferType_StaticAudioBuffer,
-			BufferType_Static3DAudioBuffer,
-			BufferType_StreamingAudioBuffer,
-			BufferType_Streaming3DAudioBuffer,
-			BufferType_BufferTypeNum,
+		enum AUDIO_BUFFER_TYPE{
+			AUDIO_BUFFER_TYPE_STATIC,
+			AUDIO_BUFFER_TYPE_STATIC_3D,
+			AUDIO_BUFFER_TYPE_STREAMING,
+			AUDIO_BUFFER_TYPE_STREAMING_3D,
+			AUDIO_BUFFER_TYPE_NUM,
 		};
 
 
 		///オーディオエフェクトタイプ
-		enum EffectType {
-			EffectType_Chorus,
-			EffectType_Distortion,
-			EffectType_Echo,
-			EffectType_Flanger,
-			EffectType_Gargle,
-			EffectType_ParametricEqualizer,
-			EffectType_Reverb,
-			EffectType_Reset,
-			EffectType_EffectTypeNum
+		enum AUDIO_EFFECT_TYPE {
+			AUIO_EFFECT_TYPE_CHORUS,
+			AUDIO_EFFECT_TYPE_DISTORTION,
+			AUDIO_EFFECT_TYPE_ECHO,
+			AUDIO_EFFECT_TYPE_FLANGER,
+			AUDIO_EFFECT_TYPE_GARGLE,
+			AUDIO_EFFECT_TYPE_PARAMETRIC_EQUALIZER,
+			AUDIO_EFFECT_TYPE_REVERB,
+			AUDIO_EFFECT_TYPE_RESET,
+			AUDIO_EFFECT_TYPE_NUM
 		};
 
 		///利用可能API
-		enum APIType {
-			APIType_DirectSound,
-			APIType_APITypeNum
+		enum AUDIO_API_TYPE {
+			AUDIO_API_DIRECT_SOUND,
+			AUDIO_API_TYPE_NUM
 		};
 
 
 		///デフォルトビットレート
-		static const double DefaultBitRate;
+		static const double DEFAULT_BIT_RATE;
 
 
 		///デフォルトサンプリングレート
-		static const double DefaultSamplingRate;
+		static const double DEFAULT_SAMPLING_RATE;
 
-		
+
 		/**
 		* ボリュームをデシベルに変換します
 		* @param long ボリューム（1 ~ 100)
 		* @return long デシベル
 		*/
-		static long VolumeToDecibel(long volume);
+		static long volume_to_decibel(long volume);
 
 
 		/**
@@ -84,7 +84,7 @@ namespace Nyx {
 		* @param  long ボリューム
 		* @return long デシベル
 		*/
-		static long DecibelToVolume(long decibel);
+		static long decibel_to_volume(long decibel);
 
 
 		/**
@@ -92,39 +92,36 @@ namespace Nyx {
 		* @param[out] WAVEFORMATEX    Waveファイルフォーマット
 		* @param const WaveFileHeader Waveファイルヘッダ
 		*/
-		static void BuildWaveFormatEx(WAVEFORMATEX* wfx, const WaveFileHeader& waveHeader);
-	private:
-		AudioUtility();//生成禁止
+		static void build_wav_format_ex(WAVEFORMATEX* wfx, const wav_file_header& waveHeader);
+
 	};
-
-
 	///オーディオ初期化記述子
-	struct AudioDesc {
-		ulong                 reserved; ///< 予約領域
+	struct audio_desc {
+		uint64_t              reserved; ///< 予約領域
 		HWND				  handle;   ///< 初期化ハンドル
-		AudioUtility::APIType apiType;  ///< APIの種類
+		AudioUtility::AUDIO_API_TYPE apiType;  ///< APIの種類
 	};
 
 
 	///オーディオバッファ記述子
-	struct AudioBufferDesc {
-		ulong                    reserved;  ///< 予約領域
+	struct audio_buffer_desc {
+		uint64_t                 reserved;  ///< 予約領域
 		GUID                     algorithm; ///< 3Dバッファの再生アルゴリズム
-		AudioUtility::BufferType bufferType;///< オーディオバッファのバッファタイプ
-		AudioUtility::FocusType  focusType; ///< オーディオバッファのフォーカスタイプ
-		WaveFileHeader           waveFormat;
+		AudioUtility::AUDIO_BUFFER_TYPE bufferType;///< オーディオバッファのバッファタイプ
+		AudioUtility::FOCUS_TYPE  focusType; ///< オーディオバッファのフォーカスタイプ
+		wav_file_header           waveFormat;
 	};
 
 
 	///オーディオエフェクト記述子
-	struct AudioEffectDesc {
-		ulong reserved;///< 予約領域
-		AudioUtility::EffectType effectType;///< エフェクトの種類
+	struct audio_effect_desc {
+		uint64_t reserved;///< 予約領域
+		AudioUtility::AUDIO_EFFECT_TYPE effectType;///< エフェクトの種類
 	};
 
 
 	///オーディオステータス
-	struct AudioState {
+	struct audio_state {
 		bool isPlaying;  ///< 再生しているかどうか
 		bool isLooping;  ///< ループ再生かどうか
 		bool isBufferLost;///< オーディオバッファがロストしてるか

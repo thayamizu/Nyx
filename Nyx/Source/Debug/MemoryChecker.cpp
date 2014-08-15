@@ -16,14 +16,14 @@
 #include "Debug/DebugOutput.h"
 #include "Debug/MemoryChecker.h"
 
-	namespace Nyx {
+	namespace nyx {
 		//----------------------------------------------------------------------------------------------
 		//
-		bool MemoryChecker::initialized = false;
+		bool memory_checker::initialized = false;
 
 		//----------------------------------------------------------------------------------------------
 		//
-		bool MemoryChecker::Initialize() {
+		bool memory_checker::initialize() {
 			if (initialized) {
 				return initialized;
 			}
@@ -39,36 +39,36 @@
 
 		//----------------------------------------------------------------------------------------------
 		//
-		MemoryState MemoryChecker::GetMemoryState() {
-			MemoryState state = {};
+		memory_state memory_checker::get_memory_state() {
+			memory_state state = {};
 			_CrtMemCheckpoint(&state);
 			return state;
 		}
 
 		//----------------------------------------------------------------------------------------------
 		//
-		void MemoryChecker::DumpDetail() {
+		void memory_checker::dump_detail() {
 			_CrtMemDumpAllObjectsSince(NULL);
 		}
 
 		//----------------------------------------------------------------------------------------------
 		//
-		void MemoryChecker::DumpDetail(const MemoryState& old) {
+		void memory_checker::dump_detail(const memory_state& old) {
 			_CrtMemDumpAllObjectsSince(&old);
 		}
 
 		//----------------------------------------------------------------------------------------------
 		//
-		void MemoryChecker::DumpStatistics() {
-			MemoryState state;
+		void memory_checker::dump_statics() {
+			memory_state state;
 			_CrtMemCheckpoint(&state);
 			_CrtMemDumpStatistics(&state);
 		}
 
 		//----------------------------------------------------------------------------------------------
 		//
-		void MemoryChecker::DumpStatistics(const MemoryState& old) {
-			MemoryState now, diff;
+		void memory_checker::dump_statics(const memory_state& old) {
+			memory_state now, diff;
 			_CrtMemCheckpoint(&now);
 			_CrtMemDifference(&diff, &old, &now);
 			_CrtMemDumpStatistics(&diff);
@@ -76,20 +76,20 @@
 
 		//----------------------------------------------------------------------------------------------
 		//
-		bool MemoryChecker::LeakCheck(const MemoryState & old) {
-			MemoryState now, diff;
+		bool memory_checker::leak_check(const memory_state & old) {
+			memory_state now, diff;
 			_CrtMemCheckpoint(&now);
 			if (_CrtMemDifference(&diff, &old, &now)) {   
 				_CrtDumpMemoryLeaks();
-				DebugOutput::GetLogger()->PrintThickLine();
-				DebugOutput::GetLogger()->PrintLn("メモリーリーク");
-				DebugOutput::GetLogger()->PrintThinLine();
+				debug_out::get_logger()->print_thick_line();
+				debug_out::get_logger()->printfln("メモリーリーク");
+				debug_out::get_logger()->print_thin_line();
 				_CrtMemDumpAllObjectsSince(&diff);
-				DebugOutput::GetLogger()->PrintThinLine();
+				debug_out::get_logger()->print_thin_line();
 				_CrtMemDumpStatistics(&diff);
-				DebugOutput::GetLogger()->PrintThinLine();
-				DebugOutput::GetLogger()->PrintLn("メモリーリーク");
-				DebugOutput::GetLogger()->PrintThickLine();
+				debug_out::get_logger()->print_thin_line();
+				debug_out::get_logger()->printfln("メモリーリーク");
+				debug_out::get_logger()->print_thick_line();
 
 				return true;
 			}

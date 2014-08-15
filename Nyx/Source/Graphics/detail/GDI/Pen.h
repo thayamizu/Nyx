@@ -20,18 +20,18 @@
 #include "Primitive/Color3.h"
 #include "Primitive/Vector2.h"
 
-namespace Nyx {
-	namespace GDI
+namespace nyx {
+	namespace gdi
 	{  
 		/// ペンスタイル 
-		enum class PenStyle {
-			Solid      = 0x00,
-			Dash       = 0x01,       
-			Dot        = 0x02,       
-			DashDot    = 0x03,       
-			DashDotDot = 0x04, 
-			NullPen    = 5,
-			NumPenStyle,
+		enum class PEN_STYLE {
+			PEN_STYLE_SOLID      = 0x00,
+			PEN_STYLE_DASH       = 0x01,       
+			PEN_STYLE_DOT        = 0x02,       
+			PEN_STYLE_DASH_DOT    = 0x03,       
+			PENSTYLE_DASH_DOT_DOT = 0x04, 
+			PEN_STYLE_NULL		  = 0x05,
+			PEN_STYLE_NUM,
 		};
 
 
@@ -49,7 +49,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			Pen(PenStyle style, int width, Color3c color);
+			Pen(PEN_STYLE style, int width, color3c color);
 
 			/**
 			*
@@ -62,7 +62,7 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Set(PenStyle style, int width, Color3c color);
+			void Set(PEN_STYLE style, int width, color3c color);
 
 			/**
 			*
@@ -87,12 +87,12 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void DrawPolygon(HDC hdc, Point2i* p, int num);
+			void DrawPolygon(HDC hdc, point2i* p, int num);
 
 			/**
 			*
 			*/
-			void DrawBezier(HDC hdc, Point2i* p, int num);
+			void DrawBezier(HDC hdc, point2i* p, int num);
 		private:
 			HDC hdc_;
 			HPEN pen_;

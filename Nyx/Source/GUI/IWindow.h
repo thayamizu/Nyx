@@ -17,14 +17,14 @@
 #ifndef NYX_CORE_INCLUDED_IWINDOW_H_
 #define NYX_CORE_INCLUDED_IWINDOW_H_
 #include "GUI/IControl.h"
-namespace Nyx {
+namespace nyx {
 	class IWinHook;
 	/**
 	* ウインドウ・ボタンなどのGUIクラスのインタフェース
 	* 必要に応じて、メソッドの引き上げ・追加を行うとよい
 	*/
 	///ウインドウインタフェース
-	class IWindow : public IControl{
+	class iwindow : public iwidget{
 	public:
 		//----------------------------------------------------------------
 		//構築・破壊
@@ -32,7 +32,7 @@ namespace Nyx {
 		/**
 		* デストラクタ
 		*/
-		virtual ~IWindow() {}
+		virtual ~iwindow() {}
 
 		//----------------------------------------------------------------
 		//ウインドウ固有の操作
@@ -40,19 +40,19 @@ namespace Nyx {
 		/**
 		* メニューを取得する
 		*/
-		virtual HMENU GetMenu() = 0;
+		virtual HMENU get_menu() = 0;
 
 		/**
 		* メニューを設定する
 		* @pram HMENU メニュー
 		*/
-		virtual void SetMenu(HMENU menu) = 0;
+		virtual void set_menu(HMENU menu) = 0;
 		
 		/**
 		* メッセージ処理
 		* @retur bool
 		*/
-		virtual bool ProcessMessage() = 0;
+		virtual bool process_message() = 0;
 	};
 }
 

@@ -2,21 +2,21 @@
 #define NYX_CORE_INCLUDED_IRENDERABLE_H_
 #include "Primitive/Matrix44.h"
 
-namespace Nyx {
+namespace nyx {
 
 	///レンダリング可能なリソース
-	class IRenderable {
+	class irenderable {
 	public:
 		/**
 		*
 		*/
-		virtual ~IRenderable() {}
+		virtual ~irenderable() {}
 		
 		
 		/**
 		*
 		*/
-		virtual void Render(const Matrix44& matrix) const = 0;
+		virtual void render(const matrix& matrix) const = 0;
 	};
 };
 

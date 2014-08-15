@@ -27,13 +27,13 @@
 #include "Primitive/Vector3.h"
 
 
-namespace Nyx {
+namespace nyx {
 
-	struct Joystick::PImpl : public IJoystick {
+	struct joystick::PImpl : public ijoystick {
 		bool isInitialized;
 
 		PImpl() 
-			:isInitialized(false), IJoystick(), allowRange_(0), joystick_(nullptr), joystickDevice_(nullptr), isAcquire_(false), axis_()
+			:isInitialized(false), ijoystick(), allowRange_(0), joystick_(nullptr), joystickDevice_(nullptr), isAcquire_(false), axis_()
 		{
 		}
 		~PImpl() 
@@ -42,30 +42,30 @@ namespace Nyx {
 		}
 		//-----------------------------------------------------------------------------------------
 		//
-		void Initialize(HWND hwnd_, float range, int buttonNum) 
+		void initialize(HWND hwnd_, float range, int buttonNum) 
 		{
 			//メンバ初期化
 			::ZeroMemory(&joyCaps_, sizeof(joyCaps_));
 			allowRange_ = range;
-			SetButtonMax(buttonNum);
+			set_button_num(buttonNum);
 
 			//DirectInputオブジェクトの作成
 			LPDIRECTINPUT8 joystick = NULL;
 			HRESULT hr = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&joystick, NULL );
 			if(FAILED(hr)) 
 			{
-				DebugOutput::Trace("DirectInputオブジェクトの生成に失敗しました。");
-				throw Nyx::COMException("DirectInputオブジェクトの生成に失敗しました。", hr);
+				debug_out::trace("DirectInputオブジェクトの生成に失敗しました。");
+				throw nyx::com_exception("DirectInputオブジェクトの生成に失敗しました。", hr);
 			}
 			joystick_ = DirectInputPtr(joystick);
 
 			//デバイスの列挙
 			hr = joystick_->EnumDevices(
-				DI8DEVCLASS_GAMECTRL, EnumJoysticksCallback,(void *)this, DIEDFL_ATTACHEDONLY );
+				DI8DEVCLASS_GAMECTRL, enum_joysticks_callback,(void *)this, DIEDFL_ATTACHEDONLY );
 			if( FAILED(hr))
 			{
-				DebugOutput::Trace("制御モードの設定に失敗しました。");
-				throw Nyx::COMException("制御モードの設定に失敗しました。", hr);
+				debug_out::trace("制御モードの設定に失敗しました。");
+				throw nyx::com_exception("制御モードの設定に失敗しました。", hr);
 			}
 
 			//ジョイスティックデバイスが作成できた
@@ -73,24 +73,24 @@ namespace Nyx {
 				hr = joystickDevice_->SetDataFormat(&c_dfDIJoystick2);
 				if( FAILED(hr))
 				{
-					DebugOutput::Trace("データ形式の設定に失敗しました。");
-					throw Nyx::COMException("データ形式の設定に失敗しました。", hr);
+					debug_out::trace("データ形式の設定に失敗しました。");
+					throw nyx::com_exception("データ形式の設定に失敗しました。", hr);
 				}
 
 				//モードを設定（フォアグラウンド＆非排他モード）
 				hr = joystickDevice_->SetCooperativeLevel(hwnd_, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
 				if( FAILED(hr))
 				{
-					DebugOutput::Trace("制御モードの設定に失敗しました。");
-					throw Nyx::COMException("制御モードの設定に失敗しました。", hr);
+					debug_out::trace("制御モードの設定に失敗しました。");
+					throw nyx::com_exception("制御モードの設定に失敗しました。", hr);
 
 				}
 				// コールバック関数を使って各軸のモードを設定
-				hr = joystickDevice_->EnumObjects(EnumAxesCallback,(void*)this, DIDFT_AXIS);
+				hr = joystickDevice_->EnumObjects(enum_axis_callback,(void*)this, DIDFT_AXIS);
 				if( FAILED(hr))
 				{
-					DebugOutput::Trace("軸モードの設定に失敗しました。");
-					throw Nyx::COMException("軸モードの設定に失敗しました。", hr);
+					debug_out::trace("軸モードの設定に失敗しました。");
+					throw nyx::com_exception("軸モードの設定に失敗しました。", hr);
 				}
 
 
@@ -104,16 +104,16 @@ namespace Nyx {
 
 
 
-		bool Update() {
+		bool update() {
 			HRESULT hr;
 			//バッファフリップや
-			Flip();
+			flip();
 
 
 			//Acquireしとらんのか
 			if  (isAcquire_ == false ) {
-				if (Acquire() == false)  {
-					::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BufferSize);
+				if (acquire() == false)  {
+					::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BUFFER_SIZE);
 					return false;  
 				}
 			}
@@ -121,7 +121,7 @@ namespace Nyx {
 			//ジョイスティックをポールしなはれ
 			hr = joystickDevice_->Poll();
 			if (FAILED(hr)) {
-				if (!Acquire()) {
+				if (!acquire()) {
 					return false;
 				}
 			}
@@ -132,7 +132,7 @@ namespace Nyx {
 			hr = joystickDevice_->GetDeviceState(sizeof(DIJOYSTATE2),&dijs );
 			if(hr == DIERR_INPUTLOST) {
 				// 失敗したらAcquireする
-				if (!Acquire()) {
+				if (!acquire()) {
 					//acquireでけへんかった。
 					//isAcquire = false;
 					return true;
@@ -143,7 +143,7 @@ namespace Nyx {
 
 			if (SUCCEEDED(hr)) {
 				//キーバッファを更新する前に、一度クリアしておく
-				::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BufferSize);
+				::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BUFFER_SIZE);
 				//キーバッファ更新してくよー
 				//0~3はジョイスティックの軸の状態なんやで0番目かx, x, y, -y, z, -zの順番にはいっとるよ
 				if (dijs.lX >= allowRange_) {
@@ -173,7 +173,7 @@ namespace Nyx {
 
 				//4番目以降はジョイスティックボタンの状態や
 				//デフォルトは３２個や．必要に応じてSetButtonでボタン数を適当に調整せいよ
-				int buttonNum = GetButtonMax();
+				int buttonNum = get_button_num();
 				for (int i=0; i < buttonNum; i++) {
 					keyBuffer_[flipCounter_][6 + i] = (dijs.rgbButtons[i] & 0x80);
 				}
@@ -182,7 +182,7 @@ namespace Nyx {
 			if (FAILED(hr)) {
 				//	バッファをクリアして戻る。（画面外にフォーカスが移ったときに押しっぱなし
 				//	になるのを防ぐため）
-				::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BufferSize);
+				::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BUFFER_SIZE);
 				return false;       
 			}
 
@@ -192,13 +192,13 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		Axis3f GetAxis() {
+		axis3f get_axis() {
 			return axis_;
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void  Release() {
+		void  release() {
 			// DirectInputのデバイスを解放
 			if (joystickDevice_) {
 				joystickDevice_->Unacquire();
@@ -207,7 +207,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		bool Acquire() {
+		bool acquire() {
 			HRESULT hr = joystickDevice_->Acquire();
 			if (SUCCEEDED(hr)) {
 				isAcquire_ = true;
@@ -219,7 +219,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		bool Unacquire() {
+		bool unacquire() {
 			if (isAcquire_ == false) {
 				return false;
 			}
@@ -236,7 +236,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		//
-		static int CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* lpddi, VOID* lpContext) {
+		static int CALLBACK enum_joysticks_callback(const DIDEVICEINSTANCE* lpddi, VOID* lpContext) {
 			// 列挙されたジョイスティックへのインターフェイスを取得する。
 			HRESULT hr;
 			PImpl* joy = reinterpret_cast<PImpl*>(lpContext);
@@ -261,7 +261,7 @@ namespace Nyx {
 
 		//-----------------------------------------------------------------------------------------
 		// ジョイスティックの軸を列挙する関数
-		static int  CALLBACK EnumAxesCallback(LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef) {
+		static int  CALLBACK enum_axis_callback(LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef) {
 			HRESULT hr;
 
 			// 軸の値の範囲を設定（-2000～2000）
@@ -286,161 +286,161 @@ namespace Nyx {
 		bool isAcquire_;
 		float allowRange_;
 		DIDEVCAPS joyCaps_;
-		Axis3f    axis_;
+		axis3f    axis_;
 		DirectInputPtr joystick_;
 		DirectInputDevicePtr joystickDevice_;
 	};
 
 	//-----------------------------------------------------------------------------------------
 	//
-	Joystick::Joystick()
+	joystick::joystick()
 		:pimpl_(std::make_shared<PImpl>())
 	{
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	Joystick::Joystick(const InputDeviceDesc& desc)
+	joystick::joystick(const input_device_desc& desc)
 		:pimpl_(std::make_shared<PImpl>())
 	{
-		Assert(pimpl_ != nullptr);
-		Initialize(desc);
+		NYX_ASSERT(pimpl_ != nullptr);
+		initialize(desc);
 
-		Assert(pimpl_!= nullptr);
+		NYX_ASSERT(pimpl_!= nullptr);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	Joystick::~Joystick()  {
-		pimpl_->Release();
+	joystick::~joystick()  {
+		pimpl_->release();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::IsInitialized() {
+	bool joystick::is_initialized() {
 		return pimpl_->isInitialized;
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::Initialize(const InputDeviceDesc& desc) {
-		Assert(pimpl_ != nullptr);
-		if (IsInitialized()) {
-			return IsInitialized();
+	bool joystick::initialize(const input_device_desc& desc) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		if (is_initialized()) {
+			return is_initialized();
 		}		
 
-		pimpl_->Initialize((HWND)desc.handle, desc.range, desc.button);
+		pimpl_->initialize((HWND)desc.handle, desc.range, desc.button);
 
 		return pimpl_->isInitialized;
 	}
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::Update() {
-		Assert(pimpl_!= nullptr);
+	bool joystick::update() {
+		NYX_ASSERT(pimpl_!= nullptr);
 		if (pimpl_->isInitialized == false) {
 			return false;
 		}
 
-		return pimpl_->Update();
+		return pimpl_->update();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void  Joystick::Release() {
-		Assert(pimpl_!= nullptr);
+	void  joystick::release() {
+		NYX_ASSERT(pimpl_!= nullptr);
 
-		return pimpl_->Release();
+		return pimpl_->release();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::Acquire() {
-		Assert(pimpl_!= nullptr);
-		if (pimpl_->isInitialized == false) {
-			return false;
-		}
-
-
-		return pimpl_->Acquire();
-	}
-
-	//-----------------------------------------------------------------------------------------
-	//
-	bool Joystick::Unacquire() {
-		Assert(pimpl_!= nullptr);
+	bool joystick::acquire() {
+		NYX_ASSERT(pimpl_!= nullptr);
 		if (pimpl_->isInitialized == false) {
 			return false;
 		}
 
 
-		return pimpl_->Unacquire();
+		return pimpl_->acquire();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	Axis3f Joystick::GetAxis() {
-		Assert(pimpl_ != nullptr);
+	bool joystick::unacquire() {
+		NYX_ASSERT(pimpl_!= nullptr);
 		if (pimpl_->isInitialized == false) {
-			return Axis3f(-1.f, -1.f, -1.f);
+			return false;
 		}
 
 
-		return pimpl_->GetAxis();
+		return pimpl_->unacquire();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	uchar* Joystick::GetKeyBuffer() {
-		Assert(pimpl_ != nullptr);
+	axis3f joystick::get_axis() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		if (pimpl_->isInitialized == false) {
+			return axis3f(-1.f, -1.f, -1.f);
+		}
+
+
+		return pimpl_->get_axis();
+	}
+
+	//-----------------------------------------------------------------------------------------
+	//
+	uint8_t* joystick::get_key_buffer() {
+		NYX_ASSERT(pimpl_ != nullptr);
 		if (pimpl_->isInitialized == false) {
 			return nullptr;
 		}
 
 
-		return pimpl_->GetKeyBuffer();
+		return pimpl_->get_key_buffer();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::IsPushed(JoystickButton keycode) {
-		Assert(pimpl_ != nullptr);
+	bool joystick::is_pushed(JOYSTICK_BUTTON keycode) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		if (pimpl_->isInitialized == false) {
 			return false;
 		}
 
 
-		uchar key = static_cast<uchar>(keycode);
-		return pimpl_->IsPushed(key);
+		uint8_t key = static_cast<uint8_t>(keycode);
+		return pimpl_->is_pushed(key);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool Joystick::IsPressed(JoystickButton keycode) {
-		Assert(pimpl_ != nullptr);
+	bool joystick::is_pressed(JOYSTICK_BUTTON keycode) {
+		NYX_ASSERT(pimpl_ != nullptr);
 		if (pimpl_->isInitialized == false) {
 			return false;
 		}
 
 
-		uchar key = static_cast<uchar>(keycode);
-		return pimpl_->IsPressed(key);
+		uint8_t key = static_cast<uint8_t>(keycode);
+		return pimpl_->is_pressed(key);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void Joystick::SetButtonMax(const size_t num) {
-		Assert(pimpl_!= nullptr);
-		Assert(pimpl_->isInitialized);
+	void joystick::set_button_num(const size_t num) {
+		NYX_ASSERT(pimpl_!= nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		pimpl_->SetButtonMax(num);
+		pimpl_->set_button_num(num);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	size_t Joystick::GetButtonMax() {
-		Assert(pimpl_!= nullptr);
-		Assert(pimpl_->isInitialized);
+	size_t joystick::get_button_num() {
+		NYX_ASSERT(pimpl_!= nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->GetButtonMax();
+		return pimpl_->get_button_num();
 	}
 }

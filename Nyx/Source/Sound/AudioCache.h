@@ -18,24 +18,24 @@
 #define NYX_CORE_INCLUDED_AUDIO_CACHE_H_
 #include "Utility/NonCopyable.h"
 
-namespace Nyx
+namespace nyx
 {
-	class IAudioBuffer;
-	struct AudioEffectDesc;
+	class iaudio_buffer;
+	struct audio_effect_desc;
 	///オーディオキャッシュ
-	class AudioCache : NonCopyable {
+	class audio_cache : noncopyable {
 	public:
 		/**
 		* デフォルトコンストラクタ
 		*/
-		explicit AudioCache();
+		explicit audio_cache();
 
 
 		/**
 		* コンストラクタ
 		* @param size_t キャッシュサイズ
 		*/
-		explicit AudioCache(size_t cacheSize);
+		explicit audio_cache(size_t cacheSize);
 
 
 		/**
@@ -43,7 +43,7 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> operator[](const std::wstring& fileName);
+		std::shared_ptr<iaudio_buffer> operator[](const std::wstring& fileName);
 
 
 		/**
@@ -51,7 +51,7 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @param std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		void Add(const std::wstring& fileName, std::shared_ptr<IAudioBuffer> audioBuffer);
+		void add(const std::wstring& fileName, std::shared_ptr<iaudio_buffer> audioBuffer);
 
 
 		/**
@@ -59,62 +59,62 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @param std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		void Remove(const std::wstring& fileName);
+		void remove(const std::wstring& fileName);
 
 
 		/**
 		* キャシュをクリアします
 		*/
-		void Clear();
+		void clear();
 		
 		
 		/**
 		* 指定したオーディオバッファを再生します
 		* @param const std::wstring& ファイル名
 		*/
-		void Play(const std::wstring& fileName, bool isLoop=true);
+		void play(const std::wstring& fileName, bool isLoop=true);
 
 
 		/**
 		* 全てのオーディオバッファを再生します
 		*/
-		void PlayAll(bool isLoop=true);
+		void play_all(bool isLoop=true);
 		
 		
 		/**
 		* 指定したオーディオバッファを停止します
 		* @param const std::wstring& ファイル名
 		*/
-		void Stop(const std::wstring& fileName);
+		void stop(const std::wstring& fileName);
 		
 		
 		/**
 		* 全てのオーディオバッファを停止します
 		*/
-		void StopAll();
+		void stop_all();
 
 		/**
 		* 指定したオーディオバッファをレジュームします
 		*/
-		void Resume(const std::wstring& fileName);
+		void resume(const std::wstring& fileName);
 		
 		
 		/**
 		* 全てのオーディオバッファをレジュームします
 		*/
-		void ResumeAll();
+		void resume_all();
 		
 		
 		/**
 		* 指定したオーディオバッファを一時停止します
 		*/
-		void Reset(const std::wstring& fileName);
+		void reset(const std::wstring& fileName);
 		
 		
 		/**
 		* 全てのオーディオバッファを一時停止します
 		*/
-		void ResetAll();
+		void reset_all();
 		
 
 		/**
@@ -122,27 +122,27 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @param const const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetEffect(const std::wstring& fileName, const AudioEffectDesc& effectDesc);
+		void set_effect(const std::wstring& fileName, const audio_effect_desc& effectDesc);
 
 
 		/**
 		* 全てのオーディオバッファにエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetEffectAll(const AudioEffectDesc& effectDesc);
+		void set_effect_all(const audio_effect_desc& effectDesc);
 
 
 		/**
 		* 指定したオーディオバッファのエフェクトを削除します
 		* @param const std::wstring& ファイル名
 		*/
-		void ResetEffect(const std::wstring& fileName);
+		void reset_effect(const std::wstring& fileName);
 
 
 		/**
 		* 全てのオーディオバッファのエフェクトを削除します
 		*/
-		void ResetEffectAll();
+		void reset_effect_all();
 
 		
 		/**
@@ -150,7 +150,7 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @return const std::shared_ptr<IAudioBffer>& オーディオaバッファ
 		*/
-		const std::shared_ptr<IAudioBuffer> GetAudioBuffer(const std::wstring& fileName);
+		const std::shared_ptr<iaudio_buffer> get_audio_buffer(const std::wstring& fileName);
 	private :
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

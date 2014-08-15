@@ -3,7 +3,7 @@
 
 #include <btCollisionCommon.h>
 #include <btPhisicsCommon.h>
-namespace Nyx {
+namespace nyx {
 	
 }
 #endif

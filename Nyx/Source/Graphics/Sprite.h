@@ -5,10 +5,10 @@
 #include "Primitive/Color4.h"
 #include "Primitive/Rect.h"
 
-namespace Nyx {
+namespace nyx {
 
 	///スプライト
-	class Sprite : public IRenderable, public IResource
+	class sprite : public irenderable, public iresource
 	{
 	public:
 		/*
@@ -17,7 +17,7 @@ namespace Nyx {
 		* @param int スプライトの高さ
 		* @param std::wstring ファイル名
 		*/
-		Sprite(const std::wstring& fileName);
+		sprite(const std::wstring& fileName);
 		
 		
 		/*
@@ -26,59 +26,59 @@ namespace Nyx {
 		* @param int スプライトの高さ
 		* @param const Color4c& 色
 		*/
-		Sprite(int width, int height, const Color4c& color);
+		sprite(int width, int height, const color4c& color);
 		
 		
 		/*
 		*　デストラクタ
 		*/
-		~Sprite();
+		~sprite();
 		
 		/*
 		*　スプライトを指定した色で塗りつぶします
 		* @param const Color4c& 色
 		*/
-		void Fill(const Color4c& color);
+		void fill(const color4c& color);
 		
 		/*
 		*　スプライトの描画色を取得します
 		* @param const Color4c& 描画色
 		*/
-		void SetColor(const Color4c& color);
+		void set_fore_color(const color4c& color);
 		
 		/*
 		*　スプライトの描画色を取得します
 		* @return Colr4c 描画色
 		*/
-		Color4c GetColor() const;
+		color4c get_fore_color() const;
 		
 		/*
 		*　スプライトの描画矩形を設定します
 		* @param const Rect2i& 矩形
 		*/
-		void SetRect(const Rect2i& rect);
+		void set_rect(const rect2i& rect);
 		
 		/*
 		*　スプライトの描画矩形を取得します
 		* @return Rect2i 矩形
 		*/
-		Rect2i GetRect() const;
+		rect2i get_rect() const;
 		
 		/*
 		*　レンダリング
 		* @param const Matrix44& 変換行列
 		*/
-		void Render(const Matrix44& matrix) const;
+		void render(const matrix& matrix) const;
 
 		/*
 		* リソースを開放します
 		*/
-		void Release();
+		void release();
 		
 		/*
 		* リソースを復元します
 		*/
-		void Recovery();
+		void recovery();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

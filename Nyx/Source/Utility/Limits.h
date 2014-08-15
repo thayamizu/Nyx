@@ -1,99 +1,99 @@
 #ifndef NYX_CORE_INCLUDED_LIMITS_H_
 #define NYX_CORE_INCLUDED_LIMITS_H_
 
-namespace Nyx
+namespace nyx
 {
 	///----------------------------------------------------------------------------------
 	///型の限界値定義
 	///----------------------------------------------------------------------------------
-	class Limits {
+	class limits {
 	public:
 		/**
 		* char 型の最小値（符号付）
 		*/
-		static const char CharMin = (-128);
+		static const signed char CHAR_MINIMUM = (-128);
 		
 		/**
 		* char 型の最大値（符号付）
 		*/
-		static const char CharMax = (127);
+		static const signed char CHAR_MAXIMUM = (127);
 
 		/**
 		* char 型の最小値（符号なし）
 		*/
-		static const uchar UCharMin = (0);
+		static const uint8_t UCHAR_MINIMUM = (0);
 
 		/**
 		* char 型の最大値（符号なし）
 		*/
-		static const uchar UCharMax = (0xff);
+		static const uint8_t UCHAR_MAXIMUM = (0xff);
 
 
 		/**
 		* short 型の最小値（符号付）
 		*/
-		static const short ShortMin = (-32768);
+		static const short SHORT_MINIMUM = (-32768);
 
 		/**
 		* short 型の最大値（符号付）
 		*/
-		static const short ShortMax =   (32767);
+		static const short SHORT_MAXIMUM =   (32767);
 
 		/**
 		* short 型の最小値（符号なし）
 		*/
-		static const ushort UShortMin = (0);
+		static const uint16_t USHORT_MINIMUM = (0);
 
 		/**
 		* short 型の最大値（符号なし）
 		*/
-		static const ushort UShortMax = (0xffff);
+		static const uint16_t USHORT_MAXIMUM = (0xffff);
 
 
 		/**
 		* int 型の最小値（符号付）
 		*/
-		static const int IntMin = (-2147483647 -1);
+		static const int INT_MINIMUM = (-2147483647 -1);
 
 		/**
 		* int 型の最大値（符号付）
 		*/
-		static const int IntMax = (2147483647);
+		static const int INT_MAXIMUM = (2147483647);
 
 		/**
 		* int 型の最小値（符号なし）
 		*/
-		static const uint UIntMin = (0);
+		static const uint32_t UINT_MINIMUM = (0);
 
 		/**
 		* int 型の最大値（符号なし）
 		*/
-		static const uint UIntMax = (0xffffffff);
+		static const uint32_t UINT_MAXIMUM = (0xffffffff);
 
 		/**
 		* float  型の最大値
 		*/
-		static const float FloatMin;
+		static const float FLOAT_MINIMUM;
 
 		/**
 		* float 型の最大値
 		*/
-		static const float FloatMax;
+		static const float FLOAT_MAXIMUM;
 
 		/**
 		* float 型の最大値平方根
 		*/
-		static const float FloatMaxSqrt;
+		static const float FLOAT_MAX_SQRT;
 
 		/**
 		* double 型の最大値
 		*/
-		static const double DoubleMin;
+		static const double DOUBLE_MINIMUM;
 
 		/**
 		* double 型の最大値
 		*/
-		static const double DoubleMax;
+		static const double DOUBLE_MAXIMUM;
 
 
 		/**
@@ -102,8 +102,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsCharRange(T value) {
-			return ((value >= CharMin) && (value <= CharMax));
+		static bool is_char_range(T value) {
+			return ((value >= CHAR_MINIMUM) && (value <= CHAR_MINIMUM));
 		}
 
 		/**
@@ -112,8 +112,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsUCharRange(T value) {
-			return ((value >= UCharMin) && (value <= UCharMax));
+		static bool is_uchar_range(T value) {
+			return ((value >= UCHAR_MINIMUM) && (value <= UCHAR_MAXIMUM));
 		}
 
 		/**
@@ -122,8 +122,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsShortRange(T value) {
-			return ((value >= ShortMin) && (value <= ShortMax));
+		static bool is_short_range(T value) {
+			return ((value >= SHORT_MINIMUM) && (value <= SHORT_MAXIMUM));
 		}
 
 		/**
@@ -132,8 +132,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsUShortRange(T value) {
-			return ((value >= UShortMin) && (value <= UShortMax));
+		static bool is_ushort_range(T value) {
+			return ((value >= USHORT_MINIMUM) && (value <= USHORT_MAXIMUM));
 		}
 
 		/**
@@ -142,8 +142,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsIntRange(T value) {
-			return ((value >= IntMin) && (value <= IntMax));
+		static bool is_int_range(T value) {
+			return ((value >= INT_MINIMUM) && (value <= INT_MAXIMUM));
 		}
 
 		/**
@@ -152,8 +152,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsUIntRange(T value) {
-			return ((value >= UIntMin) && (value <= UIntMax));
+		static bool is_uint_range(T value) {
+			return ((value >= UINT_MINIMUM) && (value <= UINT_MAXIMUM));
 		}
 
 		/**
@@ -162,8 +162,8 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsFloatRange(T value) {
-			return ((value >= FloatMin) && (value <= FloatMax));
+		static bool is_float_range(T value) {
+			return ((value >= FLOAT_MINIMUM) && (value <= FLOAT_MAXIMUM));
 		}
 
 		/**
@@ -172,11 +172,11 @@ namespace Nyx
 		* @return bool 範囲内ならtrue
 		*/
 		template<typename T>
-		static bool IsDoubleRange(T value) {
-			return ((value >= DoubleMin) && (value <= DoubleMax));
+		static bool is_double_range(T value) {
+			return ((value >= DOUBLE_MINIMUM) && (value <= DOUBLE_MAXIMUM));
 		}
 	private:
-		Limits();//生成禁止
+		limits();//生成禁止
 	};
 }
 #endif

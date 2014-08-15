@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_PERFORMANCE_TIMER_H_
 #define NYX_CORE_INCLUDED_PERFORMANCE_TIMER_H_
 #include "Utility/NonCopyable.h"
-namespace Nyx {
+namespace nyx {
 #ifdef _WIN32
 	/// 時間間隔
 	typedef ::LARGE_INTEGER Tick;
@@ -25,7 +25,7 @@ namespace Nyx {
 
 	///高精度タイマー
 	//主にパフォーマンスチェックに使用するとよい
-	class PerformanceTimer: private NonCopyable {
+	class performance_timer: private noncopyable {
 	public:
 		//------------------------------------------------------------------------
 		//　公開メンバ変数
@@ -39,11 +39,11 @@ namespace Nyx {
 		/**
 		* コンストラクタ
 		*/
-		PerformanceTimer();
+		performance_timer();
 		/**
 		* デストラクタ
 		*/
-		~PerformanceTimer();
+		~performance_timer();
 
 		//------------------------------------------------------------------------
 		//　初期化
@@ -52,7 +52,7 @@ namespace Nyx {
 		* 高精度タイマーの初期化
 		* @return bool 初期化に成功すればtrue
 		*/
-		bool Initialize();
+		bool initialize();
 
 		//------------------------------------------------------------------------
 		//　時間の取得
@@ -61,14 +61,14 @@ namespace Nyx {
 		* 現在の時刻を取得します
 		* @return Tick 時刻
 		*/
-		Tick GetTick();
+		Tick get_tick();
 
 		/**
 		* 現在の時刻と以前の時刻の間隔を取ります
 		* @param const Tick& 以前の時刻
 		* @return double 時刻の差分
 		*/
-		double GetInterval(const Tick& previous);
+		double get_interval(const Tick& previous);
 
 		/**
 		* 指定した時刻の間の間隔を取ります
@@ -76,7 +76,7 @@ namespace Nyx {
 		* @param const Tick & after
 		* @return double 指定した時刻間の差分
 		*/ 
-		double GetInterval(const Tick& previous, const Tick & after);
+		double get_interval(const Tick& previous, const Tick & after);
 	};
 
 }

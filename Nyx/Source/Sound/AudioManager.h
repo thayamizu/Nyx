@@ -19,35 +19,35 @@
 #include "Utility/NonCopyable.h"
 #include "IAudioManager.h"
 
-namespace Nyx {
+namespace nyx {
 	//前方宣言
-	class AudioCache;
-	class IAudioBuffer;
-	class IAudioListener;
-	struct AudioBufferDesc;
-	struct AudioDesc;
+	class audio_cache;
+	class iaudio_buffer;
+	class iaudio_listener;
+	struct audio_buffer_desc;
+	struct audio_desc;
 	
 	///オーディオマネージャ
-	class AudioManager : NonCopyable, public IAudioManager{
+	class audio_manager : noncopyable, public iaudio_manager{
 	public:
 		/**
 		 * コンストラクタ
 		 */
-		explicit AudioManager();
+		explicit audio_manager();
 
 
 		/**
 		 * コンストラクタ
 		 * @param const const AudioDesc& オーディオバッファ
 		 */
-		explicit AudioManager(const AudioDesc& desc);
+		explicit audio_manager(const audio_desc& desc);
 		
 
 		/**
 		* オーディオマネージャの初期化
 		* @return bool
 		*/
-		void Initialize(const AudioDesc& desc);
+		void initialize(const audio_desc& desc);
 
 
 		/**
@@ -56,14 +56,14 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @return std::shared_ptr<IAudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
-		
+
+		std::shared_ptr<iaudio_buffer> create_audio_buffer(const std::wstring& fileName, const audio_buffer_desc& bufferDesc);
 
 		/**
 		* オーディオリスナーを生成します
 		* @return std::shared_ptr<IAudioListener> 
 		*/
-		std::shared_ptr<IAudioListener> CreateAudioListener();	
+		std::shared_ptr<iaudio_listener> create_audio_listener();	
 
 
 		/**
@@ -72,7 +72,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
 		*/
-		std::shared_ptr<AudioCache> Load(const std::wstring& fileName,  const AudioBufferDesc& bufferDesc);
+		std::shared_ptr<audio_cache> load_audio(const std::wstring& fileName,  const audio_buffer_desc& bufferDesc);
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

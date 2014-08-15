@@ -18,18 +18,18 @@
 #include "Thread/Thread.h"
 #include "Thread/detail/Win32/Win32Thread.h"
 
-namespace Nyx {
-	struct Thread::PImpl
+namespace nyx {
+	struct thread::PImpl
 	{
-			PImpl(void * fp,  void* param, ulong stackSize, ulong flag)
-				:thread(new Win32Thread(fp, param, stackSize, flag))
+			PImpl(void * fp,  void* param, uint64_t stackSize, uint64_t flag)
+				:thread(new win32_thread(fp, param, stackSize, flag))
 			{}
-			std::unique_ptr<Win32Thread> thread;
+			std::unique_ptr<win32_thread> thread;
 	};
 
 	//-----------------------------------------------------------------------------
 	// コンストラクタ
-	Thread::Thread(void * fp,  void* param, ulong stackSize, ulong flag) 
+	thread::thread(void * fp,  void* param, uint64_t stackSize, uint64_t flag) 
 		:pimpl_(new PImpl(fp, param, stackSize, flag))
 	{
 	}
@@ -37,63 +37,62 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------
 	// デストラクタ
-	Thread::~Thread() {
+	thread::~thread() {
 	}
 
 	//-----------------------------------------------------------------------------
 	// スレッドのレジューム
-	ulong Thread::Resume() {
-		return pimpl_->thread->Resume();
+	uint64_t thread::resume() {
+		return pimpl_->thread->resume();
 	}
 
 	//-----------------------------------------------------------------------------
 	// スレッドのサスペンド
-	ulong Thread::Suspend() {
-		return pimpl_->thread->Suspend();
+	uint64_t thread::suspend() {
+		return pimpl_->thread->suspend();
 	}
 
 	//-----------------------------------------------------------------------------
 	// IDの取得
-	ulong Thread::GetID() {
-		return pimpl_->thread->GetID();
+	uint64_t thread::get_thread_id() {
+		return pimpl_->thread->get_id();
 	}
 
 	//-----------------------------------------------------------------------------
 	// 優先順位の取得
-	int Thread::GetPriority() { 
-		return pimpl_->thread->GetPriority();
+	int thread::get_priority() { 
+		return pimpl_->thread->get_priority();
 	}
 
 	//-----------------------------------------------------------------------------
 	// 優先順位の設定
-	void Thread::SetPriority(int priority) { 
-		return pimpl_->thread->SetPriority(priority);
+	void thread::set_priority(uint32_t priority) { 
+		return pimpl_->thread->set_priority(priority);
 	}
 
 	//-----------------------------------------------------------------------------
 	// 終了の待機
-	bool Thread::Join(ulong millisecond) {
-		return pimpl_->thread->Join(millisecond);
+	bool thread::join(uint64_t millisecond) {
+		return pimpl_->thread->join(millisecond);
 	}
 
 	//-----------------------------------------------------------------------------
 	// 終了コードの取得
-	ulong Thread::GetExitCode() { 
-		return pimpl_->thread->GetExitCode();
+	uint64_t thread::get_exit_code() { 
+		return pimpl_->thread->get_exit_code();
 	}
 
 	//-----------------------------------------------------------------------------
 	// ハンドルの取得
-	HANDLE Thread::GetHandle() {
-		return pimpl_->thread->GetHandle();
+	thread_handle thread::get_handle() {
+		return pimpl_->thread->get_handle();
 	}
 
 	//-----------------------------------------------------------------------------
 	// スリープ
-	void Thread::Sleep(ulong time) {
-		using Nyx::Win32Thread;
-		::Sleep(time);
-		
+	void thread::sleep(uint64_t time) {
+		using nyx::win32_thread;
+		::Sleep(time);	
 	}   
 
 }

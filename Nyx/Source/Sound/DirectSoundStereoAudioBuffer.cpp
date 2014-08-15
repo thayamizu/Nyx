@@ -19,50 +19,101 @@
 #include "Debug/DebugOutput.h"
 #include "DirectSoundStereoAudioBuffer.h"
 
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStereoAudioBuffer::DirectSoundStereoAudioBuffer() 
-		: DirectSoundAudioBuffer(), IStereoAudioBuffer() {
+	dsound_stereo_audio_buffer::dsound_stereo_audio_buffer() 
+		: dsound_audio_buffer(){
 
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStereoAudioBuffer::~DirectSoundStereoAudioBuffer() {
+	dsound_stereo_audio_buffer::~dsound_stereo_audio_buffer() {
 
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	long DirectSoundStereoAudioBuffer::GetPan() const {
-		auto soundBuffer = GetHandle();
+	long dsound_stereo_audio_buffer::get_pan() const {
+		auto soundBuffer = get_handle();
 		long pan;
 		HRESULT hr = soundBuffer->GetPan(&pan);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのパン値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのパン値の取得に失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのパン値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのパン値の取得に失敗しました。", hr);
 		}
-		auto volume = AudioUtility::DecibelToVolume((pan > 0) ? - pan : pan);
+		auto volume = AudioUtility::decibel_to_volume((pan > 0) ? - pan : pan);
 		return (pan > 0)? 100L - volume : volume - 100L;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStereoAudioBuffer::SetPan(long volume) {
-		auto soundBuffer = GetHandle();
-		Assert(soundBuffer != nullptr);
+	void dsound_stereo_audio_buffer::set_pan(long volume) {
+		auto soundBuffer = get_handle();
+		NYX_ASSERT(soundBuffer != nullptr);
 		const auto ref = 100L;
-		volume = Math::Clamp(volume, -100L, 100L);
-		auto pan = AudioUtility::VolumeToDecibel(ref - Math::Abs(volume));
+		volume = math::clamp(volume, -100L, 100L);
+		auto pan = AudioUtility::volume_to_decibel(ref - math::abs(volume));
 		pan = (volume > 0)? pan : -pan;
 		HRESULT hr = soundBuffer->SetPan(pan);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのパン値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのパン値の設定に失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのパン値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのパン値の設定に失敗しました。", hr);
 		}
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	vector3f dsound_stereo_audio_buffer::get_position() const{
+		return vector3f();
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void dsound_stereo_audio_buffer::set_position(const vector3f& velocity){
+		velocity;
+	}
+	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	vector3f dsound_stereo_audio_buffer::get_velocity() const{
+		return vector3f();
+	}
+	
+	
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void dsound_stereo_audio_buffer::set_velocity(const vector3f& velocity) {
+		velocity;
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	float dsound_stereo_audio_buffer::get_max_distance() const{
+		return 1.F;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void dsound_stereo_audio_buffer::set_max_distance(float maxDistance){
+		maxDistance;
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	float dsound_stereo_audio_buffer::get_min_distance() const {
+		return 1.F;
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void dsound_stereo_audio_buffer::set_min_distance(float minDistance) {
+		minDistance;
 	}
 }

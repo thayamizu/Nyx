@@ -18,16 +18,16 @@
 #define NYX_CORE_INCLUDED_FPS_TIMER_H_
 #include "Timer/ITimer.h"
 #include "Utility/NonCopyable.h"
-namespace Nyx {
+namespace nyx {
 
 	///FPSタイマー
-	class FPSTimer : public ITimer, private NonCopyable {
+	class fps_timer : public itimer, private noncopyable {
 	public:
 		//------------------------------------------------------------------------
 		//　公開メンバ変数
 		//------------------------------------------------------------------------
-		static const uint FPS30;	///< 30FPS
-		static const uint FPS60;	///< 60FPS
+		static const uint32_t FPS30;	///< 30FPS
+		static const uint32_t FPS60;	///< 60FPS
 	public:
 		//------------------------------------------------------------------------
 		//　構築・破壊
@@ -35,12 +35,12 @@ namespace Nyx {
 		/**
 		*　コンストラクタ
 		*/
-		FPSTimer(ulong fps=FPS60);
+		fps_timer(uint64_t fps=FPS60);
 
 		/**
 		* デストラクタ 
 		*/
-		~FPSTimer();
+		~fps_timer();
 
 		//------------------------------------------------------------------------
 		//　時間の取得・設定
@@ -49,36 +49,36 @@ namespace Nyx {
 		* タイマの時刻をリセットする．
 		*以降、Getを呼ぶとリセットされた時刻からの経過時間が買える
 		*/
-		void Reset();
+		void reset();
 
 		/**
 		* 時刻の取得
 		* @return ulong
 		*/
-		ulong Get();
+		uint64_t get();
 
 		/**
 		*タイマの時刻設定
 		*@param ulong 時刻
 		*/
-		void Set(ulong now);
+		void set(uint64_t now);
 
 		/*
 		* タイマーをポーズする
 		*@param bool ポーズするのであればtrueを指定
 		*/
-		void Pause(bool pause);
+		void pause(bool pause);
 
 		/**
 		* ポーズ中かどうか
 		* @return bool trueならポーズ
 		*/
-		bool IsPause();
+		bool is_pause();
 
 		/**
 		* ポーズ中ならタイマをリスタートさせる．そうでなければなにもしない
 		*/
-		void Restart();
+		void restart();
 
 		//------------------------------------------------------------------------
 		//　FPSの調整
@@ -87,23 +87,23 @@ namespace Nyx {
 		* FPSの取得
 		* @return uint FPS
 		*/
-		uint GetFPS();
+		uint32_t get_fps();
 
 		/**
 		* 現在のFPSを取得
 		* @param uint FPS
 		*/
-		uint GetNowFPS();
+		uint32_t get_current_fps();
 
 		/**
 		* FPSを設定する
 		*/
-		void SetFPS(uint fps);
+		void set_fps(uint32_t fps);
 
 		/**
 		* 指定したFPSになるようフレームを調整
 		*/
-		void WaitFrame();
+		void wait_frame();
 
 	private:
 		struct PImpl;

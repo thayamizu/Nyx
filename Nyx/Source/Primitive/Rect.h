@@ -18,10 +18,10 @@
 #define NYX_CORE_INCLUDED_RECT2i_H_
 #include "Primitive/Vector2.h"
 
-namespace Nyx
+namespace nyx
 {
 	template <typename T>
-	class Rect{
+	class rectangle{
 		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
 		union {
@@ -40,16 +40,16 @@ namespace Nyx
 		};
 
 
-		static const Rect<T> Zero;
+		static const rectangle<T> ZERO;
 		
-		static const Rect<T> Unit;
+		static const rectangle<T> UNIT;
 
 
 		/**
 		* コンストラクタ
 		*/
-		Rect<T>() {
-			Set(0, 0, 0, 0);
+		rectangle<T>() {
+			set(0, 0, 0, 0);
 		}
 
 
@@ -60,23 +60,23 @@ namespace Nyx
 		* @param T width
 		* @param T height
 		*/
-		Rect<T>(const T x, const T y, const T width, const T height) {
-			Set(x, y, width, height);
+		rectangle<T>(const T x, const T y, const T width, const T height) {
+			set(x, y, width, height);
 		}
 
 
 		/**
 		* コピーコンストラクタ
 		*/
-		Rect<T>(const Rect<T>& rect ) {
-			Set(rect.x, rect.y, rect.width, rect.height);
+		rectangle<T>(const rectangle<T>& rect ) {
+			set(rect.x, rect.y, rect.width, rect.height);
 		}
 
 
 		/**
 		* 値のセット
 		*/
-		void Set(const T x, const T y, const T width, const T height) {
+		void set(const T x, const T y, const T width, const T height) {
 			this->x      = x;
 			this->y      = y;
 			this->width  = width;
@@ -88,7 +88,7 @@ namespace Nyx
 		* 指定した点が矩形に包含されているか
 		* @param const Point2<T> 点
 		*/
-		bool Contain(const Vector2<T>& point) const {
+		bool contain(const vector2<T>& point) const {
 			const T right  = x + width;
 			const T bottom = y + height;
 
@@ -104,7 +104,7 @@ namespace Nyx
 		* 等価演算
 		* @param const Rect<T>& rect
 		*/
-		bool operator ==(const Rect<T>& rect) const {
+		bool operator ==(const rectangle<T>& rect) const {
 			return (
 				x      == rect.x     &&
 				y      == rect.y     &&
@@ -117,24 +117,24 @@ namespace Nyx
 		* 等価演算
 		* @param const Rect<T>& rect
 		*/
-		bool operator !=(const Rect<T>& rect) const {
+		bool operator !=(const rectangle<T>& rect) const {
 			return !(*this == rect);
 		}
 	};
 	//--------------------------------------------------------------------------------------
 	// 別名定義
 	//--------------------------------------------------------------------------------------
-	typedef Rect<int>     Rect2i;
-	typedef Rect<float>   Rect2f;
-	typedef Rect<double>  Rect2d;
+	typedef rectangle<int>     rect2i;
+	typedef rectangle<float>   rect2f;
+	typedef rectangle<double>  rect2d;
 
 	//--------------------------------------------------------------------------------------
 	// 定数定義
 	//--------------------------------------------------------------------------------------
 	template <typename T>
-	const Rect<T> Rect<T>::Zero = Rect<T>(0, 0, 0, 0);
+	const rectangle<T> rectangle<T>::ZERO = rectangle<T>(0, 0, 0, 0);
 	
 	template <typename T>
-	const Rect<T> Rect<T>::Unit = Rect<T>(1, 1, 1, 1);
+	const rectangle<T> rectangle<T>::UNIT = rectangle<T>(1, 1, 1, 1);
 } 
 #endif

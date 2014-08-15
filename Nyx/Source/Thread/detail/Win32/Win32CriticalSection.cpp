@@ -18,25 +18,25 @@
 #include "PCH/PCH.h"
 #include "Win32CriticalSection.h"
 
-namespace Nyx
+namespace nyx
 {
 	// コンストラクタ
-	Win32CriticalSection::Win32CriticalSection() { 
+	win32_critical_section::win32_critical_section() { 
 		InitializeCriticalSection(&criticalSection); 
 	}
 
 	// デストラクタ
-	Win32CriticalSection::~Win32CriticalSection() { 
+	win32_critical_section::~win32_critical_section() { 
 		DeleteCriticalSection(&criticalSection); 
 	}
 
 	//クリティカルセクションの開始
-	void Win32CriticalSection::Enter() { 
+	void win32_critical_section::enter() { 
 		EnterCriticalSection(&criticalSection); 
 	}
 
 	// クリティカルセクションの終了
-	void Win32CriticalSection::Leave() { 
+	void win32_critical_section::leave() { 
 		LeaveCriticalSection(&criticalSection);
 	}
 }

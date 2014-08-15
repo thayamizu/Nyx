@@ -18,51 +18,51 @@
 #define NYX_CORE_INCLUDED_FIXED_TIMER_H_ 
 #include "Utility/NonCopyable.h"
 #include "Timer/ITimer.h"
-namespace Nyx {
+namespace nyx {
 
 	///固定タイマー
-	class FixedTimer : public ITimer, private NonCopyable{
+	class fixed_timer : public itimer, private noncopyable{
 	public:
 		/**
 		* コンストラクタ
 		*/
-		FixedTimer();
+		fixed_timer();
 
 		/**
 		* デストラクタ
 		*/
-		~FixedTimer ();
+		~fixed_timer ();
 
 		/**
 		* タイマリセット
 		*/
-		void Reset();
+		void reset();
 		/**
 		* 時刻の取得
 		* @return ulong 時刻
 		*/
-		ulong Get();
+		uint64_t get();
 		/**
 		* 時刻の設定
 		* @param ulong 時刻
 		*/
-		void Set(ulong t);
+		void set(uint64_t t);
 
 		/**
 		* タイマーをポーズ
 		* @param bool trueであればタイマをポーズ
 		*/
-		void Pause(bool pause);
+		void pause(bool pause);
 		/**
 		* タイマがポーズ中であるかどうか
 		* @return bool タイマがポーズ中であればtrue
 		*/
-		bool IsPause();
+		bool is_pause();
 
 		/**
 		* タイマーをリスタート
 		*/
-		void Restart();
+		void restart();
 
 		/**
 		* タイマをフラッシュする

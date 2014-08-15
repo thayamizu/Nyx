@@ -4,88 +4,88 @@
 #include "IResource.h"
 #include "IRenderable.h"
 
-namespace Nyx {
+namespace nyx {
 
-	typedef std::vector< std::shared_ptr<TextureFont> > TextureFontList;
-	class TextureText : public IRenderable, public IResource {
+	typedef std::vector< std::shared_ptr<texture_font> > TextureFontList;
+	class texture_text : public irenderable, public iresource {
 	public:
 		/**
 		*
 		*/
-		explicit TextureText(const TextureFontList& text);
+		explicit texture_text(const TextureFontList& text);
 
 		/**
 		*
 		*/
-		void Set(const TextureFontList& text);
-		
-
-		/**
-		*
-		*/
-		void SetRect(const Rect2i& rect);
+		void set(const TextureFontList& text);
 		
 
 		/**
 		*
 		*/
-		Rect2i GetRect() const ;
+		void set_rect(const rect2i& rect);
 		
 
 		/**
 		*
 		*/
-		void SetTextSpeed(size_t speed);
+		rect2i get_rect() const ;
+		
+
+		/**
+		*
+		*/
+		void set_text_speed(size_t speed);
 		
 		
 		/**
 		*
 		*/
-		size_t GetTextSpeed() const;
+		size_t get_text_speed() const;
 
 
 		/**
 		*
 		*/
-		void SetFontInfo(const FontInfo& color);
+		void set_font_info(const font_info& color);
 		
 		
 		/**
 		*
 		*/
-		void SetColor(const Color4c& color);
+		void set_color(const color4c& color);
 		
 		
 		/**
 		*
 		*/
-		void NextText();
+		void next();
 
 		/**
 		*
 		*/
-		void SetTransparency(uchar transparency);
+		void set_transparency(uint8_t transparency);
 
 
 		/**
 		*
 		*/
-		uchar GetTransparency() const;
+		uint8_t get_transparency() const;
 
 		/**
 		*
 		*/
-		void Render(const Matrix44& matrix) const;
+		void render(const matrix& matrix) const;
 		
 		/**
 		*
 		*/
-		void Release();
+		void release();
 		
 		/**
 		*
 		*/
-		void Recovery();
+		void recovery();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

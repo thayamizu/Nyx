@@ -17,6 +17,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxCoreUnitTest", "NyxCoreU
 		{1B75596E-EBDA-47BD-A1FD-7E865274F809} = {1B75596E-EBDA-47BD-A1FD-7E865274F809}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nyx_sample01", "nyx_sample01\nyx_sample01.vcxproj", "{1DAE59DD-C3BC-46B7-8CEB-A1F7A3452E07}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nyx_sample02", "nyx_sample02\nyx_sample02.vcxproj", "{58031BF9-1190-49B8-9524-D13310DB2D12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +35,14 @@ Global
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Debug|Win32.Build.0 = Debug|Win32
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Release|Win32.ActiveCfg = Release|Win32
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Release|Win32.Build.0 = Release|Win32
+		{1DAE59DD-C3BC-46B7-8CEB-A1F7A3452E07}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DAE59DD-C3BC-46B7-8CEB-A1F7A3452E07}.Debug|Win32.Build.0 = Debug|Win32
+		{1DAE59DD-C3BC-46B7-8CEB-A1F7A3452E07}.Release|Win32.ActiveCfg = Release|Win32
+		{1DAE59DD-C3BC-46B7-8CEB-A1F7A3452E07}.Release|Win32.Build.0 = Release|Win32
+		{58031BF9-1190-49B8-9524-D13310DB2D12}.Debug|Win32.ActiveCfg = Debug|Win32
+		{58031BF9-1190-49B8-9524-D13310DB2D12}.Debug|Win32.Build.0 = Debug|Win32
+		{58031BF9-1190-49B8-9524-D13310DB2D12}.Release|Win32.ActiveCfg = Release|Win32
+		{58031BF9-1190-49B8-9524-D13310DB2D12}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

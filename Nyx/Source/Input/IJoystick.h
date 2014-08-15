@@ -19,31 +19,31 @@
 #include "IKeyBase.h"
 #include "Primitive/Vector3.h"
 
-namespace Nyx
+namespace nyx
 {
 	/// ジョイスティックインタフェース
-	class IJoystick : public IKeyBase {
+	class ijoystick : public ikey_base {
 	public:
-		IJoystick();
+		ijoystick();
 		/**
 		*
 		*/
-		virtual bool Update() = 0;
+		virtual bool update() = 0;
 		
 		/**
 		*
 		*/
-		virtual Axis3f GetAxis() = 0;
+		virtual axis3f get_axis() = 0;
 		
 		/**
 		*
 		*/
-		void SetButtonMax(size_t buttonNum);
+		void set_button_num(size_t buttonNum);
 		
 		/**
 		*
 		*/
-		size_t GetButtonMax();	
+		size_t get_button_num();	
 	private:
 		size_t buttonNum_;
 	};

@@ -1,16 +1,16 @@
 #ifndef NYX_CORE_MOVIE_PLAYER_H_
 #define NYX_CORE_MOVIE_PLAYER_H_
 
-namespace Nyx
+namespace nyx
 {
 
-	class Window;
-	class MoviePlayer {
+	class window;
+	class movie_player {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		MoviePlayer();
+		movie_player();
 
 
 		/**
@@ -18,19 +18,19 @@ namespace Nyx
 		* @param const std::shared_ptr<Nyx::Window> ウインドウ
 		* @param const std::wstring& ファイル名
 		*/
-		MoviePlayer(const std::shared_ptr<Nyx::Window> window, const std::wstring& fileName);
+		movie_player(nyx::window& window, const std::wstring& fileName);
 		
 		/**
 		*初期化されているかどうか
 		*/
-		bool IsInitialize();
+		bool is_initialized();
 
 		/**
 		*初期化
 		* @param const std::shared_ptr<Nyx::Window> ウインドウ
 		* @return bool(trueなら成功)
 		*/
-		bool Initialize(const std::shared_ptr<Nyx::Window> window);
+		bool initialize(nyx::window& window);
 
 
 		/**
@@ -38,47 +38,48 @@ namespace Nyx
 		* @param const std::wstring& ファイル名
 		* @return bool(trueなら成功)
 		*/
-		void Open(const std::wstring& name);
+		void open(const std::wstring& name);
 
 
 		/**
 		* 動画を再生します
 		*/
-		void Play();
+		void play();
 
 
 		/**
 		* 動画を停止します
 		*/
-		void Stop();
+		void stop();
 
 
 		/**
 		* 動画を一時停止します
 		*/
-		void Pause();
+		void pause();
 
 
 		/**
 		* 動画再生をレジュームします
 		*/
-		void Resume();
+		void resume();
 
 
 		/**
 		* アスペクト比維持するかどうかを指定します．
 		* @param bool アスペクト比を維持するならtrue
 		*/
-		void SetAspectRatioMode(bool mode);
+		void set_aspect_ratio_mode(bool mode);
 
 
 		/**
 		* アスペクト比のモードを取得します
 		* @return bool アスペクト比を維持するならtrue
 		*/
-		bool GetAspectRatioMode() const;
+		bool get_aspect_ratio_mode() const;
 
-		void Release();
+
+		void release();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

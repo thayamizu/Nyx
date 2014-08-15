@@ -23,11 +23,11 @@ namespace Nyx {
 	public:
 		virtual ~IAnimationController() {}
 		// ループ時間を設定
-		virtual bool SetLoopTime( uint animID, float time ) = 0;
+		virtual bool SetLoopTime( uint32_t animID, float time ) = 0;
 		// 動作開始にかかる時間を設定
-		virtual bool SetShiftTime( uint animID, float interval ) = 0;
+		virtual bool SetShiftTime(uint32_t animID, float interval) = 0;
 		// アニメーションを切り替え
-		virtual bool ChangeAnimation( uint animID ) = 0;
+		virtual bool ChangeAnimation(uint32_t animID) = 0;
 		// アニメーションセット数を取得
 		virtual int GetNumAnimationSet() = 0;
 		// アニメーションを更新

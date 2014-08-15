@@ -20,16 +20,16 @@
 #include "Timer/Timer.h"
 #include "Timer/detail/Win32/Win32Timer.h"
 
-namespace Nyx {
+namespace nyx {
 	struct Timer::PImpl
 	{
-		PImpl() :timer(new Win32Timer()){}
-		std::unique_ptr<Win32Timer> timer;	
+		PImpl() :timer(new win32_timer()){}
+		std::unique_ptr<win32_timer> timer;	
 	};
 
 	//---------------------------------------------------------------------------------------
 	Timer::Timer()
-	: ITimer(), NonCopyable(), pimpl_(new PImpl()) 
+	: itimer(), noncopyable(), pimpl_(new PImpl()) 
 	{
 		
 	}
@@ -39,33 +39,33 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Timer::Reset() {
-		pimpl_->timer->Reset();
+	void  Timer::reset() {
+		pimpl_->timer->reset();
 	}
 
 	//---------------------------------------------------------------------------------------
-	ulong  Timer::Get() {
-		return pimpl_->timer->Get();
+	uint64_t  Timer::get() {
+		return pimpl_->timer->get();
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Timer::Set(ulong now) {
-		pimpl_->timer->Set(now);
+	void  Timer::set(uint64_t now) {
+		pimpl_->timer->set(now);
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Timer::Pause(bool pause) {
-		pimpl_->timer->Pause(pause);
+	void  Timer::pause(bool pause) {
+		pimpl_->timer->pause(pause);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool  Timer::IsPause() {
-		return pimpl_->timer->IsPause();
+	bool  Timer::is_pause() {
+		return pimpl_->timer->is_pause();
 	}
 
 	//---------------------------------------------------------------------------------------
-	void  Timer::Restart() {
-		pimpl_->timer->Restart();
+	void  Timer::restart() {
+		pimpl_->timer->restart();
 	}
 
 }

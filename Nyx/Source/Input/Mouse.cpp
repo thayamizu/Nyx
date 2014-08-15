@@ -23,14 +23,14 @@
 #include "InputDeviceDesc.h"
 #include "DirectInputDefinition.h"
 
-namespace Nyx {
+namespace nyx {
 
 
-	const int Mouse::BufferSize			= 8;
-	const int Mouse::InputDeviceNum		= 16;
-	const int Mouse::MouseButtonMax		= 8;
+	const int mouse::BUFFER_SIZE			= 8;
+	const int mouse::INPUT_DEVICE_NUM		= 16;
+	const int mouse::MOUSE_BUTTON_MAX		= 8;
 
-	struct Mouse::PImpl {
+	struct mouse::PImpl {
 		bool isInitialized;
 
 		PImpl() : 
@@ -45,37 +45,37 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void Initialize(HWND hwnd) 
+		void initialize(HWND hwnd) 
 		{
 			hwnd_ = hwnd;
 			// DirectInputの作成
 			LPDIRECTINPUT8 mouse = nullptr;
 			HRESULT hr = DirectInput8Create(::GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&mouse, NULL);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("DirectInputオブジェクトの生成に失敗しました。");
-				throw Nyx::COMException("DirectInputオブジェクトの生成に失敗しました。", hr);
+				debug_out::trace("DirectInputオブジェクトの生成に失敗しました。");
+				throw nyx::com_exception("DirectInputオブジェクトの生成に失敗しました。", hr);
 			}
 
 			// デバイス・オブジェクトを作成
 			LPDIRECTINPUTDEVICE8 mouseDevice;
 			hr = mouse->CreateDevice(GUID_SysMouse, &mouseDevice, NULL); 
 			if (FAILED(hr)) {
-				DebugOutput::Trace("DirectInputDeviceオブジェクトの生成に失敗しました。");
-				throw Nyx::COMException("DirectInputDeviceオブジェクトの生成に失敗しました。", hr);
+				debug_out::trace("DirectInputDeviceオブジェクトの生成に失敗しました。");
+				throw nyx::com_exception("DirectInputDeviceオブジェクトの生成に失敗しました。", hr);
 			}
 
 			// データ形式を設定
 			hr = mouseDevice->SetDataFormat(&c_dfDIMouse2);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("データ形式の設定に失敗しました。");
-				throw Nyx::COMException("データ形式の設定に失敗しました。", hr);
+				debug_out::trace("データ形式の設定に失敗しました。");
+				throw nyx::com_exception("データ形式の設定に失敗しました。", hr);
 			}
 
 			//モードを設定（フォアグラウンド＆非排他モード）
 			hr = mouseDevice->SetCooperativeLevel(hwnd_, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("制御モードの設定に失敗しました。");
-				throw Nyx::COMException("制御モードの設定に失敗しました。", hr);
+				debug_out::trace("制御モードの設定に失敗しました。");
+				throw nyx::com_exception("制御モードの設定に失敗しました。", hr);
 			}
 
 			// 軸モードを設定（相対値モードに設定）
@@ -88,16 +88,16 @@ namespace Nyx {
 			//	diprop.dwData		= DIPROPAXISMODE_ABS;	// 絶対値モードは事実上使えない
 			hr = mouseDevice->SetProperty(DIPROP_AXISMODE, &diprop.diph);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("軸モードの設定に失敗しました。");
-				throw Nyx::COMException("軸モードの設定に失敗しました。", hr);
+				debug_out::trace("軸モードの設定に失敗しました。");
+				throw nyx::com_exception("軸モードの設定に失敗しました。", hr);
 			}
 
 			// バッファリング・データを取得するため、バッファ・サイズを設定
-			diprop.dwData = BufferSize;
+			diprop.dwData = BUFFER_SIZE;
 			hr = mouseDevice->SetProperty(DIPROP_BUFFERSIZE, &diprop.diph);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("バッファサイズの設定に失敗しました。");
-				throw Nyx::COMException("バッファサイズの設定に失敗しました。", hr);
+				debug_out::trace("バッファサイズの設定に失敗しました。");
+				throw nyx::com_exception("バッファサイズの設定に失敗しました。", hr);
 			}
 
 
@@ -111,15 +111,15 @@ namespace Nyx {
 		//-------------------------------------------------------------------------------------------------------
 		//
 		~PImpl() {
-			Release();
+			release();
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		bool Update() {
+		bool update() {
 			if (isAcquire_ == false) {
 				//acquireしとらんのか
-				if (!Acquire()) { 
+				if (!acquire()) { 
 					::ZeroMemory(&mouseState_, sizeof(mouseState_));
 					return false;//acuire失敗。
 				}
@@ -130,7 +130,7 @@ namespace Nyx {
 
 			HRESULT hr = mouseDevice_->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState_);
 			if (hr == DIERR_INPUTLOST) {
-				if(!Acquire()) {
+				if(!acquire()) {
 					return false;
 				}
 				hr = mouseDevice_->GetDeviceState(sizeof(DIMOUSESTATE2), &mouseState_);
@@ -151,9 +151,9 @@ namespace Nyx {
 		}
 		//-------------------------------------------------------------------------------------------------------
 		//
-		bool GetMouseButton(MouseButton button) {
-			auto keycode = static_cast<uchar>(button);
-			if(keycode >= MouseButtonMax) {
+		bool get_mouse_button(MOUSE_BUTTON button) {
+			auto keycode = static_cast<uint8_t>(button);
+			if(keycode >= MOUSE_BUTTON_MAX) {
 				return false;
 			}
 
@@ -161,7 +161,7 @@ namespace Nyx {
 		}
 		//-------------------------------------------------------------------------------------------------------
 		//
-		Point2l GetPosition() {
+		point2i get_position() {
 			POINT pos;
 			GetCursorPos(&pos);
 			ScreenToClient(this->hwnd_, &pos);
@@ -174,13 +174,13 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		int GetWheelState() {
+		int get_wheel_state() {
 			return wheelState_;
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		bool Acquire() {
+		bool acquire() {
 			HRESULT hr = mouseDevice_->Acquire();
 			if (hr == DI_OK) {
 				isAcquire_ = true;
@@ -194,7 +194,7 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		bool Unacquire(){
+		bool unacquire(){
 			if (isAcquire_ == false ) {
 				//acquireされてないんやで
 				return false;
@@ -213,9 +213,9 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void Release() {
+		void release() {
 			if (mouseDevice_) {
-				Unacquire();
+				unacquire();
 			}
 
 		}
@@ -224,7 +224,7 @@ namespace Nyx {
 		bool isAcquire_;
 		char align[3];
 		HWND hwnd_;
-		Point2l position_;
+		point2i position_;
 		DIMOUSESTATE2 mouseState_;
 		DirectInputPtr mouse_;
 		DirectInputDevicePtr mouseDevice_;
@@ -232,115 +232,115 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Mouse::Mouse() 
+	mouse::mouse() 
 		:pimpl_(std::make_shared<PImpl>())
 	{
 	}
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Mouse::Mouse(const InputDeviceDesc& desc) 
+	mouse::mouse(const input_device_desc& desc) 
 		:pimpl_(std::make_shared<PImpl>())
 	{
 
-		if (Initialize(desc) == false) {
-			Nyx::DebugOutput::Trace("マウスデバイスの初期化に失敗しました。");
-			throw Nyx::COMException("マウスの初期化に失敗しました。", 0);
+		if (initialize(desc) == false) {
+			nyx::debug_out::trace("マウスデバイスの初期化に失敗しました。");
+			throw nyx::com_exception("マウスの初期化に失敗しました。", 0);
 		}
 
-		Assert(pimpl_!= nullptr);
-		Assert(pimpl_->isInitialized);
+		NYX_ASSERT(pimpl_!= nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Mouse::Mouse(const Mouse& other) {
+	mouse::mouse(const mouse& other) {
 		this->pimpl_ = other.pimpl_;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::Initialize(const InputDeviceDesc& desc) {
-		Assert(pimpl_ != nullptr);
-		if (IsInitialized()) {
-			return IsInitialized();
+	bool mouse::initialize(const input_device_desc& desc) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		if (is_initialized()) {
+			return is_initialized();
 		}
 
-		pimpl_->Initialize((HWND)desc.handle);
+		pimpl_->initialize((HWND)desc.handle);
 
-		return IsInitialized();
+		return is_initialized();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::IsInitialized() {
+	bool mouse::is_initialized() {
 		return pimpl_->isInitialized;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::Update() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool mouse::update() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->Update();
+		return pimpl_->update();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::GetMouseButton(MouseButton keycode) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool mouse::get_mouse_button(MOUSE_BUTTON keycode) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->GetMouseButton(keycode);
+		return pimpl_->get_mouse_button(keycode);
 	}
 
 	
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Point2l Mouse::GetPosition() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	point2i mouse::get_position() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->GetPosition();
+		return pimpl_->get_position();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	int Mouse::GetWheelState() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	int mouse::get_wheel_state() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->GetWheelState();
+		return pimpl_->get_wheel_state();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::Acquire() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool mouse::acquire() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->Acquire();
+		return pimpl_->acquire();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	bool Mouse::Unacquire(){
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool mouse::unacquire(){
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->Unacquire();
+		return pimpl_->unacquire();
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void Mouse::Release() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	void mouse::release() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		pimpl_->Release();
+		pimpl_->release();
 	}
 }

@@ -3,11 +3,11 @@
 #include "GUI/IControl.h"
 #include "Utility/Type.h"
 
-namespace Nyx 
+namespace nyx 
 {
 
 	///リストボックスインタフェース
-	class IListBox : public IControl
+	class ilist_box : public iwidget
 	{
 	public:
 		//----------------------------------------------------------------
@@ -16,7 +16,7 @@ namespace Nyx
 		/**
 		* デストラクタ
 		*/
-		virtual ~IListBox() {} 
+		virtual ~ilist_box() {} 
 
 		//----------------------------------------------------------------
 		//リストボックス固有の操作
@@ -24,28 +24,28 @@ namespace Nyx
 		/**
 		* リストボックスにアイテムを追加する
 		*/
-		virtual void AddItem(const std::wstring& item) = 0;
+		virtual void add(const std::wstring& item) = 0;
 
 		/**
 		* リストボックスのアイテムを削除する
 		*/
-		virtual void DeleteItem() = 0;
+		virtual void remove() = 0;
 
 		/**
 		* リストボックスのアイテムをクリアする
 		*/
-		virtual void ClearItem() = 0;
+		virtual void clear() = 0;
 
 		/**
 		* 現在選択されているアイテムのインデックスを取得する
 		*/
-		virtual uint GetSelectedIndex() = 0 ;
+		virtual uint32_t get_select_index() = 0 ;
 
 		/**
 		* 現在選択されているアイテム名を取得する
 		* @return std::wstring
 		*/
-		virtual std::wstring GetSelectedItem() = 0;
+		virtual std::wstring get_select_item() = 0;
 	};
 }
 

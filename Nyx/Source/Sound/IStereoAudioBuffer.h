@@ -17,24 +17,24 @@
 #ifndef NYX_CORE_INCLUDED_ISTEREO_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_ISTEREO_AUDIO_BUFFER_H_
 
-namespace Nyx {
+namespace nyx {
 	
 	///ステレオサウンドの機能を持つオーディオバッファインタフェース
-	class IStereoAudioBuffer {
+	class istereo_audio_buffer {
 	public:
-		virtual ~IStereoAudioBuffer() {}
+		virtual ~istereo_audio_buffer() {}
 		/**
 		* オーディオバッファのパン値を設定します
 		* @param long パン
 		*/
-		virtual void SetPan(long pan) = 0;
+		virtual void set_pan(long pan) = 0;
 
 
 		/**
 		* オーディオバッファのパン値を取得します
 		* @return long 
 		*/
-		virtual long GetPan()const = 0;
+		virtual long get_pan()const = 0;
 
 	};
 }

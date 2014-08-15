@@ -18,20 +18,20 @@
 #define NYX_CORE_INCLUDED_WINSOCK_UDP_SERVER_SOCKET_H_
 #include "WinsockInitializer.h"
 
-namespace Nyx {
+namespace nyx {
 	///UDPソケット
-	class WinsockUDPSocket {
+	class winsock_udp_socket {
 	public:
 		/**
 		*　コンストラクタ
 		*/
-		WinsockUDPSocket(const char* address, size_t port, size_t blockingMode = 1);
+		winsock_udp_socket(const char* address, size_t port, size_t blockingMode = 1);
 
 
 		/**
 		*　デストラクタ
 		*/
-		~WinsockUDPSocket();
+		~winsock_udp_socket();
 
 
 		/**
@@ -39,7 +39,7 @@ namespace Nyx {
 		* @param const char* アドレス
 		* @param ushort ポート番号
 		*/
-		bool Bind(const char* address, size_t port);
+		bool bind(const char* address, size_t port);
 
 
 		/**
@@ -48,7 +48,7 @@ namespace Nyx {
 		* @param size_t  送信バッファの長さ
 		* @return size_t 送信バイト数
 		*/
-		size_t Send(const char *buffer, size_t bufferSize, const WinsockUDPSocket& socket) const;
+		size_t send(const char *buffer, size_t bufferSize, const winsock_udp_socket& socket) const;
 
 
 		/**
@@ -57,7 +57,7 @@ namespace Nyx {
 		* @param size_t 受信バッファの長さ
 		* @return size_ 受信バイト数
 		*/
-		size_t Recieve(char *buffer, size_t bufferSize, WinsockUDPSocket& socket) const;
+		size_t recieve(char *buffer, size_t bufferSize, winsock_udp_socket& socket) const;
 	private:
 		SOCKET      socket_;  ///< 接続先のソケット
 		sockaddr_in address_; ///< 接続元のアドレス情報

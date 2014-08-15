@@ -4,26 +4,26 @@
 #include "FontManager.h"
 #include "detail/DX9/DirectXDefinition.h"
 
-namespace Nyx {
+namespace nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<TextureFont> FontManager::CreateChar(wchar_t chara, const FontInfo& fontInfo) {
+	std::shared_ptr<texture_font> font_factory::make_texture_char(wchar_t chara, const font_info& fontInfo) {
 		//ÉäÉ\Å[ÉXÇçÏê¨
-		auto resource = std::make_shared<TextureFont>(chara, fontInfo);
-		ResourceCache::Add(std::make_shared<ResourceHandle>(&chara, resource));
+		auto resource = std::make_shared<texture_font>(chara, fontInfo);
+		resource_cache::add(std::make_shared<resource_handle>(&chara, resource));
 
 		return resource;
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<TextureText> FontManager::CreateText(const std::wstring& text, const FontInfo& fontInfo) {
+	std::shared_ptr<texture_text> font_factory::make_texture_text(const std::wstring& text, const font_info& fontInfo) {
 		TextureFontList resource;
 		for (auto chara : text) {
-			resource.push_back(CreateChar(chara, fontInfo));
+			resource.push_back(make_texture_char(chara, fontInfo));
 		}
 
-		return std::make_shared<TextureText>(resource);
+		return std::make_shared<texture_text>(resource);
 	}
 
 
@@ -44,18 +44,18 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void FontManager::Delete(const std::wstring& key) {
-		ResourceCache::Delete(key);
+	void font_factory::remove(const std::wstring& key) {
+		resource_cache::remove(key);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<TextureFont> FontManager::GetItem(wchar_t chara) {
-		if (ResourceCache::Find(&chara) == false) {
+	std::shared_ptr<texture_font> font_factory::get_item(wchar_t chara) {
+		if (resource_cache::find(&chara) == false) {
 			return nullptr;
 		}
 
-		return std::static_pointer_cast<TextureFont>(ResourceCache::GetHandle(&chara)->GetResource());
+		return std::static_pointer_cast<texture_font>(resource_cache::get_handle(&chara)->get_resource());
 	}
 
 }

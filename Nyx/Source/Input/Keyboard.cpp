@@ -25,49 +25,49 @@
 #include "DirectInputDefinition.h"
 
 
-namespace Nyx {
-	struct Keyboard::PImpl : public IKeyBase {
+namespace nyx {
+	struct keyboard::PImpl : public ikey_base {
 		bool isInitialized;
 		PImpl() 
 			: isInitialized(false), 
 			isAcquire_(false), 
 			keyboard_(nullptr), 
 			keyboardDevice_(nullptr), 
-			IKeyBase() 
+			ikey_base() 
 		{
 		}
 
-		void Initialize(HWND hwnd_) {
+		void initialize(HWND hwnd_) {
 
 
 			// DirectInputの作成
 			LPDIRECTINPUT8 keyboard = NULL;
 			HRESULT hr = DirectInput8Create(::GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&keyboard, NULL); 
 			if (FAILED(hr)) {
-				DebugOutput::Trace("DirectInputオブジェクトの生成に失敗しました。");
-				throw Nyx::COMException("DirectInputオブジェクトの生成に失敗しました。", hr);
+				debug_out::trace("DirectInputオブジェクトの生成に失敗しました。");
+				throw nyx::com_exception("DirectInputオブジェクトの生成に失敗しました。", hr);
 			}
 
 			// デバイス・オブジェクトを作成
 			LPDIRECTINPUTDEVICE8 keyboardDevice = NULL;
 			hr = keyboard->CreateDevice(GUID_SysKeyboard, &keyboardDevice, NULL); 
 			if (FAILED(hr)) {
-				DebugOutput::Trace("DirectInputDeviceオブジェクトの生成に失敗しました。");
-				throw Nyx::COMException("DirectInputDeviceオブジェクトの生成に失敗しました。", hr);
+				debug_out::trace("DirectInputDeviceオブジェクトの生成に失敗しました。");
+				throw nyx::com_exception("DirectInputDeviceオブジェクトの生成に失敗しました。", hr);
 			}
 
 
 			// データ形式を設定
 			hr = keyboardDevice->SetDataFormat(&c_dfDIKeyboard);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("データ形式の設定に失敗しました。");
-				throw Nyx::COMException("データ形式の設定に失敗しました。", hr);
+				debug_out::trace("データ形式の設定に失敗しました。");
+				throw nyx::com_exception("データ形式の設定に失敗しました。", hr);
 			}
 			//モードを設定（フォアグラウンド＆非排他モード）
 			hr = keyboardDevice->SetCooperativeLevel(hwnd_, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("制御モードの設定に失敗しました。");
-				throw Nyx::COMException("制御モードの設定に失敗しました。", hr);
+				debug_out::trace("制御モードの設定に失敗しました。");
+				throw nyx::com_exception("制御モードの設定に失敗しました。", hr);
 			}
 			// バッファリング・データを取得するため、バッファ・サイズを設定
 			DIPROPDWORD diprop = {};
@@ -78,8 +78,8 @@ namespace Nyx {
 			diprop.dwData = 255;
 			hr = keyboardDevice->SetProperty(DIPROP_BUFFERSIZE, &diprop.diph);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("バッファサイズの設定に失敗しました。");
-				throw Nyx::COMException("バッファサイズの設定に失敗しました。", hr);
+				debug_out::trace("バッファサイズの設定に失敗しました。");
+				throw nyx::com_exception("バッファサイズの設定に失敗しました。", hr);
 			}
 
 
@@ -91,39 +91,39 @@ namespace Nyx {
 		
 		
 		~PImpl()  {
-			Release();
+			release();
 		}
 
 
-		bool Update() {
+		bool update() {
 			HRESULT hr;
-			Flip();
+			flip();
 
 			//Acquireしとらんのか
 			if  (isAcquire_ == false ) {
-				if (Acquire() == false)  {
-					::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BufferSize);
+				if (acquire() == false)  {
+					::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BUFFER_SIZE);
 					return false;  
 				}
 			}
 
 			//キーボードの状態を読み込む
-			hr = keyboardDevice_->GetDeviceState(BufferSize, (LPVOID)&(keyBuffer_[flipCounter_][0]));
+			hr = keyboardDevice_->GetDeviceState(BUFFER_SIZE, (LPVOID)&(keyBuffer_[flipCounter_][0]));
 			if(hr == DIERR_INPUTLOST) {
 				// 失敗したらAcquireする
-				if (!Acquire()) {
+				if (!acquire()) {
 					//acquireでけへんかった。
 					isAcquire_ = false;
 					return true;
 				}
 				//	一回はok
-				hr = keyboardDevice_->GetDeviceState(BufferSize, (LPVOID)&(keyBuffer_[flipCounter_][0]));
+				hr = keyboardDevice_->GetDeviceState(BUFFER_SIZE, (LPVOID)&(keyBuffer_[flipCounter_][0]));
 			} 
 
 			if (hr != DI_OK) {
 				//	バッファをクリアして戻る。（画面外にフォーカスが移ったときに押しっぱなし
 				//	になるのを防ぐため）
-				::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BufferSize);
+				::ZeroMemory((LPVOID)&(keyBuffer_[flipCounter_][0]), BUFFER_SIZE);
 				return false;       
 			}
 
@@ -131,14 +131,14 @@ namespace Nyx {
 		}
 
 
-		void  Release() {
+		void  release() {
 			// DirectInputのデバイスを解放
 			if (keyboardDevice_) {
 				keyboardDevice_->Unacquire();
 			}
 		}
 
-		bool Acquire() {
+		bool acquire() {
 			HRESULT hr = keyboardDevice_->Acquire();
 			if (hr==DI_OK) {
 				isAcquire_ = true;
@@ -148,7 +148,7 @@ namespace Nyx {
 			return isAcquire_;
 		}
 
-		bool Unacquire() {
+		bool unacquire() {
 			if (isAcquire_ == false) {
 				//acquireされとらん
 				return false;
@@ -168,93 +168,93 @@ namespace Nyx {
 		DirectInputDevicePtr keyboardDevice_;
 	};
 
-	Keyboard::Keyboard() 
+	keyboard::keyboard() 
 		: pimpl_(std::make_shared<PImpl>()) {
 	}
 
 
 
-	Keyboard::Keyboard(const InputDeviceDesc& desc) 
+	keyboard::keyboard(const input_device_desc& desc) 
 		: pimpl_(std::make_shared<PImpl>()) {
 
-			Initialize(desc);
+			initialize(desc);
 
-			Assert(pimpl_!= nullptr);
-			Assert(pimpl_->isInitialized);
+			NYX_ASSERT(pimpl_!= nullptr);
+			NYX_ASSERT(pimpl_->isInitialized);
 	}
 
-	bool Keyboard::IsInitialized() {
-		Assert(pimpl_ != nullptr);
+	bool keyboard::is_initialized() {
+		NYX_ASSERT(pimpl_ != nullptr);
 
 		return pimpl_->isInitialized;
 	}
 
-	bool Keyboard::Initialize(const InputDeviceDesc& desc) {
-		Assert(pimpl_ != nullptr);
-		if (IsInitialized()) {
-			return IsInitialized();
+	bool keyboard::initialize(const input_device_desc& desc) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		if (is_initialized()) {
+			return is_initialized();
 		}		
 
-		pimpl_->Initialize((HWND)desc.handle);
+		pimpl_->initialize((HWND)desc.handle);
 
 		return pimpl_->isInitialized;
 	}
 
 
-	bool Keyboard::Update() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool keyboard::update() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->Update();
+		return pimpl_->update();
 	}
 
 
-	uchar* Keyboard::GetKeyBuffer() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	uint8_t* keyboard::get_key_buffer() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->GetKeyBuffer();
+		return pimpl_->get_key_buffer();
 	}
 
 
-	bool Keyboard::IsPushed(KeyCode keycode) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool keyboard::is_pushed(KEYCODE keycode) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		uchar key = static_cast<uchar>(keycode);
-		return pimpl_->IsPushed(key);
+		uint8_t key = static_cast<uint8_t>(keycode);
+		return pimpl_->is_pushed(key);
 	}
 
 
-	bool Keyboard::IsPressed(KeyCode keycode) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool keyboard::is_pressed(KEYCODE keycode) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		uchar key = static_cast<uchar>(keycode);
-		return pimpl_->IsPressed(key);
+		uint8_t key = static_cast<uint8_t>(keycode);
+		return pimpl_->is_pressed(key);
 	}
 
 
-	void  Keyboard::Release() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	void  keyboard::release() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		pimpl_->Release();
+		pimpl_->release();
 	}
 
 
-	bool Keyboard::Acquire() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool keyboard::acquire() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->Acquire();
+		return pimpl_->acquire();
 	}
 
 
-	bool Keyboard::Unacquire() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->isInitialized);
+	bool keyboard::unqcquire() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->isInitialized);
 
-		return pimpl_->Unacquire();
+		return pimpl_->unacquire();
 	}
 }

@@ -20,9 +20,9 @@
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 
-namespace Nyx {
+namespace nyx {
 	//------------------------------------------------------------------------------
-	PushButton::PushButton(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id)
+	push_button::push_button(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id)
 		:label_(label), hwnd_(NULL), id_(id), atom_(NULL), isShow_(false), isActivate_(true)
 	{
 
@@ -30,7 +30,7 @@ namespace Nyx {
 	}       
 
 	//------------------------------------------------------------------------------
-	PushButton::~PushButton() 
+	push_button::~push_button() 
 	{
 		if (atom_) { 
 			::UnregisterClass((LPCTSTR)atom_, ::GetModuleHandle(NULL));
@@ -38,115 +38,115 @@ namespace Nyx {
 	}
 
 	//------------------------------------------------------------------------------
-	bool PushButton::OnCreate(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id) {
+	bool push_button::OnCreate(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 	
 			x, y, width, height, hwnd,  (HMENU)id, hInstance, NULL);
 
-		Assert(hwnd != NULL);
+		NYX_ASSERT(hwnd != NULL);
 		if (!hwnd) {
 			::MessageBox(NULL, TEXT("失敗しました"), TEXT("error"), MB_OK);
 			return false;
 		}
 		//コントロールの表示
-		Show();
+		show();
 		return true;
 	}
 	//---------------------------------------------------------------------------------------
-	void PushButton::Show() 
+	void push_button::show() 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_ = true;
 		::ShowWindow(hwnd_, SW_SHOW);   
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::Hide() 
+	void push_button::hide() 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_ = false;
 		::ShowWindow(hwnd_, SW_HIDE);   
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::Update() 
+	void push_button::update() 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		::UpdateWindow(hwnd_);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool PushButton::IsShow() 
+	bool push_button::is_show() 
 	{
 		return isShow_;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::Activate() 
+	void push_button::activate() 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, true);
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::Unactivate() 
+	void push_button::unactivate() 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, false);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool PushButton::IsActivate() 
+	bool push_button::is_activate() 
 		const 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		return IsWindowEnabled(hwnd_) != 0;
 	}
 
 	//---------------------------------------------------------------------------------------
-	HWND  PushButton::GetHandle() 
-	{
-		Assert(hwnd_ != NULL);
+	nyx::window_handle push_button::get_handle()
+{
+		NYX_ASSERT(hwnd_ != NULL);
 		return hwnd_;
 	}
 
 	//---------------------------------------------------------------------------------------
-	ControlType PushButton::GetType() 
+	WIDGET_TYPE push_button::get_type() 
 		const 
 	{
-		return ControlType_PushButton;
+		return WIDGET_TYPE_BUTTON;
 	}
 
 	//---------------------------------------------------------------------------------------
-	std::shared_ptr<void> PushButton::GetUserData() 
+	std::shared_ptr<void> push_button::get_user_data() 
 		const 
 	{
 		return userData_;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::SetUserData(std::shared_ptr<void> data) 
+	void push_button::set_user_data(std::shared_ptr<void> data) 
 	{
 		userData_ = data;
 	}
 
 	//---------------------------------------------------------------------------------------
-	uint PushButton::GetID() 
+	uint32_t push_button::get_id() 
 		const 
 	{
 		return id_;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::SetID(uint id)  
+	void push_button::set_id(uint32_t id)  
 	{
 		id_ = id;
 	}
 	//---------------------------------------------------------------------------------------
-	void PushButton::GetSize(Rect2i& rect)
+	void push_button::get_size(rect2i& rect)
 		const 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT r;
 		::GetWindowRect(hwnd_, &r);
 
@@ -158,17 +158,17 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::SetSize(const Rect2i& rect) 
+	void push_button::set_size(const rect2i& rect)
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		::SetWindowPos(hwnd_, NULL, rect.x, rect.y, rect.width, rect.height, SWP_SHOWWINDOW);
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::GetPosition(Point2i& p) 
+	void push_button::get_position(point2i& p) 
 		const 
 	{
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT _r;
 		::GetWindowRect(hwnd_, &_r);
 
@@ -177,24 +177,24 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::SetPosition(const Point2i& p) 
+	void push_button::set_position(const point2i& p) 
 	{
-		Assert(hwnd_ != NULL);
-		Rect2i r;
-		GetSize(r);
+		NYX_ASSERT(hwnd_ != NULL);
+		rect2i r;
+		get_size(r);
 
 		::SetWindowPos(hwnd_, NULL, p.x, p.y, r.width, r.height, SWP_SHOWWINDOW);
 	}
 
 	//---------------------------------------------------------------------------------------
-	std::wstring PushButton::GetLabel() 
+	std::wstring push_button::GetLabel() 
 		const
 	{
 		return label_;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void PushButton::SetLabel(const std::wstring& label)
+	void push_button::SetLabel(const std::wstring& label)
 	{
 		label_ = label;
 		SetWindowText(hwnd_, label_.c_str());

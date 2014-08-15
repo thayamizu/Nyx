@@ -20,112 +20,113 @@
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 
-namespace Nyx {
+namespace nyx {
 	//---------------------------------------------------------------------------------------
-	CheckBox::CheckBox(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) 
+	check_box::check_box(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) 
 		:hwnd_(NULL), label_(label), id_(id), atom_(NULL), isShow_(false), userData_(NULL)	{
 		OnCreate(hwnd, label, x, y, width, height, id);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool CheckBox::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool check_box::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
 
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 
 			x, y, width, height, hwnd, (HMENU)id,  hInstance, NULL);
 
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		if (!hwnd_) {
 			::MessageBox(NULL, TEXT("Ž¸”s‚µ‚Ü‚µ‚½"), TEXT("error"), MB_OK);
 			return false;
 		}
-		Show();
+		show();
 		return true;
 	}
 	//---------------------------------------------------------------------------------------
-	CheckBox::~CheckBox() {
+	check_box::~check_box() {
 		if (atom_) {
 			::UnregisterClass((LPCTSTR)atom_, ::GetModuleHandle(NULL));
 		}
 	}
 
 	//---------------------------------------------------------------------------------------
-	HWND CheckBox::GetHandle() {
-		Assert(hwnd_ != NULL);
+	nyx::window_handle check_box::get_handle()
+{
+		NYX_ASSERT(hwnd_ != NULL);
 		return hwnd_;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::Show(){
-		Assert(hwnd_ !=NULL);
+	void check_box::show(){
+		NYX_ASSERT(hwnd_ !=NULL);
 		isShow_ = true;
 		::ShowWindow(hwnd_, SW_SHOW);
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::Hide(){
-		Assert(hwnd_ != NULL);
+	void check_box::hide(){
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_=false;
 		::ShowWindow(hwnd_, SW_HIDE);
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::Update() {
-		Assert(hwnd_ != NULL);
+	void check_box::update() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::UpdateWindow(hwnd_);
 	}
 
 	//----------------------------------------------------------------
-	bool CheckBox::IsShow() {
+	bool check_box::is_show() {
 		return isShow_;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::Activate() {
-		Assert(hwnd_ != NULL);
+	void check_box::activate() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, true);
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::Unactivate() {
-		Assert(hwnd_ != NULL);
+	void check_box::unactivate() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, false);
 	}
 
 	//----------------------------------------------------------------
-	bool CheckBox::IsActivate() const {
-		Assert(hwnd_ != NULL);
+	bool check_box::is_activate() const {
+		NYX_ASSERT(hwnd_ != NULL);
 		return IsWindowEnabled(hwnd_) != 0;
 	}
 
 	//----------------------------------------------------------------
-	ControlType CheckBox::GetType() const{
-		return ControlType_CheckBox;
+	WIDGET_TYPE check_box::get_type() const{
+		return WIDGET_TYPE_CHECK_BOX;
 	}
 
 	//----------------------------------------------------------------
-	std::shared_ptr<void> CheckBox::GetUserData() const {
+	std::shared_ptr<void> check_box::get_user_data() const {
 		return userData_;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::SetUserData(std::shared_ptr<void> data) {
+	void check_box::set_user_data(std::shared_ptr<void> data) {
 		userData_ = data;
 	}
 
 	//----------------------------------------------------------------
-	uint CheckBox::GetID() const {
+	uint32_t check_box::get_id() const {
 		return id_;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::SetID(uint id)  {
+	void check_box::set_id(uint32_t id)  {
 		id_ = id;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::GetSize(Rect2i& rect) const {
-		Assert(hwnd_ != NULL);
+	void check_box::get_size(rect2i& rect) const {
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT r;
 		::GetWindowRect(hwnd_, &r);
 
@@ -137,14 +138,14 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::SetSize(const Rect2i& rect) {
-		Assert(hwnd_ != NULL);
+	void check_box::set_size(const rect2i& rect) {
+		NYX_ASSERT(hwnd_ != NULL);
 		::SetWindowPos(hwnd_, NULL, rect.x, rect.y, rect.width, rect.height, SWP_SHOWWINDOW);
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::GetPosition(Point2i& p) const {
-		Assert(hwnd_ != NULL);
+	void check_box::get_position(point2i& p) const {
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT _r;
 		::GetWindowRect(hwnd_, &_r);
 
@@ -153,29 +154,29 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::SetPosition(const Point2i& p) {
-		Assert(hwnd_ != NULL);
-		Rect2i r;
-		GetSize(r);
+	void check_box::set_position(const point2i& p) {
+		NYX_ASSERT(hwnd_ != NULL);
+		rect2i r;
+		get_size(r);
 
 		::SetWindowPos(hwnd_, NULL, p.x, p.y, r.width, r.height, SWP_SHOWWINDOW);
 	}
 
 	//----------------------------------------------------------------
-	std::wstring CheckBox::GetLabel() const {
+	std::wstring check_box::GetLabel() const {
 		return label_;
 	}
 
 	//----------------------------------------------------------------
-	void CheckBox::SetLabel(const std::wstring& label) {
-		Assert(hwnd_ != NULL);
+	void check_box::SetLabel(const std::wstring& label) {
+		NYX_ASSERT(hwnd_ != NULL);
 		label_ = label;
 		SetWindowText(hwnd_, label_.c_str());
 	}
 
 	//----------------------------------------------------------------
-	bool CheckBox::IsChecked() const {
-		Assert(hwnd_ != NULL);
+	bool check_box::IsChecked() const {
+		NYX_ASSERT(hwnd_ != NULL);
 		LRESULT result = ::SendMessage(hwnd_, BM_GETCHECK, 0, 0);
 		return result == BST_CHECKED;
 	}

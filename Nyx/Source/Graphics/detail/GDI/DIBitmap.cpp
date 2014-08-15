@@ -19,23 +19,23 @@
 #include "Primitive/Color3.h"
 #include "Debug/Assert.h"
 
-namespace Nyx {
-	namespace GDI {
+namespace nyx {
+	namespace gdi {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		DIBitmap::DIBitmap(const std::wstring fileName_){
-			hMemDC = ::CreateCompatibleDC(NULL);
-			hbitmap = (HBITMAP)LoadImage(GetModuleHandle(NULL), 
+		bitmap::bitmap(const std::wstring fileName_){
+			hMemDC_ = ::CreateCompatibleDC(NULL);
+			hBitmap_ = (HBITMAP)LoadImage(GetModuleHandle(NULL), 
 				fileName_.c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-			Assert(hbitmap != NULL);
-			::GetObject(hbitmap, sizeof(BITMAP), &bitmap);
+			NYX_ASSERT(hBitmap_ != NULL);
+			::GetObject(hBitmap_, sizeof(BITMAP), &bmpData_);
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		DIBitmap::~DIBitmap() {
-			Release();
+		bitmap::~bitmap() {
+			release();
 		}
 
 		//-------------------------------------------------------------------------------------------------------
@@ -56,57 +56,57 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void DIBitmap::Draw(HDC hdc, int x, int y,ulong op) {
+		void bitmap::draw(HDC hdc, int x, int y,uint64_t op) {
 			//画像を選択
-			SelectObject(hMemDC, hbitmap);
+			SelectObject(hMemDC_, hBitmap_);
 			//指定した座標にそのまま描画
-			::BitBlt(hdc, x, y, bitmap.bmWidth, bitmap.bmHeight, hMemDC, 0, 0, op);
+			::BitBlt(hdc, x, y, bmpData_.bmWidth, bmpData_.bmHeight, hMemDC_, 0, 0, op);
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void DIBitmap::Draw(HDC hdc, int x, int y, int sx, int sy, ulong op) {
+		void bitmap::draw(HDC hdc, int x, int y, int sx, int sy, uint64_t op) {
 			//画像を選択
-			SelectObject(hMemDC, hbitmap);
+			SelectObject(hMemDC_, hBitmap_);
 			//伸縮して描画
-			::StretchBlt(hdc, x, y, bitmap.bmWidth*sx, bitmap.bmHeight*sy, hMemDC, 0, 0,bitmap.bmWidth, bitmap.bmHeight, op);
+			::StretchBlt(hdc, x, y, bmpData_.bmWidth*sx, bmpData_.bmHeight*sy, hMemDC_, 0, 0,bmpData_.bmWidth, bmpData_.bmHeight, op);
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void DIBitmap::Draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, ulong op) {
+		void bitmap::draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, uint64_t op) {
 			//画像を選択
-			SelectObject(hMemDC, hbitmap);
-			::StretchBlt(hdc, x, y, width, height, hMemDC, width*tx, height*ty, width, height, op);
+			SelectObject(hMemDC_, hBitmap_);
+			::StretchBlt(hdc, x, y, width, height, hMemDC_, width*tx, height*ty, width, height, op);
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void DIBitmap::Draw(HDC hdc, int x, int y, int colorKey) {
+		void bitmap::draw(HDC hdc, int x, int y, int colorKey) {
 			//画像を選択
-			SelectObject(hMemDC, hbitmap);
+			SelectObject(hMemDC_, hBitmap_);
 			//抜き色を指定して描画
 			::TransparentBlt(
-				hdc, x, y, bitmap.bmWidth, bitmap.bmHeight, 
-				hMemDC, 0, 0, bitmap.bmWidth, bitmap.bmHeight, 
+				hdc, x, y, bmpData_.bmWidth, bmpData_.bmHeight, 
+				hMemDC_, 0, 0, bmpData_.bmWidth, bmpData_.bmHeight, 
 				colorKey);
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		void DIBitmap::Draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey) {
+		void bitmap::draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey) {
 			//画像を選択
-			SelectObject(hMemDC, hbitmap);
+			SelectObject(hMemDC_, hBitmap_);
 			//抜き色を指定して描画(チップ対応)
 			::TransparentBlt(
-				hdc, x, y, width, height, hMemDC,
+				hdc, x, y, width, height, hMemDC_,
 				width*tx, height*ty, width, height, colorKey);
 		}
 
 
 		//-------------------------------------------------------------------------------------------------------
 		//アルファブレンディング
-		void DIBitmap::Draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey, uchar alpha) {
+		void bitmap::draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey, uint8_t alpha) {
 			//アルファブレンドの設定
 			BLENDFUNCTION blend;
 			blend.BlendOp    = AC_SRC_OVER;
@@ -116,14 +116,14 @@ namespace Nyx {
 
 			//一時領域の作成
 			HDC tmp = ::CreateCompatibleDC(hdc);
-			HBITMAP work=::CreateCompatibleBitmap(hdc, bitmap.bmWidth, bitmap.bmHeight);
+			HBITMAP work=::CreateCompatibleBitmap(hdc, bmpData_.bmWidth, bmpData_.bmHeight);
 			SelectObject(tmp, work);
 
 			//一時領域へチップ画像を描画(抜き色指定）
-			SelectObject(hMemDC, hbitmap);
+			SelectObject(hMemDC_, hBitmap_);
 			::TransparentBlt(
 				tmp, 0, 0, width, height, 
-				hMemDC, width*tx, height*ty, width, height, colorKey);
+				hMemDC_, width*tx, height*ty, width, height, colorKey);
 
 			//一時領域へ描画したものを、アルファブレンディングしてプライマリに転送
 			AlphaBlend(
@@ -137,28 +137,28 @@ namespace Nyx {
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		long DIBitmap::GetWidth() {
-			return bitmap.bmWidth;
+		long bitmap::get_width() {
+			return bmpData_.bmWidth;
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		long DIBitmap::GetHeight() {
-			return bitmap.bmHeight;
+		long bitmap::get_height() {
+			return bmpData_.bmHeight;
 		}
 
 		//-------------------------------------------------------------------------------------------------------
 		//
-		long* DIBitmap::GetPixel() {
-			return reinterpret_cast<long*>(bitmap.bmBits);
+		long* bitmap::get_pixel() {
+			return reinterpret_cast<long*>(bmpData_.bmBits);
 		}
 
 		//---------------------------------------------------------------
 		//解放処理
 		//---------------------------------------------------------------
-		void DIBitmap::Release() {
-			DeleteDC(hMemDC);
-			DeleteObject(hbitmap);
+		void bitmap::release() {
+			DeleteDC(hMemDC_);
+			DeleteObject(hBitmap_);
 		}
 	}
 }

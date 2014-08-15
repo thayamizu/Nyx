@@ -19,115 +19,115 @@
 #include "IO/File.h"
 #include "IO/detail/Win32/Win32File.h"
 
-namespace Nyx {
-	struct File::PImpl {
-		std::unique_ptr<Win32File> file;
+namespace nyx {
+	struct file::PImpl {
+		std::unique_ptr<win32_file> file;
 	};
 	//-----------------------------------------------------------------------------------
-	File::File() 
+	file::file() 
 		:pimpl_(new PImpl()) {
-			pimpl_->file = std::unique_ptr<Win32File>(new Win32File());
+			pimpl_->file = std::unique_ptr<win32_file>(new win32_file());
 	}
 
 	//-----------------------------------------------------------------------------------
-	File::File(const std::wstring& name, AccessAttribute attr) 
+	file::file(const std::wstring& name, FILE_ACCESS_ATTRIBUTE attr) 
 		:pimpl_(new PImpl()){
-			pimpl_->file = std::unique_ptr<Win32File>(new Win32File(name, attr));
+			pimpl_->file = std::unique_ptr<win32_file>(new win32_file(name, attr));
 	}
 
 	//-----------------------------------------------------------------------------------
-	File::~File() {
+	file::~file() {
 
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool File::Open(const std::wstring& name, AccessAttribute attr) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->Open(name, attr);
+	bool file::open(const std::wstring& name, FILE_ACCESS_ATTRIBUTE attr) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->open(name, attr);
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool  File::Close() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->Close();
+	bool  file::close() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->close();
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::GetCurrentPosition() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->GetCurrentPosition();
+	uint64_t  file::get_current_position() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->get_current_position();
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::GetSize() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return  pimpl_->file->GetSize();
+	uint64_t  file::get_size() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return  pimpl_->file->get_size();
 	}
 
 	//-----------------------------------------------------------------------------------
-	std::wstring File::GetFileName() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->GetFileName();
+	std::wstring file::get_file_name() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->get_file_name();
 	}
 
 	//-----------------------------------------------------------------------------------
-	HANDLE File::GetHandle() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
+	file_handle file::get_handle() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
 		return pimpl_->file->GetHandle();
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::Read(void* buffer, ulong size) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->Read(buffer, size);
+	uint64_t  file::read(void* buffer, uint64_t size) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->read(buffer, size);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::Write(void* buffer, ulong size) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->Write(buffer, size);
+	uint64_t  file::write(void* buffer, uint64_t size) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->write(buffer, size);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::Seek(long offSet) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->Seek(offSet);
+	uint64_t  file::seek(long offSet) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->seek(offSet);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::SeekBegin(long offSet) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->SeekBegin(offSet);
+	uint64_t  file::seek_begin(long offSet) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->seek_begin(offSet);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  File::SeekEnd(long offSet) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->SeekEnd(offSet);
+	uint64_t  file::seek_end(long offSet) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->seek_end(offSet);
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool  File::IsOpened() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->IsOpened();
+	bool  file::is_opened() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->is_opened();
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool File::Flush() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->file != nullptr);
-		return pimpl_->file->Flush();
+	bool file::flush() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->file != nullptr);
+		return pimpl_->file->flush();
 	}
 }

@@ -17,31 +17,31 @@
 #include "PCH/PCH.h"
 #include "WinsockUDPSocket.h"
 
-namespace Nyx {
+namespace nyx {
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockUDPSocket::WinsockUDPSocket(const char* address, const size_t port, const size_t blockingMode)
+	winsock_udp_socket::winsock_udp_socket(const char* address, const size_t port, const size_t blockingMode)
 		: socket_(NULL), address_() {
 			socket_ = socket(AF_INET, SOCK_DGRAM, 0);
 			if (socket_ == INVALID_SOCKET) {
 				LRESULT status = ::WSAGetLastError();
-				throw Win32Exception("UDPソケットの作成に失敗しました", status);
+				throw win32_exception("UDPソケットの作成に失敗しました", status);
 			}
 
 
 			//アドレス情報とソケットをバインディング
-			Bind(address, port);
+			bind(address, port);
 
 
 			//ブロッキングモード
-			ulong blocking = blockingMode;
+			uint64_t blocking = blockingMode;
 			::ioctlsocket(socket_, FIONBIO, &blocking);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool WinsockUDPSocket::Bind(const char* address, size_t port) {
+	bool winsock_udp_socket::bind(const char* address, size_t port) {
 		// ローカルサーバのアドレスを指定
 		address_.sin_family           = AF_INET;
 		address_.sin_port			  = htons(port);
@@ -59,7 +59,7 @@ namespace Nyx {
 
 		}
 
-		int status = bind(socket_, (sockaddr*)&address_, sizeof(address_));
+		int status = ::bind(socket_, (sockaddr*)&address_, sizeof(address_));
 		if (status == INVALID_SOCKET) {
 			return false;
 		}
@@ -70,7 +70,7 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	WinsockUDPSocket::~WinsockUDPSocket() {
+	winsock_udp_socket::~winsock_udp_socket() {
 		if (socket_ != NULL) {
 			closesocket(socket_);
 		}
@@ -79,14 +79,14 @@ namespace Nyx {
 
 	//-----------------------------------------------------------------------------------------
 	//
-	size_t WinsockUDPSocket::Send(const char *buffer, const size_t bufferSize, const WinsockUDPSocket& destination) const {
+	size_t winsock_udp_socket::send(const char *buffer, const size_t bufferSize, const winsock_udp_socket& destination) const {
 		return sendto(socket_, buffer, bufferSize, 0, (sockaddr*)&destination.address_, sizeof(destination.address_));
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	size_t WinsockUDPSocket::Recieve( char *buffer, const size_t bufferSize, WinsockUDPSocket& source) const {
+	size_t winsock_udp_socket::recieve( char *buffer, const size_t bufferSize, winsock_udp_socket& source) const {
 		int length = sizeof(source.address_);
 		return recvfrom(socket_, buffer, bufferSize, 0,  (sockaddr*)&source.address_, &length);
 	}

@@ -17,20 +17,20 @@
 #include "PCH/PCH.h"
 #include "Timer/PerformanceTimer.h"
 
-namespace Nyx {
-	double PerformanceTimer::Frequency;
-	bool   PerformanceTimer::Initialized =false;
+namespace nyx {
+	double performance_timer::Frequency;
+	bool   performance_timer::Initialized =false;
 	
 	//---------------------------------------------------------------------------------------
-	PerformanceTimer::PerformanceTimer() {
+	performance_timer::performance_timer() {
 	}
 
 	//---------------------------------------------------------------------------------------
-	PerformanceTimer::~PerformanceTimer() {
+	performance_timer::~performance_timer() {
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool PerformanceTimer::Initialize() {
+	bool performance_timer::initialize() {
 		if (Initialized) {
 			return Initialized;
 		}
@@ -38,7 +38,7 @@ namespace Nyx {
 		Tick freq;
 		bool isSuccess = QueryPerformanceFrequency(&freq) != 0;
 		if (isSuccess) {
-			PerformanceTimer::Frequency = static_cast<double>(freq.QuadPart);
+			performance_timer::Frequency = static_cast<double>(freq.QuadPart);
 			Initialized = true;
 		}
 		else {
@@ -49,14 +49,14 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	Tick PerformanceTimer::GetTick() {
+	Tick performance_timer::get_tick() {
 		Tick now;
 		::QueryPerformanceCounter(&now);
 		return now;
 	}
 
 	//---------------------------------------------------------------------------------------
-	double PerformanceTimer::GetInterval(const Tick &previous) {
+	double performance_timer::get_interval(const Tick &previous) {
 		Tick now;
 		::QueryPerformanceCounter(&now);
 		double diff = static_cast<double>(now.QuadPart - previous.QuadPart);
@@ -64,7 +64,7 @@ namespace Nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	double PerformanceTimer::GetInterval(const Tick &previous, const Tick &after)  {
+	double performance_timer::get_interval(const Tick &previous, const Tick &after)  {
 		double diff= static_cast<double>(after.QuadPart - previous.QuadPart);
 
 		return diff * 1000/Frequency;

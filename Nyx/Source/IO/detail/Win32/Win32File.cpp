@@ -16,19 +16,19 @@
 ********************************************************************************/
 #include "PCH/PCH.h"
 #include "Win32File.h"
-namespace Nyx {
+namespace nyx {
 
 	//-----------------------------------------------------------------------------------
-	Win32File::Win32File() 
-		:handle(INVALID_HANDLE_VALUE),attribute(None), fileName(TEXT("")) {
+	win32_file::win32_file() 
+		:handle(INVALID_HANDLE_VALUE),attribute(FILE_ACCESS_ATTRIBUTE_NUM), fileName(TEXT("")) {
 	}
 
 
 	//-----------------------------------------------------------------------------------
-	Win32File::Win32File(const std::wstring& name, AccessAttribute attr) 
+	win32_file::win32_file(const std::wstring& name, FILE_ACCESS_ATTRIBUTE attr) 
 		:handle(NULL), attribute(attr), fileName(name) {
 		try {
-			if (!Open(name, attr)) {
+			if (!open(name, attr)) {
 				throw std::domain_error("file can't open!");
 			}
 		}
@@ -39,24 +39,24 @@ namespace Nyx {
 
 
 	//-----------------------------------------------------------------------------------
-	Win32File::~Win32File() {
-		if (IsOpened()) { Close();}
+	win32_file::~win32_file() {
+		if (is_opened()) { close();}
 	}
 	
 
 	//-----------------------------------------------------------------------------------
-	bool Win32File::Open(const std::wstring& name, AccessAttribute attr) {
-		if (IsOpened()) { Close();}
+	bool win32_file::open(const std::wstring& name, FILE_ACCESS_ATTRIBUTE attr) {
+		if (is_opened()) { close();}
 
-		ulong openType = NULL;
+		uint64_t openType = NULL;
 		switch(attr) {
-		case ReadMode:
+		case FILE_ACCESS_ATTRIBUTE_READ:
 			openType = OPEN_EXISTING;
 			break;
-		case WriteMode:
+		case FILE_ACCESS_ATTRIBUTE_WRITE:
 			openType = CREATE_ALWAYS;
 			break;
-		case ReadWriteMode:
+		case FILE_ACCESS_ATTRIBUTE_READ_WRITE:
 			openType = OPEN_EXISTING;
 			break;
 		default:
@@ -75,53 +75,53 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool  Win32File::Close() {
+	bool  win32_file::close() {
 		return CloseHandle(handle) != 0;
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::GetCurrentPosition() const {
+	uint64_t  win32_file::get_current_position() const {
 		return ::SetFilePointer(handle, 0, NULL, FILE_CURRENT); 
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::GetSize() const {
+	uint64_t  win32_file::get_size() const {
 		return  ::GetFileSize(handle, NULL);
 	}
 
 	//-----------------------------------------------------------------------------------
-	std::wstring Win32File::GetFileName() const {
+	std::wstring win32_file::get_file_name() const {
 		return fileName;
 	}
 
 	//-----------------------------------------------------------------------------------
-	HANDLE Win32File::GetHandle() {
+	HANDLE win32_file::GetHandle() {
 		return handle;
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::Read(void* buffer, ulong size) {
+	uint64_t  win32_file::read(void* buffer, uint64_t size) {
 		if (handle == INVALID_HANDLE_VALUE) {
 			return 0;
 		}
-		ulong readBytes;
+		uint64_t readBytes;
 		::ReadFile(handle, buffer, size, &readBytes, NULL); 
 		return readBytes;
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::Write(void* buffer, ulong size) {
+	uint64_t  win32_file::write(void* buffer, uint64_t size) {
 		if (handle == INVALID_HANDLE_VALUE) {
 			return 0;
 		}
-		ulong writeBytes;
+		uint64_t writeBytes;
 		::WriteFile(handle, buffer, size, &writeBytes, NULL); 
 
 		return writeBytes;
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::Seek(long offSet) {
+	uint64_t  win32_file::seek(long offSet) {
 		if (handle == INVALID_HANDLE_VALUE) {
 			return 0;
 		}
@@ -129,7 +129,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::SeekBegin(long offSet) {
+	uint64_t  win32_file::seek_begin(long offSet) {
 		if (handle == INVALID_HANDLE_VALUE) {
 			return 0;
 		}
@@ -137,7 +137,7 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong  Win32File::SeekEnd(long offSet) {
+	uint64_t  win32_file::seek_end(long offSet) {
 		if (handle == INVALID_HANDLE_VALUE) {
 			return 0;
 		}
@@ -145,12 +145,12 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool  Win32File::IsOpened() {
+	bool  win32_file::is_opened() {
 		return handle != INVALID_HANDLE_VALUE;
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool Win32File::Flush() {
+	bool win32_file::flush() {
 		return FlushFileBuffers(handle) != 0;
 	}
 }

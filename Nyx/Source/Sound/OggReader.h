@@ -2,50 +2,50 @@
 #define NYX_CORE_INCLUDED_OGG_READER_H_
 #include "SoundReader.h"
 
-namespace Nyx {
-	struct WaveFileHeader;
+namespace nyx {
+	struct wav_file_header;
 	///oggファイルリーダ
-	class OggReader : public SoundReader {
+	class ogg_reader : public sound_reader {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		OggReader();
+		ogg_reader();
 
 
 		/**
 		* コンストラクタ
 		* @param const std::wstring& ファイル名
 		*/
-		OggReader(const std::wstring& fileName);
+		ogg_reader(const std::wstring& fileName);
 
 
 		/**
 		* WAVファイルを開く
 		* @param const std::wstring& ファイル名
 		*/
-		void Open(const std::wstring& fileName);
+		void open(const std::wstring& fileName);
 		
 
 		/**
 		* 読み込みカーソルを指定した位置にセットする
 		* @param ulong 読み込みカーソル位置
 		*/
-		void SetCursor(ulong cursor);
+		void set_cursor(uint64_t cursor);
 
 
 		/**
 		* 読み込みカーソルを取得する
 		* @return ulong 読み込みカーソル位置
 		*/
-		ulong GetCursor() const;
+		uint64_t get_cursor() const;
 		
 		
 		/**
 		* Waveファイルヘッダの取得します
 		* @return const WaveFileHeader& WAVEファイルヘッダ
 		*/
-		const WaveFileHeader& ReadHeader();
+		const wav_file_header& read_header();
 
 
 		/**
@@ -54,9 +54,9 @@ namespace Nyx {
 		* @param size_t　実際に読み取ったサイズ
 		* @return std::shared_ptr<char> WAVEデータ
 		*/
-		std::shared_ptr<char> Read(size_t bufferSize, ulong* readSize=nullptr);
+		std::shared_ptr<char> read(size_t bufferSize, uint64_t* readSize=nullptr);
 	private:
-		WaveFileHeader header;
+		wav_file_header header;
 	};
 }
 

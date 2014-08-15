@@ -138,6 +138,7 @@
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
     <ClInclude Include="..\Source\Graphics\Sphere.h" />
     <ClInclude Include="..\Source\Graphics\Sprite.h" />
+    <ClInclude Include="..\Source\Graphics\SpriteManager.h" />
     <ClInclude Include="..\Source\Graphics\TextureFont.h" />
     <ClInclude Include="..\Source\Graphics\TextureText.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
@@ -163,7 +164,7 @@
     <ClInclude Include="..\Source\Input\Mouse.h" />
     <ClInclude Include="..\Source\IO\detail\Win32\Win32File.h" />
     <ClInclude Include="..\Source\IO\File.h" />
-    <ClInclude Include="..\Source\IO\IFile.h" />
+    <ClInclude Include="..\Source\IO\FileUtility.h" />
     <ClInclude Include="..\Source\IO\Logger.h" />
     <ClInclude Include="..\Source\IO\PackedFile.h" />
     <ClInclude Include="..\Source\Movie\DirectShowDefinition.h" />
@@ -190,11 +191,9 @@
     <ClInclude Include="..\Source\Sound\DirectSoundStereoAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\DirectSoundStreaming3DAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\DirectSoundStreamingAudioBuffer.h" />
-    <ClInclude Include="..\Source\Sound\I3DAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\IAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\IAudioListener.h" />
     <ClInclude Include="..\Source\Sound\IAudioManager.h" />
-    <ClInclude Include="..\Source\Sound\IStereoAudioBuffer.h" />
     <ClInclude Include="..\Source\Sound\OggReader.h" />
     <ClInclude Include="..\Source\Sound\SoundReader.h" />
     <ClInclude Include="..\Source\Sound\WaveFileHeader.h" />
@@ -237,6 +236,7 @@
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
     <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
+    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureText.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />

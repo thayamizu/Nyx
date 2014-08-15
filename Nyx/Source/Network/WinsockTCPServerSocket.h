@@ -18,57 +18,57 @@
 #define NYX_CORE_WINSOCK_TCP_SERVER_SOCKET_H_
 #include "WinsockInitializer.h"
 
-namespace Nyx {
+namespace nyx {
 
 	///TCPサーバソケット
-	class WinsockTCPServerSocket {
+	class winsock_tcp_server_socket {
 	public:
 		/**
 		* コンストラクタ
 		* @param ushort ポート番号
 		*/
-		WinsockTCPServerSocket(size_t port=8080) ;
+		winsock_tcp_server_socket(size_t port=8080) ;
 
 
 		/**
 		* デストラクタ
 		*/
-		~WinsockTCPServerSocket();
+		~winsock_tcp_server_socket();
 
 
 		/**
 		* クライアントからの接続要求を受け入れ
 		* @return bool クライアントと接続したならtrue
 		*/
-		bool Accept();
+		bool accept();
 
 
 		/**
 		*
 		*/
-		bool Listen();
+		bool listen();
 
 
 		/**
 		*
 		*/
-		bool Bind();
+		bool bind();
 		/**
 		* 
 		*/
-		void Disconnect();
-
-
-		/**
-		* 
-		*/
-		void SetMaxConnect(size_t maxConnect);
+		void disconnect();
 
 
 		/**
 		* 
 		*/
-		size_t GetMaxConnect() const;
+		void set_connection_size(size_t maxConnect);
+
+
+		/**
+		* 
+		*/
+		size_t get_connection_size() const;
 
 
 		/**
@@ -76,7 +76,7 @@ namespace Nyx {
 		* @param int 送信バッファの長さ
 		* @return int 送信バイト数
 		*/
-		int Send(char *buffer, size_t bufferSize) const ;
+		int send(char *buffer, size_t bufferSize) const ;
 
 
 		/**
@@ -84,7 +84,7 @@ namespace Nyx {
 		* @param int 受信バッファの長さ
 		* @return int 受信バイト数
 		*/
-		int Recieve(char *buffer, size_t bufferSize) const;
+		int recieve(char *buffer, size_t bufferSize) const;
 	private:
 		size_t port_;
 		size_t maxConnect_;

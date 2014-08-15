@@ -95,8 +95,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>../../SDKs/WinUnit;$(DXSDK_DIR)/Lib/x86</AdditionalLibraryDirectories>
-      <AdditionalDependencies>WinUnitLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../SDKs/WinUnit;$(DXSDK_DIR)/Lib/x86;../../Lib/Debug/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Nyx_MTd.lib;WinUnitLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>

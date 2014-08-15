@@ -18,31 +18,31 @@
 #define NYX_CORE_INCLUDED_CRITICAL_SECTION_H_
 #include "Utility/NonCopyable.h"
 
-namespace Nyx 
+namespace nyx 
 {
 
 	/// クリティカルセクション
-	DEPRECATED class CriticalSection : private NonCopyable {
+	NYX_DEPRECATED class critical_section : private noncopyable {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		CriticalSection();
+		critical_section();
 
 		/**
 		* デストラクタ
 		*/
-		~CriticalSection();
+		~critical_section();
 
 		/**
 		* クリティカルセクションの開始
 		*/
-		void Enter();
+		void enter();
 
 		/**
 		* クリティカルセクションの終了
 		*/
-		void Leave();
+		void leave();
 
 	private:
 		struct PImpl;

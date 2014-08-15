@@ -19,11 +19,11 @@
 #include "IJoystick.h"
 #include "KeyCode.h"
 
-namespace Nyx {
-	struct InputDeviceDesc;
+namespace nyx {
+	struct input_device_desc;
 
 	///DirectInputを使ったジョイスティック入力
-	class Joystick {
+	class joystick {
 	public:
 		//--------------------------------------------------------
 		//構築・破壊
@@ -31,79 +31,79 @@ namespace Nyx {
 		/**
 		*
 		*/
-		Joystick() ;
+		joystick() ;
 
 		/**
 		*
 		*/
-		Joystick(const InputDeviceDesc& desc) ;
+		joystick(const input_device_desc& desc) ;
 		
 		/**
 		*
 		*/
-		~Joystick();
+		~joystick();
 		
 		/**
 		*
 		*/
-		bool Initialize(const InputDeviceDesc& desc);
+		bool initialize(const input_device_desc& desc);
 
 		/**
 		*
 		*/
-		bool IsInitialized(); 
+		bool is_initialized(); 
 
 		/**
 		*
 		*/
-		bool Update();
+		bool update();
 
 		/**
 		*
 		*/
-		void Release();
+		void release();
 
 		/**
 		*
 		*/
-		bool Acquire();
+		bool acquire();
 
 		/**
 		*
 		*/
-		bool Unacquire();
+		bool unacquire();
 
 		/**
 		*
 		*/
-		uchar* GetKeyBuffer();
+		uint8_t* get_key_buffer();
 
 		/**
 		*
 		*/
-		Axis3f GetAxis();
+		axis3f get_axis();
 
 		/**
 		*
 		*/
-		bool IsPressed(JoystickButton button);
-
-
-		/**
-		*
-		*/
-		bool IsPushed(JoystickButton button);
+		bool is_pressed(JOYSTICK_BUTTON button);
 
 
 		/**
 		*
 		*/
-		void SetButtonMax(size_t buttonNum);
+		bool is_pushed(JOYSTICK_BUTTON button);
+
 
 		/**
 		*
 		*/
-		size_t GetButtonMax();
+		void set_button_num(size_t buttonNum);
+
+		/**
+		*
+		*/
+		size_t get_button_num();
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

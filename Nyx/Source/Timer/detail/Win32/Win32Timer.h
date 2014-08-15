@@ -17,10 +17,10 @@
 #ifndef NYX_CORE_INCLUDED_WIN32TIMER_H_
 #define NYX_CORE_INCLUDED_WIN32TIMER_H_
 
-namespace Nyx {
-	class ITimer;
+namespace nyx {
+	class itimer;
 	///独立タイマー
-	class Win32Timer {
+	class win32_timer {
 	public:
 
 		//------------------------------------------------------------------------
@@ -29,12 +29,12 @@ namespace Nyx {
 		/**
 		* コンストラクタ
 		*/
-		Win32Timer() ;
+		win32_timer() ;
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~Win32Timer();
+		virtual ~win32_timer();
 
 
 		//------------------------------------------------------------------------
@@ -44,39 +44,39 @@ namespace Nyx {
 		* タイマの時刻をリセットする．
 		*以降、Getを呼ぶとリセットされた時刻からの経過時間が買える
 		*/
-		void Reset();
+		void reset();
 
 		/**
 		* 時刻の取得
 		* @return ulong
 		*/
-		ulong Get();
+		uint64_t get();
 
 		/**
 		*タイマの時刻設定
 		*@param ulong 時刻
 		*/
-		void Set(ulong now);
+		void set(uint64_t now);
 
 		/*
 		* タイマーをポーズする
 		*@param bool ポーズするのであればtrueを指定
 		*/
-		void Pause(bool pause_);
+		void pause(bool pause_);
 
 		/**
 		* ポーズ中かどうか
 		* @return bool trueならポーズ
 		*/
-		bool IsPause();
+		bool is_pause();
 
 		/**
 		* ポーズ中ならタイマをリスタートさせる．そうでなければなにもしない
 		*/
-		void Restart();
+		void restart();
 	private:
-		ulong offsetTime;  ///< オフセット
-		ulong pauseTime;   ///< ポーズ
+		uint64_t offsetTime;  ///< オフセット
+		uint64_t pauseTime;   ///< ポーズ
 		bool isPaused;     ///< ポーズ中
 		char _align[3];     ///<アライメント
 		TIMECAPS timeCaps; ///< タイマーの能力

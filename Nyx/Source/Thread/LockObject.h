@@ -17,42 +17,42 @@
 #ifndef NYX_CORE_INCLUDED_LOCK_OBJECT_H_
 #define NYX_CORE_INCLUDED_LOCK_OBJECT_H_
 #include "Utility/NonCopyable.h"
-namespace Nyx 
+namespace nyx 
 {
 	/// ロックオブジェクト
-	class LockObject : private NonCopyable {
+	class ilock_object : private noncopyable {
 	public:  
 		/**
 		* コンストラクタ
 		*/
-		LockObject() {
+		ilock_object() {
 
 		}
 
 		/**
 		* デストラクタ
 		*/
-		~LockObject() {
+		~ilock_object() {
 
 		}
 		/**
 		*　ロック
 		*/
-		virtual void Lock() =0;
+		virtual void lock() =0;
 
 		/**
 		*　アンロック
 		*/
-		virtual void UnLock() =0;
+		virtual void unlock() =0;
 
 		/**
 		*　スレッドでロックされているかどうか
 		* @return bool ロックされていればtrueを返すようにします
 		*/
-		virtual bool IsLockedByCurrentThread() = 0;
+		virtual bool is_locked_current_thread() = 0;
 	private:
-		LockObject(const LockObject & );
-		LockObject & operator =(const LockObject*);
+		ilock_object(const ilock_object & );
+		ilock_object & operator =(const ilock_object*);
 
 	};
 }

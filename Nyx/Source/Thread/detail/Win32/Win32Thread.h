@@ -19,10 +19,10 @@
 #include "PCH/PCH.h"
 #include "Utility/NonCopyable.h"
 
-namespace Nyx
+namespace nyx
 {
 	/// スレッドクラス
-	class Win32Thread : private NonCopyable
+	class win32_thread : private noncopyable
 	{
 	public:
 
@@ -35,70 +35,70 @@ namespace Nyx
 		* @param スタックサイズ
 		* @param 起動時に、スレッドを起動するか
 		*/
-		explicit  Win32Thread(void * fp,  void* param, ulong stackSize=0, ulong flag=0);
+		explicit  win32_thread(void * fp,  void* param, uint64_t stackSize=0, uint64_t flag=0);
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~Win32Thread();
+		virtual ~win32_thread();
 
 		/** 
 		* スレッドのレジューム
 		* @return 以前のサスペンドカウント 失敗すると0xffffffff
 		*/
-		ulong Resume();
+		uint64_t resume();
 
 
 		/** 
 		* スレッドのサスペンド
 		* @return 以前のサスペンドカウント 失敗すると0xffffffff
 		*/
-		ulong Suspend();
+		uint64_t suspend();
 
 		/** 
 		* IDの取得
 		* @return スレッドID
 		*/
-		ulong GetID();
+		uint64_t get_id();
 
 		/**
 		* 優先順位の取得
 		* @return int スレッドの相対的優先順位（定数）
 		*/
-		int GetPriority(); 
+		int get_priority(); 
 
 		/**
 		* 優先順位の設定
 		* @param int スレッドの相対的優先順位
 		*/
-		void SetPriority(int priority) ;
+		void set_priority(int priority) ;
 
 		/**
 		* 終了の待機
 		* @param ulong ミリセコンド 
 		*/
-		bool Join(ulong millisecond=INFINITE);
+		bool join(uint64_t millisecond=INFINITE);
 
 		/**
 		* 終了コードの取得
 		* @return 終了コード
 		*/
-		ulong GetExitCode();
+		uint64_t get_exit_code();
 
 		/**
 		* スレッドのハンドルを返します
 		* @return HANDLE スレッドのハンドル
 		*/
-		HANDLE GetHandle();
+		HANDLE get_handle();
 
 		/**
 		* ＣＰＵをスリープ
 		* @param ulong スリープ時間(ミリ秒単位)
 		*/
-		static void Sleep(ulong time);
+		static void sleep(uint64_t time);
 
 	private:
-		ulong id;
+		uint64_t id;
 		HANDLE thread;
 	};
 

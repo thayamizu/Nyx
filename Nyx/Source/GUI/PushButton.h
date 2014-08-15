@@ -20,9 +20,9 @@
 #include "GUI/IPushButton.h"
 #include "Utility/Type.h"
 
-namespace Nyx {
+namespace nyx {
 	///プッシュボタン
-	class PushButton : public IPushButton {
+	class push_button : public ibutton {
 	public:
 		//---------------------------------------------------------------------------------------
 		//生成・破棄
@@ -30,12 +30,12 @@ namespace Nyx {
 		/**
 		*
 		*/
-		PushButton(HWND hwnd, const std::wstring& label, int x, int y, int width,int height, int id);
+		push_button(HWND hwnd, const std::wstring& label, int x, int y, int width,int height, int id);
 
 		/**
 		*
 		*/
-		~PushButton();
+		~push_button();
 		/**
 		*
 		*/
@@ -48,7 +48,7 @@ namespace Nyx {
 		* ウインドウハンドルの取得
 		* @return HWND
 		*/
-		HWND GetHandle();
+		window_handle get_handle();
 
 		//---------------------------------------------------------------------------------------
 		//描画・更新
@@ -56,20 +56,20 @@ namespace Nyx {
 		/**
 		* ウインドウを表示する
 		*/
-		void Show();
+		void show();
 		/**
 		* ウインドウを隠す
 		*/
-		void Hide();
+		void hide();
 		/**
 		* ウインドウを更新する
 		*/
-		void Update();
+		void update();
 		/**
 		* ウインドウが表示されているか
 		* @return trueならウインドウは表示されている
 		*/
-		bool IsShow();
+		bool is_show();
 
 		//---------------------------------------------------------------------------------------
 		//コントロールの有効化と無効化
@@ -77,18 +77,18 @@ namespace Nyx {
 		/**
 		* コントロールを有効化する
 		*/
-		void Activate();
+		void activate();
 
 		/**
 		* コントロールを無効化する
 		*/
-		void Unactivate();
+		void unactivate();
 
 		/**
 		* コントロールが有効かどうか
 		* @return bool trueならコントロールは有効
 		*/
-		bool IsActivate() const;
+		bool is_activate() const;
 
 		//---------------------------------------------------------------------------------------
 		//値の取得・設定
@@ -97,54 +97,54 @@ namespace Nyx {
 		* コントロールのタイプを取得する
 		* @return ControlType::enum_tの値
 		*/
-		ControlType GetType() const;
+		WIDGET_TYPE get_type() const;
 
 		/**
 		* ユーザーデータを取得する
 		* @return void*
 		*/
-		std::shared_ptr<void> GetUserData() const;
+		std::shared_ptr<void> get_user_data() const;
 
 		/**
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void SetUserData(std::shared_ptr<void> data) ;
+		void set_user_data(std::shared_ptr<void> data) ;
 
 		/**
 		* コントロールのIDを取得する
 		* @return uint コントロールのID
 		*/
-		uint GetID() const;
+		uint32_t get_id() const;
 
 		/**
 		* コントロールのIDを設定する
 		* @return コントロールのID
 		*/
-		void SetID(uint id)  ;
+		void set_id(uint32_t id)  ;
 
 		/**
 		* ウインドウのクライアント領域のサイズを取得する
 		* @param Rect2i& ウインドウのクライアント領域のサイズ
 		*/
-		void GetSize(Rect2i& rect) const;
+		void get_size(rect2i& rect) const;
 
 		/**
 		* ウインドウのクライアント領域のサイズを設定する
 		* @param Rect2i& ウインドウのクライアント領域のサイズ
 		*/
-		void SetSize(const Rect2i& rect);
+		void set_size(const rect2i& rect);
 
 		/**
 		* ウインドウの位置を取得する
 		* @param Point2i& p
 		*/
-		void GetPosition(Point2i& p) const;
+		void get_position(point2i& p) const;
 
 		/**
 		* ウインドウの位置を設定する
 		*/
-		void SetPosition(const Point2i& p);
+		void set_position(const point2i& p);
 		//----------------------------------------------------------------
 		// プッシュボタン固有の操作
 		//-----------------------------------------------------------------

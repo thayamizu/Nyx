@@ -21,38 +21,38 @@
 #include "Sound/WaveReader.h"
 #include "Sound/SoundReader.h"
 #include "DirectSoundStreaming3DAudioBuffer.h"
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStreaming3DAudioBuffer::DirectSoundStreaming3DAudioBuffer(
-		const AudioBufferDesc& bufferDesc, 
-		const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader)
-		: DirectSound3DAudioBuffer(), waveReader_(reader), bufferDesc_(bufferDesc), offset_(0){
+	dsound_streaming_3d_audio_buffer::dsound_streaming_3d_audio_buffer(
+		const audio_buffer_desc& bufferDesc, 
+		const dsound_ptr dsound, const std::shared_ptr<sound_reader> reader)
+		: dsound_3d_audio_buffer(), waveReader_(reader), bufferDesc_(bufferDesc), offset_(0){
 
 			//バッファを作成
 
-			bufferDesc_.waveFormat = waveReader_->ReadHeader();
+			bufferDesc_.waveFormat = waveReader_->read_header();
 
 			//バッファに再生データを書き込む
-			const ulong samplingRate = bufferDesc_.waveFormat.formatChunk.samplingRate;   
-			const ulong blockAlign   = bufferDesc_.waveFormat.formatChunk.blockSize;  
-			const ulong size         = samplingRate * 2 * blockAlign / NotifyEventNum;   
+			const uint64_t samplingRate = bufferDesc_.waveFormat.formatChunk.samplingRate;   
+			const uint64_t blockAlign   = bufferDesc_.waveFormat.formatChunk.blockSize;  
+			const uint64_t size         = samplingRate * 2 * blockAlign / NotifyEventNum;   
 			notifySize_  = size;
 
-			Load(bufferDesc_, dsound);
-			Create3DBuffer();
-			WriteWaveData();
+			load(bufferDesc_, dsound);
+			create_3d_buffer();
+			write_wave_data();
 
 			//通知スレッドの生成
-			notifyThreadHandle_ = CreateThread( NULL,0, Notify3DBufferProc, (void*)this, 0, 0);
+			notifyThreadHandle_ = CreateThread( NULL,0, notify_3d_buffer_proc, (void*)this, 0, 0);
 
 			//通知イベントの設定
 			LPDIRECTSOUNDNOTIFY notify;
 			DSBPOSITIONNOTIFY  positionNotify[NotifyEventNum] = {};
-			HRESULT hr = GetHandle()->QueryInterface(IID_IDirectSoundNotify, reinterpret_cast<void**>(&notify));
+			HRESULT hr = get_handle()->QueryInterface(IID_IDirectSoundNotify, reinterpret_cast<void**>(&notify));
 			if ( FAILED(hr)) {
-				DebugOutput::Trace("IDirectSoundNotifyの取得に失敗しました。", hr);
-				throw COMException("IDirectSoundNotifyの取得に失敗しました。", hr);
+				debug_out::trace("IDirectSoundNotifyの取得に失敗しました。", hr);
+				throw com_exception("IDirectSoundNotifyの取得に失敗しました。", hr);
 			}
 
 			// イベントとシグナルになる位置を取得
@@ -65,8 +65,8 @@ namespace Nyx {
 			// イベントをセット
 			hr = notify->SetNotificationPositions(NotifyEventNum, positionNotify);
 			if( FAILED(hr)) {
-				DebugOutput::Trace("IDirectSoundNotify通知イベントの設定が失敗しました。", hr);
-				throw COMException("IDirectSoundNotify通知イベントの設定が失敗しました。", hr);
+				debug_out::trace("IDirectSoundNotify通知イベントの設定が失敗しました。", hr);
+				throw com_exception("IDirectSoundNotify通知イベントの設定が失敗しました。", hr);
 			}
 
 			SafeRelease(notify);
@@ -75,7 +75,7 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundStreaming3DAudioBuffer::~DirectSoundStreaming3DAudioBuffer() {
+	dsound_streaming_3d_audio_buffer::~dsound_streaming_3d_audio_buffer() {
 		for (auto var : notifyEventList_) {
 			CloseHandle(var);
 		}
@@ -88,43 +88,43 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioUtility::BufferType DirectSoundStreaming3DAudioBuffer::GetBufferType() const {
-		return AudioUtility::BufferType_Streaming3DAudioBuffer;
+	AudioUtility::AUDIO_BUFFER_TYPE dsound_streaming_3d_audio_buffer::get_buffer_type() const {
+		return AudioUtility::AUDIO_BUFFER_TYPE_STREAMING_3D;
 	}
 
-	void DirectSoundStreaming3DAudioBuffer::Reset() {
+	void dsound_streaming_3d_audio_buffer::reset() {
 		offset_ = 0;
-		waveReader_->SetCursor(0);
+		waveReader_->set_cursor(0);
 	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreaming3DAudioBuffer::WriteWaveData(){
-		const auto handle = GetHandle();
+	void dsound_streaming_3d_audio_buffer::write_wave_data(){
+		const auto handle = get_handle();
 		const auto size   = bufferDesc_.waveFormat.dataChunk.chunkSize;
 		
 		if (size <= offset_ + notifySize_) {
 			offset_ = 0;
-			waveReader_->SetCursor(0);
+			waveReader_->set_cursor(0);
 		}
 		//バッファをロック
 		void* readData1 = nullptr;
 		void* readData2 = nullptr;
-		ulong readSize1  = 0;
-		ulong readSize2  = 0;
+		uint64_t readSize1  = 0;
+		uint64_t readSize2  = 0;
 		HRESULT hr = handle->Lock(0, notifySize_, &readData1, &readSize1, &readData2, &readSize2, DSBLOCK_FROMWRITECURSOR);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのロックに失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのロックに失敗しました。", hr);
 		}
 
 		//バッファに書き込み
-		ulong readBytes;
-		const auto buffer = waveReader_->Read(readSize1, &readBytes);
+		uint64_t readBytes;
+		const auto buffer = waveReader_->read(readSize1, &readBytes);
 		CopyMemory(readData1, buffer.get(), readBytes);
 		offset_ += readSize1;
 		if (readData2 != nullptr) {
-			const auto buffer = waveReader_->Read(readSize2, &readBytes);
+			const auto buffer = waveReader_->read(readSize2, &readBytes);
 			CopyMemory(readData2, buffer.get(), readBytes);
 			offset_ += readSize2;
 		}
@@ -132,20 +132,20 @@ namespace Nyx {
 		//バッファをアンロック
 		hr = handle->Unlock(readData1, readSize1, readData2, readSize2);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのアンロックに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのアンロックに失敗しました。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreaming3DAudioBuffer::BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx){
+	void dsound_streaming_3d_audio_buffer::build_dsound_buffer_desc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx){
 		//フラグの設定
 		DWORD flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D |  DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
 
 		//フォーカスモードの設定
-		if ( bufferDesc_.focusType == AudioUtility::FocusType_GlobalFocus) {
+		if ( bufferDesc_.focusType == AudioUtility::FOCUS_TYPE_GLOBAL) {
 			flag |= DSBCAPS_GLOBALFOCUS;
 		}
 		else {
@@ -165,20 +165,20 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	ulong _stdcall Notify3DBufferProc(void* parameter) {
-		Assert(parameter != nullptr)
-		auto audio = reinterpret_cast<DirectSoundStreaming3DAudioBuffer*>(parameter);
-		audio->NotifyThread();
+	uint64_t _stdcall notify_3d_buffer_proc(void* parameter) {
+		NYX_ASSERT(parameter != nullptr)
+		auto audio = reinterpret_cast<dsound_streaming_3d_audio_buffer*>(parameter);
+		audio->notify_thread();
 		return 0L;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundStreaming3DAudioBuffer::NotifyThread() {
+	void dsound_streaming_3d_audio_buffer::notify_thread() {
 		bool isDone = false;
 		while( !isDone ) { 
-			ulong signal = MsgWaitForMultipleObjects(NotifyEventNum, notifyEventList_, 
+			uint64_t signal = MsgWaitForMultipleObjects(NotifyEventNum, notifyEventList_, 
 				FALSE, INFINITE, QS_ALLEVENTS );
 
 			switch( signal ) {
@@ -186,7 +186,7 @@ namespace Nyx {
 			case WAIT_OBJECT_0+1:
 			case WAIT_OBJECT_0+2:
 			case WAIT_OBJECT_0+3:
-				WriteWaveData();
+				write_wave_data();
 				break;
 			case WAIT_OBJECT_0+NotifyEventNum:
 				std::cout <<"バッファ書き込み5" << std::endl;

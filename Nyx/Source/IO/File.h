@@ -16,89 +16,88 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_FILE_H_
 #define NYX_CORE_INCLUDED_FILE_H_
+#include "Utility/NonCopyable.h"
 
-#include "IO/IFile.h"
-
-namespace Nyx {
+namespace nyx {
 
 	///ファイル入出力
-	class File : public IFile
+	class file : private noncopyable
 	{
 	public:
 		/**
 		*
 		*/
-		File();
+		file();
 		/**
 		*
 		*/
-		File(const std::wstring&  name, AccessAttribute attr = ReadWriteMode);
+		file(const std::wstring&  name, FILE_ACCESS_ATTRIBUTE attr = FILE_ACCESS_ATTRIBUTE_READ_WRITE);
 		/**
 		*
 		*/
-		~File();
+		~file();
 		/**
 		*
 		*/
-		bool Open(const std::wstring&, AccessAttribute attr = ReadWriteMode);
+		bool open(const std::wstring&, FILE_ACCESS_ATTRIBUTE attr = FILE_ACCESS_ATTRIBUTE_READ_WRITE);
 		/**
 		*
 		*/
-		bool Close();
+		bool close();
 		/**
 		*
 		*/
-		ulong GetCurrentPosition() const ;
+		uint64_t get_current_position() const ;
 
 		/**
 		*
 		*/
-		HANDLE GetHandle();
+		file_handle get_handle();
 		
 		/**
 		*
 		*/
-		ulong GetSize() const;
+		uint64_t get_size() const;
 		
 		/**
 		*
 		*/
-		std::wstring GetFileName() const;
+		std::wstring get_file_name() const;
 		
 		/**
 		*
 		*/
-		ulong Read(void* buffer, ulong size);
+		uint64_t read(void* buffer, uint64_t size);
 		
 		/**
 		*
 		*/
-		ulong Write(void* buffer, ulong size);
+		uint64_t write(void* buffer, uint64_t size);
 		
 		/**
 		*
 		*/
-		ulong Seek(long offSet);
+		uint64_t seek(long offSet);
 		
 		/**
 		*
 		*/
-		ulong SeekBegin(long offSet);
+		uint64_t seek_begin(long offSet);
 		
 		/**
 		*
 		*/
-		ulong SeekEnd(long offSet);
+		uint64_t seek_end(long offSet);
 		
 		/**
 		*
 		*/
-		bool IsOpened();
+		bool is_opened();
 
 		/**
 		*
 		*/			
-		bool Flush();
+		bool flush();
 
 	private:
 		struct PImpl;

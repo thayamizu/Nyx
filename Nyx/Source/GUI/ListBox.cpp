@@ -20,27 +20,27 @@
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 
-namespace Nyx {
+namespace nyx {
 	//---------------------------------------------------------------------------------------
 	//生成・破棄
 	//---------------------------------------------------------------------------------------
-	ListBox::ListBox(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
+	list_box::list_box(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
 		:label_(label), id_(id){
 
 			OnCreate(hwnd, label, x, y, width, height, id);
 	}       
-	ListBox::~ListBox() {
+	list_box::~list_box() {
 		if (atom_) {
 			::UnregisterClass((LPCTSTR)atom_, ::GetModuleHandle(NULL));
 		}
 	}
 
-	bool ListBox::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool list_box::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(TEXT("LISTBOX"), label.c_str(), WS_CHILD | WS_VISIBLE | LBS_STANDARD & ~LBS_SORT, 
 			x, y, width, height, hwnd, (HMENU)id, hInstance, NULL);
 
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		if (!hwnd_) {
 			::MessageBox(NULL, TEXT("失敗しました"), TEXT("error"), MB_OK);
 
@@ -48,86 +48,87 @@ namespace Nyx {
 		}
 
 		//コントロールの表示
-		Show();
+		show();
 		return true;
 	}
 
 	//---------------------------------------------------------------------------------------
-	HWND ListBox::GetHandle() {
-		Assert(hwnd_ != NULL);
+	nyx::window_handle list_box::get_handle()
+{
+		NYX_ASSERT(hwnd_ != NULL);
 		return hwnd_;
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::Show(){
-		Assert(hwnd_ != NULL);
+	void list_box::show(){
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_ = true;
 		::ShowWindow(hwnd_, SW_SHOW);  
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::Hide(){
-		Assert(hwnd_ != NULL);
+	void list_box::hide(){
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_ = false;
 		::ShowWindow(hwnd_, SW_HIDE); 
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::Update() {
-		Assert(hwnd_ != NULL);
+	void list_box::update() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::UpdateWindow(hwnd_);
 	}
 
 	//----------------------------------------------------------------
-	bool ListBox::IsShow() {
+	bool list_box::is_show() {
 		return isShow_;
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::Activate() {
-		Assert(hwnd_ != NULL);
+	void list_box::activate() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, true);
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::Unactivate() {
-		Assert(hwnd_ != NULL);
+	void list_box::unactivate() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, false);
 	}
 	//----------------------------------------------------------------
-	bool ListBox::IsActivate() const {
-		Assert(hwnd_ != NULL);
+	bool list_box::is_activate() const {
+		NYX_ASSERT(hwnd_ != NULL);
 		return IsWindowEnabled(hwnd_) != 0;
 	}
 
 	//----------------------------------------------------------------
-	ControlType ListBox::GetType() const{
-		return ControlType_ListBox;
+	WIDGET_TYPE list_box::get_type() const{
+		return WIDGET_TYPE_LIST_BOX;
 	}
 
 	//----------------------------------------------------------------
-	std::shared_ptr<void> ListBox::GetUserData() const {
+	std::shared_ptr<void> list_box::get_user_data() const {
 		return userData_;
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::SetUserData(std::shared_ptr<void> data) {
+	void list_box::set_user_data(std::shared_ptr<void> data) {
 		userData_ = data;
 	}
 
 	//----------------------------------------------------------------
-	uint ListBox::GetID() const {
+	uint32_t list_box::get_id() const {
 		return id_;
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::SetID(uint id)  {
+	void list_box::set_id(uint32_t id)  {
 		id_ = id;
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::GetSize(Rect2i& rect) const {
-		Assert(hwnd_ != NULL);
+	void list_box::get_size(rect2i& rect) const {
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT r;
 		::GetWindowRect(hwnd_, &r);
 
@@ -139,15 +140,15 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::SetSize(const Rect2i& rect) {
-		Assert(hwnd_ != NULL);
+	void list_box::set_size(const rect2i& rect) {
+		NYX_ASSERT(hwnd_ != NULL);
 		::SetWindowPos(hwnd_, NULL, rect.x, rect.y, rect.width, rect.height, SWP_SHOWWINDOW);
 	}
 
 
 	//----------------------------------------------------------------
-	void ListBox::GetPosition(Point2i& p) const {
-		Assert(hwnd_ != NULL);
+	void list_box::get_position(point2i& p) const {
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT _r;
 		::GetWindowRect(hwnd_, &_r);
 
@@ -155,21 +156,21 @@ namespace Nyx {
 		p.y = _r.top;
 	}
 
-	void ListBox::SetPosition(const Point2i& p) {
-		Assert(hwnd_ != NULL);
-		Rect2i r;
-		GetSize(r);
+	void list_box::set_position(const point2i& p) {
+		NYX_ASSERT(hwnd_ != NULL);
+		rect2i r;
+		get_size(r);
 
 		::SetWindowPos(hwnd_, NULL, p.x, p.y, r.width, r.height, SWP_SHOWWINDOW);
 
 	}
 	//----------------------------------------------------------------
-	void ListBox::AddItem(const std::wstring& item) {
+	void list_box::add(const std::wstring& item) {
 		SendMessage(hwnd_, LB_ADDSTRING, 0, (LPARAM)item.c_str());
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::DeleteItem() {
+	void list_box::remove() {
 		int index = SendMessage(hwnd_, LB_GETCURSEL, 0, 0);
 		if (index == LB_ERR) return;
 
@@ -177,20 +178,20 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void ListBox::ClearItem() {
+	void list_box::clear() {
 		SendMessage(hwnd_, LB_RESETCONTENT, 0, 0);
 	}
 
 
 	//----------------------------------------------------------------
-	uint ListBox::GetSelectedIndex() {
+	uint32_t list_box::get_select_index() {
 		return SendMessage(hwnd_, LB_GETCURSEL, 0, 0);
 	}
 
 
 	//----------------------------------------------------------------
-	std::wstring ListBox::GetSelectedItem() {
-		uint index = GetSelectedIndex();
+	std::wstring list_box::get_select_item() {
+		uint32_t index = get_select_index();
 		
 		SendMessage(hwnd_, LB_GETTEXT, index, 0);
 		return TEXT("");

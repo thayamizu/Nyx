@@ -6,8 +6,8 @@ namespace Nyx {
 	// ’è”’è‹`
 	//--------------------------------------------------------------------------------------
 	template <typename T>
-	const Rect<T> Rect<T>::Zero = Rect<T>(0, 0, 0, 0);
+	const rectangle<T> rectangle<T>::ZERO = rectangle<T>(0, 0, 0, 0);
 
 	template <typename T>
-	const Rect<T> Rect<T>::Unit = Rect<T>(1, 1, 1, 1);
+	const rectangle<T> rectangle<T>::UNIT = rectangle<T>(1, 1, 1, 1);
 }

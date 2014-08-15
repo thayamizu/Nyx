@@ -19,164 +19,164 @@
 #include "Debug/Assert.h"
 #include "Graphics/detail/GDI/Font.h"
 
-namespace Nyx {
-	namespace GDI {
+namespace nyx {
+	namespace gdi {
 
 		//------------------------------------------------------------------------------
 		//
-		Font::Font(const int height_, const int angle_, const std::wstring face_) 
-		:font(NULL){
-			Set(height_, angle_, face_);   
+		font::font(const int height_, const int angle_, const std::wstring face_) 
+		:fontHandle_(NULL){
+			set(height_, angle_, face_);   
 
 
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		Font::Font(const int height_, const int angle_, const int weight_,
+		font::font(const int height_, const int angle_, const int weight_,
 			const bool isItalic_, const bool isUnderLine_, const bool isStrike_,
 			const int charset_, const std::wstring face_)
-			:font(NULL)
+			:fontHandle_(NULL)
 		{
-			Set(height_, angle_, weight_, isItalic_, isUnderLine_,isStrike_, charset_ ,face_);
+			set(height_, angle_, weight_, isItalic_, isUnderLine_,isStrike_, charset_ ,face_);
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		Font::Font(const Font &font_) {
-			height = font_.height;                     
-			angle  = font_.angle;                 
-			weight = font_.weight;FW_REGULAR;             
-			isItalic   = font_.isItalic;                    
-			isUnderLine= font_.isUnderLine;                  
-			isStrike   = font_.isStrike;                 
-			charset = font_.charset;      
-			face    = font_.face.c_str();           
+		font::font(const font &font_) {
+			height_ = font_.height_;                     
+			angle_  = font_.angle_;                 
+			weight_ = font_.weight_;FW_REGULAR;             
+			isItalic_   = font_.isItalic_;                    
+			isUnderLine_= font_.isUnderLine_;                  
+			isStrike_   = font_.isStrike_;                 
+			charset_ = font_.charset_;      
+			fontFace_    = font_.fontFace_.c_str();           
 
 
-
-		}
-
-		//------------------------------------------------------------------------------
-		//
-		Font::~Font() {
 
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		void Font::Set(const int height_,const int angle_, const std::wstring face_) {
-			height = height_;                      //文字幅（高さと同じ）
-			angle  = angle_;                  //テキストの角度
-			weight = FW_REGULAR;             //フォントの重さ（太さ）
-			isItalic    = false;
-			isUnderLine = false;                  //アンダーライン
-			isStrike   = false;                  //打ち消し線
-			charset = SHIFTJIS_CHARSET;       //文字セット
-			face    = face_;                  //書体名
+		font::~font() {
 
-			font=  CreateFont(
-				height,       //フォント高さ
+		}
+
+		//------------------------------------------------------------------------------
+		//
+		void font::set(const int height,const int angle, const std::wstring face) {
+			height_ = height;                      //文字幅（高さと同じ）
+			angle_  = angle;                  //テキストの角度
+			weight_ = FW_REGULAR;             //フォントの重さ（太さ）
+			isItalic_    = false;
+			isUnderLine_ = false;                  //アンダーライン
+			isStrike_   = false;                  //打ち消し線
+			charset_ = SHIFTJIS_CHARSET;       //文字セット
+			fontFace_    = face;                  //書体名
+
+			fontHandle_=  CreateFont(
+				height_,       //フォント高さ
 				0,                      //文字幅（高さと同じ）
-				angle,                  //テキストの角度
+				angle_,                  //テキストの角度
 				0,                      //ベースラインとｘ軸との角度
-				weight,             //フォントの重さ（太さ）
-				isItalic,                  //イタリック体
-				isUnderLine,                  //アンダーライン
-				isStrike,                  //打ち消し線
-				charset,       //文字セット
+				weight_,             //フォントの重さ（太さ）
+				isItalic_,                  //イタリック体
+				isUnderLine_,                  //アンダーライン
+				isStrike_,                  //打ち消し線
+				charset_,       //文字セット
 				OUT_TT_ONLY_PRECIS,     //出力精度
 				CLIP_DEFAULT_PRECIS,    //クリッピング精度
 				PROOF_QUALITY,          //出力品質
 				FIXED_PITCH|FF_MODERN,  //ピッチとファミリー
-				face.c_str());                  //書体名
+				fontFace_.c_str());                  //書体名
 
-			Assert(font != NULL);
+			NYX_ASSERT(fontHandle_ != NULL);
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		void Font::Set(const int height_, const int angle_, const int weight_,
-			const bool isItalic_, const bool isUnderLine_, const bool isStrike_, 
-			const int charset_, const std::wstring face_) {
-				height = height_;                      //文字幅（高さと同じ）
-				angle  = angle_;                  //テキストの角度
-				weight = weight_;             //フォントの重さ（太さ）
-				isItalic    = isItalic_;
-				isUnderLine = isUnderLine_;                  //アンダーライン
-				isStrike    = isStrike_;                  //打ち消し線
-				charset = charset_;       //文字セット
-				face    = face_;                  //書体名
+		void font::set(const int height, const int angle, const int weight,
+			const bool isItalic, const bool isUnderLine, const bool isStrike, 
+			const int charset, const std::wstring face) {
+				height_ = height;                      //文字幅（高さと同じ）
+				angle_  = angle;                  //テキストの角度
+				weight_ = weight;             //フォントの重さ（太さ）
+				isItalic_    = isItalic;
+				isUnderLine_ = isUnderLine;                  //アンダーライン
+				isStrike_    = isStrike;                  //打ち消し線
+				charset_ = charset;       //文字セット
+				fontFace_    = face;                  //書体名
 
-				font=  CreateFont(
-					height,       //フォント高さ
+				fontHandle_=  CreateFont(
+					height_,       //フォント高さ
 					0,                      //文字幅（高さと同じ）
-					angle,                  //テキストの角度
+					angle_,                  //テキストの角度
 					0,                      //ベースラインとｘ軸との角度
-					weight,             //フォントの重さ（太さ）
-					isItalic,                  //イタリック体
-					isUnderLine,                  //アンダーライン
-					isStrike,                  //打ち消し線
-					charset,       //文字セット
+					weight_,             //フォントの重さ（太さ）
+					isItalic_,                  //イタリック体
+					isUnderLine_,                  //アンダーライン
+					isStrike_,                  //打ち消し線
+					charset_,       //文字セット
 					OUT_TT_ONLY_PRECIS,     //出力精度
 					CLIP_DEFAULT_PRECIS,    //クリッピング精度
 					PROOF_QUALITY,          //出力品質
 					FIXED_PITCH|FF_MODERN,  //ピッチとファミリー
-					face.c_str());                  //書体名
+					fontFace_.c_str());                  //書体名
 
-				Assert(font != NULL);
+				NYX_ASSERT(fontHandle_ != NULL);
 		} 
 
 		//------------------------------------------------------------------------------
 		//
-		void Font::Draw(HDC hdc, const wchar_t* text_, RECT rect) {
-			SelectObject(hdc, font);
+		void font::draw(HDC hdc, const wchar_t* text_, RECT rect) {
+			SelectObject(hdc, fontHandle_);
 			DrawText(hdc, text_, -1, &rect, DT_WORDBREAK | DT_LEFT);
 			DeleteObject(hdc);
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		void Font::Draw(HDC hdc, const std::wstring text_,RECT rect) {
-			SelectObject(hdc, font);
+		void font::draw(HDC hdc, const std::wstring text_,RECT rect) {
+			SelectObject(hdc, fontHandle_);
 			DrawText(hdc, text_.c_str(), -1, &rect, DT_WORDBREAK | DT_LEFT);
 			DeleteObject(hdc);
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		int Font::GetAngle() {
-			return angle;
+		int font::get_angle() {
+			return angle_;
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		int Font::GetHeight() {
-			return height;
+		int font::get_height() {
+			return height_;
 		}
 
 		//------------------------------------------------------------------------------
 		//  
-		int Font::GetWeight() {
-			return weight;
+		int font::get_font_weight() {
+			return weight_;
 		}
 
 		//------------------------------------------------------------------------------
 		//  
-		bool Font::IsItalic() {
-			return isItalic;
+		bool font::is_italic() {
+			return isItalic_;
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		bool Font::IsUnderLine() {
-			return isUnderLine;
+		bool font::is_underline() {
+			return isUnderLine_;
 		}
 
 		//------------------------------------------------------------------------------
 		//            
-		HFONT Font::GetFont() {
-			return font;    
+		font_handle font::get_font_handle() {
+			return fontHandle_;    
 		}
 	}
 }

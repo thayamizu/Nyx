@@ -1,7 +1,7 @@
 #pragma once
 #include "PCH/PCH.h"
 
-using namespace Nyx;
+using namespace nyx;
 
 BEGIN_TEST(Matrix33_0001)
 {
@@ -149,9 +149,9 @@ BEGIN_TEST(Matrix33_0009)
 	Matrix33 mat1(1, 2, 3,
 				  4, 5, 6,
 				  7, 8, 9);
-	Vector3f v(3,4,5);
-	Vector3f exp(26, 62,98);
-	Vector3f value = mat1* v;
+	vector3f v(3,4,5);
+	vector3f exp(26, 62,98);
+	vector3f value = mat1* v;
 	WIN_TRACE("value=(%f, %f, %f)\n", value.x, value.y, value.z);
 	WIN_ASSERT_TRUE(exp.x == value.x);
 	WIN_ASSERT_TRUE(exp.y == value.y);
@@ -360,9 +360,9 @@ BEGIN_TEST(Matrix_0019)
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				const auto a = Math::Abs(exp.Mat[i][j]);
-				const auto b = Math::Abs(exp.Mat[i][j]);
-				WIN_ASSERT_TRUE(Math::Abs(a - b) <= Math::Epsilon);
+				const auto a = math::abs(exp.Mat[i][j]);
+				const auto b = math::abs(exp.Mat[i][j]);
+				WIN_ASSERT_TRUE(math::abs(a - b) <= math::EPSILON);
 			}
 		}
 

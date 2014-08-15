@@ -16,38 +16,70 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DIRECT_SOUND_STEREO_AUDIO_BUFFER
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STEREO_AUDIO_BUFFER
-#include "IStereoAudioBuffer.h"
 #include "DirectSoundAudioBuffer.h"
+#include "Primitive/Vector3.h"
 
-namespace Nyx {
+namespace nyx {
 
 	///ステレオサウンド
-	class DirectSoundStereoAudioBuffer : public DirectSoundAudioBuffer, public IStereoAudioBuffer {
+	class dsound_stereo_audio_buffer : public dsound_audio_buffer{
 	public:
 		/**
 		* コンストラクタ
 		*/
-		DirectSoundStereoAudioBuffer();
+		dsound_stereo_audio_buffer();
 
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~DirectSoundStereoAudioBuffer();
+		virtual ~dsound_stereo_audio_buffer();
 
 
 		/**
 		* パンの設定
 		* @param long パン
 		*/
-		void SetPan(long pan);
+		void set_pan(long pan);
 
 
 		/**
 		* パンの取得
 		* @return long
 		*/
-		long GetPan() const;
+		long get_pan() const;
+	protected:
+		virtual vector3f get_position() const ;
+		virtual void set_position(const vector3f& velocity) ;
+		virtual vector3f get_velocity() const ;
+		virtual void set_velocity(const vector3f& velocity) ;
+
+		/**
+		* 音源からの最大距離を取得します
+		* @return float 音源からの最大距離
+		*/
+		virtual float get_max_distance() const ;
+
+
+		/**
+		* 音源からの最大距離を設定します
+		* @param float  最大距離
+		*/
+		virtual void set_max_distance(float maxDistance) ;
+
+
+		/**
+		* 音源からの最小距離を設定します
+		* @param float  最小距離
+		*/
+		virtual float get_min_distance() const ;
+
+
+		/**
+		* 音源からの最小距離を取得します
+		* @return float 音源からの最小距離
+		*/
+		virtual void set_min_distance(float minDistance) ;
 	};
 }
 #endif

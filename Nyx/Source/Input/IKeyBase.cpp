@@ -20,17 +20,17 @@
 #include "IKeyBase.h"
 #include "KeyCode.h"
 
-namespace Nyx {
-	IKeyBase::IKeyBase() 
+namespace nyx {
+	ikey_base::ikey_base() 
 		: flipCounter_(1) {
-			ZeroMemory((void*)&(keyBuffer_[0]), BufferSize);
-			ZeroMemory((void*)&(keyBuffer_[1]), BufferSize);
+			ZeroMemory((void*)&(keyBuffer_[0]), BUFFER_SIZE);
+			ZeroMemory((void*)&(keyBuffer_[1]), BUFFER_SIZE);
 	}
 
 	/**
 	*
 	*/
-	uchar* IKeyBase::GetKeyBuffer() {
+	uint8_t* ikey_base::get_key_buffer() {
 		return keyBuffer_[flipCounter_];
 	}
 
@@ -38,14 +38,14 @@ namespace Nyx {
 	/**
 	*
 	*/
-	bool IKeyBase::IsPressed(uchar keycode) {
+	bool ikey_base::is_pressed(uint8_t keycode) {
 		return (keyBuffer_[flipCounter_][keycode] & 0x80) != 0;
 	}
 
 	/**
 	*
 	*/
-	bool IKeyBase::IsPushed(uchar keycode) {
+	bool ikey_base::is_pushed(uint8_t keycode) {
 		// âüÇ≥ÇÍÇΩèuä‘Ç…trueÇ…Ç∑ÇÈèÍçá
 		if (!(keyBuffer_[ flipCounter_][keycode])) return false;
 		if (  keyBuffer_[1-flipCounter_][keycode] ) return false;
@@ -55,7 +55,7 @@ namespace Nyx {
 	/**
 	*
 	*/
-	void IKeyBase::Flip() {
+	void ikey_base::flip() {
 		flipCounter_ ^= 1;
 	}
 }

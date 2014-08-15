@@ -23,82 +23,82 @@
 #include "DirectSoundDefinition.h"
 #include "DirectSound3DAudioBuffer.h"
 
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSound3DAudioBuffer::DirectSound3DAudioBuffer()
-	:DirectSoundAudioBuffer(), I3DAudioBuffer(), buffer_(nullptr) {
+	dsound_3d_audio_buffer::dsound_3d_audio_buffer()
+	:dsound_audio_buffer(), buffer_(nullptr) {
 
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSound3DAudioBuffer::~DirectSound3DAudioBuffer() {
+	dsound_3d_audio_buffer::~dsound_3d_audio_buffer() {
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Vector3f DirectSound3DAudioBuffer::GetPosition() const {
-		Assert(buffer_ != nullptr);
+	vector3f dsound_3d_audio_buffer::get_position() const {
+		NYX_ASSERT(buffer_ != nullptr);
 		D3DXVECTOR3 pos;
 		HRESULT hr = buffer_->GetPosition(&pos);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の位置の取得に失敗しました。[%s,%n]", __FILE__, __LINE__);
-			throw COMException("音源の位置の取得に失敗しました。", hr);
+			debug_out::trace("音源の位置の取得に失敗しました。[%s,%n]", __FILE__, __LINE__);
+			throw com_exception("音源の位置の取得に失敗しました。", hr);
 		}
-		return Vector3f(pos.x, pos.y, pos.z);
+		return vector3f(pos.x, pos.y, pos.z);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSound3DAudioBuffer::SetPosition(const Vector3f& pos) {
-		Assert(buffer_ != nullptr);
+	void dsound_3d_audio_buffer::set_position(const vector3f& pos) {
+		NYX_ASSERT(buffer_ != nullptr);
 		HRESULT hr = buffer_->SetPosition(pos.x, pos.y, pos.z, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の位置の設定に失敗しました。[%s, %n]", __FILE__, __LINE__);
-			throw COMException("音源の位置の設定に失敗しました。", hr);
+			debug_out::trace("音源の位置の設定に失敗しました。[%s, %n]", __FILE__, __LINE__);
+			throw com_exception("音源の位置の設定に失敗しました。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	Vector3f DirectSound3DAudioBuffer::GetVelocity() const {
-		Assert(buffer_ != nullptr);
+	vector3f dsound_3d_audio_buffer::get_velocity() const {
+		NYX_ASSERT(buffer_ != nullptr);
 		D3DXVECTOR3 velocity;
 		HRESULT hr = buffer_->GetVelocity(&velocity);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の速度の取得に失敗しました。[%s, %n]", __FILE__, __LINE__);
-			throw COMException("音源の速度の取得に失敗しました。", hr);
+			debug_out::trace("音源の速度の取得に失敗しました。[%s, %n]", __FILE__, __LINE__);
+			throw com_exception("音源の速度の取得に失敗しました。", hr);
 		}
-		return Vector3f(velocity.x, velocity.y, velocity.z);
+		return vector3f(velocity.x, velocity.y, velocity.z);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSound3DAudioBuffer::SetVelocity(const Vector3f& velocity) {
-		Assert(buffer_ != nullptr);
+	void dsound_3d_audio_buffer::set_velocity(const vector3f& velocity) {
+		NYX_ASSERT(buffer_ != nullptr);
 		HRESULT hr = buffer_->SetVelocity(velocity.x, velocity.y, velocity.z, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の速度の設定に失敗しました。[%s, %n]", __FILE__, __LINE__);
-			throw COMException("音源の速度の設定に失敗しました。", hr);
+			debug_out::trace("音源の速度の設定に失敗しました。[%s, %n]", __FILE__, __LINE__);
+			throw com_exception("音源の速度の設定に失敗しました。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	float DirectSound3DAudioBuffer::GetMaxDistance() const {
+	float dsound_3d_audio_buffer::get_max_distance() const {
 		float distance;
-		Assert(buffer_ != nullptr);
+		NYX_ASSERT(buffer_ != nullptr);
 		HRESULT hr = buffer_->GetMaxDistance(&distance);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の最大距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
-			throw COMException("音源の最大距離の取得に失敗しました。", hr);
+			debug_out::trace("音源の最大距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
+			throw com_exception("音源の最大距離の取得に失敗しました。", hr);
 		}
 		return distance;
 	}
@@ -106,25 +106,25 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSound3DAudioBuffer::SetMaxDistance(float maxDistance) {
-		Assert(buffer_ != nullptr);
+	void dsound_3d_audio_buffer::set_max_distance(float maxDistance) {
+		NYX_ASSERT(buffer_ != nullptr);
 		HRESULT hr = buffer_->SetMaxDistance(maxDistance, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の最大距離の設定に失敗しました。[%s, %d]",__FILE__, __LINE__);
-			throw COMException("音源の最大距離の設定に失敗しました", hr);
+			debug_out::trace("音源の最大距離の設定に失敗しました。[%s, %d]",__FILE__, __LINE__);
+			throw com_exception("音源の最大距離の設定に失敗しました", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	float DirectSound3DAudioBuffer::GetMinDistance() const {
+	float dsound_3d_audio_buffer::get_min_distance() const {
 		float distance;
-		Assert(buffer_ != nullptr);
+		NYX_ASSERT(buffer_ != nullptr);
 		HRESULT hr = buffer_->GetMinDistance(&distance);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の最小距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
-			throw COMException("音源の最小距離の取得に失敗しました。",hr);
+			debug_out::trace("音源の最小距離の取得に失敗しました。[%s, %d]",__FILE__, __LINE__);
+			throw com_exception("音源の最小距離の取得に失敗しました。",hr);
 		}
 		return distance;
 	}
@@ -132,30 +132,42 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSound3DAudioBuffer::SetMinDistance(float minDistance) {
-		Assert(buffer_ != nullptr);
+	void dsound_3d_audio_buffer::set_min_distance(float minDistance) {
+		NYX_ASSERT(buffer_ != nullptr);
 		HRESULT hr = buffer_->SetMinDistance(minDistance, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("音源の最小距離の設定に失敗しました。[%s,%d]",__FILE__, __LINE__);
-			throw COMException("音源の最小距離の設定に失敗しました。", hr);
+			debug_out::trace("音源の最小距離の設定に失敗しました。[%s,%d]",__FILE__, __LINE__);
+			throw com_exception("音源の最小距離の設定に失敗しました。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void  DirectSound3DAudioBuffer::Create3DBuffer() {
-		auto handle = GetHandle();
-		Assert(handle != nullptr);
+	void  dsound_3d_audio_buffer::create_3d_buffer() {
+		auto handle = get_handle();
+		NYX_ASSERT(handle != nullptr);
 		
 		IDirectSound3DBuffer8* buffer;
 		HRESULT hr = handle->QueryInterface(IID_IDirectSound3DBuffer8, reinterpret_cast<void**>(&buffer));
 		if (FAILED(hr)) {
-			DebugOutput::Trace("IDirectSound3DBuffer8の取得に失敗しました。[%s,%d]",__FILE__, __LINE__);
-			throw COMException("IDirectSound3DBuffer8の取得に失敗しました。", hr);
+			debug_out::trace("IDirectSound3DBuffer8の取得に失敗しました。[%s,%d]",__FILE__, __LINE__);
+			throw com_exception("IDirectSound3DBuffer8の取得に失敗しました。", hr);
 		}
 
 		//スマートポインタの管理下に置く
 		buffer_ = buffer;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	void dsound_3d_audio_buffer::set_pan(long pan) {
+	}
+
+	//-------------------------------------------------------------------------------------------------------
+	//
+	long dsound_3d_audio_buffer::get_pan() const {
+		return 1L;
 	}
 }

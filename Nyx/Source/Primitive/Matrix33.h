@@ -20,9 +20,9 @@
 #include "Primitive/EulerAngles.h"
 #include "Primitive/Quaternion.h"
 
-namespace Nyx {
+namespace nyx {
 
-	DEPRECATED class Matrix33 {
+	NYX_DEPRECATED class Matrix33 {
 	public:
 		/// 3x3s—ñ
 		union {	
@@ -114,7 +114,7 @@ namespace Nyx {
 		* @param ‰E•Ó’l 
 		* @return æZŒ‹‰Ê
 		*/
-		Vector3f operator *(const Vector3f& v) const;
+		vector3f operator *(const vector3f& v) const;
 
 
 		/**

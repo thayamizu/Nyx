@@ -18,34 +18,35 @@
 #include "PCH/PCH.h"
 #include "Thread/CriticalSection.h"
 #include "Thread/detail/Win32/Win32CriticalSection.h"
-namespace Nyx
+namespace nyx
 {
-	struct CriticalSection::PImpl
+	struct critical_section::PImpl
 	{
 		PImpl()
-			:criticalSection(new Win32CriticalSection()) {
+			:criticalSection(new win32_critical_section()) {
 		
 		}
-		std::unique_ptr<Win32CriticalSection> criticalSection;
+		std::unique_ptr<win32_critical_section> criticalSection;
 	};
 	// コンストラクタ
-	CriticalSection::CriticalSection()
+	critical_section::critical_section()
 		:pimpl_(new PImpl())
 	{ 
-
+		enter();
 	}
 
 	// デストラクタ
-	CriticalSection::~CriticalSection() { 
+	critical_section::~critical_section() { 
+		leave();
 	}
 
 	//クリティカルセクションの開始
-	void CriticalSection::Enter() { 
-		pimpl_->criticalSection->Enter();
+	void critical_section::enter() { 
+		pimpl_->criticalSection->enter();
 	}
 
 	// クリティカルセクションの終了
-	void CriticalSection::Leave() { 
-		pimpl_->criticalSection->Leave();
+	void critical_section::leave() { 
+		pimpl_->criticalSection->leave();
 	}
 }

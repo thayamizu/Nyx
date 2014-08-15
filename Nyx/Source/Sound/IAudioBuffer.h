@@ -17,76 +17,122 @@
 #ifndef NYX_CORE_INCLUDED_IAUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_IAUDIO_BUFFER_H_
 #include "AudioUtility.h"
-
-namespace Nyx {
+#include "Primitive/Vector3.h"
+namespace nyx {
 	///オーディオバッファインタフェース
-	class IAudioBuffer {
+	class iaudio_buffer {
 	public:
-		virtual ~IAudioBuffer() {}
+		virtual ~iaudio_buffer() {}
 
 		/**
 		*　オーディオバッファを再生します
 		*/
-		virtual void Play(bool isLoop) = 0;
+		virtual void play(bool isLoop) = 0;
 
 
 		/**
 		*　オーディオバッファを停止します
 		*/
-		virtual void Stop() = 0;
+		virtual void stop() = 0;
 		
 		
 		/**
 		*　オーディオバッファをレジュームします
 		*/
-		virtual void Resume() = 0;
+		virtual void resume() = 0;
 		
 		
 		/**
 		*　オーディオバッファをリセットします
 		*/
-		virtual void Reset()  = 0; 
+		virtual void reset()  = 0; 
 
 
 		/**
 		* オーディオバッファのボリューム値を設定します
 		* @return int　ボリューム
 		*/
-		virtual void SetVolume(long volume) = 0;
+		virtual void set_volume(long volume) = 0;
 
 		
 		/**
 		* オーディオバッファのボリュームを取得します
 		* @return int ボリューム
 		*/
-		virtual long GetVolume() const = 0;
+		virtual long get_volume() const = 0;
 
 		
 		/**
 		* オーディオバッファの状態を取得します
 		* @return int ボリューム
 		*/
-		virtual AudioState GetState() const = 0;
+		virtual audio_state get_audio_state() const = 0;
 		
 
 		/**
 		*　オーディオバッファのエフェクトをリセットします
 		*/
-		virtual void ResetEffect() = 0; 
+		virtual void reset_effect() = 0; 
 		
 		
 		/**
 		*　オーディオバッファにエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		virtual void SetEffect(const AudioEffectDesc& effectDesc) = 0;
+		virtual void set_effect(const audio_effect_desc& effectDesc) = 0;
 
 
 		/**
 		* オーディオバッファの状態の取得します
 		* @return AudioUtility::BufferType
 		*/
-		virtual AudioUtility::BufferType GetBufferType() const = 0;
+		virtual AudioUtility::AUDIO_BUFFER_TYPE get_buffer_type() const = 0;
+
+		/**
+		* オーディオバッファのパン値を設定します
+		* @param long パン
+		*/
+		virtual void set_pan(long pan) = 0;
+
+
+		/**
+		* オーディオバッファのパン値を取得します
+		* @return long
+		*/
+		virtual long get_pan()const = 0;
+
+		virtual vector3f get_position() const = 0;
+		virtual void set_position(const vector3f& velocity) = 0;
+		virtual vector3f get_velocity() const = 0;
+		virtual void set_velocity(const vector3f& velocity) = 0;
+
+		/**
+		* 音源からの最大距離を取得します
+		* @return float 音源からの最大距離
+		*/
+		virtual float get_max_distance() const = 0;
+
+
+		/**
+		* 音源からの最大距離を設定します
+		* @param float  最大距離
+		*/
+		virtual void set_max_distance(float maxDistance) = 0;
+
+
+		/**
+		* 音源からの最小距離を設定します
+		* @param float  最小距離
+		*/
+		virtual float get_min_distance() const = 0;
+
+
+		/**
+		* 音源からの最小距離を取得します
+		* @return float 音源からの最小距離
+		*/
+		virtual void set_min_distance(float minDistance) = 0;
+
 	};
 }
 #endif

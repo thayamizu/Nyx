@@ -1,9 +1,9 @@
 #ifndef NYX_CORE_INCLUDED_KEYCODE_H_
 #define NYX_CORE_INCLUDED_KEYCODE_H_
 
-namespace Nyx {
+namespace nyx {
 	///ジョイスティック
-	enum class JoystickButton : uchar {
+	enum class JOYSTICK_BUTTON : uint8_t {
 		BUTTON_1			= 0x00,
 		BUTTON_2			= 0x01,
 		BUTTON_3			= 0x02,
@@ -40,7 +40,7 @@ namespace Nyx {
 
 
 	///マウスボタン
-	enum class MouseButton : uchar {
+	enum class MOUSE_BUTTON : uint8_t {
 		BUTTON_1			= 0x00,
 		BUTTON_2			= 0x01,
 		BUTTON_3			= 0x02,
@@ -55,7 +55,7 @@ namespace Nyx {
 	};
 
 	///キーコード
-	enum class KeyCode : uchar{
+	enum class KEYCODE : uint8_t{
 		KEY_ESCAPE         =0x01,
 		KEY_1              =0x02,
 		KEY_2              =0x03,
@@ -67,9 +67,9 @@ namespace Nyx {
 		KEY_8              =0x09,
 		KEY_9              =0x0A,
 		KEY_0              =0x0B,
-		KEY_MINUS          =0x0C,    /* - on main keyboard */
+		KEY_MINUS          =0x0C, 
 		KEY_EQUALS         =0x0D,
-		KEY_BACK           =0x0E,    /* backspace */
+		KEY_BACK           =0x0E, 
 		KEY_TAB            =0x0F,
 		KEY_Q              =0x10,
 		KEY_W              =0x11,
@@ -83,7 +83,7 @@ namespace Nyx {
 		KEY_P              =0x19,
 		KEY_LBRACKET       =0x1A,
 		KEY_RBRACKET       =0x1B,
-		KEY_RETURN         =0x1C ,   /* Enter on main keyboard */
+		KEY_RETURN         =0x1C ,
 		KEY_LCONTROL       =0x1D,
 		KEY_A              =0x1E,
 		KEY_S              =0x1F,
@@ -96,7 +96,7 @@ namespace Nyx {
 		KEY_L              =0x26,
 		KEY_SEMICOLON      =0x27,
 		KEY_APOSTROPHE     =0x28,
-		KEY_GRAVE          =0x29,   /* accent grave */
+		KEY_GRAVE          =0x29, 
 		KEY_LSHIFT         =0x2A,
 		KEY_BACKSLASH      =0x2B,
 		KEY_Z              =0x2C,
@@ -107,11 +107,11 @@ namespace Nyx {
 		KEY_N              =0x31,
 		KEY_M              =0x32,
 		KEY_COMMA          =0x33,
-		KEY_PERIOD         =0x34,   /* . on main keyboard */
-		KEY_SLASH          =0x35,  /* / on main keyboard */
+		KEY_PERIOD         =0x34, 
+		KEY_SLASH          =0x35, 
 		KEY_RSHIFT         =0x36,
-		KEY_MULTIPLY       =0x37,    /* * on numeric keypad */
-		KEY_LMENU          =0x38,    /* left Alt */
+		KEY_MULTIPLY       =0x37, 
+		KEY_LMENU          =0x38, 
 		KEY_SPACE          =0x39,
 		KEY_CAPITAL        =0x3A,
 		KEY_F1             =0x3B,
@@ -125,81 +125,81 @@ namespace Nyx {
 		KEY_F9             =0x43,
 		KEY_F10            =0x44,
 		KEY_NUMLOCK        =0x45,
-		KEY_SCROLL         =0x46,   /* Scroll Lock */
+		KEY_SCROLL         =0x46, 
 		KEY_NUMPAD7        =0x47,
 		KEY_NUMPAD8        =0x48,
 		KEY_NUMPAD9        =0x49,
-		KEY_SUBTRACT       =0x4A,   /* - on numeric keypad */
+		KEY_SUBTRACT       =0x4A, 
 		KEY_NUMPAD4        =0x4B,
 		KEY_NUMPAD5        =0x4C,
 		KEY_NUMPAD6        =0x4D,
-		KEY_ADD            =0x4E,   /* + on numeric keypad */
+		KEY_ADD            =0x4E, 
 		KEY_NUMPAD1        =0x4F,
 		KEY_NUMPAD2        =0x50,
 		KEY_NUMPAD3        =0x51,
 		KEY_NUMPAD0        =0x52,
-		KEY_DECIMAL        =0x53,   /* . on numeric keypad */
-		KEY_OEM_102        =0x56,    /* <> or \| on RT 102-key keyboard (Non-U.S.) */
+		KEY_DECIMAL        =0x53, 
+		KEY_OEM_102        =0x56, 
 		KEY_F11            =0x57,
 		KEY_F12            =0x58,
-		KEY_F13            =0x64,   /*                     (NEC PC98) */
-		KEY_F14            =0x65,    /*                     (NEC PC98) */
-		KEY_F15            =0x66,    /*                     (NEC PC98) */
-		KEY_KANA           =0x70,    /* (Japanese keyboard)            */
-		KEY_ABNT_C1        =0x73,    /* /? on Brazilian keyboard */
-		KEY_CONVERT        =0x79,    /* (Japanese keyboard)            */
-		KEY_NOCONVERT      =0x7B,    /* (Japanese keyboard)            */
-		KEY_YEN            =0x7D,    /* (Japanese keyboard)            */
-		KEY_ABNT_C2        =0x7E,    /* Numpad . on Brazilian keyboard */
-		KEY_NUMPADEQUALS   =0x8D,    /* = on numeric keypad (NEC PC98) */
-		KEY_PREVTRACK      =0x90,    /* Previous Track (KEY_CIRCUMFLEX on Japanese keyboard) */
-		KEY_AT             =0x91,    /*                     (NEC PC98) */
-		KEY_COLON          =0x92,    /*                     (NEC PC98) */
-		KEY_UNDERLINE      =0x93,    /*                     (NEC PC98) */
-		KEY_KANJI          =0x94,    /* (Japanese keyboard)            */
-		KEY_STOP           =0x95,    /*                     (NEC PC98) */
-		KEY_AX             =0x96,    /*                     (Japan AX) */
-		KEY_UNLABELED      =0x97,    /*                        (J3100) */
-		KEY_NEXTTRACK      =0x99,    /* Next Track */
-		KEY_NUMPADENTER    =0x9C,    /* Enter on numeric keypad */
+		KEY_F13            =0x64, 
+		KEY_F14            =0x65, 
+		KEY_F15            =0x66, 
+		KEY_KANA           =0x70, 
+		KEY_ABNT_C1        =0x73, 
+		KEY_CONVERT        =0x79, 
+		KEY_NOCONVERT      =0x7B, 
+		KEY_YEN            =0x7D, 
+		KEY_ABNT_C2        =0x7E, 
+		KEY_NUMPADEQUALS   =0x8D, 
+		KEY_PREVTRACK      =0x90, 
+		KEY_AT             =0x91, 
+		KEY_COLON          =0x92, 
+		KEY_UNDERLINE      =0x93, 
+		KEY_KANJI          =0x94, 
+		KEY_STOP           =0x95, 
+		KEY_AX             =0x96, 
+		KEY_UNLABELED      =0x97, 
+		KEY_NEXTTRACK      =0x99, 
+		KEY_NUMPADENTER    =0x9C, 
 		KEY_RCONTROL       =0x9D,
-		KEY_MUTE           =0xA0,    /* Mute */
-		KEY_CALCULATOR     =0xA1,    /* Calculator */
-		KEY_PLAYPAUSE      =0xA2,    /* Play / Pause */
-		KEY_MEDIASTOP      =0xA4,    /* Media Stop */
-		KEY_VOLUMEDOWN     =0xAE,    /* Volume - */
-		KEY_VOLUMEUP       =0xB0,    /* Volume + */
-		KEY_WEBHOME        =0xB2,    /* Web home */
-		KEY_NUMPADCOMMA    =0xB3,    /* , on numeric keypad (NEC PC98) */
-		KEY_DIVIDE         =0xB5,    /* / on numeric keypad */
+		KEY_MUTE           =0xA0, 
+		KEY_CALCULATOR     =0xA1, 
+		KEY_PLAYPAUSE      =0xA2, 
+		KEY_MEDIASTOP      =0xA4, 
+		KEY_VOLUMEDOWN     =0xAE, 
+		KEY_VOLUMEUP       =0xB0, 
+		KEY_WEBHOME        =0xB2, 
+		KEY_NUMPADCOMMA    =0xB3, 
+		KEY_DIVIDE         =0xB5, 
 		KEY_SYSRQ          =0xB7,
-		KEY_RMENU          =0xB8,    /* right Alt */
-		KEY_PAUSE          =0xC5,    /* Pause */
-		KEY_HOME           =0xC7,    /* Home on arrow keypad */
-		KEY_UP             =0xC8,    /* UpArrow on arrow keypad */
-		KEY_PRIOR          =0xC9,    /* PgUp on arrow keypad */
-		KEY_LEFT           =0xCB,    /* LeftArrow on arrow keypad */
-		KEY_RIGHT          =0xCD,    /* RightArrow on arrow keypad */
-		KEY_END            =0xCF,    /* End on arrow keypad */
-		KEY_DOWN           =0xD0,    /* DownArrow on arrow keypad */
-		KEY_NEXT           =0xD1,    /* PgDn on arrow keypad */
-		KEY_INSERT         =0xD2,    /* Insert on arrow keypad */
-		KEY_DELETE         =0xD3,    /* Delete on arrow keypad */
-		KEY_LWIN           =0xDB,    /* Left Windows key */
-		KEY_RWIN           =0xDC,    /* Right Windows key */
-		KEY_APPS           =0xDD,    /* AppMenu key */
-		KEY_POWER          =0xDE,    /* System Power */
-		KEY_SLEEP          =0xDF,    /* System Sleep */
-		KEY_WAKE           =0xE3,    /* System Wake */
-		KEY_WEBSEARCH      =0xE5,    /* Web Search */
-		KEY_WEBFAVORITES   =0xE6,    /* Web Favorites */
-		KEY_WEBREFRESH     =0xE7,    /* Web Refresh */
-		KEY_WEBSTOP        =0xE8,    /* Web Stop */
-		KEY_WEBFORWARD     =0xE9,    /* Web Forward */
-		KEY_WEBBACK        =0xEA,    /* Web Back */
-		KEY_MYCOMPUTER     =0xEB,    /* My Computer */
-		KEY_MAIL           =0xEC,    /* Mail */
-		KEY_MEDIASELECT    =0xED,    /* Media Select */
+		KEY_RMENU          =0xB8, 
+		KEY_PAUSE          =0xC5, 
+		KEY_HOME           =0xC7, 
+		KEY_UP             =0xC8, 
+		KEY_PRIOR          =0xC9, 
+		KEY_LEFT           =0xCB, 
+		KEY_RIGHT          =0xCD, 
+		KEY_END            =0xCF, 
+		KEY_DOWN           =0xD0, 
+		KEY_NEXT           =0xD1, 
+		KEY_INSERT         =0xD2, 
+		KEY_DELETE         =0xD3, 
+		KEY_LWIN           =0xDB, 
+		KEY_RWIN           =0xDC, 
+		KEY_APPS           =0xDD, 
+		KEY_POWER          =0xDE, 
+		KEY_SLEEP          =0xDF, 
+		KEY_WAKE           =0xE3, 
+		KEY_WEBSEARCH      =0xE5, 
+		KEY_WEBFAVORITES   =0xE6, 
+		KEY_WEBREFRESH     =0xE7, 
+		KEY_WEBSTOP        =0xE8, 
+		KEY_WEBFORWARD     =0xE9, 
+		KEY_WEBBACK        =0xEA, 
+		KEY_MYCOMPUTER     =0xEB, 
+		KEY_MAIL           =0xEC, 
+		KEY_MEDIASELECT    =0xED, 
 	};
 }
 

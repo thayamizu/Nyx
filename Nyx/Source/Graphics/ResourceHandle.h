@@ -2,15 +2,15 @@
 #define NYX_CORE_RESOURCE_HANDLE_H_
 #include "IResource.h"
 
-namespace Nyx
+namespace nyx
 {
 	///リソースハンドル
-	class ResourceHandle {
+	class resource_handle {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		ResourceHandle(std::wstring name, const std::shared_ptr<IResource>& resource)
+		resource_handle(std::wstring name, const std::shared_ptr<iresource>& resource)
 			: name_(name), resource_(resource) {
 		}
 
@@ -18,7 +18,7 @@ namespace Nyx
 		* リソース名を取得します
 		* @return std::wstring リソース名
 		*/
-		std::wstring GetId() const {
+		std::wstring get_name() const {
 			return name_;
 		}
 
@@ -26,13 +26,13 @@ namespace Nyx
 		* リソースへのポインタを取得します
 		* @return リソース
 		*/
-		std::shared_ptr<IResource> GetResource() const {
+		std::shared_ptr<iresource> get_resource() const {
 			return resource_;
 		}
 
 	private:
 		std::wstring name_;
-	    std::shared_ptr<IResource> resource_;
+	    std::shared_ptr<iresource> resource_;
 	};
 
 }

@@ -20,117 +20,118 @@
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
 
-namespace Nyx {
+namespace nyx {
 	//-----------------------------------------------------------------------------------------
-	RadioButton::RadioButton(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
+	radio_button::radio_button(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
 		:label_(label), hwnd_(NULL), id_(id), atom_(NULL), isShow_(false), userData_(NULL) {
 
 			OnCreate(hwnd, label_, x, y, width, height, id);
 	}       
 
 	//-----------------------------------------------------------------------------------------
-	RadioButton::~RadioButton() {
+	radio_button::~radio_button() {
 		if (atom_) {
 			::UnregisterClass((LPCTSTR)atom_, ::GetModuleHandle(NULL));
 		}
 	}
 
 	//-----------------------------------------------------------------------------------------
-	bool RadioButton::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool radio_button::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(
 			TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, //ウィンドウの種類
 			x, y, width, height, hwnd, (HMENU)id, hInstance, NULL);
 
-		Assert(hwnd_ != NULL);
+		NYX_ASSERT(hwnd_ != NULL);
 		if (!hwnd_) {
 			::MessageBox(NULL, TEXT("失敗しました"), TEXT("error"), MB_OK);
 			return false;
 		}
 
 		//コントロールの表示
-		Show();
+		show();
 		return true;
 	}
 
 	//---------------------------------------------------------------------------------------
-	HWND RadioButton::GetHandle() {
-		Assert(hwnd_ != NULL);
+	nyx::window_handle radio_button::get_handle()
+{
+		NYX_ASSERT(hwnd_ != NULL);
 		return hwnd_;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::Show() {
-		Assert(hwnd_ != NULL);
+	void radio_button::show() {
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_ = true;
 		::ShowWindow(hwnd_, SW_SHOW);  
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::Hide(){
-		Assert(hwnd_ != NULL);
+	void radio_button::hide(){
+		NYX_ASSERT(hwnd_ != NULL);
 		isShow_ = false;
 		::ShowWindow(hwnd_, SW_HIDE);  
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::Update() {
-		Assert(hwnd_ != NULL);
+	void radio_button::update() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::UpdateWindow(hwnd_);
 
 	}
 
 	//----------------------------------------------------------------
-	bool RadioButton::IsShow() {
+	bool radio_button::is_show() {
 		return isShow_;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::Activate() {
-		Assert(hwnd_ != NULL);
+	void radio_button::activate() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, true);
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::Unactivate() {
-		Assert(hwnd_ != NULL);
+	void radio_button::unactivate() {
+		NYX_ASSERT(hwnd_ != NULL);
 		::EnableWindow(hwnd_, false);
 	}
 
 	//----------------------------------------------------------------
-	bool RadioButton::IsActivate() const {
-		Assert(hwnd_ != NULL);
+	bool radio_button::is_activate() const {
+		NYX_ASSERT(hwnd_ != NULL);
 		return IsWindowEnabled(hwnd_) != 0;
 	}
 
 	//----------------------------------------------------------------
-	ControlType RadioButton::GetType() const{
-		return ControlType_RadioButton;
+	WIDGET_TYPE radio_button::get_type() const{
+		return WIDGET_TYPE_RADIO_BUTTON;
 	}
 
 	//----------------------------------------------------------------
-	std::shared_ptr<void> RadioButton::GetUserData() const {
+	std::shared_ptr<void> radio_button::get_user_data() const {
 		return userData_;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::SetUserData(std::shared_ptr<void> data) {
+	void radio_button::set_user_data(std::shared_ptr<void> data) {
 		userData_ = data;
 	}
 
 	//----------------------------------------------------------------
-	uint RadioButton::GetID() const {
+	uint32_t radio_button::get_id() const {
 		return id_;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::SetID(uint id)  {
+	void radio_button::set_id(uint32_t id)  {
 		id_ = id;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::GetSize(Rect2i& rect) const {
-		Assert(hwnd_ != NULL);
+	void radio_button::get_size(rect2i& rect) const {
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT r;
 		::GetWindowRect(hwnd_, &r);
 
@@ -142,14 +143,14 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::SetSize(const Rect2i& rect) {
-		Assert(hwnd_ != NULL);
+	void radio_button::set_size(const rect2i& rect) {
+		NYX_ASSERT(hwnd_ != NULL);
 		::SetWindowPos(hwnd_, NULL, rect.x, rect.y, rect.width, rect.height, SWP_SHOWWINDOW);
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::GetPosition(Point2i& p) const {
-		Assert(hwnd_ != NULL);
+	void radio_button::get_position(point2i& p) const {
+		NYX_ASSERT(hwnd_ != NULL);
 		RECT _r;
 		::GetWindowRect(hwnd_, &_r);
 
@@ -158,27 +159,27 @@ namespace Nyx {
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::SetPosition(const Point2i& p) {
-		Assert(hwnd_ != NULL);
-		Rect2i r;
-		GetSize(r);
+	void radio_button::set_position(const point2i& p) {
+		NYX_ASSERT(hwnd_ != NULL);
+		rect2i r;
+		get_size(r);
 
 		::SetWindowPos(hwnd_, NULL, p.x, p.y, r.width, r.height, SWP_SHOWWINDOW);
 	}
 
 	//----------------------------------------------------------------
-	std::wstring RadioButton::GetLabel() const  {
+	std::wstring radio_button::get_label() const  {
 		return label_;
 	}
 
 	//----------------------------------------------------------------
-	void RadioButton::SetLabel(const std::wstring& label) {
+	void radio_button::set_label(const std::wstring& label) {
 		label_ = label;
 		SetWindowText(hwnd_, label.c_str());
 	}
 
 	//----------------------------------------------------------------
-	bool RadioButton::IsChecked() const {
+	bool radio_button::is_checked() const {
 		LRESULT result = ::SendMessage(hwnd_, BST_CHECKED, 0, 0);
 		return result == BST_CHECKED;
 	}

@@ -3,10 +3,10 @@
 
 //機能廃止宣言
 #if defined(_MSC_VER)
-#define DEPRECATED __declspec(deprecated) 
+#define NYX_DEPRECATED __declspec(deprecated) 
 #elif defined(__GNUC__)
-#define DEPRECATED 
-#define DEPRECATED __attribute__((deprecated))
+#define NYX_DEPRECATED 
+#define NYX_DEPRECATED __attribute__((deprecated))
 #else
 #pragma message("DEPRECATEDはサポートされていません")
 #endif
@@ -27,7 +27,7 @@ inline void intrusive_ptr_release( IUnknown* ptr ) {
 	}
 }
 
-namespace Nyx {
+namespace nyx {
 
 
 	///----------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ namespace Nyx {
 	* @return 文字列された数値
 	*/
 	template <typename T> 
-	inline std::wstring ToString(T value) {
+	inline std::wstring to_string(T value) {
 		std::wstringstream ss;
 		ss<<value;
 
@@ -89,7 +89,7 @@ namespace Nyx {
 	* @return int 変換された値
 	*/
 	template <typename T> 
-	inline char ToChar(T value) {
+	inline char to_char(T value) {
 		char result;
 		std::stringstream ss;
 
@@ -105,7 +105,7 @@ namespace Nyx {
 	* @return short 変換された値
 	*/  
 	template <typename T> 
-	inline short ToShort(T value) {
+	inline short to_short(T value) {
 		short result;
 		std::stringstream ss;
 
@@ -120,7 +120,7 @@ namespace Nyx {
 	* @return int 変換された値
 	*/
 	template <typename T> 
-	inline int ToInt(T value) {
+	inline int to_int(T value) {
 		int result;
 		std::stringstream ss;
 
@@ -136,7 +136,7 @@ namespace Nyx {
 	* @return float 変換された値
 	*/
 	template <typename T> 
-	inline float ToFloat(T value) {
+	inline float to_float(T value) {
 		float result;
 		std::stringstream ss;
 
@@ -151,7 +151,7 @@ namespace Nyx {
 	* @return double 変換された値
 	*/ 
 	template <typename T> 
-	inline double ToDouble(T value) {
+	inline double to_double(T value) {
 		double result;
 		std::stringstream ss;
 

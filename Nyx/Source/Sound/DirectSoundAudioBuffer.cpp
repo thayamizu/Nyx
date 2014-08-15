@@ -21,12 +21,12 @@
 #include "Sound/WaveReader.h"
 #include "DirectSoundAudioBuffer.h"
 
-namespace Nyx {
+namespace nyx {
 	class AudioBuffer3D;
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	DirectSoundAudioBuffer::DirectSoundAudioBuffer() 
+	dsound_audio_buffer::dsound_audio_buffer() 
 		: isLoop_(false), soundBuffer_(nullptr){
 
 	}
@@ -34,92 +34,92 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Load(const AudioBufferDesc& desc, const DirectSoundPtr ds) {
+	void dsound_audio_buffer::load(const audio_buffer_desc& desc, const dsound_ptr ds) {
 		WAVEFORMATEX wfx={};
-		AudioUtility::BuildWaveFormatEx(&wfx, desc.waveFormat);
+		AudioUtility::build_wav_format_ex(&wfx, desc.waveFormat);
 
 		DSBUFFERDESC bufferDesc = {};
-		BuildDirectSoundBufferDesc(&bufferDesc, wfx);
+		build_dsound_buffer_desc(&bufferDesc, wfx);
 
 		//サウンドバッファの生成
 		LPDIRECTSOUNDBUFFER primaryBuffer;
 		HRESULT hr = ds->CreateSoundBuffer(&bufferDesc, &primaryBuffer, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオのプライマリバッファの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオのプライマリバッファの作成に失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオのプライマリバッファの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオのプライマリバッファの作成に失敗しました。", hr);
 		}
 
 		LPDIRECTSOUNDBUFFER8 soundBuffer;
 		hr = primaryBuffer->QueryInterface(IID_IDirectSoundBuffer8 , (void**)&soundBuffer);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオのセカンダリバッファの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオのセカンダリバッファの作成に失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオのセカンダリバッファの作成に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオのセカンダリバッファの作成に失敗しました。", hr);
 		}
 
 		//スマートポインタの管理下に置く
-		soundBuffer_ = DirectSoundBufferPtr(soundBuffer);
+		soundBuffer_ = dsound_buffer_ptr(soundBuffer);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Play(bool isLoop) {
-		Assert(soundBuffer_ != nullptr);
+	void dsound_audio_buffer::play(bool isLoop) {
+		NYX_ASSERT(soundBuffer_ != nullptr);
 		isLoop_ = isLoop;
 		HRESULT hr = soundBuffer_->Play(0, 0, isLoop_);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファを再生出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファを再生出来ませんでした。", hr);
+			debug_out::trace("DirectSoundオーディオバッファを再生出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファを再生出来ませんでした。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Stop() {
-		Assert(soundBuffer_ != nullptr);
+	void dsound_audio_buffer::stop() {
+		NYX_ASSERT(soundBuffer_ != nullptr);
 		HRESULT hr = soundBuffer_->Stop();
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファを停止出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファを停止出来ませんでした。", hr);
+			debug_out::trace("DirectSoundオーディオバッファを停止出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファを停止出来ませんでした。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Resume() {
-		Assert(soundBuffer_ != nullptr);
+	void dsound_audio_buffer::resume() {
+		NYX_ASSERT(soundBuffer_ != nullptr);
 		//再生中なら処理しない
-		auto state = GetState();
+		auto state = get_audio_state();
 		if (state.isPlaying) {
 			return;
 		} 
 		if (state.isBufferLost) {
 			HRESULT hr = soundBuffer_->Restore();
 			if (FAILED(hr)) {
-				DebugOutput::Trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-				throw COMException("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
+				debug_out::trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+				throw com_exception("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
 			}
 		}
 		//レジュームする
 		HRESULT hr = soundBuffer_->Play(0, 0, isLoop_);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
+			debug_out::trace("DirectSoundオーディオバッファをレジューム出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファをレジューム出来ませんでした。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::Reset() {
-		Assert(soundBuffer_ != nullptr);
+	void dsound_audio_buffer::reset() {
+		NYX_ASSERT(soundBuffer_ != nullptr);
 
 		HRESULT hr = soundBuffer_->SetCurrentPosition(0);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。", hr);
+			debug_out::trace("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファの再生位置をリセット出来ませんでした。", hr);
 		}
 
 	}
@@ -128,59 +128,59 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetVolume(long volume) {
-		Assert(soundBuffer_ != nullptr);
-		long decibel = AudioUtility::VolumeToDecibel(volume);
+	void dsound_audio_buffer::set_volume(long volume) {
+		NYX_ASSERT(soundBuffer_ != nullptr);
+		long decibel = AudioUtility::volume_to_decibel(volume);
 		HRESULT hr = soundBuffer_->SetVolume(decibel);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。", hr);
 		}
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	long DirectSoundAudioBuffer::GetVolume() const {
-		Assert(soundBuffer_ != nullptr);
+	long dsound_audio_buffer::get_volume() const {
+		NYX_ASSERT(soundBuffer_ != nullptr);
 		long decibel;
 		HRESULT hr = soundBuffer_->GetVolume(&decibel);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。", hr);
 		}
 
-		return AudioUtility::DecibelToVolume(decibel);
+		return AudioUtility::decibel_to_volume(decibel);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetEffect(const AudioEffectDesc & effectDesc) {
+	void dsound_audio_buffer::set_effect(const audio_effect_desc & effectDesc) {
 		switch(effectDesc.effectType) {
-		case AudioUtility::EffectType_Chorus:
-			SetChorusEffect(effectDesc);
+		case AudioUtility::AUIO_EFFECT_TYPE_CHORUS:
+			set_chorus_effect(effectDesc);
 			break;
-		case AudioUtility::EffectType_Distortion:
-			SetDistortionEffect(effectDesc);
+		case AudioUtility::AUDIO_EFFECT_TYPE_DISTORTION:
+			set_distortion_effect(effectDesc);
 			break;
-		case AudioUtility::EffectType_Echo:
-			SetEchoEffect(effectDesc);
+		case AudioUtility::AUDIO_EFFECT_TYPE_ECHO:
+			set_echo_effect(effectDesc);
 			break;
-		case AudioUtility::EffectType_Flanger:
-			SetFlangerEffect(effectDesc);
+		case AudioUtility::AUDIO_EFFECT_TYPE_FLANGER:
+			set_flanger_effect(effectDesc);
 			break;
-		case AudioUtility::EffectType_Gargle:
-			SetFlangerEffect(effectDesc);
+		case AudioUtility::AUDIO_EFFECT_TYPE_GARGLE:
+			set_flanger_effect(effectDesc);
 			break;
-		case AudioUtility::EffectType_ParametricEqualizer:
-			SetParametricEqualizerEffect(effectDesc);
+		case AudioUtility::AUDIO_EFFECT_TYPE_PARAMETRIC_EQUALIZER:
+			set_parametric_equalizer_effect(effectDesc);
 			break;
-		case AudioUtility::EffectType_Reverb:
-			SetReverbEffect(effectDesc);
+		case AudioUtility::AUDIO_EFFECT_TYPE_REVERB:
+			set_reverb_effect(effectDesc);
 			break;
 		default:
-			DebugOutput::Trace("EffectTypeの値が違います。");
+			debug_out::trace("EffectTypeの値が違います。");
 			throw std::invalid_argument("EffectTypeの値が違います。");
 		}
 	}
@@ -188,29 +188,29 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::ResetEffect() {
-		ulong status = GetStatus();
+	void dsound_audio_buffer::reset_effect() {
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
 		HRESULT hr = soundBuffer_->SetFX(0, NULL, NULL);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("エフェクトのリセットに失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("エフェクトのリセットに失敗しました。", hr);
+			debug_out::trace("エフェクトのリセットに失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("エフェクトのリセットに失敗しました。", hr);
 		}
 
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioState DirectSoundAudioBuffer::GetState() const {
-		Assert(soundBuffer_ != nullptr);
-		ulong status = GetStatus();
+	audio_state dsound_audio_buffer::get_audio_state() const {
+		NYX_ASSERT(soundBuffer_ != nullptr);
+		uint64_t status = get_status();
 
-		AudioState state;
+		audio_state state;
 		state.isBufferLost = (status & DSBSTATUS_BUFFERLOST) != 0;
 		state.isLooping    = (status & DSBSTATUS_LOOPING)    != 0;
 		state.isPlaying    = (status & DSBSTATUS_PLAYING)    != 0;
@@ -221,21 +221,21 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const DirectSoundBufferPtr& DirectSoundAudioBuffer::GetHandle() const {
+	const dsound_buffer_ptr& dsound_audio_buffer::get_handle() const {
 		return soundBuffer_;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetChorusEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_chorus_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
-		ulong result;
+		uint64_t result;
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
@@ -244,24 +244,24 @@ namespace Nyx {
 
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("コーラスエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("コーラスエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("コーラスエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("コーラスエフェクトの設定に失敗しました。", hr);
 		}
 
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetDistortionEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_distortion_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
-		ulong result;
+		uint64_t result;
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
@@ -270,20 +270,20 @@ namespace Nyx {
 
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("ディストーションエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("ディストーションエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("ディストーションエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("ディストーションエフェクトの設定に失敗しました。", hr);
 		}
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetEchoEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_echo_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
 
@@ -293,26 +293,26 @@ namespace Nyx {
 		desc.dwFlags = NULL;
 		desc.guidDSFXClass = GUID_DSFX_STANDARD_ECHO;
 
-		ulong result;
+		uint64_t result;
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("エコーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("エコーエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("エコーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("エコーエフェクトの設定に失敗しました。", hr);
 		}
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetFlangerEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_flanger_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
-		ulong result;
+		uint64_t result;
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
@@ -321,23 +321,23 @@ namespace Nyx {
 
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("フランジャーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("フランジャーエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("フランジャーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("フランジャーエフェクトの設定に失敗しました。", hr);
 		}
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetGargleEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_gargle_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
-		ulong result;
+		uint64_t result;
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
@@ -346,23 +346,23 @@ namespace Nyx {
 
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("ガーグルエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("ガーグルエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("ガーグルエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("ガーグルエフェクトの設定に失敗しました。", hr);
 		}
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetParametricEqualizerEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_parametric_equalizer_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
-		ulong result;
+		uint64_t result;
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
@@ -371,23 +371,23 @@ namespace Nyx {
 
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("パラメトリックイコライザーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("パラメトリックイコライザースエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("パラメトリックイコライザーエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("パラメトリックイコライザースエフェクトの設定に失敗しました。", hr);
 		}
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void DirectSoundAudioBuffer::SetReverbEffect(const AudioEffectDesc& effectDesc) {
+	void dsound_audio_buffer::set_reverb_effect(const audio_effect_desc& effectDesc) {
 		effectDesc;
-		ulong status = GetStatus();
+		uint64_t status = get_status();
 		if (status & DSBSTATUS_PLAYING) {
-			Stop();
+			stop();
 		}
 
-		ulong result;
+		uint64_t result;
 		DSEFFECTDESC desc;
 		ZeroMemory(&desc, sizeof(DSEFFECTDESC));
 		desc.dwSize  = sizeof(DSEFFECTDESC);
@@ -396,22 +396,22 @@ namespace Nyx {
 
 		HRESULT hr = soundBuffer_->SetFX(1, &desc, &result);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("リバーブエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("リバーブスエフェクトの設定に失敗しました。", hr);
+			debug_out::trace("リバーブエフェクトの設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("リバーブエフェクトの設定に失敗しました。", hr);
 		}
-		Resume();
+		resume();
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	ulong DirectSoundAudioBuffer::GetStatus() const {
-		Assert(soundBuffer_ != nullptr);
-		ulong status;
+	uint64_t dsound_audio_buffer::get_status() const {
+		NYX_ASSERT(soundBuffer_ != nullptr);
+		uint64_t status;
 		HRESULT hr = soundBuffer_->GetStatus(&status);
 		if (FAILED(hr)) {
-			DebugOutput::Trace("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。[%s:%d]", __FILE__, __LINE__);
-			throw COMException("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。", hr);
+			debug_out::trace("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。[%s:%d]", __FILE__, __LINE__);
+			throw com_exception("DirectSoundオーディオバッファのステータスコードを取得出来ませんでした。", hr);
 		}
 		return status;
 	}

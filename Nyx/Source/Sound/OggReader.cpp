@@ -2,15 +2,15 @@
 #include "WaveReader.h"
 #include "OggReader.h"
 
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	OggReader::OggReader() {}
+	ogg_reader::ogg_reader() {}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	OggReader::OggReader(const std::wstring& fileName) {
+	ogg_reader::ogg_reader(const std::wstring& fileName) {
 		fileName;
 
 	}
@@ -18,35 +18,35 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void OggReader::Open(const std::wstring& fileName) {
+	void ogg_reader::open(const std::wstring& fileName) {
 		fileName;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void OggReader::SetCursor(ulong cursor) {
+	void ogg_reader::set_cursor(uint64_t cursor) {
 		cursor=0;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	ulong OggReader::GetCursor() const{
+	uint64_t ogg_reader::get_cursor() const{
 			return 1;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const WaveFileHeader& OggReader::ReadHeader() {
+	const wav_file_header& ogg_reader::read_header() {
 		return header;
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<char> OggReader::Read(size_t bufferSize, ulong *readBytes) {
+	std::shared_ptr<char> ogg_reader::read(size_t bufferSize, uint64_t *readBytes) {
 		bufferSize=0, readBytes=0;
 		return  nullptr;
 	}

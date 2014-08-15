@@ -19,42 +19,42 @@
 #include "GUI/Dispatcher.h"
 #include "Thread/CriticalSection.h"
 
-namespace Nyx {
+namespace nyx {
 	//-----------------------------------------------------------------------------------------
 	Dispatcher::Dispatcher() 
-		:IDispatcher() {
+		:idispatcher() {
 
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	Dispatcher::~Dispatcher() {
-		Clear();
+		clear();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Add(std::shared_ptr<IControl> control, GUICallback delegate) {
-		uint index = control->GetID();
+	void Dispatcher::add(std::shared_ptr<iwidget> control, gui_callback delegate) {
+		uint32_t index = control->get_id();
 		hooklist[index] = delegate;
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Del(std::shared_ptr<IControl> control) {
-		HookListIterator it = hooklist.find(control->GetID());
+	void Dispatcher::remove(std::shared_ptr<iwidget> control) {
+		HookListIterator it = hooklist.find(control->get_id());
 		if (it != hooklist.end()) {
 			hooklist.erase(it);
 		}
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Clear() {
+	void Dispatcher::clear() {
 		hooklist.clear();
 	}
 	
 	//-----------------------------------------------------------------------------------------
-	GUICallback   Dispatcher::GetCallback(std::shared_ptr<IControl> control) {
-		size_t id = control->GetID();
+	gui_callback   Dispatcher::get_callback(std::shared_ptr<iwidget> control) {
+		size_t id = control->get_id();
 		HookListIterator it = hooklist.find(id);
 		if (it == hooklist.end()) {
 			return nullptr;
@@ -63,9 +63,9 @@ namespace Nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Dispatch(std::shared_ptr<IControl> sender, EventArgs e) {
-		size_t id = sender->GetID();
-		GUICallback callback = hooklist[id];
+	void Dispatcher::Dispatch(std::shared_ptr<iwidget> sender, event_args e) {
+		size_t id = sender->get_id();
+		gui_callback callback = hooklist[id];
 		if (callback != nullptr) {
 			callback(sender, e);
 		}

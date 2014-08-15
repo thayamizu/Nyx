@@ -19,29 +19,29 @@
 #include "Sound/IAudioManager.h"
 #include "DirectSoundDefinition.h"
 
-namespace Nyx {
-	class IAudioListener;
+namespace nyx {
+	class iaudio_listener;
 	///オーディオマネージャのDirectSoundによる実装
-	class DirectSoundAudioManager : public IAudioManager{
+	class dsound_audio_manager : public iaudio_manager{
 	public:
 		/**
 		* コンストラクタ
 		*/
-		DirectSoundAudioManager();
+		dsound_audio_manager();
 		
 		
 		/**
 		* コンストラクタ
 		* @param AudioDesc オーディオ初期化記述子
 		*/
-		DirectSoundAudioManager(const AudioDesc& desc);
+		dsound_audio_manager(const audio_desc& desc);
 		
 		
 		/**
 		* オーディオマネージャの初期化します
 		* @param AudioDesc オーディオ初期化記述子
 		*/
-		void Initialize(const AudioDesc& desc);
+		void initialize(const audio_desc& desc);
 		
 
 		/**
@@ -50,14 +50,14 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);	
+		std::shared_ptr<iaudio_buffer> create_audio_buffer(const std::wstring& fileName, const audio_buffer_desc& bufferDesc);	
 
 
 		/**
 		* オーディオリスナーを生成します
 		* @return std::shared_ptr<IAudioListener> 
 		*/
-		std::shared_ptr<IAudioListener> CreateAudioListener();	
+		std::shared_ptr<iaudio_listener> create_audio_listener();	
 
 
 		/**
@@ -66,14 +66,14 @@ namespace Nyx {
 		* @param SoundBufferType バッファの種類
 		* @return std::shared_ptr<AudioCache> オーディオキャッシュ
 		*/
-		std::shared_ptr<AudioCache> Load(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);
+		std::shared_ptr<audio_cache> load_audio(const std::wstring& fileName, const audio_buffer_desc& bufferDesc);
 		
 
 		/**
 		* DirectSoundオブジェクトを返します
 		* @return const DirectSoundPtr 
 		*/
-		const DirectSoundPtr GetHandle();
+		const dsound_ptr get_handle();
 	private:	
 		/**
 		* Waveファイルからオーディオバッファを生成します
@@ -81,7 +81,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> CreateAudioBufferFromWave(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);	
+		std::shared_ptr<iaudio_buffer> create_audio_buffer_from_wave(const std::wstring& fileName, const audio_buffer_desc& bufferDesc);
 		
 	
 		/**
@@ -90,11 +90,11 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
 		*/
-		std::shared_ptr<IAudioBuffer> CreateAudioBufferFromOgg(const std::wstring& fileName, const AudioBufferDesc& bufferDesc);	
+		std::shared_ptr<iaudio_buffer> create_audio_buffer_from_ogg(const std::wstring& fileName, const audio_buffer_desc& bufferDesc);
 	
 		int masterVolume_;	///< マスターボリューム
-		DirectSoundPtr directSound_;///< DirectSoundオブジェクト
-		DirectSoundPrimaryBufferPtr primaryBuffer_;
+		dsound_ptr directSound_;///< DirectSoundオブジェクト
+		dsound_primary_buffer_ptr primaryBuffer_;
 	};
 }
 #endif

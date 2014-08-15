@@ -19,14 +19,14 @@
 #include "DirectSoundDefinition.h"
 #include "Sound/IAudioBuffer.h"
 
-namespace Nyx {
+namespace nyx {
 	///オーディオバッファのDirectSoundによる実装
-	class DirectSoundAudioBuffer : public IAudioBuffer{
+	class dsound_audio_buffer : public iaudio_buffer{
 	public:
 		/**
 		* コンストラクタ
 		*/
-		explicit DirectSoundAudioBuffer();
+		explicit dsound_audio_buffer();
 
 		/**
 		* コンストラクタ
@@ -34,79 +34,79 @@ namespace Nyx {
 		* @param const DirectSound DirectSoundオブジェクト
 		* @param std::wstring ファイル名
 		*/
-		virtual void Load(const AudioBufferDesc& bufferDesc, const DirectSoundPtr ds);
+		virtual void load(const audio_buffer_desc& bufferDesc, const dsound_ptr ds);
 
 
 		/**
 		* 再生
 		*/
-		virtual void Play(bool isLoop);
+		virtual void play(bool isLoop);
 
 
 		/**
 		* 停止
 		*/
-		virtual void Stop();
+		virtual void stop();
 
 
 		/**
 		* レジューム
 		*/
-		virtual void Resume();
+		virtual void resume();
 
 
 		/**
 		* リセット
 		*/
-		virtual void Reset();
+		virtual void reset();
 
 
 		/**
 		* ボリュームの設定
 		* @param long ボリューム
 		*/
-		virtual void SetVolume(long volume);
+		virtual void set_volume(long volume);
 
 
 		/**
 		* ボリュームの取得
 		* @return long
 		*/
-		virtual long GetVolume() const;
+		virtual long get_volume() const;
 
 
 		/**
 		* ステータスコードの取得
 		* @return ulong
 		*/
-		virtual ulong GetStatus() const;
+		virtual uint64_t get_status() const;
 
 
 		/**
 		*　オーディオバッファにエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		virtual void SetEffect(const AudioEffectDesc& effectDesc);
+		virtual void set_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファのエフェクトをリセットします
 		*/
-		virtual void ResetEffect();
+		virtual void reset_effect();
 
 
 		/**
 		* DirectSoundBufferのポインタを返します
 		* @return const DirectSoundBufferPtr& DirectSoundBufferのポインタ
 		*/
-		virtual const DirectSoundBufferPtr& GetHandle() const;
+		virtual const dsound_buffer_ptr& get_handle() const;
 
 
 		/**
 		* オーディオバッファの状態の取得
 		* @return AudioState
 		*/
-		virtual AudioState GetState() const;
+		virtual audio_state get_audio_state() const;
 
 
 	protected:
@@ -115,65 +115,65 @@ namespace Nyx {
 		* @param [out] DSBUFFERDESC
 		* @param const AudioBufferDesc&
 		*/
-		virtual void BuildDirectSoundBufferDesc(DSBUFFERDESC* bufferDesc, WAVEFORMATEX& wfx) = 0;
+		virtual void build_dsound_buffer_desc(DSBUFFERDESC* bufferDesc, WAVEFORMATEX& wfx) = 0;
 
 
 		/**
 		* バッファにWaveデータを書き込みます
 		* @param size_t バッファサイズ
 		*/
-		virtual void WriteWaveData() = 0;
+		virtual void write_wave_data() = 0;
 	private:	
 		/**
 		*　オーディオバッファにコーラスエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetChorusEffect(const AudioEffectDesc& effectDesc);
+		void set_chorus_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファにディストーションエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetDistortionEffect(const AudioEffectDesc& effectDesc);
+		void set_distortion_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファにエコーエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetEchoEffect(const AudioEffectDesc& effectDesc);
+		void set_echo_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファにフランジャーエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetFlangerEffect(const AudioEffectDesc& effectDesc);
+		void set_flanger_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファにガーグルエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetGargleEffect(const AudioEffectDesc& effectDesc);
+		void set_gargle_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファにパラメトリックイコライザーエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetParametricEqualizerEffect(const AudioEffectDesc& effectDesc);
+		void set_parametric_equalizer_effect(const audio_effect_desc& effectDesc);
 
 
 		/**
 		*　オーディオバッファにリバーブエフェクトを設定します
 		* @param const AudioEffectDesc& オーディオエフェクト記述子
 		*/
-		void SetReverbEffect(const AudioEffectDesc& effectDesc);
+		void set_reverb_effect(const audio_effect_desc& effectDesc);
 	private:
 		bool isLoop_;
-		DirectSoundBufferPtr soundBuffer_;
+		dsound_buffer_ptr soundBuffer_;
 	};
 }
 #endif

@@ -23,24 +23,24 @@
 
 //デバッグ時
 #ifdef _DEBUG
-#define Assert(expression) \
+#define NYX_ASSERT(expression) \
 	if (!(expression)) {\
-	Nyx::DebugOutput::Trace("アサート失敗 %s(%d行目)", __FILE__, __LINE__);\
+	nyx::debug_out::trace("アサート失敗 %s(%d行目)", __FILE__, __LINE__);\
 	_asm {int 3}\
 	}
 //リリース時は、アサートを切る
 #else 
-#define Assert(expression)
+#define NYX_ASSERT(expression)
 #endif
 
 
 //機能廃止宣言
 #ifdef _GNUC
-#define DEPRECATED __attribute__((deprecated))
+#define NYX_DEPRECATED __attribute__((deprecated))
 #elif defined(_MSC_VER)
-#define DEPRECATED __declspec(deprecated)
+#define NYX_DEPRECATED __declspec(deprecated)
 #else
-#define DEPRECATED
+#define NYX_DEPRECATED
 #pragma message("DEPRECATEDはこのコンパイラでは，定義されていません")
 #endif
 

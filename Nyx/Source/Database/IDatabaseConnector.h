@@ -17,7 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_IDATABASE_CONNECTOR_H_
 #define NYX_CORE_INCLUDED_IDATABASE_CONNECTOR_H_
 
-namespace Nyx {
+namespace nyx {
 
 	///データベースの接続情報を保持する
 	class IDatabaseConnection {

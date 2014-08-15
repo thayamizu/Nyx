@@ -19,50 +19,50 @@
 #define NYX_CORE_INCLUDED_DEBUG_OUTPUT_H_
 #include "IO/Logger.h"
 
-namespace Nyx  {
-	class Nyx::Logger;
+namespace nyx  {
+	class nyx::logger;
 
 	///出力先種別
-	enum class OutputMode {
-		StdOut,
-		Console, 
-		File,
+	enum DEBUG_OUTPUT_MODE {
+		DEBUG_OUTPUT_MODE_STDOUT,
+		DEBUG_OUTPUT_MODE_CONSOLE, 
+		DEBUG_OUTPUT_MODE_FILE,
 	};
 
 	///デバッグ出力
-	class DebugOutput {
+	class debug_out {
 	public:
 		/**
 		* DebugOutputのロガーオブジェクトを取得する
 		*/
-		static Nyx::Logger* GetLogger();
+		static nyx::logger* get_logger();
 
 		/**
 		* トレース出力
 		*/
-		static void Trace(char* format, ...);
+		static void trace(char* format, ...);
 
 		/**
 		* 出力先を設定します
 		* @param OutputMode 出力先
 		*/
-		static void SetOutput(OutputMode mode);
+		static void set_output_mode(DEBUG_OUTPUT_MODE mode);
 
 		
 		/**
 		* DebugOutputのシングルトンオブジェクトを削除する
 		*/
-		static void DeleteInstance();
+		static void delete_instance();
 
 		/**
 		* メッセージボックスでデバッグメッセージを出力する
 		*/
-		static void DebugMessage(char* format, ...);
+		static void debug_messagebox(char* format, ...);
 	private:
-		DebugOutput();//生成禁止
-		DebugOutput(const DebugOutput& d);
-		static Nyx::Logger* logger_;
-		static OutputMode outputMode_;
+		debug_out();//生成禁止
+		debug_out(const debug_out& d);
+		static nyx::logger* logger_;
+		static DEBUG_OUTPUT_MODE outputMode_;
 	};
 }
 #endif

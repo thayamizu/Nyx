@@ -17,8 +17,8 @@
 #include "PCH/PCH.h"
 #include "Graphics/detail/GDI/Pen.h"
 
-namespace Nyx {
-	namespace GDI {
+namespace nyx {
+	namespace gdi {
 		//------------------------------------------------------------------------------
 		//
 		Pen::Pen()
@@ -28,7 +28,7 @@ namespace Nyx {
 		}
 		//------------------------------------------------------------------------------
 		//
-		Pen::Pen(PenStyle style, int width, Color3c color_){
+		Pen::Pen(PEN_STYLE style, int width, color3c color_){
 			int type = static_cast<int>(style);
 			pen_ = CreatePen(type, width, RGB(color_.r, color_.g, color_.b));
 		}
@@ -42,7 +42,7 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::Set(PenStyle style, int width, Color3c color_) {
+		void  Pen::Set(PEN_STYLE style, int width, color3c color_) {
 			int type = static_cast<int>(style);
 			pen_ = CreatePen(type, width, RGB(color_.r, color_.g, color_.b));
 		}
@@ -81,7 +81,7 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawPolygon(HDC hdc, Point2i *point, int num) {
+		void  Pen::DrawPolygon(HDC hdc, point2i *point, int num) {
 			//ペンを選択して多角形を描画
 			::SelectObject(hdc, pen_);
 			::Polygon(hdc, reinterpret_cast<POINT*>(point->elements), num);
@@ -89,7 +89,7 @@ namespace Nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawBezier(HDC hdc, Point2i* point, int num) {
+		void  Pen::DrawBezier(HDC hdc, point2i* point, int num) {
 			//ペンを選択してベジェ曲線を描画
 			SelectObject(hdc, pen_);
 			::PolyBezier(hdc, reinterpret_cast<POINT*>(point->elements), num);

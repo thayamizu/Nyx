@@ -17,19 +17,20 @@
 #ifndef NYX_CORE_PACKED_FILE_H_
 #define NYX_CORE_PACKED_FILE_H_
 #include "IO/IFile.h"
-namespace Nyx
+#include "Utility/NonCopyable.h"
+namespace nyx
 {
 	using std::unique_ptr;
 	using std::shared_ptr;
 	///パックされたファイル
-	class PackedFile : public IFile
+	NYX_DEPRECATED class packed_file : public ifile, private noncopyable
 	{
 	public:
 		//-------------------------------------------------------
 		//構築・破壊
 		//-------------------------------------------------------
-		PackedFile(const wchar_t*  name, AccessAttribute attr=ReadMode);
-		~PackedFile();
+		packed_file(const wchar_t*  name, FILE_ACCESS_ATTRIBUTE attr=FILE_ACCESS_ATTRIBUTE_READ);
+		~packed_file();
 
 		//-----------------------------------------------------
 		//値の取得
@@ -38,24 +39,24 @@ namespace Nyx
 		* ヘッダサイズの取得
 		* @return ulong
 		*/
-		ulong GetHeaderSize();
+		uint64_t get_header_size();
 		/**
 		* ヘッダサイズの取得
 		* @return ヘッダサイズ
 		*/
-		uint GetFileNum();
+		uint32_t get_file_num();
 
 		/**
 		* ヘッダサイズの取得
 		* @return ヘッダサイズ
 		*/
-		ulong GetFileSize(uint index);
+		uint64_t get_file_size(uint32_t index);
 		/**
 		* index番目にパックされたデータの取得
 		*@param index
 		*@return shared_ptr<char> 
 		*/
-		shared_ptr<char> GetFileData(uint index);
+		shared_ptr<char> get_file_data(uint32_t index);
 
 		//-----------------------------------------------------
 		//ファイル操作
@@ -63,53 +64,53 @@ namespace Nyx
 		/**
 		*
 		*/
-		bool Open(const std::wstring&  name, AccessAttribute attr=ReadMode);
-		bool Close();
-		bool Flush();
+		bool open(const std::wstring&  name, FILE_ACCESS_ATTRIBUTE attr=FILE_ACCESS_ATTRIBUTE_READ);
+		bool close();
+		bool flush();
 
 		/**
 		*
 		*/
-		ulong GetCurrentPosition() const;
+		uint64_t get_current_position() const;
 
 		/**
 		*
-		*/ulong GetSize() const;
-
-		/**
-		*
-		*/
-		std::wstring GetFileName() const;
-
+		*/uint64_t get_size() const;
 
 		/**
 		*
 		*/
-		ulong Read(void* buffer, ulong size);
+		std::wstring get_file_name() const;
+
+
+		/**
+		*
+		*/
+		uint64_t read(void* buffer, uint64_t size);
 		
 		/**
 		*
 		*/
-		ulong Write(void* buffer, ulong size);
+		uint64_t write(void* buffer, uint64_t size);
 		/**
 		*
 		*/
-		ulong Seek(long offSet);
+		uint64_t seek(long offSet);
 
 		/**
 		*
 		*/
-		ulong SeekBegin(long offSet);
+		uint64_t seek_begin(long offSet);
 
 		/**
 		*
 		*/
-		ulong SeekEnd(long offSet);
+		uint64_t seek_end(long offSet);
 
 		/**
 		*
 		*/
-		bool IsOpened();
+		bool is_opened();
 
 	private:
 		struct PImpl;

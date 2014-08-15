@@ -16,121 +16,121 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_LOGGER_H_ 
 #define NYX_CORE_INCLUDED_LOGGER_H_
-#include "IO/IFile.h"
 #include "Utility/NonCopyable.h"
 #include "Utility/Type.h"
-namespace Nyx {
 
-	class File;
+namespace nyx {
+
+	class file;
 	///ÉçÉKÅ[
-	class Logger : public IFile, private NonCopyable{
+	class logger : private noncopyable{
 	public:
 		/**
 		*
 		*/
-		Logger();
+		logger();
 		
 		/**
 		*
 		*/
-		Logger(const std::wstring& name);
+		logger(const std::wstring& name);
 		
 		/**
 		*
 		*/
-		~Logger() ;
+		~logger() ;
 
 		/**
 		*
 		*/
-		bool Open(const std::wstring&, AccessAttribute attr = ReadWriteMode);
+		bool open(const std::wstring&, FILE_ACCESS_ATTRIBUTE attr = FILE_ACCESS_ATTRIBUTE_READ_WRITE);
 		/**
 		*
 		*/
-		bool Close();
+		bool close();
 		/**
 		*
 		*/
-		ulong GetCurrentPosition() const ;
+		uint64_t get_current_position() const ;
 
 		/**
 		*
 		*/
-		HANDLE GetHandle();
+		file_handle get_handle();
 		
 		/**
 		*
 		*/
-		ulong GetSize() const;
+		uint64_t get_size() const;
 		
 		/**
 		*
 		*/
-		std::wstring GetFileName() const;
+		std::wstring get_file_name() const;
 		
 		/**
 		*
 		*/
-		ulong Read(void* buffer, ulong size);
+		uint64_t read(void* buffer, uint64_t size);
 		
 		/**
 		*
 		*/
-		ulong Write(void* buffer, ulong size);
+		uint64_t write(void* buffer, uint64_t size);
 		
 		/**
 		*
 		*/
-		ulong Seek(long offSet);
+		uint64_t seek(long offSet);
 		
 		/**
 		*
 		*/
-		ulong SeekBegin(long offSet);
+		uint64_t seek_begin(long offSet);
 		
 		/**
 		*
 		*/
-		ulong SeekEnd(long offSet);
+		uint64_t seek_end(long offSet);
 		
 		/**
 		*
 		*/
-		bool IsOpened();
+		bool is_opened();
 
 		/**
 		*
 		*/			
-		bool Flush();
+		bool flush();
 
 
 		/**
 		*
 		*/
-		void Print(char * message);
+		void print(char * message);
 		/**
 		*
 		*/
-		void Printf(const char* format,...);
+		void printf(const char* format,...);
 
 		/**
 		*
 		*/
-		void PrintLn(char *message);
+		void printfln(char *message);
 		/**
 		*
 		*/
-		void PrintfLn(const char* format,...);
+		void printfln(const char* format,...);
 
 		/**
 		*
 		*/
-		void PrintThickLine();
+		void print_thick_line();
 
 		/**
 		*
 		*/
-		void PrintThinLine();
+		void print_thin_line();
 
 	private:  
 		struct PImpl;

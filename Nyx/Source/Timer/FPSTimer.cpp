@@ -21,113 +21,113 @@
 #include "Timer/FPSTimer.h"
 #include "Thread/Thread.h"
 
-namespace Nyx {
+namespace nyx {
 	//---------------------------------------------------------------------------------------
-	const uint FPSTimer::FPS30 = 30;
-	const uint FPSTimer::FPS60 = 60;
+	const uint32_t fps_timer::FPS30 = 30;
+	const uint32_t fps_timer::FPS60 = 60;
 
-	struct FPSTimer::PImpl
+	struct fps_timer::PImpl
 	{
 		PImpl():
 			fps(0), nowFPS(0), frames(0), beforeTime(0), fpsWait(0), fpsWaitTT(0), lastDraw(0), timer(new Timer())
 		{
 
 		}
-		uint fps;		///< FPS
-		uint nowFPS;	///< 現在のFPS値
-		uint frames;	///< 前フレームの時刻
-		ulong beforeTime;///< 前回の時刻
-		ulong fpsWaitTT;///<  1000 * 0x10000 / fpsの値
-		ulong fpsWait;  ///<経過時間
-		ulong lastDraw; ///<最後に描画した時刻
+		uint32_t fps;		///< FPS
+		uint32_t nowFPS;	///< 現在のFPS値
+		uint32_t frames;	///< 前フレームの時刻
+		uint64_t beforeTime;///< 前回の時刻
+		uint64_t fpsWaitTT;///<  1000 * 0x10000 / fpsの値
+		uint64_t fpsWait;  ///<経過時間
+		uint64_t lastDraw; ///<最後に描画した時刻
 		std::unique_ptr<Timer> timer;	///<FPS計測タイマー
 	};
 	
 
 	//---------------------------------------------------------------------------------------
-	FPSTimer::FPSTimer(ulong fps)
-		:ITimer(), pimpl_(new PImpl())
+	fps_timer::fps_timer(uint64_t fps)
+		:itimer(), pimpl_(new PImpl())
 	{
 	
-		SetFPS(fps);
+		set_fps(fps);
 	}
 	
 	//---------------------------------------------------------------------------------------
-	FPSTimer::~FPSTimer() {
+	fps_timer::~fps_timer() {
 	}
 
 	//---------------------------------------------------------------------------------------
-	ulong FPSTimer::Get() {
-		Assert(pimpl_->timer != NULL);
-		return pimpl_->timer->Get();
+	uint64_t fps_timer::get() {
+		NYX_ASSERT(pimpl_->timer != NULL);
+		return pimpl_->timer->get();
 	}
 
 	//---------------------------------------------------------------------------------------
-	void FPSTimer::Set(ulong now) {
-		Assert(pimpl_->timer != NULL);
-		pimpl_->timer->Set(now);
+	void fps_timer::set(uint64_t now) {
+		NYX_ASSERT(pimpl_->timer != NULL);
+		pimpl_->timer->set(now);
 	}
 
 	//---------------------------------------------------------------------------------------
-	void FPSTimer::Reset() {
-		Assert(pimpl_->timer != NULL);
-		pimpl_->timer->Reset();
+	void fps_timer::reset() {
+		NYX_ASSERT(pimpl_->timer != NULL);
+		pimpl_->timer->reset();
 	}
 
 	//---------------------------------------------------------------------------------------
-	void FPSTimer::Restart() {
-		Assert(pimpl_->timer != NULL);
-		pimpl_->timer->Restart();
+	void fps_timer::restart() {
+		NYX_ASSERT(pimpl_->timer != NULL);
+		pimpl_->timer->restart();
 	}
 
 	//---------------------------------------------------------------------------------------
-	void FPSTimer::Pause(bool pause) {
-		Assert(pimpl_->timer != NULL);
-		pimpl_->timer->Pause(pause);
+	void fps_timer::pause(bool pause) {
+		NYX_ASSERT(pimpl_->timer != NULL);
+		pimpl_->timer->pause(pause);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool FPSTimer::IsPause() {
-		Assert(pimpl_->timer != NULL);
-		return pimpl_->timer->IsPause();
+	bool fps_timer::is_pause() {
+		NYX_ASSERT(pimpl_->timer != NULL);
+		return pimpl_->timer->is_pause();
 	}
 	//---------------------------------------------------------------------------------------
-	uint FPSTimer::GetFPS() {
+	uint32_t fps_timer::get_fps() {
 		return pimpl_->fps;
 	}
 
 	//---------------------------------------------------------------------------------------
-	uint FPSTimer::GetNowFPS(){
+	uint32_t fps_timer::get_current_fps(){
 		return pimpl_->nowFPS;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void FPSTimer::SetFPS(uint fps) {
+	void fps_timer::set_fps(uint32_t fps) {
 		pimpl_->fps = fps;
 		if (pimpl_->fps != 0 ) {
 			pimpl_->fpsWait = 1000 * 0x10000 / pimpl_->fps;
 		}
 	}
 	//---------------------------------------------------------------------------------------
-	void FPSTimer::WaitFrame() {
-		Assert(pimpl_->timer != NULL);
+	void fps_timer::wait_frame() {
+		NYX_ASSERT(pimpl_->timer != NULL);
 		// やねうらお氏のFPSTimerを参考にしました
 		if (pimpl_->fps == 0) {return ;}//non-wait
 
-		ulong t = pimpl_->timer->Get(); // 現在時刻
+		uint64_t t = pimpl_->timer->get(); // 現在時刻
 
 		pimpl_->fpsWaitTT = (pimpl_->fpsWaitTT & 0xffff) + pimpl_->fpsWait; // 今回の待ち時間を計算
 
 		// fpsWaitは，待ち時間の小数以下を16ビットの精度で持っていると考える
 		// これにより，double型を持ち出す必要がなくなる
 		// fpsWaitTT = 1000 * 0x10000 / fps;
-		ulong wait = pimpl_->fpsWaitTT >> 16; // 何ミリ秒待つのかを計算
+		uint64_t wait = pimpl_->fpsWaitTT >> 16; // 何ミリ秒待つのかを計算
 
 		// 1フレーム時間を経過していたら，ただちに描画
-		ulong elapse = (ulong)(t - pimpl_->lastDraw); // 前回描画からいくら経過しているか
+		uint64_t elapse = (uint64_t)(t - pimpl_->lastDraw); // 前回描画からいくら経過しているか
 		if (elapse >= wait) {
 			pimpl_->lastDraw = t;
-			if ((pimpl_->timer->Get() - pimpl_->beforeTime) > 1000) {
+			if ((pimpl_->timer->get() - pimpl_->beforeTime) > 1000) {
 				pimpl_->beforeTime = t;
 				pimpl_->nowFPS = pimpl_->frames;
 				pimpl_->frames = 0;
@@ -141,17 +141,17 @@ namespace Nyx {
 
 		// 4ms以上消費する必要があるのならば、sleepする
 		if (wait - elapse >= 4) {
-			Nyx::Thread::Sleep(wait-elapse-3);
+			nyx::thread::sleep(wait-elapse-3);
 		}
 		// いまwait > elpなのでwait - wlp >= 0と考えて良い
 		// sleepの精度は3ms以内と仮定
 		// 時間つぶし完了
-		while ((pimpl_->timer->Get() - pimpl_->lastDraw) < wait) ;
+		while ((pimpl_->timer->get() - pimpl_->lastDraw) < wait) ;
 
 
 		pimpl_->lastDraw += wait; // ぴったりで描画が完了した仮定する。（端数を持ち込まないため）
 
-		if ((pimpl_->timer->Get() - pimpl_->beforeTime) > 1000) {
+		if ((pimpl_->timer->get() - pimpl_->beforeTime) > 1000) {
 			pimpl_->beforeTime = t;
 			pimpl_->nowFPS = pimpl_->frames;
 			pimpl_->frames = 0;

@@ -17,40 +17,40 @@
 #ifndef NYX_CORE_INCLUDED_ITIMER_H_
 #define NYX_CORE_INCLUDED_ITIMER_H_
 
-namespace Nyx {
+namespace nyx {
 	///タイマーインタフェース
-	class ITimer {
+	class itimer {
 	public:
 		/**
 		* デストラクタ
 		*/
-		virtual ~ITimer(){}
+		virtual ~itimer(){}
 		/**
 		* タイマリセット
 		*/
-		virtual void Reset()   = 0;
+		virtual void reset()   = 0;
 
 		/**
 		* 時刻の取得
 		* @return ulong 
 		*/
-		virtual ulong Get()   = 0;
+		virtual uint64_t get()   = 0;
 
 		/**
 		* 時刻の設定
 		* @param ulong 設定する時刻
 		*/
-		virtual void Set(ulong now)      = 0;
+		virtual void set(uint64_t now)      = 0;
 
 		/**
 		* タイマのリスタート
 		*/
-		virtual void Restart() = 0;
+		virtual void restart() = 0;
 
 		/**
 		* タイマをポーズする
 		*/
-		virtual void Pause(bool pause) = 0;
+		virtual void pause(bool pause) = 0;
 
 	};
 }

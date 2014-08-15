@@ -20,175 +20,175 @@
 #include "Debug/Assert.h"
 #include "IO/detail/Win32/Win32File.h"
 
-namespace Nyx {
+namespace nyx {
 
-	struct Logger::PImpl
+	struct logger::PImpl
 	{
-		std::unique_ptr<Win32File> logger;
+		std::unique_ptr<win32_file> logger;
 	};
 	//-----------------------------------------------------------------------------------
-	Logger::Logger() 
+	logger::logger() 
 		:pimpl_(new PImpl())
 	{
-		pimpl_->logger = std::unique_ptr<Win32File>(new Win32File());
+		pimpl_->logger = std::unique_ptr<win32_file>(new win32_file());
 	}
 
 	//-----------------------------------------------------------------------------------
-	Logger::Logger(const std::wstring& name)
+	logger::logger(const std::wstring& name)
 		:pimpl_(new PImpl())
 	{
-		pimpl_->logger = std::unique_ptr<Win32File>(new Win32File(name, WriteMode));
+		pimpl_->logger = std::unique_ptr<win32_file>(new win32_file(name, FILE_ACCESS_ATTRIBUTE_WRITE));
 
 	}
 
 	//-----------------------------------------------------------------------------------
-	Logger::~Logger() {
+	logger::~logger() {
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool Logger::Open(const std::wstring& name, AccessAttribute attr) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->Open(name, attr);
+	bool logger::open(const std::wstring& name, FILE_ACCESS_ATTRIBUTE attr) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->open(name, attr);
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool Logger::Close() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
+	bool logger::close() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
 
-		return pimpl_->logger->Close();
+		return pimpl_->logger->close();
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger::GetCurrentPosition() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->GetCurrentPosition();
+	uint64_t logger::get_current_position() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->get_current_position();
 	}
 
 	//-----------------------------------------------------------------------------------
-	HANDLE Logger::GetHandle() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
+	HANDLE logger::get_handle() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
 		return pimpl_->logger->GetHandle();
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger:: GetSize() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->GetSize();
+	uint64_t logger:: get_size() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->get_size();
 	}
 
 	//-----------------------------------------------------------------------------------
-	std::wstring Logger::GetFileName() const {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->GetFileName();
+	std::wstring logger::get_file_name() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->get_file_name();
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger::Read(void* buffer, ulong size) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->Read(buffer, size);
+	uint64_t logger::read(void* buffer, uint64_t size) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->read(buffer, size);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger::Write(void* buffer, ulong size) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->Write(buffer, size);
+	uint64_t logger::write(void* buffer, uint64_t size) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->write(buffer, size);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger::Seek(long offSet) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->Seek(offSet);
+	uint64_t logger::seek(long offSet) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->seek(offSet);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger::SeekBegin(long offSet) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->SeekBegin(offSet);
+	uint64_t logger::seek_begin(long offSet) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->seek_begin(offSet);
 	}
 
 	//-----------------------------------------------------------------------------------
-	ulong Logger::SeekEnd(long offSet) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->SeekEnd(offSet);
+	uint64_t logger::seek_end(long offSet) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->seek_end(offSet);
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool Logger::IsOpened() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->IsOpened();
+	bool logger::is_opened() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->is_opened();
 	}
 
 	//-----------------------------------------------------------------------------------
-	bool Logger::Flush() {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		return pimpl_->logger->Flush();
+	bool logger::flush() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		return pimpl_->logger->flush();
 	}
 
 	//-----------------------------------------------------------------------------------
-	void Logger::Print(char* message) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		pimpl_->logger->Write(message,  ::strlen(message));
-		pimpl_->logger->Flush();
+	void logger::print(char* message) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		pimpl_->logger->write(message,  ::strlen(message));
+		pimpl_->logger->flush();
 
 	}
 
 	//-----------------------------------------------------------------------------------
-	void Logger::Printf(const char* format,...) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
+	void logger::printf(const char* format,...) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
 		va_list list;
 		va_start(list, format);
 		static const int length = 1024;
 		static char tmp[length];
 		vsprintf_s(tmp, length, format, list);
-		Print(tmp); 
+		print(tmp); 
 		va_end(list);
 
 	}
 
 	//-----------------------------------------------------------------------------------
-	void Logger::PrintLn(char* message) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
-		pimpl_->logger->Write(message, ::strlen(message));       
-		pimpl_->logger->Write("\r\n", sizeof("\r\n")); 
-		pimpl_->logger->Flush();
+	void logger::printfln(char* message) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
+		pimpl_->logger->write(message, ::strlen(message));       
+		pimpl_->logger->write("\r\n", sizeof("\r\n")); 
+		pimpl_->logger->flush();
 	}
 
 	//-----------------------------------------------------------------------------------
-	void Logger::PrintfLn(const char* format,...) {
-		Assert(pimpl_ != nullptr);
-		Assert(pimpl_->logger != nullptr);
+	void logger::printfln(const char* format,...) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		NYX_ASSERT(pimpl_->logger != nullptr);
 		va_list list;
 		va_start(list, format);
 		static const int length = 1024;
 		static char tmp[length];
 		vsprintf_s(tmp, length, format, list);
-		PrintLn(tmp); 
+		printfln(tmp); 
 		va_end(list);
 	}
 
 	//-----------------------------------------------------------------------------------
-	void Logger::PrintThickLine() {
-		PrintLn("===========================================================");
+	void logger::print_thick_line() {
+		printfln("===========================================================");
 	}
 
 	//-----------------------------------------------------------------------------------
-	void Logger::PrintThinLine() {
-		PrintLn("-----------------------------------------------------------");
+	void logger::print_thin_line() {
+		printfln("-----------------------------------------------------------");
 	}
 }

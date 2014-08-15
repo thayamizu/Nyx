@@ -21,9 +21,9 @@
 #include "Primitive/Quaternion.h"
 #include "Primitive/Vector3.h"
 
-namespace Nyx  {
+namespace nyx  {
 
-	class Matrix {
+	class matrix {
 	public:
 		/// 4x4行列
 		union {	
@@ -33,8 +33,8 @@ namespace Nyx  {
 				float _31, _32, _33, _34;
 				float _41, _42, _43, _44;
 			};
-			float Mat[4][4];
-			float array[16];
+			float mat_[4][4];
+			float array_[16];
 		};
 
 		//static const Matrix Unit;
@@ -47,8 +47,8 @@ namespace Nyx  {
 		* 行列の値をすべてゼロに設定する
 		*/
 
-		Matrix() {
-			memset(array, 0, sizeof(array)); 
+		matrix() {
+			memset(array_, 0, sizeof(array_)); 
 		}
 
 		/**
@@ -64,7 +64,7 @@ namespace Nyx  {
 		* @param a32
 		* @param a33
 		*/
-		Matrix(
+		matrix(
 			float a11, float a12, float a13, float a14, 
 			float a21, float a22, float a23, float a24,
 			float a31, float a32, float a33, float a34,
@@ -93,19 +93,19 @@ namespace Nyx  {
 		* @param a32
 		* @param a33
 		*/
-		void Set(float a11, float a12, float a13, float a14, 
+		void set(float a11, float a12, float a13, float a14, 
 			float a21, float a22, float a23, float a24,
 			float a31, float a32, float a33, float a34,
 			float a41, float a42, float a43, float a44) {
 
-				Mat[0][0] = a11; Mat[0][1]=a12; Mat[0][2] =a13; Mat[0][3]=a14;
-				Mat[1][0] = a21; Mat[1][1]=a22; Mat[1][2] =a23; Mat[1][3]=a24;
-				Mat[2][0] = a31; Mat[2][1]=a32; Mat[2][2] =a33; Mat[2][3]=a34;
-				Mat[3][0] = a41; Mat[3][1]=a42; Mat[3][2] =a43; Mat[3][3]=a44;
+				mat_[0][0] = a11; mat_[0][1]=a12; mat_[0][2] =a13; mat_[0][3]=a14;
+				mat_[1][0] = a21; mat_[1][1]=a22; mat_[1][2] =a23; mat_[1][3]=a24;
+				mat_[2][0] = a31; mat_[2][1]=a32; mat_[2][2] =a33; mat_[2][3]=a34;
+				mat_[3][0] = a41; mat_[3][1]=a42; mat_[3][2] =a43; mat_[3][3]=a44;
 		}
 
-		void Identity() {
-			Set(1, 0, 0, 0, 
+		void identity() {
+			set(1, 0, 0, 0, 
 				0, 1, 0, 0,
 				0, 0, 1, 0,
 				0, 0, 0, 1);
@@ -119,12 +119,12 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 加算結果
 		*/
-		Matrix operator +(const Matrix& m) const {
-			return Matrix(
-				Mat[0][0] + m.Mat[0][0], Mat[0][1] +m.Mat[0][1], Mat[0][2]+ m.Mat[0][2],Mat[0][3]+ m.Mat[0][3],
-				Mat[1][0] + m.Mat[1][0], Mat[1][1] +m.Mat[1][1], Mat[1][2]+ m.Mat[1][2],Mat[1][3]+ m.Mat[1][3],
-				Mat[2][0] + m.Mat[2][0], Mat[2][1] +m.Mat[2][1], Mat[2][2]+ m.Mat[2][2],Mat[2][3]+ m.Mat[2][3],
-				Mat[3][0] + m.Mat[3][0], Mat[3][1] +m.Mat[3][1], Mat[3][2]+ m.Mat[3][2],Mat[3][3]+ m.Mat[3][3]);
+		matrix operator +(const matrix& m) const {
+			return matrix(
+				mat_[0][0] + m.mat_[0][0], mat_[0][1] +m.mat_[0][1], mat_[0][2]+ m.mat_[0][2],mat_[0][3]+ m.mat_[0][3],
+				mat_[1][0] + m.mat_[1][0], mat_[1][1] +m.mat_[1][1], mat_[1][2]+ m.mat_[1][2],mat_[1][3]+ m.mat_[1][3],
+				mat_[2][0] + m.mat_[2][0], mat_[2][1] +m.mat_[2][1], mat_[2][2]+ m.mat_[2][2],mat_[2][3]+ m.mat_[2][3],
+				mat_[3][0] + m.mat_[3][0], mat_[3][1] +m.mat_[3][1], mat_[3][2]+ m.mat_[3][2],mat_[3][3]+ m.mat_[3][3]);
 		}
 
 		/**
@@ -132,24 +132,24 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 減算結果
 		*/
-		Matrix operator -(const Matrix& m) const {
-			return Matrix(
-				Mat[0][0] - m.Mat[0][0], Mat[0][1] - m.Mat[0][1], Mat[0][2] - m.Mat[0][2], Mat[0][3] - m.Mat[0][3],
-				Mat[1][0] - m.Mat[1][0], Mat[1][1] - m.Mat[1][1], Mat[1][2] - m.Mat[1][2], Mat[1][3] - m.Mat[1][3],
-				Mat[2][0] - m.Mat[2][0], Mat[2][1] - m.Mat[2][1], Mat[2][2] - m.Mat[2][2], Mat[2][3] - m.Mat[2][3],
-				Mat[3][0] - m.Mat[3][0], Mat[3][1] - m.Mat[3][1], Mat[3][2] - m.Mat[3][2], Mat[3][3] - m.Mat[3][3]);
+		matrix operator -(const matrix& m) const {
+			return matrix(
+				mat_[0][0] - m.mat_[0][0], mat_[0][1] - m.mat_[0][1], mat_[0][2] - m.mat_[0][2], mat_[0][3] - m.mat_[0][3],
+				mat_[1][0] - m.mat_[1][0], mat_[1][1] - m.mat_[1][1], mat_[1][2] - m.mat_[1][2], mat_[1][3] - m.mat_[1][3],
+				mat_[2][0] - m.mat_[2][0], mat_[2][1] - m.mat_[2][1], mat_[2][2] - m.mat_[2][2], mat_[2][3] - m.mat_[2][3],
+				mat_[3][0] - m.mat_[3][0], mat_[3][1] - m.mat_[3][1], mat_[3][2] - m.mat_[3][2], mat_[3][3] - m.mat_[3][3]);
 		}
 		/**
 		* 乗算
 		* @param 右辺値
 		* @return 乗算結果
 		*/
-		Matrix operator *(const float s) const {
-			return Matrix(
-				Mat[0][0] * s, Mat[0][1] * s, Mat[0][2] * s, Mat[0][3] * s,
-				Mat[1][0] * s, Mat[1][1] * s, Mat[1][2] * s, Mat[1][3] * s,
-				Mat[2][0] * s, Mat[2][1] * s, Mat[2][2] * s, Mat[2][3] * s,
-				Mat[3][0] * s, Mat[3][1] * s, Mat[3][2] * s, Mat[3][3] * s
+		matrix operator *(const float s) const {
+			return matrix(
+				mat_[0][0] * s, mat_[0][1] * s, mat_[0][2] * s, mat_[0][3] * s,
+				mat_[1][0] * s, mat_[1][1] * s, mat_[1][2] * s, mat_[1][3] * s,
+				mat_[2][0] * s, mat_[2][1] * s, mat_[2][2] * s, mat_[2][3] * s,
+				mat_[3][0] * s, mat_[3][1] * s, mat_[3][2] * s, mat_[3][3] * s
 				);
 		}
 		/**
@@ -157,28 +157,28 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix operator *(const Matrix& mat) const {
-			return Matrix(
+		matrix operator *(const matrix& mat) const {
+			return matrix(
 
-				Mat[0][0]*mat.Mat[0][0] + Mat[0][1]*mat.Mat[1][0] + Mat[0][2]*mat.Mat[2][0] + Mat[0][3] * mat.Mat[3][0],  
-				Mat[0][0]*mat.Mat[0][1] + Mat[0][1]*mat.Mat[1][1] + Mat[0][2]*mat.Mat[2][1] + Mat[0][3] * mat.Mat[3][1], 
-				Mat[0][0]*mat.Mat[0][2] + Mat[0][1]*mat.Mat[1][2] + Mat[0][2]*mat.Mat[2][2] + Mat[0][3] * mat.Mat[3][2], 
-				Mat[0][0]*mat.Mat[0][3] + Mat[0][1]*mat.Mat[1][3] + Mat[0][2]*mat.Mat[2][3] + Mat[0][3] * mat.Mat[3][3], 
+				mat_[0][0]*mat.mat_[0][0] + mat_[0][1]*mat.mat_[1][0] + mat_[0][2]*mat.mat_[2][0] + mat_[0][3] * mat.mat_[3][0],  
+				mat_[0][0]*mat.mat_[0][1] + mat_[0][1]*mat.mat_[1][1] + mat_[0][2]*mat.mat_[2][1] + mat_[0][3] * mat.mat_[3][1], 
+				mat_[0][0]*mat.mat_[0][2] + mat_[0][1]*mat.mat_[1][2] + mat_[0][2]*mat.mat_[2][2] + mat_[0][3] * mat.mat_[3][2], 
+				mat_[0][0]*mat.mat_[0][3] + mat_[0][1]*mat.mat_[1][3] + mat_[0][2]*mat.mat_[2][3] + mat_[0][3] * mat.mat_[3][3], 
 
-				Mat[1][0]*mat.Mat[0][0] + Mat[1][1]*mat.Mat[1][0] + Mat[1][2]*mat.Mat[2][0] + Mat[1][3] * mat.Mat[3][0],
-				Mat[1][0]*mat.Mat[0][1] + Mat[1][1]*mat.Mat[1][1] + Mat[1][2]*mat.Mat[2][1] + Mat[1][3] * mat.Mat[3][1],
-				Mat[1][0]*mat.Mat[0][2] + Mat[1][1]*mat.Mat[1][2] + Mat[1][2]*mat.Mat[2][2] + Mat[1][3] * mat.Mat[3][2], 
-				Mat[1][0]*mat.Mat[0][3] + Mat[1][1]*mat.Mat[1][3] + Mat[1][2]*mat.Mat[2][3] + Mat[1][3] * mat.Mat[3][3], 
+				mat_[1][0]*mat.mat_[0][0] + mat_[1][1]*mat.mat_[1][0] + mat_[1][2]*mat.mat_[2][0] + mat_[1][3] * mat.mat_[3][0],
+				mat_[1][0]*mat.mat_[0][1] + mat_[1][1]*mat.mat_[1][1] + mat_[1][2]*mat.mat_[2][1] + mat_[1][3] * mat.mat_[3][1],
+				mat_[1][0]*mat.mat_[0][2] + mat_[1][1]*mat.mat_[1][2] + mat_[1][2]*mat.mat_[2][2] + mat_[1][3] * mat.mat_[3][2], 
+				mat_[1][0]*mat.mat_[0][3] + mat_[1][1]*mat.mat_[1][3] + mat_[1][2]*mat.mat_[2][3] + mat_[1][3] * mat.mat_[3][3], 
 
-				Mat[2][0]*mat.Mat[0][0] + Mat[2][1]*mat.Mat[1][0] + Mat[2][2]*mat.Mat[2][0] + Mat[2][3] * mat.Mat[3][0], 
-				Mat[2][0]*mat.Mat[0][1] + Mat[2][1]*mat.Mat[1][1] + Mat[2][2]*mat.Mat[2][1] + Mat[2][3] * mat.Mat[3][1], 
-				Mat[2][0]*mat.Mat[0][2] + Mat[2][1]*mat.Mat[1][2] + Mat[2][2]*mat.Mat[2][2] + Mat[2][3] * mat.Mat[3][2], 
-				Mat[2][0]*mat.Mat[0][3] + Mat[2][1]*mat.Mat[1][3] + Mat[2][2]*mat.Mat[2][3] + Mat[2][3] * mat.Mat[3][3], 
+				mat_[2][0]*mat.mat_[0][0] + mat_[2][1]*mat.mat_[1][0] + mat_[2][2]*mat.mat_[2][0] + mat_[2][3] * mat.mat_[3][0], 
+				mat_[2][0]*mat.mat_[0][1] + mat_[2][1]*mat.mat_[1][1] + mat_[2][2]*mat.mat_[2][1] + mat_[2][3] * mat.mat_[3][1], 
+				mat_[2][0]*mat.mat_[0][2] + mat_[2][1]*mat.mat_[1][2] + mat_[2][2]*mat.mat_[2][2] + mat_[2][3] * mat.mat_[3][2], 
+				mat_[2][0]*mat.mat_[0][3] + mat_[2][1]*mat.mat_[1][3] + mat_[2][2]*mat.mat_[2][3] + mat_[2][3] * mat.mat_[3][3], 
 
-				Mat[3][0]*mat.Mat[0][0] + Mat[3][1]*mat.Mat[1][0] + Mat[3][2]*mat.Mat[3][0] + Mat[3][3] * mat.Mat[3][0], 
-				Mat[3][0]*mat.Mat[0][1] + Mat[3][1]*mat.Mat[1][1] + Mat[3][2]*mat.Mat[3][1] + Mat[3][3] * mat.Mat[3][1], 
-				Mat[3][0]*mat.Mat[0][2] + Mat[3][1]*mat.Mat[1][2] + Mat[3][2]*mat.Mat[3][2] + Mat[3][3] * mat.Mat[3][2], 
-				Mat[3][0]*mat.Mat[0][3] + Mat[3][1]*mat.Mat[1][3] + Mat[3][2]*mat.Mat[3][3] + Mat[3][3] * mat.Mat[3][3]	
+				mat_[3][0]*mat.mat_[0][0] + mat_[3][1]*mat.mat_[1][0] + mat_[3][2]*mat.mat_[3][0] + mat_[3][3] * mat.mat_[3][0], 
+				mat_[3][0]*mat.mat_[0][1] + mat_[3][1]*mat.mat_[1][1] + mat_[3][2]*mat.mat_[3][1] + mat_[3][3] * mat.mat_[3][1], 
+				mat_[3][0]*mat.mat_[0][2] + mat_[3][1]*mat.mat_[1][2] + mat_[3][2]*mat.mat_[3][2] + mat_[3][3] * mat.mat_[3][2], 
+				mat_[3][0]*mat.mat_[0][3] + mat_[3][1]*mat.mat_[1][3] + mat_[3][2]*mat.mat_[3][3] + mat_[3][3] * mat.mat_[3][3]	
 			);
 		}
 
@@ -189,13 +189,13 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 除算結果
 		*/
-		Matrix operator /(float s) const {
+		matrix operator /(float s) const {
 			if (s==0.f) {s=1;}
-			return Matrix(
-				Mat[0][0] / s, Mat[0][1] / s, Mat[0][2] / s, Mat[0][3] / s,
-				Mat[1][0] / s, Mat[1][1] / s, Mat[1][2] / s, Mat[1][3] / s,
-				Mat[2][0] / s, Mat[2][1] / s, Mat[2][2] / s, Mat[2][3] / s,
-				Mat[3][0] / s, Mat[3][1] / s, Mat[3][2] / s, Mat[3][3] / s
+			return matrix(
+				mat_[0][0] / s, mat_[0][1] / s, mat_[0][2] / s, mat_[0][3] / s,
+				mat_[1][0] / s, mat_[1][1] / s, mat_[1][2] / s, mat_[1][3] / s,
+				mat_[2][0] / s, mat_[2][1] / s, mat_[2][2] / s, mat_[2][3] / s,
+				mat_[3][0] / s, mat_[3][1] / s, mat_[3][2] / s, mat_[3][3] / s
 				);
 		}
 
@@ -207,26 +207,26 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 加算結果 
 		*/
-		Matrix& operator +=(const Matrix & mat) {
-			Mat[0][0] += mat.Mat[0][0];
-			Mat[0][1] += mat.Mat[0][1];
-			Mat[0][2] += mat.Mat[0][2];
-			Mat[0][3] += mat.Mat[0][3];
+		matrix& operator +=(const matrix & mat) {
+			mat_[0][0] += mat.mat_[0][0];
+			mat_[0][1] += mat.mat_[0][1];
+			mat_[0][2] += mat.mat_[0][2];
+			mat_[0][3] += mat.mat_[0][3];
 
-			Mat[1][0] += mat.Mat[1][0];
-			Mat[1][1] += mat.Mat[1][1];
-			Mat[1][2] += mat.Mat[1][2];
-			Mat[1][3] += mat.Mat[1][3];	
+			mat_[1][0] += mat.mat_[1][0];
+			mat_[1][1] += mat.mat_[1][1];
+			mat_[1][2] += mat.mat_[1][2];
+			mat_[1][3] += mat.mat_[1][3];	
 
-			Mat[2][0] += mat.Mat[2][0];
-			Mat[2][1] += mat.Mat[2][1];
-			Mat[2][2] += mat.Mat[2][2];
-			Mat[2][3] += mat.Mat[2][3];
+			mat_[2][0] += mat.mat_[2][0];
+			mat_[2][1] += mat.mat_[2][1];
+			mat_[2][2] += mat.mat_[2][2];
+			mat_[2][3] += mat.mat_[2][3];
 
-			Mat[3][0] += mat.Mat[3][0];
-			Mat[3][1] += mat.Mat[3][1];
-			Mat[3][2] += mat.Mat[3][2];
-			Mat[3][3] += mat.Mat[3][3];
+			mat_[3][0] += mat.mat_[3][0];
+			mat_[3][1] += mat.mat_[3][1];
+			mat_[3][2] += mat.mat_[3][2];
+			mat_[3][3] += mat.mat_[3][3];
 			return *this;
 		}
 
@@ -235,26 +235,26 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 減算結果
 		*/
-		Matrix& operator -=(const Matrix & mat) {
-			Mat[0][0] -= mat.Mat[0][0];
-			Mat[0][1] -= mat.Mat[0][1];
-			Mat[0][2] -= mat.Mat[0][2];
-			Mat[0][3] -= mat.Mat[0][3];
+		matrix& operator -=(const matrix & mat) {
+			mat_[0][0] -= mat.mat_[0][0];
+			mat_[0][1] -= mat.mat_[0][1];
+			mat_[0][2] -= mat.mat_[0][2];
+			mat_[0][3] -= mat.mat_[0][3];
 
-			Mat[1][0] -= mat.Mat[1][0];
-			Mat[1][1] -= mat.Mat[1][1];
-			Mat[1][2] -= mat.Mat[1][2];
-			Mat[1][3] -= mat.Mat[1][3];	
+			mat_[1][0] -= mat.mat_[1][0];
+			mat_[1][1] -= mat.mat_[1][1];
+			mat_[1][2] -= mat.mat_[1][2];
+			mat_[1][3] -= mat.mat_[1][3];	
 
-			Mat[2][0] -= mat.Mat[2][0];
-			Mat[2][1] -= mat.Mat[2][1];
-			Mat[2][2] -= mat.Mat[2][2];
-			Mat[2][3] -= mat.Mat[2][3];
+			mat_[2][0] -= mat.mat_[2][0];
+			mat_[2][1] -= mat.mat_[2][1];
+			mat_[2][2] -= mat.mat_[2][2];
+			mat_[2][3] -= mat.mat_[2][3];
 
-			Mat[3][0] -= mat.Mat[3][0];
-			Mat[3][1] -= mat.Mat[3][1];
-			Mat[3][2] -= mat.Mat[3][2];
-			Mat[3][3] -= mat.Mat[3][3];
+			mat_[3][0] -= mat.mat_[3][0];
+			mat_[3][1] -= mat.mat_[3][1];
+			mat_[3][2] -= mat.mat_[3][2];
+			mat_[3][3] -= mat.mat_[3][3];
 			return *this;
 		}
 
@@ -263,23 +263,23 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix& operator *=(const float s) {
-			Mat[0][0] *= s;
-			Mat[0][1] *= s;
-			Mat[0][2] *= s;
-			Mat[0][3] *= s;
-			Mat[1][0] *= s;
-			Mat[1][1] *= s;
-			Mat[1][2] *= s;
-			Mat[1][3] *= s;	
-			Mat[2][0] *= s;
-			Mat[2][1] *= s;
-			Mat[2][2] *= s;
-			Mat[2][3] *= s;
-			Mat[3][0] *= s;
-			Mat[3][1] *= s;
-			Mat[3][2] *= s;
-			Mat[3][3] *= s;
+		matrix& operator *=(const float s) {
+			mat_[0][0] *= s;
+			mat_[0][1] *= s;
+			mat_[0][2] *= s;
+			mat_[0][3] *= s;
+			mat_[1][0] *= s;
+			mat_[1][1] *= s;
+			mat_[1][2] *= s;
+			mat_[1][3] *= s;	
+			mat_[2][0] *= s;
+			mat_[2][1] *= s;
+			mat_[2][2] *= s;
+			mat_[2][3] *= s;
+			mat_[3][0] *= s;
+			mat_[3][1] *= s;
+			mat_[3][2] *= s;
+			mat_[3][3] *= s;
 
 			return *this;
 		}
@@ -289,27 +289,27 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix& operator *=(const Matrix& mat) {
-			Set(
-				Mat[0][0]*mat.Mat[0][0] + Mat[0][1]*mat.Mat[1][0] + Mat[0][2]*mat.Mat[2][0] + Mat[0][3] * mat.Mat[3][0],  
-				Mat[0][0]*mat.Mat[0][1] + Mat[0][1]*mat.Mat[1][1] + Mat[0][2]*mat.Mat[2][1] + Mat[0][3] * mat.Mat[3][1],
-				Mat[0][0]*mat.Mat[0][2] + Mat[0][1]*mat.Mat[1][2] + Mat[0][2]*mat.Mat[2][2] + Mat[0][3] * mat.Mat[3][2], 
-				Mat[0][0]*mat.Mat[0][3] + Mat[0][1]*mat.Mat[1][3] + Mat[0][2]*mat.Mat[2][3] + Mat[0][3] * mat.Mat[3][3], 
+		matrix& operator *=(const matrix& mat) {
+			set(
+				mat_[0][0]*mat.mat_[0][0] + mat_[0][1]*mat.mat_[1][0] + mat_[0][2]*mat.mat_[2][0] + mat_[0][3] * mat.mat_[3][0],  
+				mat_[0][0]*mat.mat_[0][1] + mat_[0][1]*mat.mat_[1][1] + mat_[0][2]*mat.mat_[2][1] + mat_[0][3] * mat.mat_[3][1],
+				mat_[0][0]*mat.mat_[0][2] + mat_[0][1]*mat.mat_[1][2] + mat_[0][2]*mat.mat_[2][2] + mat_[0][3] * mat.mat_[3][2], 
+				mat_[0][0]*mat.mat_[0][3] + mat_[0][1]*mat.mat_[1][3] + mat_[0][2]*mat.mat_[2][3] + mat_[0][3] * mat.mat_[3][3], 
 
-				Mat[1][0]*mat.Mat[0][0] + Mat[1][1]*mat.Mat[1][0] + Mat[1][2]*mat.Mat[2][0] + Mat[1][3] * mat.Mat[3][0],
-				Mat[1][0]*mat.Mat[0][1] + Mat[1][1]*mat.Mat[1][1] + Mat[1][2]*mat.Mat[2][1] + Mat[1][3] * mat.Mat[3][1],
-				Mat[1][0]*mat.Mat[0][2] + Mat[1][1]*mat.Mat[1][2] + Mat[1][2]*mat.Mat[2][2] + Mat[1][3] * mat.Mat[3][2], 
-				Mat[1][0]*mat.Mat[0][3] + Mat[1][1]*mat.Mat[1][3] + Mat[1][2]*mat.Mat[2][3] + Mat[1][3] * mat.Mat[3][3], 
+				mat_[1][0]*mat.mat_[0][0] + mat_[1][1]*mat.mat_[1][0] + mat_[1][2]*mat.mat_[2][0] + mat_[1][3] * mat.mat_[3][0],
+				mat_[1][0]*mat.mat_[0][1] + mat_[1][1]*mat.mat_[1][1] + mat_[1][2]*mat.mat_[2][1] + mat_[1][3] * mat.mat_[3][1],
+				mat_[1][0]*mat.mat_[0][2] + mat_[1][1]*mat.mat_[1][2] + mat_[1][2]*mat.mat_[2][2] + mat_[1][3] * mat.mat_[3][2], 
+				mat_[1][0]*mat.mat_[0][3] + mat_[1][1]*mat.mat_[1][3] + mat_[1][2]*mat.mat_[2][3] + mat_[1][3] * mat.mat_[3][3], 
 
-				Mat[2][0]*mat.Mat[0][0] + Mat[2][1]*mat.Mat[1][0] + Mat[2][2]*mat.Mat[2][0] + Mat[2][3] * mat.Mat[3][0], 
-				Mat[2][0]*mat.Mat[0][1] + Mat[2][1]*mat.Mat[1][1] + Mat[2][2]*mat.Mat[2][1] + Mat[2][3] * mat.Mat[3][1], 
-				Mat[2][0]*mat.Mat[0][2] + Mat[2][1]*mat.Mat[1][2] + Mat[2][2]*mat.Mat[2][2] + Mat[2][3] * mat.Mat[3][2], 
-				Mat[2][0]*mat.Mat[0][3] + Mat[2][1]*mat.Mat[1][3] + Mat[2][2]*mat.Mat[2][3] + Mat[2][3] * mat.Mat[3][3], 
+				mat_[2][0]*mat.mat_[0][0] + mat_[2][1]*mat.mat_[1][0] + mat_[2][2]*mat.mat_[2][0] + mat_[2][3] * mat.mat_[3][0], 
+				mat_[2][0]*mat.mat_[0][1] + mat_[2][1]*mat.mat_[1][1] + mat_[2][2]*mat.mat_[2][1] + mat_[2][3] * mat.mat_[3][1], 
+				mat_[2][0]*mat.mat_[0][2] + mat_[2][1]*mat.mat_[1][2] + mat_[2][2]*mat.mat_[2][2] + mat_[2][3] * mat.mat_[3][2], 
+				mat_[2][0]*mat.mat_[0][3] + mat_[2][1]*mat.mat_[1][3] + mat_[2][2]*mat.mat_[2][3] + mat_[2][3] * mat.mat_[3][3], 
 
-				Mat[3][0]*mat.Mat[0][0] + Mat[3][1]*mat.Mat[1][0] + Mat[3][2]*mat.Mat[2][0] + Mat[3][3] * mat.Mat[3][0], 
-				Mat[3][0]*mat.Mat[0][1] + Mat[3][1]*mat.Mat[1][1] + Mat[3][2]*mat.Mat[2][1] + Mat[3][3] * mat.Mat[3][1], 
-				Mat[3][0]*mat.Mat[0][2] + Mat[3][1]*mat.Mat[1][2] + Mat[3][2]*mat.Mat[2][2] + Mat[3][3] * mat.Mat[3][2], 
-				Mat[3][0]*mat.Mat[0][3] + Mat[3][1]*mat.Mat[1][3] + Mat[3][2]*mat.Mat[2][3] + Mat[3][3] * mat.Mat[3][3]); 
+				mat_[3][0]*mat.mat_[0][0] + mat_[3][1]*mat.mat_[1][0] + mat_[3][2]*mat.mat_[2][0] + mat_[3][3] * mat.mat_[3][0], 
+				mat_[3][0]*mat.mat_[0][1] + mat_[3][1]*mat.mat_[1][1] + mat_[3][2]*mat.mat_[2][1] + mat_[3][3] * mat.mat_[3][1], 
+				mat_[3][0]*mat.mat_[0][2] + mat_[3][1]*mat.mat_[1][2] + mat_[3][2]*mat.mat_[2][2] + mat_[3][3] * mat.mat_[3][2], 
+				mat_[3][0]*mat.mat_[0][3] + mat_[3][1]*mat.mat_[1][3] + mat_[3][2]*mat.mat_[2][3] + mat_[3][3] * mat.mat_[3][3]); 
 
 			return *this;
 		}
@@ -319,23 +319,23 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Matrix& operator /=(const float s) {
-			Mat[0][0] /= s;
-			Mat[0][1] /= s;
-			Mat[0][2] /= s;
-			Mat[0][3] /= s;
-			Mat[1][0] /= s;
-			Mat[1][1] /= s;
-			Mat[1][2] /= s;
-			Mat[1][3] /= s;	
-			Mat[2][0] /= s;
-			Mat[2][1] /= s;
-			Mat[2][2] /= s;
-			Mat[2][3] /= s;
-			Mat[3][0] /= s;
-			Mat[3][1] /= s;
-			Mat[3][2] /= s;
-			Mat[3][3] /= s;
+		matrix& operator /=(const float s) {
+			mat_[0][0] /= s;
+			mat_[0][1] /= s;
+			mat_[0][2] /= s;
+			mat_[0][3] /= s;
+			mat_[1][0] /= s;
+			mat_[1][1] /= s;
+			mat_[1][2] /= s;
+			mat_[1][3] /= s;	
+			mat_[2][0] /= s;
+			mat_[2][1] /= s;
+			mat_[2][2] /= s;
+			mat_[2][3] /= s;
+			mat_[3][0] /= s;
+			mat_[3][1] /= s;
+			mat_[3][2] /= s;
+			mat_[3][3] /= s;
 
 			return *this;
 
@@ -347,26 +347,26 @@ namespace Nyx  {
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Matrix& operator =(const Matrix& mat) {
-			Mat[0][0] = mat.Mat[0][0];
-			Mat[0][1] = mat.Mat[0][1];
-			Mat[0][2] = mat.Mat[0][2];
-			Mat[0][3] = mat.Mat[0][3];
+		matrix& operator =(const matrix& mat) {
+			mat_[0][0] = mat.mat_[0][0];
+			mat_[0][1] = mat.mat_[0][1];
+			mat_[0][2] = mat.mat_[0][2];
+			mat_[0][3] = mat.mat_[0][3];
 
-			Mat[1][0] = mat.Mat[1][0];
-			Mat[1][1] = mat.Mat[1][1];
-			Mat[1][2] = mat.Mat[1][2];
-			Mat[1][3] = mat.Mat[1][3];	
+			mat_[1][0] = mat.mat_[1][0];
+			mat_[1][1] = mat.mat_[1][1];
+			mat_[1][2] = mat.mat_[1][2];
+			mat_[1][3] = mat.mat_[1][3];	
 
-			Mat[2][0] = mat.Mat[2][0];
-			Mat[2][1] = mat.Mat[2][1];
-			Mat[2][2] = mat.Mat[2][2];
-			Mat[2][3] = mat.Mat[2][3];
+			mat_[2][0] = mat.mat_[2][0];
+			mat_[2][1] = mat.mat_[2][1];
+			mat_[2][2] = mat.mat_[2][2];
+			mat_[2][3] = mat.mat_[2][3];
 
-			Mat[3][0] = mat.Mat[3][0];
-			Mat[3][1] = mat.Mat[3][1];
-			Mat[3][2] = mat.Mat[3][2];
-			Mat[3][3] = mat.Mat[3][3];
+			mat_[3][0] = mat.mat_[3][0];
+			mat_[3][1] = mat.mat_[3][1];
+			mat_[3][2] = mat.mat_[3][2];
+			mat_[3][3] = mat.mat_[3][3];
 
 			return *this;
 
@@ -380,28 +380,28 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しいならtrue
 		*/
-		bool Equal(const Matrix & m) {
+		bool Equal(const matrix & m) {
 
 			return (
-				Math::Abs(Mat[0][0] - m.Mat[0][0]) <= Math::Epsilon &&
-				Math::Abs(Mat[0][1] - m.Mat[0][1]) <= Math::Epsilon &&
-				Math::Abs(Mat[0][2] - m.Mat[0][2]) <= Math::Epsilon &&
-				Math::Abs(Mat[0][3] - m.Mat[0][3]) <= Math::Epsilon &&
+				math::abs(mat_[0][0] - m.mat_[0][0]) <= math::EPSILON &&
+				math::abs(mat_[0][1] - m.mat_[0][1]) <= math::EPSILON &&
+				math::abs(mat_[0][2] - m.mat_[0][2]) <= math::EPSILON &&
+				math::abs(mat_[0][3] - m.mat_[0][3]) <= math::EPSILON &&
 
-				Math::Abs(Mat[1][0] - m.Mat[1][0]) <= Math::Epsilon &&
-				Math::Abs(Mat[1][1] - m.Mat[1][1]) <= Math::Epsilon &&
-				Math::Abs(Mat[1][2] - m.Mat[1][2]) <= Math::Epsilon &&
-				Math::Abs(Mat[1][3] - m.Mat[1][3]) <= Math::Epsilon &&
+				math::abs(mat_[1][0] - m.mat_[1][0]) <= math::EPSILON &&
+				math::abs(mat_[1][1] - m.mat_[1][1]) <= math::EPSILON &&
+				math::abs(mat_[1][2] - m.mat_[1][2]) <= math::EPSILON &&
+				math::abs(mat_[1][3] - m.mat_[1][3]) <= math::EPSILON &&
 
-				Math::Abs(Mat[2][0] - m.Mat[2][0]) <= Math::Epsilon &&
-				Math::Abs(Mat[2][1] - m.Mat[2][1]) <= Math::Epsilon &&
-				Math::Abs(Mat[2][2] - m.Mat[2][2]) <= Math::Epsilon &&
-				Math::Abs(Mat[2][3] - m.Mat[2][3]) <= Math::Epsilon &&
+				math::abs(mat_[2][0] - m.mat_[2][0]) <= math::EPSILON &&
+				math::abs(mat_[2][1] - m.mat_[2][1]) <= math::EPSILON &&
+				math::abs(mat_[2][2] - m.mat_[2][2]) <= math::EPSILON &&
+				math::abs(mat_[2][3] - m.mat_[2][3]) <= math::EPSILON &&
 
-				Math::Abs(Mat[3][0] - m.Mat[3][0]) <= Math::Epsilon &&
-				Math::Abs(Mat[3][1] - m.Mat[3][1]) <= Math::Epsilon &&
-				Math::Abs(Mat[3][2] - m.Mat[3][2]) <= Math::Epsilon &&
-				Math::Abs(Mat[3][3] - m.Mat[3][3]) <= Math::Epsilon
+				math::abs(mat_[3][0] - m.mat_[3][0]) <= math::EPSILON &&
+				math::abs(mat_[3][1] - m.mat_[3][1]) <= math::EPSILON &&
+				math::abs(mat_[3][2] - m.mat_[3][2]) <= math::EPSILON &&
+				math::abs(mat_[3][3] - m.mat_[3][3]) <= math::EPSILON
 				);
 		}
 
@@ -411,7 +411,7 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しくないならtrue
 		*/
-		bool NotEqual(const Matrix& matrix) {
+		bool NotEqual(const matrix& matrix) {
 			return !Equal(matrix);
 		}
 
@@ -421,27 +421,27 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しいならtrue
 		*/
-		bool operator == (const Matrix &m) {
+		bool operator == (const matrix &m) {
 			return (
-				Mat[0][0] == m.Mat[0][0] && 
-				Mat[0][1] == m.Mat[0][1] && 
-				Mat[0][2] == m.Mat[0][2] && 
-				Mat[0][3] == m.Mat[0][3] && 
+				mat_[0][0] == m.mat_[0][0] && 
+				mat_[0][1] == m.mat_[0][1] && 
+				mat_[0][2] == m.mat_[0][2] && 
+				mat_[0][3] == m.mat_[0][3] && 
 
-				Mat[1][0] == m.Mat[1][0] && 
-				Mat[1][1] == m.Mat[1][1] && 
-				Mat[1][2] == m.Mat[1][2] && 
-				Mat[1][3] == m.Mat[1][3] && 
+				mat_[1][0] == m.mat_[1][0] && 
+				mat_[1][1] == m.mat_[1][1] && 
+				mat_[1][2] == m.mat_[1][2] && 
+				mat_[1][3] == m.mat_[1][3] && 
 
-				Mat[2][0] == m.Mat[2][0] && 
-				Mat[2][1] == m.Mat[2][1] && 
-				Mat[2][2] == m.Mat[2][2] && 
-				Mat[2][3] == m.Mat[2][3] && 
+				mat_[2][0] == m.mat_[2][0] && 
+				mat_[2][1] == m.mat_[2][1] && 
+				mat_[2][2] == m.mat_[2][2] && 
+				mat_[2][3] == m.mat_[2][3] && 
 
-				Mat[3][0] == m.Mat[3][0] && 
-				Mat[3][1] == m.Mat[3][1] && 
-				Mat[3][2] == m.Mat[3][2] && 
-				Mat[3][3] == m.Mat[3][3] 
+				mat_[3][0] == m.mat_[3][0] && 
+				mat_[3][1] == m.mat_[3][1] && 
+				mat_[3][2] == m.mat_[3][2] && 
+				mat_[3][3] == m.mat_[3][3] 
 			);
 		}
 
@@ -451,7 +451,7 @@ namespace Nyx  {
 		* @param 右辺値
 		* @return 等しくないならtrue
 		*/
-		bool operator != (const Matrix& matrix) {
+		bool operator != (const matrix& matrix) {
 			return !(*this == matrix);
 		}
 
@@ -463,27 +463,27 @@ namespace Nyx  {
 		* 行列式
 		* @return 行列式の値
 		*/
-		float Determinant() {
+		float determinant() {
 
-			return Mat[0][0] * (
-				Mat[1][1] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
-				Mat[1][2] * (Mat[2][1] * Mat[3][3] - Mat[3][1] * Mat[2][3]) +
-				Mat[1][3] * (Mat[2][1] * Mat[3][2] - Mat[3][1] * Mat[2][2])
+			return mat_[0][0] * (
+				mat_[1][1] * (mat_[2][2] * mat_[3][3] - mat_[3][2] * mat_[2][3]) -
+				mat_[1][2] * (mat_[2][1] * mat_[3][3] - mat_[3][1] * mat_[2][3]) +
+				mat_[1][3] * (mat_[2][1] * mat_[3][2] - mat_[3][1] * mat_[2][2])
 				) -
-				Mat[0][1] * (
-				Mat[1][0] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
-				Mat[1][2] * (Mat[2][0] * Mat[3][3] - Mat[3][0] * Mat[2][3]) +
-				Mat[1][3] * (Mat[2][0] * Mat[3][2] - Mat[3][0] * Mat[2][2])
+				mat_[0][1] * (
+				mat_[1][0] * (mat_[2][2] * mat_[3][3] - mat_[3][2] * mat_[2][3]) -
+				mat_[1][2] * (mat_[2][0] * mat_[3][3] - mat_[3][0] * mat_[2][3]) +
+				mat_[1][3] * (mat_[2][0] * mat_[3][2] - mat_[3][0] * mat_[2][2])
 				) +
-				Mat[0][2] * (
-				Mat[1][0] * (Mat[2][1] * Mat[3][3] - Mat[3][1] * Mat[2][3]) -
-				Mat[1][1] * (Mat[2][0] * Mat[3][3] - Mat[3][0] * Mat[2][3]) +
-				Mat[1][3] * (Mat[2][0] * Mat[3][1] - Mat[3][0] * Mat[2][1])
+				mat_[0][2] * (
+				mat_[1][0] * (mat_[2][1] * mat_[3][3] - mat_[3][1] * mat_[2][3]) -
+				mat_[1][1] * (mat_[2][0] * mat_[3][3] - mat_[3][0] * mat_[2][3]) +
+				mat_[1][3] * (mat_[2][0] * mat_[3][1] - mat_[3][0] * mat_[2][1])
 				) -
-				Mat[0][3] * (
-				Mat[1][0] * (Mat[2][1] * Mat[3][2] - Mat[3][1] * Mat[2][2]) -
-				Mat[1][1] * (Mat[2][0] * Mat[3][2] - Mat[3][0] * Mat[2][2]) +
-				Mat[1][2] * (Mat[2][0] * Mat[3][1] - Mat[3][0] * Mat[2][1])
+				mat_[0][3] * (
+				mat_[1][0] * (mat_[2][1] * mat_[3][2] - mat_[3][1] * mat_[2][2]) -
+				mat_[1][1] * (mat_[2][0] * mat_[3][2] - mat_[3][0] * mat_[2][2]) +
+				mat_[1][2] * (mat_[2][0] * mat_[3][1] - mat_[3][0] * mat_[2][1])
 				);
 
 
@@ -494,13 +494,13 @@ namespace Nyx  {
 		* 行列の転置
 		* @return 転置行列
 		*/
-		Matrix& Transpose() {
+		matrix& transpose() {
 
-			Set(
-				Mat[0][0], Mat[1][0], Mat[2][0], Mat[3][0],
-				Mat[0][1], Mat[1][1], Mat[2][1], Mat[3][1],
-				Mat[0][2], Mat[1][2], Mat[2][2], Mat[3][2],
-				Mat[0][3], Mat[1][3], Mat[2][3], Mat[3][3]);
+			set(
+				mat_[0][0], mat_[1][0], mat_[2][0], mat_[3][0],
+				mat_[0][1], mat_[1][1], mat_[2][1], mat_[3][1],
+				mat_[0][2], mat_[1][2], mat_[2][2], mat_[3][2],
+				mat_[0][3], mat_[1][3], mat_[2][3], mat_[3][3]);
 
 			return *this;
 		}
@@ -510,82 +510,82 @@ namespace Nyx  {
 		* 逆行列にします
 		* @return 逆行列
 		*/
-		float Invert() {
-			Matrix invertMatrix;
+		float invert() {
+			matrix invertMatrix;
 			// 行列式を出す
-			invertMatrix.Mat[0][0] = (
-				Mat[1][1] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
-				Mat[1][2] * (Mat[2][1] * Mat[3][3] - Mat[3][1] * Mat[2][3]) +
-				Mat[1][3] * (Mat[2][1] * Mat[3][2] - Mat[3][1] * Mat[2][2]));
-			invertMatrix.Mat[1][0] = -(
-				Mat[1][0] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
-				Mat[1][2] * (Mat[2][0] * Mat[3][3] - Mat[3][0] * Mat[2][3]) +
-				Mat[1][3] * (Mat[2][0] * Mat[3][2] - Mat[3][0] * Mat[2][2]));
-			invertMatrix.Mat[2][0] = (
-				Mat[1][0] * (Mat[2][1] * Mat[3][3] - Mat[3][1] * Mat[2][3]) -
-				Mat[1][1] * (Mat[2][0] * Mat[3][3] - Mat[3][0] * Mat[2][3]) +
-				Mat[1][3] * (Mat[2][0] * Mat[3][1] - Mat[3][0] * Mat[2][1]));
-			invertMatrix.Mat[3][0] = -(
-				Mat[1][0] * (Mat[2][1] * Mat[3][2] - Mat[3][1] * Mat[2][2]) -
-				Mat[1][1] * (Mat[2][0] * Mat[3][2] - Mat[3][0] * Mat[2][2]) +
-				Mat[1][2] * (Mat[2][0] * Mat[3][1] - Mat[3][0] * Mat[2][1]));
+			invertMatrix.mat_[0][0] = (
+				mat_[1][1] * (mat_[2][2] * mat_[3][3] - mat_[3][2] * mat_[2][3]) -
+				mat_[1][2] * (mat_[2][1] * mat_[3][3] - mat_[3][1] * mat_[2][3]) +
+				mat_[1][3] * (mat_[2][1] * mat_[3][2] - mat_[3][1] * mat_[2][2]));
+			invertMatrix.mat_[1][0] = -(
+				mat_[1][0] * (mat_[2][2] * mat_[3][3] - mat_[3][2] * mat_[2][3]) -
+				mat_[1][2] * (mat_[2][0] * mat_[3][3] - mat_[3][0] * mat_[2][3]) +
+				mat_[1][3] * (mat_[2][0] * mat_[3][2] - mat_[3][0] * mat_[2][2]));
+			invertMatrix.mat_[2][0] = (
+				mat_[1][0] * (mat_[2][1] * mat_[3][3] - mat_[3][1] * mat_[2][3]) -
+				mat_[1][1] * (mat_[2][0] * mat_[3][3] - mat_[3][0] * mat_[2][3]) +
+				mat_[1][3] * (mat_[2][0] * mat_[3][1] - mat_[3][0] * mat_[2][1]));
+			invertMatrix.mat_[3][0] = -(
+				mat_[1][0] * (mat_[2][1] * mat_[3][2] - mat_[3][1] * mat_[2][2]) -
+				mat_[1][1] * (mat_[2][0] * mat_[3][2] - mat_[3][0] * mat_[2][2]) +
+				mat_[1][2] * (mat_[2][0] * mat_[3][1] - mat_[3][0] * mat_[2][1]));
 			float determ =
-				Mat[0][0] * invertMatrix.Mat[0][0] +
-				Mat[0][1] * invertMatrix.Mat[1][0] +
-				Mat[0][2] * invertMatrix.Mat[2][0] +
-				Mat[0][3] * invertMatrix.Mat[3][0];
+				mat_[0][0] * invertMatrix.mat_[0][0] +
+				mat_[0][1] * invertMatrix.mat_[1][0] +
+				mat_[0][2] * invertMatrix.mat_[2][0] +
+				mat_[0][3] * invertMatrix.mat_[3][0];
 
-			Assert(determ !=0);
+			NYX_ASSERT(determ !=0);
 
 			// 各要素の算出
-			invertMatrix.Mat[0][1] = -(
-				Mat[0][1] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
-				Mat[0][2] * (Mat[2][1] * Mat[3][3] - Mat[3][1] * Mat[2][3]) +
-				Mat[0][3] * (Mat[2][1] * Mat[3][2] - Mat[3][1] * Mat[2][2]));
-			invertMatrix.Mat[0][2] = (
-				Mat[0][1] * (Mat[1][2] * Mat[3][3] - Mat[3][2] * Mat[1][3]) -
-				Mat[0][2] * (Mat[1][1] * Mat[3][3] - Mat[3][1] * Mat[1][3]) +
-				Mat[0][3] * (Mat[1][1] * Mat[3][2] - Mat[3][1] * Mat[1][2]));
-			invertMatrix.Mat[0][3] = -(
-				Mat[0][1] * (Mat[1][2] * Mat[2][3] - Mat[2][2] * Mat[1][3]) -
-				Mat[0][2] * (Mat[1][1] * Mat[2][3] - Mat[2][1] * Mat[1][3]) +
-				Mat[0][3] * (Mat[1][1] * Mat[2][2] - Mat[2][1] * Mat[1][2]));
-			invertMatrix.Mat[1][1] = (
-				Mat[0][0] * (Mat[2][2] * Mat[3][3] - Mat[3][2] * Mat[2][3]) -
-				Mat[0][2] * (Mat[2][0] * Mat[3][3] - Mat[3][0] * Mat[2][3]) +
-				Mat[0][3] * (Mat[2][0] * Mat[3][2] - Mat[3][0] * Mat[2][2]));
-			invertMatrix.Mat[1][2] = -(
-				Mat[0][0] * (Mat[1][2] * Mat[3][3] - Mat[3][2] * Mat[1][3]) -
-				Mat[0][2] * (Mat[1][0] * Mat[3][3] - Mat[3][0] * Mat[1][3]) +
-				Mat[0][3] * (Mat[1][0] * Mat[3][2] - Mat[3][0] * Mat[1][2]));
-			invertMatrix.Mat[1][3] = (
-				Mat[0][0] * (Mat[1][2] * Mat[2][3] - Mat[2][2] * Mat[1][3]) -
-				Mat[0][2] * (Mat[1][0] * Mat[2][3] - Mat[2][0] * Mat[1][3]) +
-				Mat[0][3] * (Mat[1][0] * Mat[2][2] - Mat[2][0] * Mat[1][2]));
-			invertMatrix.Mat[2][1] = -(
-				Mat[0][0] * (Mat[2][1] * Mat[3][3] - Mat[3][1] * Mat[2][3]) -
-				Mat[0][1] * (Mat[2][0] * Mat[3][3] - Mat[3][0] * Mat[2][3]) +
-				Mat[0][3] * (Mat[2][0] * Mat[3][1] - Mat[3][0] * Mat[2][1]));
-			invertMatrix.Mat[2][2] = (
-				Mat[0][0] * (Mat[1][1] * Mat[3][3] - Mat[3][1] * Mat[1][3]) -
-				Mat[0][1] * (Mat[1][0] * Mat[3][3] - Mat[3][0] * Mat[1][3]) +
-				Mat[0][3] * (Mat[1][0] * Mat[3][1] - Mat[3][0] * Mat[1][1]));
-			invertMatrix.Mat[2][3] = -(
-				Mat[0][0] * (Mat[1][1] * Mat[2][3] - Mat[2][1] * Mat[1][3]) -
-				Mat[0][1] * (Mat[1][0] * Mat[2][3] - Mat[2][0] * Mat[1][3]) +
-				Mat[0][3] * (Mat[1][0] * Mat[2][1] - Mat[2][0] * Mat[1][1]));
-			invertMatrix.Mat[3][1] = (
-				Mat[0][0] * (Mat[2][1] * Mat[3][2] - Mat[3][1] * Mat[2][2]) -
-				Mat[0][1] * (Mat[2][0] * Mat[3][2] - Mat[3][0] * Mat[2][2]) +
-				Mat[0][2] * (Mat[2][0] * Mat[3][1] - Mat[3][0] * Mat[2][1]));
-			invertMatrix.Mat[3][2] = -(
-				Mat[0][0] * (Mat[1][1] * Mat[3][2] - Mat[3][1] * Mat[1][2]) -
-				Mat[0][1] * (Mat[1][0] * Mat[3][2] - Mat[3][0] * Mat[1][2]) +
-				Mat[0][2] * (Mat[1][0] * Mat[3][1] - Mat[3][0] * Mat[1][1]));
-			invertMatrix.Mat[3][3] = (
-				Mat[0][0] * (Mat[1][1] * Mat[2][2] - Mat[2][1] * Mat[1][2]) -
-				Mat[0][1] * (Mat[1][0] * Mat[2][2] - Mat[2][0] * Mat[1][2]) +
-				Mat[0][2] * (Mat[1][0] * Mat[2][1] - Mat[2][0] * Mat[1][1]));
+			invertMatrix.mat_[0][1] = -(
+				mat_[0][1] * (mat_[2][2] * mat_[3][3] - mat_[3][2] * mat_[2][3]) -
+				mat_[0][2] * (mat_[2][1] * mat_[3][3] - mat_[3][1] * mat_[2][3]) +
+				mat_[0][3] * (mat_[2][1] * mat_[3][2] - mat_[3][1] * mat_[2][2]));
+			invertMatrix.mat_[0][2] = (
+				mat_[0][1] * (mat_[1][2] * mat_[3][3] - mat_[3][2] * mat_[1][3]) -
+				mat_[0][2] * (mat_[1][1] * mat_[3][3] - mat_[3][1] * mat_[1][3]) +
+				mat_[0][3] * (mat_[1][1] * mat_[3][2] - mat_[3][1] * mat_[1][2]));
+			invertMatrix.mat_[0][3] = -(
+				mat_[0][1] * (mat_[1][2] * mat_[2][3] - mat_[2][2] * mat_[1][3]) -
+				mat_[0][2] * (mat_[1][1] * mat_[2][3] - mat_[2][1] * mat_[1][3]) +
+				mat_[0][3] * (mat_[1][1] * mat_[2][2] - mat_[2][1] * mat_[1][2]));
+			invertMatrix.mat_[1][1] = (
+				mat_[0][0] * (mat_[2][2] * mat_[3][3] - mat_[3][2] * mat_[2][3]) -
+				mat_[0][2] * (mat_[2][0] * mat_[3][3] - mat_[3][0] * mat_[2][3]) +
+				mat_[0][3] * (mat_[2][0] * mat_[3][2] - mat_[3][0] * mat_[2][2]));
+			invertMatrix.mat_[1][2] = -(
+				mat_[0][0] * (mat_[1][2] * mat_[3][3] - mat_[3][2] * mat_[1][3]) -
+				mat_[0][2] * (mat_[1][0] * mat_[3][3] - mat_[3][0] * mat_[1][3]) +
+				mat_[0][3] * (mat_[1][0] * mat_[3][2] - mat_[3][0] * mat_[1][2]));
+			invertMatrix.mat_[1][3] = (
+				mat_[0][0] * (mat_[1][2] * mat_[2][3] - mat_[2][2] * mat_[1][3]) -
+				mat_[0][2] * (mat_[1][0] * mat_[2][3] - mat_[2][0] * mat_[1][3]) +
+				mat_[0][3] * (mat_[1][0] * mat_[2][2] - mat_[2][0] * mat_[1][2]));
+			invertMatrix.mat_[2][1] = -(
+				mat_[0][0] * (mat_[2][1] * mat_[3][3] - mat_[3][1] * mat_[2][3]) -
+				mat_[0][1] * (mat_[2][0] * mat_[3][3] - mat_[3][0] * mat_[2][3]) +
+				mat_[0][3] * (mat_[2][0] * mat_[3][1] - mat_[3][0] * mat_[2][1]));
+			invertMatrix.mat_[2][2] = (
+				mat_[0][0] * (mat_[1][1] * mat_[3][3] - mat_[3][1] * mat_[1][3]) -
+				mat_[0][1] * (mat_[1][0] * mat_[3][3] - mat_[3][0] * mat_[1][3]) +
+				mat_[0][3] * (mat_[1][0] * mat_[3][1] - mat_[3][0] * mat_[1][1]));
+			invertMatrix.mat_[2][3] = -(
+				mat_[0][0] * (mat_[1][1] * mat_[2][3] - mat_[2][1] * mat_[1][3]) -
+				mat_[0][1] * (mat_[1][0] * mat_[2][3] - mat_[2][0] * mat_[1][3]) +
+				mat_[0][3] * (mat_[1][0] * mat_[2][1] - mat_[2][0] * mat_[1][1]));
+			invertMatrix.mat_[3][1] = (
+				mat_[0][0] * (mat_[2][1] * mat_[3][2] - mat_[3][1] * mat_[2][2]) -
+				mat_[0][1] * (mat_[2][0] * mat_[3][2] - mat_[3][0] * mat_[2][2]) +
+				mat_[0][2] * (mat_[2][0] * mat_[3][1] - mat_[3][0] * mat_[2][1]));
+			invertMatrix.mat_[3][2] = -(
+				mat_[0][0] * (mat_[1][1] * mat_[3][2] - mat_[3][1] * mat_[1][2]) -
+				mat_[0][1] * (mat_[1][0] * mat_[3][2] - mat_[3][0] * mat_[1][2]) +
+				mat_[0][2] * (mat_[1][0] * mat_[3][1] - mat_[3][0] * mat_[1][1]));
+			invertMatrix.mat_[3][3] = (
+				mat_[0][0] * (mat_[1][1] * mat_[2][2] - mat_[2][1] * mat_[1][2]) -
+				mat_[0][1] * (mat_[1][0] * mat_[2][2] - mat_[2][0] * mat_[1][2]) +
+				mat_[0][2] * (mat_[1][0] * mat_[2][1] - mat_[2][0] * mat_[1][1]));
 			// 行列式の逆数を掛ける
 			float invDeterm = 1.f / determ;
 			invertMatrix *= invDeterm;
@@ -609,19 +609,19 @@ namespace Nyx  {
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix& SetTransform(
-			Matrix* out, 
+		static matrix& set_transform(
+			matrix* out, 
 			float sx, float sy, float sz, 
 			float rx, float ry, float rz, 
 			float tx, float ty, float tz) {
-				Matrix scaling ;
-				Matrix rotation ;
-				Matrix translation ;
+				matrix scaling ;
+				matrix rotation ;
+				matrix translation ;
 
 
-				SetScale(&scaling, sx,sy, sz);
-				SetRotateZXY(&rotation, rz,rx, ry);
-				SetTranslate(&translation, tx,ty, tz);
+				set_scale(&scaling, sx,sy, sz);
+				set_rotate_zxy(&rotation, rz,rx, ry);
+				set_translate(&translation, tx,ty, tz);
 
 				*out = scaling * rotation* translation; 
 
@@ -636,9 +636,9 @@ namespace Nyx  {
 		* @param float 回転ベクトル
 		* @param float 平行移動ベクトル
 		*/
-		static Matrix& SetTransform(Matrix* matrix, Vector3f sv, Vector3f rv, Vector3f tv) 
+		static matrix& set_transform(matrix* matrix, vector3f sv, vector3f rv, vector3f tv) 
 		{
-			SetTransform(matrix, sv.x, sv.y, sv.z, rv.x, rv.y, rv.z, tv.x, tv.y, tv.z);
+			set_transform(matrix, sv.x, sv.y, sv.z, rv.x, rv.y, rv.z, tv.x, tv.y, tv.z);
 			return *matrix;
 		}
 
@@ -655,18 +655,18 @@ namespace Nyx  {
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix& AddTransform(
-			Matrix* matrix, 
+		static matrix& add_transform(
+			matrix* m, 
 			float sx, float sy, float sz, 
 			float rx, float ry, float rz, 
 			float tx, float ty, float tz) 
 		{
-			Matrix mat;
-			SetTransform(&mat, sx, sy, sz, rx, ry, rz, tx, ty, tz);
+			matrix mat;
+			set_transform(&mat, sx, sy, sz, rx, ry, rz, tx, ty, tz);
 
-			*matrix = mat * (*matrix);
+			*m = mat * (*m);
 
-			return *matrix;
+			return *m;
 		}
 
 
@@ -677,13 +677,13 @@ namespace Nyx  {
 		* @param float 回転ベクトル
 		* @param float 平行移動ベクトル
 		*/
-		static Matrix& AddTransform(Matrix* matrix, Vector3f sv, Vector3f rv, Vector3f tv) 
+		static matrix& add_transform(matrix* m, vector3f sv, vector3f rv, vector3f tv)
 		{
-			Matrix mat;
-			mat.SetTransform(&mat, sv, rv, tv);
-			*matrix = mat * (*matrix); 
+			matrix mat;
+			mat.set_transform(&mat, sv, rv, tv);
+			*m = mat * (*m);
 
-			return *matrix;
+			return *m;
 		}
 
 		//--------------------------------------------------------------------------------------
@@ -696,12 +696,12 @@ namespace Nyx  {
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix& SetTranslate(Matrix* matrix, float tx, float ty, float tz) {
-			matrix->Set(1.f, 0.f, 0.f, 0.f,
+		static matrix& set_translate(matrix* m, float tx, float ty, float tz) {
+			m->set(1.f, 0.f, 0.f, 0.f,
 				0.f, 1.f, 0.f, 0.f,
 				0.f, 0.f, 1.f, 0.f,
 				tx,  ty,  tz,  1.f);
-			return  *matrix;
+			return  *m;
 		}
 
 
@@ -710,8 +710,8 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Vector3f& スケーリングベクトル
 		*/
-		static Matrix& Matrix::SetTranslate(Matrix* matrix, const Vector3f& tv) {
-			return SetTranslate(matrix, tv.x, tv.y, tv.z);
+		static matrix& matrix::set_translate(matrix* m, const vector3f& tv) {
+			return set_translate(m, tv.x, tv.y, tv.z);
 		}
 
 
@@ -722,11 +722,11 @@ namespace Nyx  {
 		* @param float translateY
 		* @param float translateZ
 		*/
-		static Matrix& Matrix::AddTranslate(Matrix* matrix, float tx, float ty, float tz) {
-			Matrix translate;
-			translate.SetTranslate(&translate, tx, ty, tz);
-			*matrix = translate * (*matrix);
-			return *matrix;
+		static matrix& matrix::add_translate(matrix* m, float tx, float ty, float tz) {
+			matrix translate;
+			translate.set_translate(&translate, tx, ty, tz);
+			*m = translate * (*m);
+			return *m;
 		}
 
 
@@ -735,8 +735,8 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Vector3f& 平行移動ベクトル
 		*/
-		static Matrix& Matrix::AddTranslate(Matrix* matrix,  const Vector3f& tv) {
-			return AddTranslate(matrix, tv.x, tv.y, tv.z);
+		static matrix& matrix::add_translate(matrix* m, const vector3f& tv) {
+			return add_translate(m, tv.x, tv.y, tv.z);
 		}
 
 		//--------------------------------------------------------------------------------------
@@ -749,12 +749,12 @@ namespace Nyx  {
 		* @param float scaleY
 		* @param float scaleZ
 		*/
-		static Matrix& Matrix::SetScale(Matrix* matrix, float sx, float sy, float sz) {
-			matrix->Set(sx, 0.f, 0.f, 0.f,
+		static matrix& matrix::set_scale(matrix* m, float sx, float sy, float sz) {
+			m->set(sx, 0.f, 0.f, 0.f,
 				0.f, sy , 0.f, 0.f,
 				0.f, 0.f, sz , 0.f,
 				0.f, 0.f, 0.f, 1.f);
-			return  *matrix;
+			return  *m;
 		}
 
 
@@ -763,8 +763,8 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Vector3f& スケーリングベクトル
 		*/
-		static Matrix& Matrix::SetScale(Matrix* matrix, const Vector3f& sv) {
-			return SetScale(matrix, sv.x, sv.y, sv.z);
+		static matrix& matrix::set_scale(matrix* m, const vector3f& sv) {
+			return set_scale(m, sv.x, sv.y, sv.z);
 		}
 
 		/**
@@ -774,11 +774,11 @@ namespace Nyx  {
 		* @param float scaleY
 		* @param float scaleZ
 		*/
-		static Matrix& Matrix::AddScale(Matrix* matrix, float sx, float sy, float sz) {
-			Matrix scale;
-			scale.SetScale(&scale, sx, sy, sz);
-			*matrix = scale * (*matrix);
-			return  *matrix;
+		static matrix& matrix::add_scale(matrix* m, float sx, float sy, float sz) {
+			matrix scale;
+			scale.set_scale(&scale, sx, sy, sz);
+			*m = scale * (*m);
+			return  *m;
 		}
 
 
@@ -787,8 +787,8 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Vector3f& スケーリングベクトル
 		*/
-		static Matrix& Matrix::AddScale(Matrix* matrix, const Vector3f& sv) {
-			return AddScale(matrix, sv.x, sv.y, sv.z);
+		static matrix& matrix::add_scale(matrix* m, const vector3f& sv) {
+			return add_scale(m, sv.x, sv.y, sv.z);
 		}
 
 		//--------------------------------------------------------------------------------------
@@ -799,15 +799,15 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::SetRotateX(Matrix* matrix, float angle) {
-			float c = Math::Cos(angle);
-			float s = Math::Sin(angle);
+		static matrix& matrix::set_rotate_x(matrix* m, float angle) {
+			float c = math::cos(angle);
+			float s = math::sin(angle);
 
-			matrix->Set(1.f, 0.f, 0.f, 0.f,
+			m->set(1.f, 0.f, 0.f, 0.f,
 				0.f,   c,   s, 0.f,
 				0.f,  -s,   c, 0.f,
 				0.f, 0.f, 0.f, 1.f);
-			return  *matrix;
+			return  *m;
 		}
 
 
@@ -816,11 +816,11 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::AddRotateX(Matrix* matrix, float angle) {
-			Matrix rotation;
-			rotation.SetRotateX(&rotation, angle);
-			*matrix = rotation * (*matrix);
-			return *matrix;
+		static matrix& matrix::add_rotate_x(matrix* m, float angle) {
+			matrix rotation;
+			rotation.set_rotate_x(&rotation, angle);
+			*m = rotation * (*m);
+			return *m;
 		}
 
 
@@ -829,15 +829,15 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::SetRotateY(Matrix* matrix, float angle) {
-			float c = Math::Cos(angle);
-			float s = Math::Sin(angle);
+		static matrix& matrix::set_rotate_y(matrix* m, float angle) {
+			float c = math::cos(angle);
+			float s = math::sin(angle);
 
-			matrix->Set(c  , 0.f,  -s, 0.f,
+			m->set(c, 0.f, -s, 0.f,
 				0.f, 1.f, 0.f, 0.f,
 				s  , 0.f,   c, 0.f,
 				0.f, 0.f, 0.f, 1.f);
-			return  *matrix;
+			return  *m;
 
 		}
 
@@ -846,11 +846,11 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::AddRotateY(Matrix* matrix, float angle) {
-			Matrix rotation ;
-			rotation.SetRotateY(&rotation, angle);
-			*matrix = rotation * (*matrix);
-			return *matrix;
+		static matrix& matrix::add_rotate_y(matrix* m, float angle) {
+			matrix rotation ;
+			rotation.set_rotate_y(&rotation, angle);
+			*m = rotation * (*m);
+			return *m;
 		}
 
 
@@ -859,15 +859,15 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::SetRotateZ(Matrix* matrix, float angle) {
-			float c = Math::Cos(angle);
-			float s = Math::Sin(angle);
+		static matrix& matrix::set_rotate_z(matrix* m, float angle) {
+			float c = math::cos(angle);
+			float s = math::sin(angle);
 
-			matrix->Set( c,   s, 0.f, 0.f,
+			m->set(c, s, 0.f, 0.f,
 				-s,   c, 0.f, 0.f,
 				0.f, 0.f, 1.f, 0.f,
 				0.f, 0.f, 0.f, 1.f);
-			return  *matrix;
+			return  *m;
 
 		}
 
@@ -877,11 +877,11 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::AddRotateZ(Matrix* matrix, float angle) {
-			Matrix rotation ;
-			rotation.SetRotateZ(&rotation, angle);
-			*matrix = rotation * (*matrix);
-			return *matrix;
+		static matrix& matrix::add_rotate_z(matrix* m, float angle) {
+			matrix rotation ;
+			rotation.set_rotate_z(&rotation, angle);
+			*m = rotation * (*m);
+			return *m;
 		}
 
 
@@ -892,13 +892,13 @@ namespace Nyx  {
 		* @param float ピッチ角
 		* @param float ヨー角
 		*/
-		static Matrix& Matrix::SetRotateZXY(Matrix* matrix, float roll, float pitch, float yaw) {
-			Matrix tmp ;
-			*matrix *= SetRotateZ(&tmp,roll);
-			*matrix *= SetRotateX(&tmp,pitch);
-			*matrix *= SetRotateY(&tmp,yaw);
+		static matrix& matrix::set_rotate_zxy(matrix* m, float roll, float pitch, float yaw) {
+			matrix tmp ;
+			*m *= set_rotate_z(&tmp, roll);
+			*m *= set_rotate_x(&tmp, pitch);
+			*m *= set_rotate_y(&tmp, yaw);
 
-			return  *matrix;
+			return  *m;
 		}
 
 
@@ -907,8 +907,8 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Vector3f& 回転ベクトル
 		*/
-		static Matrix& Matrix::SetRotateZXY(Matrix* matrix, const Vector3f& rv) {
-			return SetRotateZXY(matrix, rv.x, rv.y, rv.z);
+		static matrix& matrix::set_rotate_zxy(matrix* m, const vector3f& rv) {
+			return set_rotate_zxy(m, rv.x, rv.y, rv.z);
 		}
 
 
@@ -918,9 +918,9 @@ namespace Nyx  {
 		* @param const Axis3f scaleX
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::SetRotateAxis(Matrix* matrix, const Axis3f& axis, float angle) {
-			float c = Math::Cos(angle);
-			float s = Math::Sin(angle);
+		static matrix& matrix::set_rotate_axis(matrix* m, const axis3f& axis, float angle) {
+			float c = math::cos(angle);
+			float s = math::sin(angle);
 			float xx = axis.x * axis.x;
 			float yy = axis.y * axis.y;
 			float zz = axis.z * axis.z;
@@ -928,12 +928,12 @@ namespace Nyx  {
 			float xz = axis.x * axis.z;
 			float yz = axis.y * axis.z;
 
-			matrix->Set(
+			m->set(
 				xx * (1 - c) + c         , xy * (1 - c) + axis.z * s, xz * (1 - c) - axis.y * s, 0,
 				xy * (1 - c) - axis.z * c, yy * (1 - c) + c         , xz * (1 - c) - axis.x * s, 0,
 				xz * (1 - c) + axis.y * s, yz * (1 - c) - axis.x * s, zz * (1 - c) + c         , 0,
 				0                        , 0                        , 0                        , 1);
-			return *matrix;
+			return *m;
 		}
 
 
@@ -943,11 +943,11 @@ namespace Nyx  {
 		* @param constAxis3f 軸
 		* @param float 回転角
 		*/
-		static Matrix& Matrix::AddRotateAxis(Matrix* matrix, const Axis3f& axis, float angle) {
-			Matrix rotation;
-			rotation.SetRotateAxis(&rotation, axis, angle);
-			*matrix = rotation * (*matrix);
-			return *matrix;
+		static matrix& matrix::add_rotate_axis(matrix* m, const axis3f& axis, float angle) {
+			matrix rotation;
+			rotation.set_rotate_axis(&rotation, axis, angle);
+			*m = rotation * (*m);
+			return *m;
 		}
 
 
@@ -956,7 +956,7 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Quaternion<float>& quoternion
 		*/		
-		static Matrix& Matrix::SetRotationQuaternion(Matrix* matrix, const Quaternion<float>& quaternion) {
+		static matrix& matrix::set_rotate_from_quaternion(matrix* m, const quaternion<float>& quaternion) {
 			float x2 = quaternion.x + quaternion.x;
 			float y2 = quaternion.y + quaternion.y;
 			float z2 = quaternion.z + quaternion.z;
@@ -971,11 +971,11 @@ namespace Nyx  {
 			float wz2 = quaternion.w * z2;
 
 
-			matrix->Set(1 - (yy2 + zz2), xy2 - wz2      , xz2 + wy2      , 0,
+			m->set(1 - (yy2 + zz2), xy2 - wz2, xz2 + wy2, 0,
 				xy2 + wz2      , 1 - (xx2 + zz2), yz2 - wx2      , 0,
 				xy2 - wy2      , yz2 + wx2      , 1 - (xx2 + yy2), 0,
 				0              , 0              , 0,              1);
-			return *matrix;
+			return *m;
 		}
 
 
@@ -984,17 +984,14 @@ namespace Nyx  {
 		* @param Matrix* 出力行列
 		* @param const Quaternion<float>& quoternion
 		*/
-		static Matrix& Matrix::AddRotationQuaternion(Matrix* matrix, const Quaternion<float>& quoternion) {
-			Matrix rotation;
-			rotation.SetRotationQuaternion(&rotation, quoternion);
-			*matrix = rotation * (*matrix);
+		static matrix& matrix::add_rotate_from_quaternion(matrix* m, const quaternion<float>& quoternion) {
+			matrix rotation;
+			rotation.set_rotate_from_quaternion(&rotation, quoternion);
+			*m = rotation * (*m);
 
-			return *matrix;
+			return *m;
 		}
 	};
-
-	//別名定義
-	typedef Matrix Matrix44;
 }
 //-----------------------------------------------------
 #endif

@@ -2,14 +2,14 @@
 #define NYX_CORE_INCLUDED_FONT_INFO_H_
 #include "Primitive/Color4.h"
 
-namespace Nyx {
+namespace nyx {
 
 	///フォント情報
-	struct FontInfo
+	struct font_info
 	{
 		int			   fontSize;///フォントサイズ
 		std::wstring   fontFace;///フォントフェイス
-		Color4c fontColor;///フォントカラー
+		color4c fontColor;///フォントカラー
 	};
 }
 #endif

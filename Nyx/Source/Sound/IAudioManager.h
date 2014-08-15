@@ -18,25 +18,25 @@
 #define NYX_CORE_INCLUDED_IAUDIO_MANAGER_H_
 #include "AudioUtility.h"
 
-namespace Nyx {
+namespace nyx {
 	//前方宣言
-	class IAudioListener;
-	class  AudioCache;
+	class iaudio_listener;
+	class audio_cache;
 
 	///オーディオマネージャインタフェース
-	class IAudioManager {
+	class iaudio_manager {
 	public:
 		/**
 		* デストラクタ
 		*/
-		virtual ~IAudioManager() {}
+		virtual ~iaudio_manager() {}
 
 
 		/**
 		* オーディオマネージャの初期化します
 		* const AudioDesc& オーディオ初期化記述子
 		*/
-		virtual void Initialize(const AudioDesc& desc) = 0;
+		virtual void initialize(const audio_desc& desc) = 0;
 
 
 		/**
@@ -45,14 +45,14 @@ namespace Nyx {
 		* @param AudioBufferDesc バッファタイプ
 		* @return std::shared_ptr<AudioBuffer> オーディオバッファ
 		*/
-		virtual std::shared_ptr<IAudioBuffer> CreateAudioBuffer(const std::wstring& fileName, const AudioBufferDesc& bufferDesc) = 0;
+		virtual std::shared_ptr<iaudio_buffer> create_audio_buffer(const std::wstring& fileName, const audio_buffer_desc& bufferDesc) = 0;
 
 
 		/**
 		* オーディオリスナーを生成します
 		* @return std::shared_ptr<IAudioListener> 
 		*/
-		virtual std::shared_ptr<IAudioListener> CreateAudioListener() = 0;	
+		virtual std::shared_ptr<iaudio_listener> create_audio_listener() = 0;	
 
 
 		/**
@@ -61,7 +61,7 @@ namespace Nyx {
 		* @param SoundBufferType バッファタイプ
 		* @param std::int& index 読み込んできたオーディオの管理番号
 		*/
-		virtual std::shared_ptr<AudioCache> Load(const std::wstring& fileName, const AudioBufferDesc& desc) = 0;
+		virtual std::shared_ptr<audio_cache> load_audio(const std::wstring& fileName, const audio_buffer_desc& desc) = 0;
 	};
 }
 #endif

@@ -21,10 +21,10 @@
 #include "Primitive/Vector3.h"
 #include "Primitive/Vector4.h"
 
-namespace Nyx {
+namespace nyx {
 
 	template<typename T=float>
-	class Quaternion  {
+	class quaternion  {
 		static_assert(std::is_floating_point<T>::value, "T required floating_point.");
 	public:
 		T w;///< w値
@@ -34,11 +34,11 @@ namespace Nyx {
 
 
 		///ゼロ定数
-		static const Quaternion<T> Zero;
+		static const quaternion<T> ZERO;
 		/** 
 		* コンストラクタ
 		*/
-		Quaternion<T>()
+		quaternion<T>()
 			:w(0), x(0), y(0), z(0) {
 		}
 
@@ -46,7 +46,7 @@ namespace Nyx {
 		/** コンストラクタ
 		* @param Vector4f
 		*/
-		Quaternion<T>(const float w, const Vector3<T>& v) 
+		quaternion<T>(const float w, const vector3<T>& v) 
 			:w(w), x(v.x), y(v.y), z(v.z) {
 		}
 
@@ -54,7 +54,7 @@ namespace Nyx {
 		/** コンストラクタ
 		* @param Vector4f
 		*/
-		Quaternion<T>(const Vector4<T>& v) 
+		quaternion<T>(const vector4<T>& v) 
 			:w(v.w), x(v.x), y(v.y), z(v.z) {
 		}
 
@@ -65,7 +65,7 @@ namespace Nyx {
 		* @param T y
 		* @param T z
 		*/
-		Quaternion<T> (const T w, const T x, const T y, const T z) {
+		quaternion<T> (const T w, const T x, const T y, const T z) {
 			this->w = w;
 			this->x = x;
 			this->y = y;
@@ -77,8 +77,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T>
 		*/
-		Quaternion<T> operator + (const Quaternion<T>& q) const {
-			return Quaternion<T>(w + q.w, x + q.x, y + q.y, z + q.z);
+		quaternion<T> operator + (const quaternion<T>& q) const {
+			return quaternion<T>(w + q.w, x + q.x, y + q.y, z + q.z);
 		}
 
 
@@ -86,8 +86,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T> operator - (const Quaternion<T>& q) const {
-			return Quaternion<T>(w - q.w, x - q.x, y - q.y, z - q.z);
+		quaternion<T> operator - (const quaternion<T>& q) const {
+			return quaternion<T>(w - q.w, x - q.x, y - q.y, z - q.z);
 		}
 
 
@@ -95,8 +95,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T> operator * (const T s) const  {
-			return Quaternion<T>(w * s, x * s, y * s, z * s);
+		quaternion<T> operator * (const T s) const  {
+			return quaternion<T>(w * s, x * s, y * s, z * s);
 		}
 
 
@@ -104,11 +104,11 @@ namespace Nyx {
 		* @param const T s
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T> operator / (const T s) const  {
-			if (s <= Math::Epsilon) {
-				return std::move(Quaternion<T>(*this));
+		quaternion<T> operator / (const T s) const  {
+			if (s <= math::EPSILON) {
+				return std::move(quaternion<T>(*this));
 			}
-			return Quaternion<T>(w / s, x / s, y / s, z / s);
+			return quaternion<T>(w / s, x / s, y / s, z / s);
 		}
 		
 
@@ -116,8 +116,8 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> 
 		*/
-		Quaternion<T> operator ~ () const {
-			return Quaternion<T>(w, -x, -y, -z);
+		quaternion<T> operator ~ () const {
+			return quaternion<T>(w, -x, -y, -z);
 		}
 
 
@@ -125,7 +125,7 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> &
 		*/
-		Quaternion<T>& operator += (const Quaternion<T>& q) {
+		quaternion<T>& operator += (const quaternion<T>& q) {
 			this->w += q.w;
 			this->x += q.x;
 			this->y += q.y;
@@ -139,7 +139,7 @@ namespace Nyx {
 		* @param const Quaternion<T> q
 		* @return Quaternion<T> &
 		*/
-		Quaternion<T>& operator -= (const Quaternion<T>& q) {
+		quaternion<T>& operator -= (const quaternion<T>& q) {
 			this->w -= q.w;
 			this->x -= q.x;
 			this->y -= q.y;
@@ -153,7 +153,7 @@ namespace Nyx {
 		* @param const T q
 		* @return Quaternion<T> &
 		*/
-		Quaternion<T>& operator *= (const T s) {
+		quaternion<T>& operator *= (const T s) {
 			this->w *= s;
 			this->x *= s;
 			this->y *= s;
@@ -167,8 +167,8 @@ namespace Nyx {
 		* @param const T q
 		* @return Quaternion<T> &
 		*/
-		Quaternion<T>& operator /= (const T s) {
-			if (s <= Math::Epsilon) {
+		quaternion<T>& operator /= (const T s) {
+			if (s <= math::EPSILON) {
 				return *this;
 			}
 
@@ -184,7 +184,7 @@ namespace Nyx {
 		/**
 		* 恒等クォターニオン
 		*/
-		void SetupIdentity() {
+		void set_identity() {
 			this->w = 1;
 			this->x = 0;
 			this->y = 0;
@@ -195,15 +195,15 @@ namespace Nyx {
 		/** クォータニオンの長さ
 		* @return float 長さ
 		*/
-		T Length() const {
-			return Math::Sqrt(x*x + y*y + z*z + w*w);
+		T norm() const {
+			return math::sqrt(x*x + y*y + z*z + w*w);
 		}
 
 
 		/** クォータニオンの2乗の長さ
 		* @return float 2乗の長さ
 		*/
-		T SquaredLength() const {
+		T squared_norm() const {
 			return (x*x + y*y + z*z + w*w);
 		}
 
@@ -211,7 +211,7 @@ namespace Nyx {
 		/**
 		* 内積
 		*/
-		T Dot(const Quaternion<T>& q) const {
+		T dot(const quaternion<T>& q) const {
 			return w * q.w + x * q.x + y * q.y + z * q.z;
 		}
 		
@@ -219,24 +219,24 @@ namespace Nyx {
 		/**
 		* 外積
 		*/
-		Quaternion<T> Cross(const Quaternion<T>& q) const {
-			Vector3<T> v1    = Vector3<T>(  x,   y,   z);
-			Vector3<T> v2    = Vector3<T>(q.x, q.y, q.z);
-			float dot        = v1.Dot(v2);
-			Vector3<T> cross = v1.Cross(v2);
-			return Quaternion(w * q.w - dot, cross + v2*w + v1*q.w);
+		quaternion<T> cross(const quaternion<T>& q) const {
+			vector3<T> v1    = vector3<T>(  x,   y,   z);
+			vector3<T> v2    = vector3<T>(q.x, q.y, q.z);
+			float dot        = v1.dot(v2);
+			vector3<T> cross = v1.cross(v2);
+			return quaternion(w * q.w - dot, cross + v2*w + v1*q.w);
 		}
 
 		/**
 		* 逆数
 		*/
-		Quaternion<T> Inverse() const {
-			const auto length = SquaredLength();
-			if (length <= Math::Epsilon) {
-				return Quaternion<T>(w, x, y, z);
+		quaternion<T> inverse() const {
+			const auto length = squared_norm();
+			if (length <= math::EPSILON) {
+				return quaternion<T>(w, x, y, z);
 			}
 
-			Quaternion<T> q(w, x, y, z);
+			quaternion<T> q(w, x, y, z);
 			q = ~q;
 			return q / length;
 		}
@@ -244,9 +244,9 @@ namespace Nyx {
 		/** 
 		* 正規化
 		*/
-		void Normalize() {
-			float length = Math::Sqrt(x * x + y * y + z * z + w * w);
-			if (length <= Math::Epsilon) {
+		void normalize() {
+			float length = math::sqrt(x * x + y * y + z * z + w * w);
+			if (length <= math::EPSILON) {
 				length = 1;
 			}
 
@@ -259,10 +259,10 @@ namespace Nyx {
 		/**
 		* Sphirical Lerp
 		*/
-		static Quaternion<T> Slerp(const Quaternion<T>& lhs, const Quaternion<T>& rhs, float t) {
-			Quaternion<T> q1(lhs);
-			Quaternion<T> q2(rhs);
-			float cosOmega = q1.Dot(q2);
+		static quaternion<T> slerp(const quaternion<T>& lhs, const quaternion<T>& rhs, float t) {
+			quaternion<T> q1(lhs);
+			quaternion<T> q2(rhs);
+			float cosOmega = q1.dot(q2);
 			if (cosOmega < 0.f) {
 				q2 = ~q2;
 				cosOmega = - cosOmega;
@@ -274,16 +274,16 @@ namespace Nyx {
 				k1 = t;
 			}
 			else {
-				const auto sinOmega = Math::Sqrt(1.f - cosOmega* cosOmega);
-				const auto omega    = Math::Atan2(sinOmega, cosOmega);
+				const auto sinOmega = math::sqrt(1.f - cosOmega* cosOmega);
+				const auto omega    = math::atan2(sinOmega, cosOmega);
 				const auto inverse  = 1.f/sinOmega;
 
-				k0 = Math::Sin((1.f - t) * omega) * inverse;
-				k1 = Math::Sin(t * omega) * inverse;
+				k0 = math::sin((1.f - t) * omega) * inverse;
+				k1 = math::sin(t * omega) * inverse;
 			}
 
 
-			return Quaternion<T>(q1.w * k0 + q2.w * k1, q1.x * k0+q2.x * k1, 
+			return quaternion<T>(q1.w * k0 + q2.w * k1, q1.x * k0+q2.x * k1, 
 								 q1.y * k0 + q2.y * k1, q1.z * k0+q2.z * k1);
 		}
 
@@ -291,9 +291,9 @@ namespace Nyx {
 		/**
 		* クォターニオンからから回転角を取り出す
 		*/
-		static float GetRotationAngle(const Quaternion<T>& q) {
-			float tmp =  Math::Clamp(w, -1.0, 1.0);
-			float theta = Math::Asin(tmp);
+		static float get_rotation_angle(const quaternion<T>& q) {
+			float tmp =  math::clamp(w, -1.0, 1.0);
+			float theta = math::asin(tmp);
 
 			return theta;
 		}
@@ -302,16 +302,16 @@ namespace Nyx {
 		/**
 		* クォターニオンから回転軸を取り出す
 		*/
-		static Axis3f GetRotationAxis(){
+		static axis3f get_rotation_axis(){
 			float sinTheta  = 1.f - w * w;
 
-			if (Math::Abs(sinTheta) <= Math::Epsilon) {
-				return Axis3f(1.f, 1.f, 1.f);
+			if (math::abs(sinTheta) <= math::EPSILON) {
+				return axis3f(1.f, 1.f, 1.f);
 			}
 
-			float oneOverSinTheta = 1.f / Math::Sqrt(sinTheta);
+			float oneOverSinTheta = 1.f / math::sqrt(sinTheta);
 
-			return Axis3f(x * oneOverSinTheta,
+			return axis3f(x * oneOverSinTheta,
 						  y * oneOverSinTheta,
 						  z * oneOverSinTheta);
 		}
@@ -319,10 +319,10 @@ namespace Nyx {
 		/**
 		* X軸周りの回転をセットアップします
 		*/
-		void SetupRotationAxisX(T theta) {
+		void set_rotation_axis_x(T theta) {
 			T thetaOver2 = theta * 0.5f;
-			w = Math::Cos(thetaOver2);
-			x = Math::Sin(thetaOver2);
+			w = math::cos(thetaOver2);
+			x = math::sin(thetaOver2);
 			y = 0;
 			z = 0;
 		}
@@ -331,11 +331,11 @@ namespace Nyx {
 		/**
 		* Y軸周りの回転をセットアップする
 		*/
-		void SetupRotationAxisY(T theta) {
+		void set_rotation_axis_y(T theta) {
 			T thetaOver2 = theta * 0.5f;
-			w = Math::Cos(thetaOver2);
+			w = math::cos(thetaOver2);
 			x = 0;
-			y = Math::Sin(thetaOver2);
+			y = math::sin(thetaOver2);
 			z = 0;
 		}
 		
@@ -343,24 +343,24 @@ namespace Nyx {
 		/**
 		* Z軸周りの回転をセットアップする
 		*/
-		void SetupRotationAxisZ(T theta) {
+		void set_rotation_axis_z(T theta) {
 			T thetaOver2 = theta * 0.5f;
-			w = Math::Cos(thetaOver2);
+			w = math::cos(thetaOver2);
 			x = 0;
 			y = 0;
-			z = Math::Sin(thetaOver2);
+			z = math::sin(thetaOver2);
 		}
 
 		/**
 		* 任意軸周りの回転
 		*/
-		void SetupRotationAxis(const Vector3f& axis, T theta) {
-			Assert(Math::Abs(axis.Length() - 1) <= Math::Epsilon);
+		void set_rotation_axis(const vector3f& axis, T theta) {
+			NYX_ASSERT(math::abs(axis.Length() - 1) <= math::EPSILON);
 
 			T radian   = theta * 0.5;
-			T sinTheta = Math::Sin(radian);
+			T sinTheta = math::sin(radian);
 
-			w = Math::Cos(radian);
+			w = math::cos(radian);
 			x = axis.x * sinTheta;
 			y = axis.y * sinTheta;
 			z = axis.z * sinTheta;
@@ -370,10 +370,10 @@ namespace Nyx {
 		/**
 		* 回転軸を追加します
 		*/
-		void AddRotationAxis(const Vector3f& axis, T radian) {
-			Quaternion<T> quaternion;
-			quaternion.SetRotationAxis(axis, radian);
-			(*this) = quaternion.Cross(*this);
+		void add_rotation_axis(const vector3f& axis, T radian) {
+			quaternion<T> quaternion;
+			quaternion.set_rotation_axis(axis, radian);
+			(*this) = quaternion.cross(*this);
 		}
 	};
 
@@ -383,6 +383,6 @@ namespace Nyx {
 	//--------------------------------------------------------------------------------------
 	// ゼロ四元数
 	template<typename T>
-	const Quaternion<T>  Quaternion<T>::Zero(0, 0, 0, 0);
+	const quaternion<T>  quaternion<T>::ZERO(0, 0, 0, 0);
 }
 #endif

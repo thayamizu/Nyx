@@ -21,48 +21,48 @@
 #include "WaveFileHeader.h"
 #include "WaveReader.h"
 
-namespace Nyx {
+namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	WaveReader::WaveReader() 
+	wave_reader::wave_reader() 
 		: isReadHeader_(false), waveFile_(nullptr), cursor_(0), fileName_(L"") {
-			::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
+			::ZeroMemory((void*)&waveHeader_, sizeof(wav_file_header));
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	WaveReader::WaveReader(const std::wstring& fileName) 
+	wave_reader::wave_reader(const std::wstring& fileName) 
 		: isReadHeader_(false), waveFile_(nullptr), cursor_(0), fileName_(fileName) {
-			::ZeroMemory((void*)&waveHeader_, sizeof(WaveFileHeader));
+			::ZeroMemory((void*)&waveHeader_, sizeof(wav_file_header));
 
-			Open(fileName);
+			open(fileName);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::Open(const std::wstring& fileName) {
+	void wave_reader::open(const std::wstring& fileName) {
 		fileName_ = fileName;
-		waveFile_ = std::make_shared<File>(fileName, AccessAttribute::ReadMode);
+		waveFile_ = std::make_shared<file>(fileName, FILE_ACCESS_ATTRIBUTE::FILE_ACCESS_ATTRIBUTE_READ);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void WaveReader::SetCursor(ulong cursor) {
+	void wave_reader::set_cursor(uint64_t cursor) {
 		const auto size = waveHeader_.dataChunk.chunkSize;
 		cursor_ += cursor;
 		if (size <= cursor) {
 			cursor_ = 0;
 		}
-		waveFile_->SeekBegin(sizeof(WaveFileHeader) + cursor_);
+		waveFile_->seek_begin(sizeof(wav_file_header) + cursor_);
 	}
 
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	ulong WaveReader::GetCursor() const {
+	uint64_t wave_reader::get_cursor() const {
 		return cursor_;
 	}
 
@@ -88,30 +88,30 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const WaveFileHeader& WaveReader::ReadHeader() {
-		Assert(waveFile_->IsOpened());
+	const wav_file_header& wave_reader::read_header() {
+		NYX_ASSERT(waveFile_->is_opened());
 		if (isReadHeader_) {
 			return waveHeader_;
 		}
 		//Waveファイルヘッダ読み取り
-		waveFile_->Read(&waveHeader_, sizeof(WaveFileHeader)); 
+		waveFile_->read(&waveHeader_, sizeof(wav_file_header)); 
 
 		//フォーマットチェック
 		if (strncmp(waveHeader_.riffID, "RIFF", 4) != 0) {
-			DebugOutput::Trace("Waveファイルのフォーマットが不正です。RIFFチャンクが正しくありません。");
-			throw FormatException("Waveファイルのフォーマットが不正です。RIFFチャンクが正しくありません。");
+			debug_out::trace("Waveファイルのフォーマットが不正です。RIFFチャンクが正しくありません。");
+			throw format_exception("Waveファイルのフォーマットが不正です。RIFFチャンクが正しくありません。");
 		}
 		else if (strncmp(waveHeader_.waveID, "WAVE", 4) != 0) {
-			DebugOutput::Trace("Waveファイルのフォーマットが不正です。WAVEタグが正しくありません。");
-			throw FormatException("Waveファイルのフォーマットが不正です。WAVEタグが正しくありません。");
+			debug_out::trace("Waveファイルのフォーマットが不正です。WAVEタグが正しくありません。");
+			throw format_exception("Waveファイルのフォーマットが不正です。WAVEタグが正しくありません。");
 		}
 		else if (strncmp(waveHeader_.formatChunk.formatChunkID, "fmt ", 4) != 0) {
-			DebugOutput::Trace("Waveファイルのフォーマットが不正です。fmtチャンクが正しくありません。");
-			throw FormatException("Waveファイルのフォーマットが不正です。fmtチャンクが正しくありません。");
+			debug_out::trace("Waveファイルのフォーマットが不正です。fmtチャンクが正しくありません。");
+			throw format_exception("Waveファイルのフォーマットが不正です。fmtチャンクが正しくありません。");
 		}
 		else if (strncmp(waveHeader_.dataChunk.dataChunkID, "data", 4) != 0) {
-			DebugOutput::Trace("Waveファイルのフォーマットが不正です。dataチャンクが正しくありません。");
-			throw FormatException("Waveファイルのフォーマットが不正です。dataチャンクが正しくありません。");
+			debug_out::trace("Waveファイルのフォーマットが不正です。dataチャンクが正しくありません。");
+			throw format_exception("Waveファイルのフォーマットが不正です。dataチャンクが正しくありません。");
 		}
 
 		isReadHeader_= true;
@@ -121,10 +121,10 @@ namespace Nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	std::shared_ptr<char> WaveReader::Read(const size_t bufferSize, ulong* readSize){
-		Assert(waveFile_->IsOpened());
+	std::shared_ptr<char> wave_reader::read(const size_t bufferSize, uint64_t* readSize){
+		NYX_ASSERT(waveFile_->is_opened());
 		if (!isReadHeader_) {
-			ReadHeader();
+			read_header();
 		} 
 		const auto size = waveHeader_.dataChunk.chunkSize;
 		if (size < (cursor_ + bufferSize)) {
@@ -136,7 +136,7 @@ namespace Nyx {
 
 		//バッファ初期化
 		char * buffer = new char[*readSize];
-		waveFile_->Read(buffer, *readSize); 
+		waveFile_->read(buffer, *readSize); 
 
 		//スマートポインタの管理下に置く
 		return std::shared_ptr<char>(

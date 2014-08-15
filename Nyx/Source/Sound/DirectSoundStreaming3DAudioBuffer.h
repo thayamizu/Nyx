@@ -18,12 +18,12 @@
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_STREAMING_3D_AUDIO_BUFFER_H_
 #include "DirectSoundDefinition.h"
 #include "DirectSound3DAudioBuffer.h"
-namespace Nyx {
-	struct AudioBufferDesc;
-	class SoundReader;
+namespace nyx {
+	struct audio_buffer_desc;
+	class sound_reader;
 
 	///ストリーミング3Dバッファクラス
-	class DirectSoundStreaming3DAudioBuffer : public DirectSound3DAudioBuffer {
+	class dsound_streaming_3d_audio_buffer : public dsound_3d_audio_buffer {
 	public:
 		/**
 		* コンストラクタ
@@ -31,59 +31,59 @@ namespace Nyx {
 		* @param const DirectSoundPtr 
 		* @param const std::wstring& fileName
 		*/
-		explicit DirectSoundStreaming3DAudioBuffer(const AudioBufferDesc& bufferDesc, const DirectSoundPtr dsound, const std::shared_ptr<SoundReader> reader);
+		explicit dsound_streaming_3d_audio_buffer(const audio_buffer_desc& bufferDesc, const dsound_ptr dsound, const std::shared_ptr<sound_reader> reader);
 		
 		
 		/**
 		* デストラクタ
 		*/
-		~DirectSoundStreaming3DAudioBuffer();
+		~dsound_streaming_3d_audio_buffer();
 		
 		
 		/**
 		* オーディオバッファの状態の取得します
 		* @return AudioUtility::BufferType
 		*/
-		AudioUtility::BufferType GetBufferType() const;
+		AudioUtility::AUDIO_BUFFER_TYPE get_buffer_type() const;
 
 		/**
 		* オーディオバッファをリセットします．
 		*/
-		void Reset();
+		void reset();
 	private:
 		/**
 		* DirectSoundのセカンダリバッファにwaveデータを書き込みます
 		* @param size_t バッファサイズ
 		*/
-		void WriteWaveData();
+		void write_wave_data();
 
 		/**
 		* DirectSoundセカンダリバッファ記述子を作成します
 		* @param DSBUFFERDESC*
 		* @param WAVEFORMATEX& wfx
 		*/
-		void BuildDirectSoundBufferDesc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
+		void build_dsound_buffer_desc(DSBUFFERDESC* dsBufferDesc, WAVEFORMATEX& wfx);
 
 
 		/**
 		* 通知スレッド用プロシージャ
 		* @param void* 
 		*/
-		friend ulong _stdcall Notify3DBufferProc(void* parameter);
+		friend uint64_t _stdcall notify_3d_buffer_proc(void* parameter);
 
 
 		/**
 		* 通知スレッド
 		*/
-		void NotifyThread();
+		void notify_thread();
 	private:
 		HANDLE notifyThreadHandle_;
 		static const int NotifyEventNum = 4;
-		ulong notifySize_;
-		ulong offset_;
+		uint64_t notifySize_;
+		uint64_t offset_;
 		HANDLE notifyEventList_[NotifyEventNum];
-		AudioBufferDesc bufferDesc_;
-		std::shared_ptr<SoundReader> waveReader_;
+		audio_buffer_desc bufferDesc_;
+		std::shared_ptr<sound_reader> waveReader_;
 	};
 }
 #endif

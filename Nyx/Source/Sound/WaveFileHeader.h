@@ -17,36 +17,36 @@
 #ifndef NYX_CORE_INCLUDED_WAVE_FILE_HEADER_H_
 #define NYX_CORE_INCLUDED_WAVE_FILE_HEADER_H_
 
-namespace Nyx {
+namespace nyx {
 
 	///Formatチャンク構造体
-	struct FormatChunk
+	struct wav_format_chunk
 	{
 		char	formatChunkID[4]; ///FMTチャンクID
-		uint	chunkSize;        ///<チャンクサイズ
-		ushort	formatTag;        ///<フォーマットID
-		ushort	channelNum;       ///<チャンネル数
-		uint	samplingRate;     ///<サンプリングレート
-		uint	bytesPerSec;      ///<データ速度
-		ushort	blockSize;        ///<ブロックサイズ
-		ushort	bitsRate;         ///< サンプルあたりのビット数
+		uint32_t	chunkSize;        ///<チャンクサイズ
+		uint16_t	formatTag;        ///<フォーマットID
+		uint16_t	channelNum;       ///<チャンネル数
+		uint32_t	samplingRate;     ///<サンプリングレート
+		uint32_t	bytesPerSec;      ///<データ速度
+		uint16_t	blockSize;        ///<ブロックサイズ
+		uint16_t	bitsRate;         ///< サンプルあたりのビット数
 	};
 
 	///データチャンク構造体
-	struct DataChunk
+	struct data_chunk
 	{
 		char dataChunkID[4]; ///< データチャンクID
-		uint  chunkSize;      ///< チャンクサイズ 
+		uint32_t  chunkSize;      ///< チャンクサイズ 
 	};
 
 	///Waveファイルヘッダ構造体
-	struct WaveFileHeader
+	struct wav_file_header
 	{
 		char        riffID[4];  ///< RIFFフォーマットID
-		uint         fileSize;   ///< ファイルサイズ
+		uint32_t    fileSize;   ///< ファイルサイズ
 		char        waveID[4];  ///< WaveファイルID
-		FormatChunk  formatChunk;///<フォーマットチャンク
-		DataChunk    dataChunk;  ///<データチャンク
+		wav_format_chunk  formatChunk;///<フォーマットチャンク
+		data_chunk		   dataChunk;  ///<データチャンク
 	};
 }
 

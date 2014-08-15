@@ -18,44 +18,44 @@
 #define NYX_CORE_INCLUDED_IKEY_BASE_H_
 #include "KeyCode.h"
 
-namespace Nyx {
+namespace nyx {
 	/// キー入力のベースクラス
-	class IKeyBase {
+	class ikey_base {
 	public:
 		/**
 		*
 		*/
-		IKeyBase() ;
+		ikey_base() ;
 		
 		/**
 		*
 		*/
-		uchar* GetKeyBuffer();
-		
-
-		/**
-		*
-		*/
-		virtual bool Update() = 0;
+		uint8_t* get_key_buffer();
 		
 
 		/**
 		*
 		*/
-		bool IsPressed(uchar keycode);
+		virtual bool update() = 0;
+		
+
+		/**
+		*
+		*/
+		bool is_pressed(uint8_t keycode);
 
 
 		/**
 		*
 		*/
-		 bool IsPushed(uchar keycode);
+		 bool is_pushed(uint8_t keycode);
 
 	protected:
-		void Flip();
+		void flip();
 		
-		static const int BufferSize = 256;
+		static const int BUFFER_SIZE = 256;
 
-		uchar keyBuffer_[2][BufferSize];
+		uint8_t keyBuffer_[2][BUFFER_SIZE];
 		int flipCounter_;
 	};
 }

@@ -23,11 +23,11 @@
 #ifndef NYX_CORE_INCLUDED_IMAGE_H_
 #define NYX_CORE_INCLUDED_IMAGE_H_
 
-namespace Nyx {
-	namespace GDI {
+namespace nyx {
+	namespace gdi {
 
 		///DIB
-		class  DIBitmap{
+		class  bitmap{
 		public:
 			//---------------------------------------------------------------
 			//構築・破壊
@@ -35,11 +35,11 @@ namespace Nyx {
 			/**
 			*
 			*/
-			DIBitmap(const std::wstring fileName_);
+			bitmap(const std::wstring fileName_);
 			/**
 			*
 			*/
-			~DIBitmap();
+			~bitmap();
 
 			//---------------------------------------------------------------
 			//データ読み込み
@@ -55,50 +55,50 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Draw(HDC hdc, int x, int y, ulong op=SRCCOPY);
+			void draw(HDC hdc, int x, int y, uint64_t op=SRCCOPY);
 			/**
 			*
 			*/
-			void Draw(HDC hdc, int x, int y, int sx, int sy, ulong op=SRCCOPY);
+			void draw(HDC hdc, int x, int y, int sx, int sy, uint64_t op=SRCCOPY);
 			/**
 			*
 			*/
-			void Draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, ulong op=SRCCOPY);
+			void draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, uint64_t op=SRCCOPY);
 			//   void Draw(HDC hdc, int x, int y, int rotate);
 			/**
 			*
 			*/
-			void Draw(HDC hdc, int x, int y, int colorKey);
+			void draw(HDC hdc, int x, int y, int colorKey);
 			/**
 			*
 			*/
-			void Draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey);
+			void draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey);
 			/**
 			*
 			*/
-			void Draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey, uchar alpha); 
+			void draw(HDC hdc, int x, int y, int width, int height, int tx, int ty, int colorKey, uint8_t alpha); 
 
 
 			//---------------------------------------------------------------
 			//情報の取得
 			//---------------------------------------------------------------
-			long GetWidth();
-			long GetHeight();
-			long* GetPixel();
+			long get_width();
+			long get_height();
+			long* get_pixel();
 
 
 			//---------------------------------------------------------------
 			//解放処理
 			//---------------------------------------------------------------
-			void Release();
+			void release();
 		private:
 			//デフォルトコンストラクタの禁止
 			//初期化・リソースの読み込みをすべてコンストラクタで行う(RAII)
-			DIBitmap();
+			bitmap();
 
-			HDC hMemDC;
-			BITMAP bitmap;
-			HBITMAP hbitmap;
+			HDC hMemDC_;
+			BITMAP bmpData_;
+			HBITMAP hBitmap_;
 
 		};
 	}

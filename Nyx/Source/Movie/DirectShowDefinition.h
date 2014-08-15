@@ -6,7 +6,7 @@
 #pragma comment(lib, "Ole32.lib")
 #pragma comment(lib, "strmiids.lib")
 
-namespace Nyx {
+namespace nyx {
 	///
 	typedef boost::intrusive_ptr<IMediaControl> IMediaControlPtr;
 

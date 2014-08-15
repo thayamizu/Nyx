@@ -19,38 +19,38 @@
 #include "Debug/DebugOutput.h"
 #include <iostream>
 
-using Nyx::Logger;
-namespace Nyx {
-	static void TraceLog(char* string) {
-		DebugOutput::GetLogger()->PrintLn(string);
+using nyx::logger;
+namespace nyx {
+	static void trace_log(char* string) {
+		debug_out::get_logger()->printfln(string);
 	}
 
-	static void TraceConsole(char* string) {
+	static void trace_console(char* string) {
 		::OutputDebugStringA(string);
 		::OutputDebugStringA("\n");
 	}
 
-	static void TraceStdErr(char* string) {
+	static void trace_stderr(char* string) {
 		std::cout << string << std::endl;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	//
-	OutputMode DebugOutput::outputMode_ = OutputMode::StdOut;
-	Logger* DebugOutput::logger_ = NULL;
+	DEBUG_OUTPUT_MODE debug_out::outputMode_ = DEBUG_OUTPUT_MODE::DEBUG_OUTPUT_MODE_STDOUT;
+	logger* debug_out::logger_ = NULL;
 
 	//----------------------------------------------------------------------------------------------
 	//
-	Logger* DebugOutput::GetLogger() {
+	logger* debug_out::get_logger() {
 		if (logger_ == NULL) {
-			logger_ = new Logger(L"NyxDebugOut.txt");
+			logger_ = new logger(L"NyxDebugOut.txt");
 		}
 		return logger_;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	//
-	void DebugOutput::Trace(char* format, ...) {
+	void debug_out::trace(char* format, ...) {
 		va_list list;
 		va_start(list, format);
 		static const int length = 1024;
@@ -59,27 +59,27 @@ namespace Nyx {
 		va_end(list);
 
 		switch(outputMode_) {
-		case OutputMode::StdOut:
-			TraceStdErr(buffer);
+		case DEBUG_OUTPUT_MODE::DEBUG_OUTPUT_MODE_STDOUT:
+			trace_stderr(buffer);
 			break;
-		case OutputMode::Console:
-			TraceConsole(buffer);
+		case DEBUG_OUTPUT_MODE::DEBUG_OUTPUT_MODE_CONSOLE:
+			trace_console(buffer);
 			break;
-		case OutputMode::File:
-			TraceLog(buffer);
+		case DEBUG_OUTPUT_MODE::DEBUG_OUTPUT_MODE_FILE:
+			trace_log(buffer);
 			break;
 		}
 	}
 
 	//----------------------------------------------------------------------------------------------
 	//
-	void DebugOutput::SetOutput(OutputMode mode) {
+	void debug_out::set_output_mode(DEBUG_OUTPUT_MODE mode) {
 		outputMode_ =  mode;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	//
-	void DebugOutput::DebugMessage(char* format, ...) {
+	void debug_out::debug_messagebox(char* format, ...) {
 		va_list list;
 		va_start(list, format);
 		static const int length = 1024;
@@ -92,7 +92,7 @@ namespace Nyx {
 
 	//----------------------------------------------------------------------------------------------
 	//
-	void DebugOutput::DeleteInstance() {
+	void debug_out::delete_instance() {
 		SafeDelete(logger_);
 	}
 }

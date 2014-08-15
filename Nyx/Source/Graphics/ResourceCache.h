@@ -3,62 +3,62 @@
 #include "Utility/NonCopyable.h"
 #include "ResourceHandle.h"
 #include <string>
-namespace Nyx
+namespace nyx
 {
-	typedef std::unordered_map<std::wstring, std::shared_ptr<ResourceHandle>> CacheMap;
-	class ResourceCache {
+	typedef std::unordered_map<std::wstring, std::shared_ptr<resource_handle>> cache_map;
+	class resource_cache {
 	public:
 
 		/*
 		* コンストラクタ
 		*/
-		ResourceCache();
+		resource_cache();
 
 		/*
 		*　デストラクタ
 		*/
-		~ResourceCache();
+		~resource_cache();
 		
 		/*
 		*キャッシュにリソースを追加します
 		* @param  const std::shared_ptr<ResourceHandle>& handle
 		*/
-		static void Add(const std::shared_ptr<ResourceHandle>& handle);
+		static void add(const std::shared_ptr<resource_handle>& handle);
 
 		/*
 		*　キャッシュからリソースを削除します
 		* @param const std::wstring& キー
 		*/
-		static void Delete(const std::wstring& key);
+		static void remove(const std::wstring& key);
 
 		/*
 		*　キャッシュをクリアします
 		*/
-		static void Clear();
+		static void clear();
 
 		/*
 		*　キャッシュからリソースを開放します
 		*/
-		static void Release();
+		static void release();
 		
 		/*
 		*　キャッシュからリソースを復元します
 		*/
-		static void Recovery();
+		static void recover();
 		
 		/*
 		*　キャッシュからリソースを復元します
 		*/
-		static bool Find(const std::wstring& resourceName);
+		static bool find(const std::wstring& resourceName);
 		
 		/*
 		* キャッシュからキーに対応するリソースのハンドルを取得します
 		* @param std::wstring key
 		* @return std::shared_ptr<ResourceHandle> 
 		*/
-		static std::shared_ptr<ResourceHandle> GetHandle(const std::wstring& key);
+		static std::shared_ptr<resource_handle> get_handle(const std::wstring& key);
 	private:
-		static CacheMap  cacheMap_;
+		static cache_map  cacheMap_;
 	};
 }
 

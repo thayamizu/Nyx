@@ -9,39 +9,39 @@
 #include "Utility/Exception.h"
 
 
-namespace Nyx{
+namespace nyx{
 
-	struct Sprite::PImpl
+	struct sprite::PImpl
 	{
-		Rect2i rect_;
-		Color4c color_;
+		rect2i rect_;
+		color4c color_;
 		D3dTexture9Ptr texture_;///<
 		D3dXSprite9Ptr sprite_;///<
 		std::wstring fileName_;
 
 		//----------------------------------------------------------------------------------------
 		//
-		PImpl(int width, int height, const Color4c& color)
-			:fileName_(L""), rect_(0, 0, width, height), color_(Color4c::White), texture_(nullptr), sprite_(nullptr)
+		PImpl(int width, int height, const color4c& color)
+			:fileName_(L""), rect_(0, 0, width, height), color_(color4c::WHITE), texture_(nullptr), sprite_(nullptr)
 		{
-			CreateSprite();
-			LoadTexture(width, height);
-			Fill(color);
+			make_sprite();
+			load_texture(width, height);
+			fill(color);
 		}
 
 
 		//----------------------------------------------------------------------------------------
 		//
 		PImpl(const std::wstring& fileName)
-			:fileName_(fileName), rect_(0, 0, 0, 0), color_(Color4c::White), texture_(nullptr), sprite_(nullptr)
+			:fileName_(fileName), rect_(0, 0, 0, 0), color_(color4c::WHITE), texture_(nullptr), sprite_(nullptr)
 		{
-			CreateSprite();
-			LoadTexture(fileName);
+			make_sprite();
+			load_texture(fileName);
 		}
 
 		//----------------------------------------------------------------------------------------
 		//
-		void CreateSprite() {
+		void make_sprite() {
 			//デバイスの取得
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
@@ -49,8 +49,8 @@ namespace Nyx{
 			ID3DXSprite *sprite = NULL;
 			auto hr = D3DXCreateSprite(d3dDevice.get(), &sprite);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("スプライトの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("スプライトの作成に失敗しました。", hr);
+				debug_out::trace("スプライトの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("スプライトの作成に失敗しました。", hr);
 			}
 
 			sprite_ = D3dXSprite9Ptr(sprite, false);
@@ -59,14 +59,14 @@ namespace Nyx{
 
 		//----------------------------------------------------------------------------------------
 		//
-		void LoadTexture(int width, int height) {
+		void load_texture(int width, int height) {
 			//「テクスチャオブジェクト」の作成
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 			auto hr = D3DXCreateTexture(d3dDevice.get(), width, height, NULL, NULL, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, &texture);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("テクスチャの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("テクスチャの作成に失敗しました。", hr);
+				debug_out::trace("テクスチャの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("テクスチャの作成に失敗しました。", hr);
 			}
 
 			//スマートポインタの管理下に置く
@@ -74,7 +74,7 @@ namespace Nyx{
 		}
 		//----------------------------------------------------------------------------------------
 		//
-		void LoadTexture(const std::wstring& fileName) {
+		void load_texture(const std::wstring& fileName) {
 			//「テクスチャオブジェクト」の作成
 			LPDIRECT3DTEXTURE9 texture = NULL;
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
@@ -83,8 +83,8 @@ namespace Nyx{
 				D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_DEFAULT,
 				0xFF, NULL, NULL, &texture);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("テクスチャの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("テクスチャの作成に失敗しました。", hr);
+				debug_out::trace("テクスチャの作成に失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("テクスチャの作成に失敗しました。", hr);
 			}
 
 			//スマートポインタの管理下に置く
@@ -94,22 +94,22 @@ namespace Nyx{
 
 		//----------------------------------------------------------------------------------------
 		//
-		void Finalize() {
+		void finalize() {
 			texture_.reset();
 			sprite_.reset();
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void Fill(const Color4c& color) {
-			Assert(texture_ != nullptr);
+		void fill(const color4c& color) {
+			NYX_ASSERT(texture_ != nullptr);
 
 			//テクスチャサーフェイスをロック
 			D3DLOCKED_RECT lockedRect = {};
 			auto hr = texture_->LockRect(0, &lockedRect, NULL, 0);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("テクスチャのロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("テクスチャのロックに失敗しました。", hr);
+				debug_out::trace("テクスチャのロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("テクスチャのロックに失敗しました。", hr);
 			}
 
 			//メモリをクリア
@@ -126,40 +126,40 @@ namespace Nyx{
 			//テクスチャサーフェイスをアンロック
 			hr = texture_->UnlockRect(NULL);
 			if (FAILED(hr)) {
-				DebugOutput::Trace("テクスチャのアンロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
-				throw COMException("テクスチャのアンロックに失敗しました。", hr);
+				debug_out::trace("テクスチャのアンロックに失敗しました。[%s][%d]", __FILE__, __LINE__);
+				throw com_exception("テクスチャのアンロックに失敗しました。", hr);
 			}
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void SetColor(const Color4c& color) {
+		void set_color(const color4c& color) {
 			color_ = color;
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		Color4c GetColor() {
+		color4c get_color() {
 			return color_;
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void SetRect(const Rect2i& rect) {
+		void set_rect(const rect2i& rect) {
 			rect_ = rect;
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		Rect2i GetRect() const {
+		rect2i get_rect() const {
 			return rect_;
 		}
 
 		//-----------------------------------------------------------------------------------------
 		//
-		void Render(const Matrix44& matrix) {
+		void render(const matrix& matrix) {
 			D3DXMATRIX world;
-			::CopyMemory(&world, matrix.Mat, sizeof(D3DXMATRIX));
+			::CopyMemory(&world, matrix.mat_, sizeof(D3DXMATRIX));
 
 			sprite_->SetTransform(&world);
 			sprite_->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_DONOTSAVESTATE);
@@ -177,19 +177,19 @@ namespace Nyx{
 		}
 
 
-		void Release() {
+		void release() {
 			sprite_->OnLostDevice();
 			texture_.reset();
 		}
 
-		void Recovery(){
+		void recovery(){
 			sprite_->OnResetDevice();
 			if (fileName_ == L"") {
-				LoadTexture(rect_.width, rect_.height);
-				Fill(color_);
+				load_texture(rect_.width, rect_.height);
+				fill(color_);
 			}
 			else {
-				LoadTexture(fileName_);
+				load_texture(fileName_);
 			}
 		}
 
@@ -198,86 +198,86 @@ namespace Nyx{
 
 	//----------------------------------------------------------------------------------------
 	//
-	Sprite::Sprite(int width,  int height, const Color4c& color)
-		:pimpl_(std::make_shared<Sprite::PImpl>(width, height, color)) {
+	sprite::sprite(int width,  int height, const color4c& color)
+		:pimpl_(std::make_shared<sprite::PImpl>(width, height, color)) {
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	Sprite::Sprite(const std::wstring& fileName)
-		:pimpl_(std::make_shared<Sprite::PImpl>(fileName)) {
+	sprite::sprite(const std::wstring& fileName)
+		:pimpl_(std::make_shared<sprite::PImpl>(fileName)) {
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	Sprite::~Sprite() {
-		pimpl_->Finalize();
+	sprite::~sprite() {
+		pimpl_->finalize();
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Sprite::Fill(const Color4c& color) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Fill(color);
+	void sprite::fill(const color4c& color) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->fill(color);
 
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Sprite::SetColor(const Color4c& color) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetColor(color);
+	void sprite::set_fore_color(const color4c& color) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_color(color);
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	Color4c Sprite::GetColor() const {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetColor();
+	color4c sprite::get_fore_color() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		return pimpl_->get_color();
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Sprite::SetRect(const Rect2i& rect) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetRect(rect);
+	void sprite::set_rect(const rect2i& rect) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_rect(rect);
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	Rect2i Sprite::GetRect() const {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetRect();
+	rect2i sprite::get_rect() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		return pimpl_->get_rect();
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Sprite::Render(const Matrix44& matrix) const {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Render(matrix);
+	void sprite::render(const matrix& matrix) const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->render(matrix);
 	}
 
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Sprite::Release() {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Release();
+	void sprite::release() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->release();
 	}
 	
 
 	//----------------------------------------------------------------------------------------
 	//
-	void Sprite::Recovery(){
-		Assert(pimpl_ != nullptr);
-		pimpl_->Recovery();
+	void sprite::recovery(){
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->recovery();
 	}
 }

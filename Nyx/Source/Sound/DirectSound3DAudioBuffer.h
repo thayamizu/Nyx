@@ -16,86 +16,98 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_DIRECT_SOUND_3D_AUDIO_BUFFER_H_
 #define NYX_CORE_INCLUDED_DIRECT_SOUND_3D_AUDIO_BUFFER_H_
-#include "I3DAudioBuffer.h"
 #include "DirectSoundAudioBuffer.h"
 #include "DirectSoundDefinition.h"
+#include "Primitive/Vector3.h"
 
-namespace Nyx {
-	class DirectSound3DAudioBuffer : public DirectSoundAudioBuffer, public I3DAudioBuffer {
+namespace nyx {
+	class dsound_3d_audio_buffer : public dsound_audio_buffer {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		DirectSound3DAudioBuffer();
+		dsound_3d_audio_buffer();
 		
 		
 		/**
 		* デストラクタ
 		*/
-		~DirectSound3DAudioBuffer();
+		~dsound_3d_audio_buffer();
 
 
 		/**
 		* 音源の位置を取得します
 		* @return Vector3f
 		*/
-		Vector3f GetPosition() const;
+		vector3f get_position() const;
 		
 		
 		/**
 		* 音源の位置を設定します
 		* @param const Vector3f&
 		*/
-		void SetPosition(const Vector3f& pos);
+		void set_position(const vector3f& pos);
 
 		
 		/**
 		* 音源の速度を取得します
 		* @return Vector3f 
 		*/
-		Vector3f GetVelocity() const ;
+		vector3f get_velocity() const ;
 		
 		/**
 		* 音源の速度を設定します
 		* @param const Vector3f & veclocity
 		*/
-		void SetVelocity(const Vector3f& velocity);
+		void set_velocity(const vector3f& velocity);
 
 
 		/**
 		* 音源からの最大距離を取得します
 		* @return float 音源からの最大距離
 		*/
-		float GetMaxDistance() const;
+		float get_max_distance() const;
 
 
 		/**
 		* 音源からの最大距離を設定します
 		* @param float  最大距離
 		*/
-		void SetMaxDistance(float maxDistance);
+		void set_max_distance(float maxDistance);
 
 
 		/**
 		* 音源からの最小距離を設定します
 		* @param float  最小距離
 		*/
-		float GetMinDistance() const;
+		float get_min_distance() const;
 
 
 		/**
 		* 音源からの最小距離を取得します
 		* @return float 音源からの最小距離
 		*/
-		void SetMinDistance(float minDistance);
+		void set_min_distance(float minDistance);
 	protected:
 		/**
 		* 3Dバッファを作成します．
 		*/
-		void Create3DBuffer();
+		void create_3d_buffer();
 
+		/**
+		* パンの設定
+		* @param long パン
+		*/
+		void set_pan(long pan);
+
+
+		/**
+		* パンの取得
+		* @return long
+		*/
+		long get_pan() const;
 	private:
-		DirectSound3DBufferPtr buffer_;
+		dsound_3d_buffer_ptr buffer_;
 	};
 }
 #endif

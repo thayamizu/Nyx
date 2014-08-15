@@ -3,67 +3,67 @@
 #include "IAudioListener.h"
 #include "DirectSoundDefinition.h"
 
-namespace Nyx {
-	class DirectSoundAudioListener : public IAudioListener{
+namespace nyx {
+	class dsound_audio_listener : public iaudio_listener{
 	public:
-		DirectSoundAudioListener(DirectSoundPtr dsound);
-		virtual ~DirectSoundAudioListener();
+		dsound_audio_listener(dsound_ptr dsound);
+		virtual ~dsound_audio_listener();
 		/**
 		* リスナーの位置を取得します
 		* @return Vecto3f リスナーの位置ベクトル
 		*/
-		Vector3f GetPosition() const ;
+		vector3f get_position() const ;
 
 
 		/**
 		*　リスナーの位置を設定します
 		* @param const Vector3f&　リスナーの位置ベクトル
 		*/
-		void SetPosition(const Vector3f& pos) ;
+		void set_position(const vector3f& pos) ;
 
 
 		/**
 		* 速度ベクトルを取得します
 		* @return Vector3f　リスナーの速度ベクトル
 		*/
-		Vector3f GetVelocity() const ;
+		vector3f get_velocity() const ;
 
 
 		/**
 		*　速度ベクトルを設定します
 		* @param const Vector3f& リスナーの速度ベクトル
 		*/
-		void SetVelocity(const Vector3f& velocity) ;
+		void set_velocity(const vector3f& velocity) ;
 
 
 		/**
 		* ドップラー係数を取得します
 		* @return float ドップラー係数
 		*/
-		float GetDopplerFactor() const ;
+		float get_doppler_factor() const ;
 
 
 		/**
 		* ドップラー係数を設定します
 		* @param float ドップラー係数
 		*/
-		void SetDopplerFactor(float dopplerFactor) ;
+		void set_doppler_factor(float dopplerFactor) ;
 
 
 		/**
 		* ロールオフ係数を取得します
 		* @return ロールオフ係数
 		*/
-		float GetRolloffFactor() const ;
+		float get_rolloff_factor() const ;
 
 
 		/**
 		* ロールオフ係数を設定します
 		* @param float ロールオフ係数
 		*/
-		void SetRolloffFactor(float rolloffFactor) ;
+		void set_rolloff_factor(float rolloffFactor) ;
 	private:
-		DirectSound3DListenerPtr listener_;
+		dsound_3d_listener_ptr listener_;
 	};
 }
 #endif

@@ -7,20 +7,20 @@
 #include "Primitive/Matrix44.h"
 #include "GraphicsDeviceType.h"
 
-namespace Nyx {
+namespace nyx {
 
-	class Window;
+	class window;
 
 	///DirectGraphicsデバイス
-	class GraphicsDevice 
+	class graphics_device 
 	{
-		friend class Sprite;
+		friend class sprite;
 		friend class Texture;
 	public:
 		/**
 		* コンストラクタ
 		*/
-		GraphicsDevice();
+		graphics_device();
 		
 		
 		/**
@@ -29,7 +29,7 @@ namespace Nyx {
 		* @param WindowMode ウインドウモード
 		* @param MultiSamplingLevel サンプリングレベル（0~16)
 		*/
-		GraphicsDevice(std::shared_ptr<Window> window, WindowMode windowMode, MultiSamplingLevel level);
+		graphics_device(std::shared_ptr<window> window, WINDOW_MODE windowMode, multi_sampling_level level);
 
 
 
@@ -39,18 +39,18 @@ namespace Nyx {
 		* @param WindowMode ウインドウモード
 		* @param MultiSamplingLevel サンプリングレベル（0~16)
 		*/
-		bool Initialize(std::shared_ptr<Window> window, WindowMode windowMode, MultiSamplingLevel level);
+		bool initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode, multi_sampling_level level);
 
 		/**
 		* 現在のウインドウモードを取得します
 		* @return WindowMode
 		*/
-		WindowMode GetWindowMode();
+		WINDOW_MODE get_window_mode();
 		
 		/**
 		* ウインドウモードを変更します
 		*/
-		void ChangeWindowMode();
+		void change_window_mode();
 
 		/**
 		* ビューポートを設定します
@@ -58,7 +58,7 @@ namespace Nyx {
 		* @param float 
 		* @param float
 		*/
-		void SetViewport(const Rect2i& clientRect, float minZ, float maxZ);
+		void set_view_port(const rect2i& clientRect, float minZ, float maxZ);
 
 
 		//ライティング
@@ -71,28 +71,28 @@ namespace Nyx {
 		* @param float ライトの範囲
 		* @param D3DLIGHTTYPE ライトの種類(ポイントライトディレクショナルライトなど)
 		*/
-		void SetLight(const Vector3f& pos, const Vector3f& dir, const Color3f& diffuse, const Color3f& specular, float range, LightType lightType);
+		void set_light(const vector3f& pos, const vector3f& dir, const color3f& diffuse, const color3f& specular, float range, LIGHT_TYPE lightType);
 		
 		//トランスフォーム
-		void SetWorldMatrix(const Matrix44& world);
-		void SetModelViewMatrix(const Matrix44& view);
-		void SetProjectionMatrix(const Matrix44& proj);
+		void set_world(const matrix& world);
+		void set_modelview(const matrix& view);
+		void set_projection(const matrix& proj);
 
 		//ステート
-		void EnableZBuffer(bool enalbe);
+		void enable_z_buffer(bool enalbe);
 		//ステートブロック
-		void ApplyStateBlock();
-		void BeginStateBlock();
-		void EndStateBlock();
+		void apply_state_block();
+		void begin_state_block();
+		void end_state_block();
 
-		void SetIndexBuffer(std::vector<Vector3f> index);
-		void SetVertexBuffer(std::vector<Vector3f> vertex);
+		void set_index_buffer(std::vector<vector3f> index);
+		void set_vertex_buffer(std::vector<vector3f> vertex);
 
 		//レンダリング関係
-		void Clear(const Color4c& color);
-		void Render();
-		void OnRender(std::function<void(std::shared_ptr<void>)> scene);
-		void SetScene(std::shared_ptr<void> sceneobj);
+		void clear(const color4c& color);
+		void render();
+		void on_render(std::function<void(std::shared_ptr<void>)> scene);
+		void set_scene(std::shared_ptr<void> sceneobj);
 	private:
 		struct PImpl;
 		std::shared_ptr<PImpl> pimpl_;

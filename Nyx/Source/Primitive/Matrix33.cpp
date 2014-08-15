@@ -17,7 +17,7 @@
 #include "PCH/PCH.h"
 #include "Primitive/Matrix33.h"
 #include "Primitive/Vector3.h"
-namespace Nyx {
+namespace nyx {
 
 	const Matrix33 Matrix33::Unit(1, 0, 0,
 		0, 1, 0,
@@ -103,8 +103,8 @@ namespace Nyx {
 			Mat[2][0] / s, Mat[2][1] / s, Mat[2][2] / s);
 	}
 
-	Vector3f Matrix33::operator *(const Vector3f& v) const {
-		return Vector3f(
+	vector3f Matrix33::operator *(const vector3f& v) const {
+		return vector3f(
 			_11 * v.x + _12 * v.y + _13 * v.z,
 			_21 * v.x + _22 * v.y + _23 * v.z,
 			_31 * v.x + _32 * v.y + _33 * v.z);

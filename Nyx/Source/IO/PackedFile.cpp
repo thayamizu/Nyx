@@ -18,177 +18,177 @@
 #include "IO/File.h"
 #include "IO/PackedFile.h"
 
-namespace Nyx
+namespace nyx
 {
 
-	struct PackedFile::PImpl
+	struct packed_file::PImpl
 	{
-		uint packedFileNum_; ///パックされたファイル数
-		ulong headerSize_;	 ///ヘッダサイズ
-		std::unique_ptr<File> packedFile_;///パックされたファイル
-		std::map<uint , ulong> packedSize_;   ///パックされたファイル毎のサイズ
-		std::map<uint , std::shared_ptr<char>  > packedData_;///パックされたファイルごとのデータ
+		uint32_t packedFileNum_; ///パックされたファイル数
+		uint64_t headerSize_;	 ///ヘッダサイズ
+		std::unique_ptr<file> packedFile_;///パックされたファイル
+		std::map<uint32_t , uint64_t> packedSize_;   ///パックされたファイル毎のサイズ
+		std::map<uint32_t , std::shared_ptr<char>  > packedData_;///パックされたファイルごとのデータ
 
 	};
 	//----------------------------------------------------------------------------------------------------
 	//
-	PackedFile::PackedFile(const wchar_t*  name, AccessAttribute attr)
+	packed_file::packed_file(const wchar_t*  name, FILE_ACCESS_ATTRIBUTE attr)
 	{
 		pimpl_ = unique_ptr<PImpl>(new PImpl());
-		pimpl_->packedFile_ = unique_ptr<File>(new File(name,attr));
+		pimpl_->packedFile_ = unique_ptr<file>(new file(name,attr));
 
 		//ファイル数の読み取り
 		int n;
-		pimpl_->packedFile_->Read(&n, sizeof(unsigned int));
+		pimpl_->packedFile_->read(&n, sizeof(unsigned int));
 		pimpl_->packedFileNum_ = n;
 
 		//ヘッダサイズの読み取り
 		int headerSize;
-		pimpl_->packedFile_->Read(&headerSize,sizeof(unsigned int));
+		pimpl_->packedFile_->read(&headerSize,sizeof(unsigned int));
 		pimpl_->headerSize_ = headerSize;
 
 		//情報の読み取り
-		for (uint i=0; i < pimpl_->packedFileNum_; ++i) {
+		for (uint32_t i=0; i < pimpl_->packedFileNum_; ++i) {
 
 			//ファイル名の取得
 			char path[255];
 			memset(path, 0, sizeof(path));
-			pimpl_->packedFile_->Read(path, sizeof(path));
+			pimpl_->packedFile_->read(path, sizeof(path));
 
 			//オフセットの取得
 			long offset=0;
-			pimpl_->packedFile_->Read(&offset, sizeof(unsigned int));
+			pimpl_->packedFile_->read(&offset, sizeof(unsigned int));
 
 			//ファイルサイズの取得
 			long size=0;
-			pimpl_->packedFile_->Read(&size, sizeof(unsigned int));
+			pimpl_->packedFile_->read(&size, sizeof(unsigned int));
 
 			//現在のオフセットを記憶する
-			ulong current=pimpl_->packedFile_->GetCurrentPosition();
+			uint64_t current=pimpl_->packedFile_->get_current_position();
 			std::shared_ptr<char> packedData = std::shared_ptr<char>(new char[255]);
 			memset(&packedData, 0, size+1);
-			pimpl_->packedFile_->SeekBegin(offset);
-			pimpl_->packedFile_->Read(&packedData, size);
+			pimpl_->packedFile_->seek_begin(offset);
+			pimpl_->packedFile_->read(&packedData, size);
 
-			pimpl_->packedSize_.insert( std::map<uint, ulong>::value_type(i, size));
-			pimpl_->packedData_.insert( std::map<uint, std::shared_ptr<char> >::value_type(i, packedData));
+			pimpl_->packedSize_.insert( std::map<uint32_t, uint64_t>::value_type(i, size));
+			pimpl_->packedData_.insert( std::map<uint32_t, std::shared_ptr<char> >::value_type(i, packedData));
 
 			//シーク位置をもとに戻す
-			pimpl_->packedFile_->SeekBegin(current);
+			pimpl_->packedFile_->seek_begin(current);
 
 		}
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	PackedFile::~PackedFile()
+	packed_file::~packed_file()
 	{
 
 	}
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::GetHeaderSize() {
+	uint64_t packed_file::get_header_size() {
 		return  pimpl_->headerSize_;
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	uint PackedFile::GetFileNum() {
+	uint32_t packed_file::get_file_num() {
 		return pimpl_->packedFileNum_;
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::GetFileSize(uint index) {
+	uint64_t packed_file::get_file_size(uint32_t index) {
 		return pimpl_->packedSize_[index];
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	shared_ptr<char> PackedFile::GetFileData(uint index) {
+	shared_ptr<char> packed_file::get_file_data(uint32_t index) {
 		return pimpl_->packedData_[index];
 
 	}
 	//----------------------------------------------------------------------------------------------------
 	//
-	bool PackedFile::Open(const std::wstring&  name, AccessAttribute attr)
+	bool packed_file::open(const std::wstring&  name, FILE_ACCESS_ATTRIBUTE attr)
 	{
-		return pimpl_->packedFile_->Open(name, attr);
+		return pimpl_->packedFile_->open(name, attr);
 	}
 	//----------------------------------------------------------------------------------------------------
 	//
-	bool PackedFile::Close()
+	bool packed_file::close()
 	{
-		return pimpl_->packedFile_->Close();
+		return pimpl_->packedFile_->close();
 	}
-	bool PackedFile::Flush()
+	bool packed_file::flush()
 	{
-		return pimpl_->packedFile_->Flush();
+		return pimpl_->packedFile_->flush();
 	}
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::GetCurrentPosition()
+	uint64_t packed_file::get_current_position()
 		const
 	{
-		return pimpl_->packedFile_->GetCurrentPosition();
+		return pimpl_->packedFile_->get_current_position();
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::GetSize()
+	uint64_t packed_file::get_size()
 		const
 	{
-		return pimpl_->packedFile_->GetSize();
+		return pimpl_->packedFile_->get_size();
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	std::wstring PackedFile::GetFileName()
+	std::wstring packed_file::get_file_name()
 		const
 	{
-		return pimpl_->packedFile_->GetFileName();
+		return pimpl_->packedFile_->get_file_name();
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::Read(void* buffer, ulong size)
+	uint64_t packed_file::read(void* buffer, uint64_t size)
 	{
-		return pimpl_->packedFile_->Read(buffer, size);
+		return pimpl_->packedFile_->read(buffer, size);
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::Write(void* buffer, ulong size)
+	uint64_t packed_file::write(void* buffer, uint64_t size)
 	{
-		return pimpl_->packedFile_->Write(buffer, size);
+		return pimpl_->packedFile_->write(buffer, size);
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::Seek(long offSet)
+	uint64_t packed_file::seek(long offSet)
 	{
-		return pimpl_->packedFile_->Seek(offSet);
+		return pimpl_->packedFile_->seek(offSet);
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::SeekBegin(long offSet)
+	uint64_t packed_file::seek_begin(long offSet)
 	{
-		return pimpl_->packedFile_->SeekBegin(offSet);
+		return pimpl_->packedFile_->seek_begin(offSet);
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	ulong PackedFile::SeekEnd(long offSet)
+	uint64_t packed_file::seek_end(long offSet)
 	{
-		return pimpl_->packedFile_->SeekEnd(offSet);
+		return pimpl_->packedFile_->seek_end(offSet);
 	}
 
 	//----------------------------------------------------------------------------------------------------
 	//
-	bool PackedFile::IsOpened()
+	bool packed_file::is_opened()
 	{
-		return pimpl_->packedFile_->IsOpened();
+		return pimpl_->packedFile_->is_opened();
 	}
 
 }

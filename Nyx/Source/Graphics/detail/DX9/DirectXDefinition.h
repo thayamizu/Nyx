@@ -38,7 +38,7 @@
 #include "Graphics/ResourceHandle.h"
 
 
-namespace Nyx {
+namespace nyx {
 	//型定義
 	//--------------------------------------------------------------
 	//Direct 3D
@@ -49,8 +49,8 @@ namespace Nyx {
 	typedef boost::intrusive_ptr<ID3DXSprite>           D3dXSprite9Ptr;
 	typedef	LPDIRECT3DTEXTURE9							D3DTexture;
 
-	class Window;
-	class GraphicsDeviceCapacity;
+	class window;
+	class graphics_capacity;
 	
 	///d3d9オブジェクトのシングルトン
 	class D3d9Driver : boost::noncopyable
@@ -74,14 +74,14 @@ namespace Nyx {
 		* @return D3dDevice9Ptr;
 		*/
 		static D3dDevice9Ptr GetD3dDevice9() {
-			Assert(d3dDevice9Ptr_ != nullptr);
+			NYX_ASSERT(d3dDevice9Ptr_ != nullptr);
 			return d3dDevice9Ptr_;
 		}
 	private:
 		friend bool InitializeD3d9(
-			std::shared_ptr<Window> window, WindowMode windowMode, 
-			std::shared_ptr<GraphicsDeviceCapacity> capacity, 
-			MultiSamplingLevel samplingLevel);
+			std::shared_ptr<window> window, WINDOW_MODE windowMode, 
+			std::shared_ptr<graphics_capacity> capacity, 
+			multi_sampling_level samplingLevel);
 	
 		static D3d9Ptr        d3d9Ptr_;
 		static D3dDevice9Ptr  d3dDevice9Ptr_;
@@ -89,7 +89,7 @@ namespace Nyx {
 
 
 	///リソースキャッシュ
-	static std::shared_ptr<ResourceCache> g_cache;
+	static std::shared_ptr<resource_cache> g_cache;
 	
 	
 	/**
@@ -99,7 +99,7 @@ namespace Nyx {
 	* @param std::shared_ptr<GraphicsDeviceCapacity>
 	* @param MutiSamplingLevel
 	*/
-	bool InitializeD3d9(std::shared_ptr<Window> window, WindowMode windowMode, std::shared_ptr<GraphicsDeviceCapacity> capacity, MultiSamplingLevel samplingLevel);
+	bool InitializeD3d9(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, multi_sampling_level samplingLevel);
 	
 
 	/**
@@ -109,7 +109,7 @@ namespace Nyx {
 	* @param std::shared_ptr<GraphicsDeviceCapacity>
 	* @param MutiSamplingLevel
 	*/
-	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<Window> window, WindowMode windowMode, std::shared_ptr<GraphicsDeviceCapacity> capacity,  MultiSamplingLevel samplingLevel);
+	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity,  multi_sampling_level samplingLevel);
 }
 
 #endif

@@ -18,31 +18,31 @@
 #define NYX_CORE_INCLUDED_WIN32_CRITICAL_SECTION_H_
 #include "Utility/NonCopyable.h"
 
-namespace Nyx 
+namespace nyx 
 {
 
 	/// クリティカルセクション
-	class Win32CriticalSection : private NonCopyable {
+	class win32_critical_section : private noncopyable {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		Win32CriticalSection();
+		win32_critical_section();
 
 		/**
 		* デストラクタ
 		*/
-		~Win32CriticalSection();
+		~win32_critical_section();
 
 		/**
 		* クリティカルセクションの開始
 		*/
-		void Enter();
+		void enter();
 
 		/**
 		* クリティカルセクションの終了
 		*/
-		void Leave();
+		void leave();
 
 	private:
 		CRITICAL_SECTION criticalSection;  ///< クリティカルセクション

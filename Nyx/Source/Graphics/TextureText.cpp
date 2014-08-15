@@ -4,84 +4,84 @@
 #include "TextureText.h"
 #include "detail/DX9/DirectXDefinition.h"
 
-namespace Nyx
+namespace nyx
 {
-	struct TextureText::PImpl
+	struct texture_text::PImpl
 	{
 		size_t speed_ = 25;
 		size_t rendered_ = 0;
 		size_t columns_ = 0;
 		size_t rows_ = 0;
-		uchar transparency_ = Limits::UCharMax;
-		Rect2i rect_ = Rect2i();
+		uint8_t transparency_ = limits::UCHAR_MAXIMUM;
+		rect2i rect_ = rect2i();
 		TextureFontList text_;
 
-		void Set(const TextureFontList & text) {
+		void set_text(const TextureFontList & text) {
 			text_ = text;
 		}
 
-		void SetTransparency(uchar transparency) {
+		void set_transparency(uint8_t transparency) {
 			using std::swap;
 			swap(transparency_, transparency);
 		}
-		uchar GetTransparency() {
+		uint8_t get_transparency() {
 			return transparency_;
 		}
 
-		void SetSpeed(size_t speed) {
+		void set_speed(size_t speed) {
 			using std::swap;
 			swap(speed_, speed);
 		}
 
-		size_t GetSpeed() const {
+		size_t get_speed() const {
 			return speed_;
 		}
 
-		void SetRect(const Rect2i& rect) {
+		void set_rect(const rect2i& rect) {
 			rect_ = rect;
 			const size_t width = rect.width;
 			const size_t height = rect.height;
-			const size_t fontSize = text_[0]->GetFontInfo().fontSize;
+			const size_t fontSize = text_[0]->get_font_info().fontSize;
 
 			columns_ = width / (fontSize);
 			rows_ = height / (fontSize);
 		}
 
-		Rect2i GetRect() const {
+		rect2i get_rect() const {
 			return rect_;
 		}
 
-		void SetColor(const Color4c& color) {
+		void set_color(const color4c& color) {
 			for (auto item : text_) {
-				item->SetColor(color);
+				item->set_color(color);
 			}
 		}
 
 
-		void SetFontInfo(const FontInfo& info) {
+		void set_font_info(const font_info& info) {
 			for (auto item : text_) {
-				item->SetFontInfo(info);
+				item->set_font_info(info);
 			}
 		}
 
-		void Render(const Matrix44& matrix) {
+		void render(const matrix& matrix) {
 			auto length = text_.size();
 			auto world(matrix);
 
 			for (auto index = 0U; index < rendered_; ++index) {
-				text_[index]->Render(world);
-				Matrix44::AddTranslate(&world, (float)text_[index]->GetRect().width, 0.f, 0.f);
+				text_[index]->render(world);
+				matrix::add_translate(&world, (float)text_[index]->get_rect().width, 0.f, 0.f);
 			}
 			if (rendered_ >= length) {
 				return;
 			}
 
 			//テキストスピードに合わせて少しずつ不透明度を上げていく
-			auto color = text_[rendered_]->GetColor();
-			color.a = (uchar)(((color.a + speed_) >= transparency_) ? transparency_ : color.a + speed_);
-			text_[rendered_]->SetColor(color);
-			text_[rendered_]->Render(world);
-			Matrix44::AddTranslate(&world, (float)text_[rendered_]->GetRect().width, 0, 0);
+			auto color = text_[rendered_]->get_color();
+			color.a = (uint8_t)(((color.a + speed_) >= transparency_) ? transparency_ : color.a + speed_);
+			text_[rendered_]->set_color(color);
+			text_[rendered_]->render(world);
+			matrix::add_translate(&world, (float)text_[rendered_]->get_rect().width, 0, 0);
 
 			//255になったら次へ行く
 			if (color.a >= transparency_) {
@@ -89,117 +89,117 @@ namespace Nyx
 			}
 		}
 
-		std::shared_ptr<TextureFont> GetChar(size_t index) {
+		std::shared_ptr<texture_font> get_char(size_t index) {
 			return text_.at(index);
 		}
 
-		void Release() {
+		void release() {
 			for (auto item : text_) {
-				item->Release();
+				item->release();
 			}
 		}
 
-		void Recovery() {
+		void recovery() {
 			for (auto item : text_) {
-				item->Recovery();
+				item->recovery();
 			}
 		}
 	};
 
 	//-----------------------------------------------------------------------------------------
 	//
-	TextureText::TextureText(const TextureFontList&text)
+	texture_text::texture_text(const TextureFontList&text)
 		:pimpl_(std::make_shared<PImpl>()) {
 
-		pimpl_->Set(text);
+		pimpl_->set_text(text);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::Set(const TextureFontList&text ) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Set(text);
+	void texture_text::set(const TextureFontList&text ) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_text(text);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::SetRect(const Rect2i& rect) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetRect(rect);
-	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	Rect2i TextureText::GetRect() const {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetRect();
-	}
-
-	//-----------------------------------------------------------------------------------------
-	//
-	void TextureText::SetColor(const Color4c& color) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetColor(color);
-	}
-
-	//-----------------------------------------------------------------------------------------
-	//
-	void TextureText::Render(const Matrix44& matrix) const{
-		Assert(pimpl_ != nullptr);
-		pimpl_->Render(matrix);
+	void texture_text::set_rect(const rect2i& rect) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_rect(rect);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::SetTextSpeed(size_t speed) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetSpeed(speed);
+	rect2i texture_text::get_rect() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		return pimpl_->get_rect();
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	size_t TextureText::GetTextSpeed() const {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetSpeed();
+	void texture_text::set_color(const color4c& color) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_color(color);
 	}
-
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::SetTransparency(uchar transparency) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetTransparency(transparency);
-	}
-
-
-	//-----------------------------------------------------------------------------------------
-	//
-	uchar TextureText::GetTransparency() const {
-		Assert(pimpl_ != nullptr);
-		return pimpl_->GetTransparency();
+	void texture_text::render(const matrix& matrix) const{
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->render(matrix);
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::SetFontInfo(const FontInfo& info) {
-		Assert(pimpl_ != nullptr);
-		pimpl_->SetFontInfo(info);
+	void texture_text::set_text_speed(size_t speed) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_speed(speed);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::Release() {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Release();
+	size_t texture_text::get_text_speed() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		return pimpl_->get_speed();
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void texture_text::set_transparency(uint8_t transparency) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_transparency(transparency);
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	uint8_t texture_text::get_transparency() const {
+		NYX_ASSERT(pimpl_ != nullptr);
+		return pimpl_->get_transparency();
+	}
+
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void texture_text::set_font_info(const font_info& info) {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->set_font_info(info);
 	}
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void TextureText::Recovery() {
-		Assert(pimpl_ != nullptr);
-		pimpl_->Recovery();
+	void texture_text::release() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->release();
+	}
+
+	//-----------------------------------------------------------------------------------------
+	//
+	void texture_text::recovery() {
+		NYX_ASSERT(pimpl_ != nullptr);
+		pimpl_->recovery();
 	}
 }

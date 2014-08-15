@@ -17,11 +17,13 @@
 #ifndef NYX_CORE_INCLUDED_FONT_H_
 #define NYX_CORE_INCLUDED_FONT_H_
 
-namespace Nyx {
-	namespace GDI {
+namespace nyx {
+	namespace gdi {
+
+		typedef HFONT font_handle;
 
 		/// フォント
-		class Font {
+		class font {
 		public:
 			//------------------------------------------------------------------------------
 			//構築・破壊
@@ -29,20 +31,20 @@ namespace Nyx {
 			/**
 			*
 			*/
-			Font(const int height_, const int angle_, const std::wstring face_);
+			font(const int height_, const int angle_, const std::wstring face_);
 			/**
 			*
 			*/
-			Font(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const std::wstring face_);
+			font(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const std::wstring face_);
 			/**
 			*
 			*/
-			Font(const Font& font_);
+			font(const font& font_);
 
 			/**
 			*
 			*/
-			~Font();
+			~font();
 
 			//------------------------------------------------------------------------------
 			//フォントのセット
@@ -50,11 +52,11 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Set(const int h, const int angle, const std::wstring face);
+			void set(const int h, const int angle, const std::wstring face);
 			/**
 			*
 			*/
-			void Set(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const std::wstring face);
+			void set(const int height_, const int angle_, const int weight_, const bool isItalic_, const bool isUnderLine_, const bool isStrike_, const int charset_, const std::wstring face);
 
 
 			//------------------------------------------------------------------------------
@@ -63,11 +65,11 @@ namespace Nyx {
 			/**
 			*
 			*/
-			void Draw(HDC hdc, const wchar_t* text_, RECT rect_);
+			void draw(HDC hdc, const wchar_t* text_, RECT rect_);
 			/**
 			*
 			*/
-			void Draw(HDC hdc, const std::wstring text_, RECT rect_);
+			void draw(HDC hdc, const std::wstring text_, RECT rect_);
 
 			//------------------------------------------------------------------------------
 			//取得
@@ -75,38 +77,38 @@ namespace Nyx {
 			/**
 			*
 			*/
-			int GetAngle();
+			int get_angle();
 			/**
 			*
 			*/
-			int GetHeight();
+			int get_height();
 			/**
 			*
 
-			*/int GetWeight();
+			*/int get_font_weight();
 			/**
 			*
 			*/
-			bool IsItalic();
+			bool is_italic();
 			/**
 			*
 			*/
-			bool IsUnderLine();
+			bool is_underline();
 			/**
 			*
 			*/
-			HFONT GetFont();
+			font_handle get_font_handle();
 		private:
-			Font(); 
-			int angle; 
-			int height;
-			int weight;
-			int charset;
-			bool isItalic;
-			bool isStrike;
-			bool isUnderLine;
-			std::wstring face;
-			HFONT font;
+			font(); 
+			int angle_; 
+			int height_;
+			int weight_;
+			int charset_;
+			bool isItalic_;
+			bool isStrike_;
+			bool isUnderLine_;
+			std::wstring fontFace_;
+			font_handle fontHandle_;
 		};
 	}
 }

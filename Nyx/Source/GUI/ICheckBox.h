@@ -3,10 +3,10 @@
 #include "GUI/IControl.h"
 #include "Utility/Type.h"
 
-namespace Nyx
+namespace nyx
 {
 	///チェックボックスインタフェース
-	class ICheckBox : public IControl {
+	class icheckbox : public iwidget {
 	public:
 		//----------------------------------------------------------------
 		//構築・破壊
@@ -14,7 +14,7 @@ namespace Nyx
 		/**
 		* デストラクタ
 		*/
-		virtual ~ICheckBox() {}
+		virtual ~icheckbox() {}
 
 		//----------------------------------------------------------------
 		// チェックボックス固有の操作
@@ -23,19 +23,19 @@ namespace Nyx
 		* ラベルの取得
 		* @return std::wstring& ラベル
 		*/
-		virtual std::wstring GetLabel() const = 0;
+		virtual std::wstring get_label() const = 0;
 
 		/**
 		* ラベルの設定
 		* @param const std::wstring& ラベル
 		*/
-		virtual void SetLabel(const std::wstring& label) = 0;
+		virtual void set_label(const std::wstring& label) = 0;
 
 		/**
 		* ボタンがチェック状態かどうか
 		* @return bool trueならチェックされている
 		*/
-		virtual bool IsChecked() const = 0;
+		virtual bool is_checked() const = 0;
 	};
 }
 #endif

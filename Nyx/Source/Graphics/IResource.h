@@ -18,25 +18,25 @@
 #define NYX_CORE_INCLUDED_IRESOURCE_H_
 #include "Utility/Common.h"
 
-namespace Nyx {
+namespace nyx {
 	///リソースインタフェース
-	class IResource {
+	class iresource {
 	public:
 
 		/*
 		*　デストラクタ
 		*/
-		virtual ~IResource() {}
+		virtual ~iresource() {}
 		
 		/*
 		*　キャッシュからリソースを開放します
 		*/
-		virtual void Release() = 0;
+		virtual void release() = 0;
 
 		/*
 		*　キャッシュからリソースを復元します
 		*/
-		virtual void Recovery() = 0;
+		virtual void recovery() = 0;
 	};
 }
 #endif

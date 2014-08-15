@@ -3,34 +3,34 @@
 #include "Utility/Exception.h"
 #pragma comment( lib, "ws2_32.lib" )
 
-namespace Nyx {
+namespace nyx {
 
 	template<int Major= 2, int Minor = 0>
-	class WinsockInitializer {
+	class winsock_initializer {
 	public:
 		/**
 		* コンストラクタ
 		*/
-		WinsockInitializer() {
-			Startup();
+		winsock_initializer() {
+			startup();
 		}
 
 
 		/**
 		* デストラクタ
 		*/
-		~WinsockInitializer() {
-			Cleanup();
+		~winsock_initializer() {
+			cleanup();
 		}
 
 
 		/**
 		* Winsockを初期化します
 		*/
-		void Startup() {
+		void startup() {
 			int result = WSAStartup(MAKEWORD(Major, Minor), &wsaData_);
 			if (result != 0) {
-				throw Nyx::Win32Exception("Winsockの初期化に失敗しました", result);
+				throw nyx::win32_exception("Winsockの初期化に失敗しました", result);
 			}
 		}
 
@@ -38,14 +38,13 @@ namespace Nyx {
 		/**
 		* Winsockの終了処理をします．
 		*/
-		void Cleanup() {
+		void cleanup() {
 			WSACleanup();
 		}
 	private:
 		WSADATA wsaData_;///< 
 	};
 
-	///
-	static const WinsockInitializer<>& winsock_initializer = WinsockInitializer<>();
+	static const nyx::winsock_initializer<> g_winsock_init = nyx::winsock_initializer<>();
 }
 #endif
