@@ -37,7 +37,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		bool OnCreate(HWND hWnd,std::wstring label, int x, int y, int width,int height, int id);
+		bool on_create(HWND hWnd,std::wstring label, int x, int y, int width,int height, int id);
 		//--------------------------------------------------------------------------------------
 		//ƒnƒ“ƒhƒ‹‚ÌŽæ“¾
 		//---------------------------------------------------------------------------------------

@@ -21,26 +21,26 @@
 
 namespace nyx {
 	//-----------------------------------------------------------------------------------------
-	Dispatcher::Dispatcher() 
+	dispatcher::dispatcher() 
 		:idispatcher() {
 
 	}
 
 
 	//-----------------------------------------------------------------------------------------
-	Dispatcher::~Dispatcher() {
+	dispatcher::~dispatcher() {
 		clear();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::add(std::shared_ptr<iwidget> control, gui_callback delegate) {
+	void dispatcher::add(std::shared_ptr<iwidget> control, gui_callback delegate) {
 		uint32_t index = control->get_id();
 		hooklist[index] = delegate;
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::remove(std::shared_ptr<iwidget> control) {
+	void dispatcher::remove(std::shared_ptr<iwidget> control) {
 		HookListIterator it = hooklist.find(control->get_id());
 		if (it != hooklist.end()) {
 			hooklist.erase(it);
@@ -48,12 +48,12 @@ namespace nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::clear() {
+	void dispatcher::clear() {
 		hooklist.clear();
 	}
 	
 	//-----------------------------------------------------------------------------------------
-	gui_callback   Dispatcher::get_callback(std::shared_ptr<iwidget> control) {
+	gui_callback   dispatcher::get_callback(std::shared_ptr<iwidget> control) {
 		size_t id = control->get_id();
 		HookListIterator it = hooklist.find(id);
 		if (it == hooklist.end()) {
@@ -63,7 +63,7 @@ namespace nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	void Dispatcher::Dispatch(std::shared_ptr<iwidget> sender, event_args e) {
+	void dispatcher::dispatch(std::shared_ptr<iwidget> sender, event_args e) {
 		size_t id = sender->get_id();
 		gui_callback callback = hooklist[id];
 		if (callback != nullptr) {

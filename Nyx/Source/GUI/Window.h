@@ -74,7 +74,7 @@ namespace nyx {
 		*/
 		bool is_show();
 
-		void ShowCursor(bool isShowCursor);
+		void show_cursor(bool isShowCursor);
 
 		//---------------------------------------------------------------------------------------
 		//コントロールの有効化と無効化
@@ -217,7 +217,6 @@ namespace nyx {
 		*/
 		bool process_message();
 
-
 	private:
 		/**
 		* ウインドウプロ―シージャ
@@ -250,9 +249,9 @@ namespace nyx {
 		///ウインドウに結びつけらている子コントロールのリスト
 		hook_list childControl_;
 		///ディスパッチャにフックされているGUIイベントのリスト
-		std::shared_ptr<Dispatcher> guiEventList_;
+		std::shared_ptr<dispatcher> guiEventList_;
 		///ディスパッチャにフックされているユーザーイベントのリスト
-		std::shared_ptr<Dispatcher> userEventList_;
+		std::shared_ptr<dispatcher> userEventList_;
 	};
 }
 

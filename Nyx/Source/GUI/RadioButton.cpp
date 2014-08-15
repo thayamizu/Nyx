@@ -25,7 +25,7 @@ namespace nyx {
 	radio_button::radio_button(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
 		:label_(label), hwnd_(NULL), id_(id), atom_(NULL), isShow_(false), userData_(NULL) {
 
-			OnCreate(hwnd, label_, x, y, width, height, id);
+			on_create(hwnd, label_, x, y, width, height, id);
 	}       
 
 	//-----------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ namespace nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	bool radio_button::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool radio_button::on_create(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(
 			TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, //ウィンドウの種類

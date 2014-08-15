@@ -70,7 +70,7 @@ namespace nyx {
 		* @param std::shared_ptr<IControl> sender
 		* @param EventArgs& e
 		*/
-		virtual void Dispatch(std::shared_ptr<iwidget>  sender, event_args e) = 0;
+		virtual void dispatch(std::shared_ptr<iwidget>  sender, event_args e) = 0;
 	};
 }
 

@@ -48,7 +48,7 @@ namespace nyx {
 		* @return bool
 		*/
 		void initialize(const audio_desc& desc);
-
+		
 
 		/**
 		* オーディオバッファを生成します

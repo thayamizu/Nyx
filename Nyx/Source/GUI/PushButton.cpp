@@ -26,7 +26,7 @@ namespace nyx {
 		:label_(label), hwnd_(NULL), id_(id), atom_(NULL), isShow_(false), isActivate_(true)
 	{
 
-		OnCreate(hwnd, label, x, y, width, height, id);
+		on_create(hwnd, label, x, y, width, height, id);
 	}       
 
 	//------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ namespace nyx {
 	}
 
 	//------------------------------------------------------------------------------
-	bool push_button::OnCreate(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id) {
+	bool push_button::on_create(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 	
 			x, y, width, height, hwnd,  (HMENU)id, hInstance, NULL);

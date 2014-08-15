@@ -27,7 +27,7 @@ namespace nyx {
 	list_box::list_box(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
 		:label_(label), id_(id){
 
-			OnCreate(hwnd, label, x, y, width, height, id);
+			onc_create(hwnd, label, x, y, width, height, id);
 	}       
 	list_box::~list_box() {
 		if (atom_) {
@@ -35,7 +35,7 @@ namespace nyx {
 		}
 	}
 
-	bool list_box::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool list_box::onc_create(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(TEXT("LISTBOX"), label.c_str(), WS_CHILD | WS_VISIBLE | LBS_STANDARD & ~LBS_SORT, 
 			x, y, width, height, hwnd, (HMENU)id, hInstance, NULL);

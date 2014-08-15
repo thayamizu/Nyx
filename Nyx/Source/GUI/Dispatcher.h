@@ -23,7 +23,7 @@
 namespace nyx {
 
 	///ディスパッチャ
-	class Dispatcher : public idispatcher, private noncopyable {
+	class dispatcher : public idispatcher, private noncopyable {
 		typedef std::unordered_map<uint32_t, gui_callback> HookList;
 		typedef std::unordered_map<uint32_t, gui_callback>::iterator HookListIterator;
 	public:
@@ -33,12 +33,12 @@ namespace nyx {
 		/**
 		* コンストラクタ
 		*/
-		explicit Dispatcher();
+		explicit dispatcher();
 
 		/**
 		* デストラクタ
 		*/
-		virtual ~Dispatcher();
+		virtual ~dispatcher();
 		
 		//---------------------------------------------------------------------------------------
 		//イベントの追加と削除
@@ -75,7 +75,7 @@ namespace nyx {
 		* @param std::shared_ptr<IControl> sender
 		* @param EventArgs* e
 		*/
-		void Dispatch(std::shared_ptr<iwidget> control, event_args e);
+		void dispatch(std::shared_ptr<iwidget> control, event_args e);
 	private:
 		///ディスパッチャにフックされているコントロールのリスト
 		HookList hooklist;

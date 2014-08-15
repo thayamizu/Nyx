@@ -26,10 +26,10 @@ namespace nyx {
 	window::window(HWND hWnd, std::wstring caption, std::wstring icon, int x, int y, int width, int height, int id)
 		:hwnd_(NULL), caption_(caption), icon_(icon), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
 			//フックリストが初期化されていなければ、初期化する
-			guiEventList_ = std::make_shared<Dispatcher>();
+			guiEventList_ = std::make_shared<dispatcher>();
 			
 			//フックリストが初期化されていなければ、初期化する
-			userEventList_ = std::make_shared<Dispatcher>();
+			userEventList_ = std::make_shared<dispatcher>();
 
 			//コントロールの生成
 			on_create(hWnd, x, y, width, height);
@@ -124,7 +124,7 @@ namespace nyx {
 	}
 	
 	//----------------------------------------------------------------
-	void window::ShowCursor(bool isShowCursor) {
+	void window::show_cursor(bool isShowCursor) {
 		::ShowCursor(isShowCursor);
 	}
 	
@@ -342,12 +342,12 @@ namespace nyx {
 			//-------------------------------------------------------------------------------------
 			//GUIイベントメッセージ処理
 			//-------------------------------------------------------------------------------------
-			win->guiEventList_->Dispatch(sender, e);
+			win->guiEventList_->dispatch(sender, e);
 
 			//-------------------------------------------------------------------------------------
 			//ユーザーイベントメッセージ処理
 			//-------------------------------------------------------------------------------------
-			win->userEventList_->Dispatch(sender, e);
+			win->userEventList_->dispatch(sender, e);
 		}
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}

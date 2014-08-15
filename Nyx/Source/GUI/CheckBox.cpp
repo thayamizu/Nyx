@@ -24,11 +24,11 @@ namespace nyx {
 	//---------------------------------------------------------------------------------------
 	check_box::check_box(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) 
 		:hwnd_(NULL), label_(label), id_(id), atom_(NULL), isShow_(false), userData_(NULL)	{
-		OnCreate(hwnd, label, x, y, width, height, id);
+		on_create(hwnd, label, x, y, width, height, id);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool check_box::OnCreate(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool check_box::on_create(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
 
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 
