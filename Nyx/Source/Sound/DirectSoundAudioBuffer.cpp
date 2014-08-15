@@ -36,7 +36,7 @@ namespace nyx {
 	//
 	void dsound_audio_buffer::load(const audio_buffer_desc& desc, const dsound_ptr ds) {
 		WAVEFORMATEX wfx={};
-		AudioUtility::build_wav_format_ex(&wfx, desc.waveFormat);
+		build_wav_format_ex(&wfx, desc.waveFormat);
 
 		DSBUFFERDESC bufferDesc = {};
 		build_dsound_buffer_desc(&bufferDesc, wfx);
@@ -130,7 +130,7 @@ namespace nyx {
 	//
 	void dsound_audio_buffer::set_volume(long volume) {
 		NYX_ASSERT(soundBuffer_ != nullptr);
-		long decibel = AudioUtility::volume_to_decibel(volume);
+		long decibel = volume_to_decibel(volume);
 		HRESULT hr = soundBuffer_->SetVolume(decibel);
 		if (FAILED(hr)) {
 			debug_out::trace("DirectSoundオーディオバッファのデシベル値の設定に失敗しました。[%s:%d]", __FILE__, __LINE__);
@@ -150,7 +150,7 @@ namespace nyx {
 			throw com_exception("DirectSoundオーディオバッファのデシベル値の取得に失敗しました。", hr);
 		}
 
-		return AudioUtility::decibel_to_volume(decibel);
+		return decibel_to_volume(decibel);
 	}
 
 
@@ -158,25 +158,25 @@ namespace nyx {
 	//
 	void dsound_audio_buffer::set_effect(const audio_effect_desc & effectDesc) {
 		switch(effectDesc.effectType) {
-		case AudioUtility::AUIO_EFFECT_TYPE_CHORUS:
+		case AUIO_EFFECT_TYPE_CHORUS:
 			set_chorus_effect(effectDesc);
 			break;
-		case AudioUtility::AUDIO_EFFECT_TYPE_DISTORTION:
+		case AUDIO_EFFECT_TYPE_DISTORTION:
 			set_distortion_effect(effectDesc);
 			break;
-		case AudioUtility::AUDIO_EFFECT_TYPE_ECHO:
+		case AUDIO_EFFECT_TYPE_ECHO:
 			set_echo_effect(effectDesc);
 			break;
-		case AudioUtility::AUDIO_EFFECT_TYPE_FLANGER:
+		case AUDIO_EFFECT_TYPE_FLANGER:
 			set_flanger_effect(effectDesc);
 			break;
-		case AudioUtility::AUDIO_EFFECT_TYPE_GARGLE:
+		case AUDIO_EFFECT_TYPE_GARGLE:
 			set_flanger_effect(effectDesc);
 			break;
-		case AudioUtility::AUDIO_EFFECT_TYPE_PARAMETRIC_EQUALIZER:
+		case AUDIO_EFFECT_TYPE_PARAMETRIC_EQUALIZER:
 			set_parametric_equalizer_effect(effectDesc);
 			break;
-		case AudioUtility::AUDIO_EFFECT_TYPE_REVERB:
+		case AUDIO_EFFECT_TYPE_REVERB:
 			set_reverb_effect(effectDesc);
 			break;
 		default:

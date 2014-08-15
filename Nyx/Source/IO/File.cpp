@@ -79,7 +79,7 @@ namespace nyx {
 	file_handle file::get_handle() {
 		NYX_ASSERT(pimpl_ != nullptr);
 		NYX_ASSERT(pimpl_->file != nullptr);
-		return pimpl_->file->GetHandle();
+		return pimpl_->file->get_handle();
 	}
 
 	//-----------------------------------------------------------------------------------

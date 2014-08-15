@@ -37,9 +37,9 @@ namespace nyx {
 
 		/**
 		* オーディオバッファの状態の取得します
-		* @return AudioUtility::BufferType
+		* @return BufferType
 		*/
-		AudioUtility::AUDIO_BUFFER_TYPE get_buffer_type() const;
+		AUDIO_BUFFER_TYPE get_buffer_type() const;
 	private:
 		/**
 		* DirectSoundのセカンダリバッファにwaveデータを書き込みます

@@ -84,9 +84,9 @@ namespace nyx {
 
 		/**
 		* オーディオバッファの状態の取得します
-		* @return AudioUtility::BufferType
+		* @return BufferType
 		*/
-		virtual AudioUtility::AUDIO_BUFFER_TYPE get_buffer_type() const = 0;
+		virtual AUDIO_BUFFER_TYPE get_buffer_type() const = 0;
 
 		/**
 		* オーディオバッファのパン値を設定します

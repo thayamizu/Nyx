@@ -95,7 +95,8 @@ namespace nyx {
 	}
 
 	//-----------------------------------------------------------------------------------
-	HANDLE win32_file::GetHandle() {
+	nyx::file_handle win32_file::get_handle()
+{
 		return handle;
 	}
 

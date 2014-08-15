@@ -45,7 +45,7 @@ namespace nyx {
 			debug_out::trace("DirectSoundオーディオバッファのパン値の取得に失敗しました。[%s:%d]", __FILE__, __LINE__);
 			throw com_exception("DirectSoundオーディオバッファのパン値の取得に失敗しました。", hr);
 		}
-		auto volume = AudioUtility::decibel_to_volume((pan > 0) ? - pan : pan);
+		auto volume = decibel_to_volume((pan > 0) ? - pan : pan);
 		return (pan > 0)? 100L - volume : volume - 100L;
 	}
 
@@ -57,7 +57,7 @@ namespace nyx {
 		NYX_ASSERT(soundBuffer != nullptr);
 		const auto ref = 100L;
 		volume = math::clamp(volume, -100L, 100L);
-		auto pan = AudioUtility::volume_to_decibel(ref - math::abs(volume));
+		auto pan = volume_to_decibel(ref - math::abs(volume));
 		pan = (volume > 0)? pan : -pan;
 		HRESULT hr = soundBuffer->SetPan(pan);
 		if (FAILED(hr)) {

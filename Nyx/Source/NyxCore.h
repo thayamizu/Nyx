@@ -55,7 +55,7 @@
 #include "GUI/Dispatcher.h"
 
 // ファイル入出力
-#include "IO/IFile.h"
+#include "IO/FileUtility.h"
 #include "IO/File.h"
 #include "IO/Logger.h"
 #include "IO/PackedFile.h"

@@ -16,14 +16,14 @@
 ********************************************************************************/
 #ifndef NYX_CORE_PACKED_FILE_H_
 #define NYX_CORE_PACKED_FILE_H_
-#include "IO/IFile.h"
 #include "Utility/NonCopyable.h"
+
 namespace nyx
 {
 	using std::unique_ptr;
 	using std::shared_ptr;
 	///パックされたファイル
-	NYX_DEPRECATED class packed_file : public ifile, private noncopyable
+	NYX_DEPRECATED class packed_file :  private noncopyable
 	{
 	public:
 		//-------------------------------------------------------

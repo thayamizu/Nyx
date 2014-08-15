@@ -21,13 +21,7 @@
 namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	const double AudioUtility::DEFAULT_BIT_RATE      = 16;
-
-	const double AudioUtility::DEFAULT_SAMPLING_RATE = 44100;
-
-	//-------------------------------------------------------------------------------------------------------
-	//
-	long AudioUtility::volume_to_decibel(long volume) {
+	long volume_to_decibel(long volume) {
 		volume  = math::clamp(volume, 1L, 100L);
 		return static_cast<long>(33.2f * math::log10((float)volume/100) * 100);
 	}
@@ -35,7 +29,7 @@ namespace nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	long AudioUtility::decibel_to_volume(long decibel) {
+	long decibel_to_volume(long decibel) {
 		decibel = math::clamp(decibel, -10000L, 10000L);
 		if (decibel <= -10000L) {
 			return 0L;
@@ -51,7 +45,7 @@ namespace nyx {
 	
 	//-------------------------------------------------------------------------------------------------------
 	//
-	void AudioUtility::build_wav_format_ex(WAVEFORMATEX* wfx, const wav_file_header& waveHeader){
+	void build_wav_format_ex(WAVEFORMATEX* wfx, const wav_file_header& waveHeader){
 		//Waveフォーマットのセットアップ
 		ZeroMemory(wfx, sizeof(WAVEFORMATEX));
 		wfx->wFormatTag      = waveHeader.formatChunk.formatTag;

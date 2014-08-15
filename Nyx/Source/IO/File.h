@@ -17,6 +17,7 @@
 #ifndef NYX_CORE_INCLUDED_FILE_H_
 #define NYX_CORE_INCLUDED_FILE_H_
 #include "Utility/NonCopyable.h"
+#include "FileUtility.h"
 
 namespace nyx {
 

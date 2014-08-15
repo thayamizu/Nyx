@@ -16,6 +16,8 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_WIN32_FILE_H_
 #define NYX_CORE_INCLUDED_WIN32_FILE_H_
+#include "IO/FileUtility.h"
+
 namespace nyx {
 
 	///ファイル入出力
@@ -50,7 +52,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		HANDLE GetHandle();
+		file_handle get_handle();
 		
 		/**
 		*

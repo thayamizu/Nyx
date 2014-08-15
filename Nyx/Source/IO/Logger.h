@@ -18,6 +18,7 @@
 #define NYX_CORE_INCLUDED_LOGGER_H_
 #include "Utility/NonCopyable.h"
 #include "Utility/Type.h"
+#include "FileUtility.h"
 
 namespace nyx {
 

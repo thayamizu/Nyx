@@ -88,8 +88,8 @@ namespace nyx {
 
 	//-------------------------------------------------------------------------------------------------------
 	//
-	AudioUtility::AUDIO_BUFFER_TYPE dsound_streaming_3d_audio_buffer::get_buffer_type() const {
-		return AudioUtility::AUDIO_BUFFER_TYPE_STREAMING_3D;
+	AUDIO_BUFFER_TYPE dsound_streaming_3d_audio_buffer::get_buffer_type() const {
+		return AUDIO_BUFFER_TYPE_STREAMING_3D;
 	}
 
 	void dsound_streaming_3d_audio_buffer::reset() {
@@ -145,7 +145,7 @@ namespace nyx {
 		DWORD flag = DSBCAPS_CTRLFX | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D |  DSBCAPS_CTRLPOSITIONNOTIFY | DSBCAPS_GETCURRENTPOSITION2;
 
 		//フォーカスモードの設定
-		if ( bufferDesc_.focusType == AudioUtility::FOCUS_TYPE_GLOBAL) {
+		if ( bufferDesc_.focusType == FOCUS_TYPE_GLOBAL) {
 			flag |= DSBCAPS_GLOBALFOCUS;
 		}
 		else {

@@ -128,16 +128,16 @@ namespace nyx {
 		NYX_ASSERT (reader != nullptr) 
 
 		switch(bufferDesc.bufferType) {
-		case AudioUtility::AUDIO_BUFFER_TYPE_STATIC :
+		case AUDIO_BUFFER_TYPE_STATIC :
 			audio = std::make_shared<dsound_static_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
-		case AudioUtility::AUDIO_BUFFER_TYPE_STATIC_3D:
+		case AUDIO_BUFFER_TYPE_STATIC_3D:
 			audio = std::make_shared<dsound_static_3d_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
-		case AudioUtility::AUDIO_BUFFER_TYPE_STREAMING:
+		case AUDIO_BUFFER_TYPE_STREAMING:
 			audio = std::make_shared<dsound_streaming_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
-		case AudioUtility::AUDIO_BUFFER_TYPE_STREAMING_3D:
+		case AUDIO_BUFFER_TYPE_STREAMING_3D:
 			audio = std::make_shared<dsound_streaming_3d_audio_buffer>(bufferDesc, directSound_, reader);
 			break;
 		default:

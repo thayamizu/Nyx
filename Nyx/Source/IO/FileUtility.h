@@ -1,8 +1,6 @@
 #ifndef NYX_CORE_INCLUDED_IFILE_H_
 #define NYX_CORE_INCLUDED_IFILE_H_
 #include <Windows.h>
-#include "Utility/Type.h"
-#include "Utility/Limits.h"
 
 namespace nyx {
 

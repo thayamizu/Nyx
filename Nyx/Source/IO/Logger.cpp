@@ -71,7 +71,7 @@ namespace nyx {
 	HANDLE logger::get_handle() {
 		NYX_ASSERT(pimpl_ != nullptr);
 		NYX_ASSERT(pimpl_->logger != nullptr);
-		return pimpl_->logger->GetHandle();
+		return pimpl_->logger->get_handle();
 	}
 
 	//-----------------------------------------------------------------------------------

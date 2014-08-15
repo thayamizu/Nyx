@@ -12,7 +12,7 @@ namespace nyx
 	* unsigned char‚Ì•Ê–¼’è‹`
 	*/
 	typedef unsigned char uint8_t;
-
+	
 	/**
 	* unsigned short‚Ì•Ê–¼’è‹`
 	*/
