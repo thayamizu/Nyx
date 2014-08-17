@@ -176,8 +176,6 @@ namespace nyx {
 		*/
 		bool is_checked() const ;
 
-		void on_checked_changed(const gui_callback& callback);
-
 		void on_click(const gui_callback& callback);
 
 		void on_paint(const gui_callback& callback);

@@ -170,7 +170,6 @@ namespace nyx {
 
 		void on_paint(const gui_callback& callback);
 		void on_click(const gui_callback& callback);
-		void on_checked_changed(const gui_callback& callback);
 		void dispatch(WIDGET_EVENT_TYPE eventType, event_args& e);
 	private:
 		/// ハンドルインスタンス

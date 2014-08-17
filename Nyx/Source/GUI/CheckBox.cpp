@@ -205,12 +205,6 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void check_box::on_checked_changed(const gui_callback& callback) {
-		NYX_ASSERT(guiEventList_ != nullptr);
-		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CHECKED_CHANGED, callback);
-	}
-
-	//----------------------------------------------------------------
 	void check_box::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e){
 		NYX_ASSERT(guiEventList_ != nullptr);
 		if (eventType != WIDGET_EVENT_TYPE_NUM) {

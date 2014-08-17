@@ -287,18 +287,24 @@ namespace nyx {
 		WIDGET_EVENT_TYPE eventType = WIDGET_EVENT_TYPE_NUM;
 		event_args e{ msg, wParam, lParam };
 		int controlId = -1;
+		uint32_t notifyCode = 0;
 		switch (msg)
 		{
 		case WM_COMMAND:
 			controlId = LOWORD(wParam);
-			eventType = WIDGET_EVENT_TYPE_CLICK;
+			notifyCode = HIWORD(wParam);
+			switch (notifyCode) {
+			case BN_CLICKED:
+				eventType = WIDGET_EVENT_TYPE_CLICK; break;
+			case LBN_SELCHANGE:
+				eventType = WIDGET_EVENT_TYPE_INDEX_CHANGED; break;
+			}
 			break;
 		case WM_DRAWITEM:
 			controlId = LOWORD(wParam);
 			eventType = WIDGET_EVENT_TYPE_PAINT;
 			break;
 		case WM_PAINT:
-			controlId = LOWORD(wParam);
 			eventType = WIDGET_EVENT_TYPE_PAINT;
 			break;
 		case WM_LBUTTONDOWN:

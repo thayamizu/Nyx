@@ -196,12 +196,6 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void radio_button::on_checked_changed(const gui_callback& callback) {
-		NYX_ASSERT(guiEventList_ != nullptr);
-		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CHECKED_CHANGED, callback);
-	}
-
-	//----------------------------------------------------------------
 	void radio_button::on_click(const gui_callback& callback) {
 		NYX_ASSERT(guiEventList_ != nullptr);
 		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CLICK, callback);
