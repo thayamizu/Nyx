@@ -21,42 +21,42 @@ namespace nyx {
 	namespace gdi {
 		//------------------------------------------------------------------------------
 		//
-		Pen::Pen()
+		pen::pen()
 			:hdc_(nullptr), pen_(nullptr)
 		{
 
 		}
 		//------------------------------------------------------------------------------
 		//
-		Pen::Pen(PEN_STYLE style, int width, color3c color_){
+		pen::pen(PEN_STYLE style, int width, color3c color_){
 			int type = static_cast<int>(style);
 			pen_ = CreatePen(type, width, RGB(color_.r, color_.g, color_.b));
 		}
 
 		//------------------------------------------------------------------------------
 		//
-		Pen::~Pen() {
+		pen::~pen() {
 			::DeleteObject(pen_);
 
 		} 
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::Set(PEN_STYLE style, int width, color3c color_) {
+		void  pen::set(PEN_STYLE style, int width, color3c color_) {
 			int type = static_cast<int>(style);
 			pen_ = CreatePen(type, width, RGB(color_.r, color_.g, color_.b));
 		}
 	
 		//------------------------------------------------------------------------------
 		//
-		void Pen::Select(HWND hwnd) {
+		void pen::select(HWND hwnd) {
 			hdc_ = GetDC(hwnd);	
 		}
 
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawLine(HDC hdc, int x, int y) {
+		void  pen::draw_line(HDC hdc, int x, int y) {
 			//ペンを選択して線を描画
 			SelectObject(hdc, pen_);
 			LineTo(hdc, x, y); 
@@ -64,7 +64,7 @@ namespace nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawRect(HDC hdc, int x, int y, int width, int height) {
+		void  pen::draw_rect(HDC hdc, int x, int y, int width, int height) {
 			//ペンを選択して長方形を描画
 			::SelectObject(hdc, pen_);
 			::Rectangle(hdc, x, y, width, height);
@@ -73,7 +73,7 @@ namespace nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawEllipse(HDC hdc, int x, int y, int width, int height) {
+		void  pen::draw_ellipse(HDC hdc, int x, int y, int width, int height) {
 			//ペンを選択して楕円を描画
 			SelectObject(hdc, pen_);
 			::Rectangle(hdc, x, y, width, height);
@@ -81,7 +81,7 @@ namespace nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawPolygon(HDC hdc, point2i *point, int num) {
+		void  pen::draw_polygon(HDC hdc, point2i *point, int num) {
 			//ペンを選択して多角形を描画
 			::SelectObject(hdc, pen_);
 			::Polygon(hdc, reinterpret_cast<POINT*>(point->elements), num);
@@ -89,7 +89,7 @@ namespace nyx {
 
 		//------------------------------------------------------------------------------
 		//
-		void  Pen::DrawBezier(HDC hdc, point2i* point, int num) {
+		void  pen::draw_bezier(HDC hdc, point2i* point, int num) {
 			//ペンを選択してベジェ曲線を描画
 			SelectObject(hdc, pen_);
 			::PolyBezier(hdc, reinterpret_cast<POINT*>(point->elements), num);

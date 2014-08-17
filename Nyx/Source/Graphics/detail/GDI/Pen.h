@@ -36,7 +36,7 @@ namespace nyx {
 
 
 		///ÉyÉì
-		class Pen {
+		class pen {
 		public:
 			//---------------------------------------------------------------
 			//ç\ízÅEîjâÛ
@@ -44,17 +44,17 @@ namespace nyx {
 			/**
 			*
 			*/
-			Pen();
+			pen();
 			
 			/**
 			*
 			*/
-			Pen(PEN_STYLE style, int width, color3c color);
+			pen(PEN_STYLE style, int width, color3c color);
 
 			/**
 			*
 			*/
-			~Pen();
+			~pen();
 
 			//---------------------------------------------------------------
 			//ÉZÉbÉg
@@ -62,37 +62,37 @@ namespace nyx {
 			/**
 			*
 			*/
-			void Set(PEN_STYLE style, int width, color3c color);
+			void set(PEN_STYLE style, int width, color3c color);
 
 			/**
 			*
 			*/
-			void Select(HWND hwnd);
+			void select(HWND hwnd);
 			//---------------------------------------------------------------
 			//ï`âÊ
 			//--------------------------------------------------------------- 
 			/**
 			*
 			*/
-			void DrawLine(HDC hdc, int x, int y);
+			void draw_line(HDC hdc, int x, int y);
 			/**
 			*
 			*/
-			void DrawRect(HDC hdc, int x, int y, int width, int height);
+			void draw_rect(HDC hdc, int x, int y, int width, int height);
 			/**
 			*
 			*/
-			void DrawEllipse(HDC hdc, int x, int y, int width, int height);
+			void draw_ellipse(HDC hdc, int x, int y, int width, int height);
 
 			/**
 			*
 			*/
-			void DrawPolygon(HDC hdc, point2i* p, int num);
+			void draw_polygon(HDC hdc, point2i* p, int num);
 
 			/**
 			*
 			*/
-			void DrawBezier(HDC hdc, point2i* p, int num);
+			void draw_bezier(HDC hdc, point2i* p, int num);
 		private:
 			HDC hdc_;
 			HPEN pen_;

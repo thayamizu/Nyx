@@ -18,7 +18,7 @@ namespace nyx {
 	//-----------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<texture_text> font_factory::make_texture_text(const std::wstring& text, const font_info& fontInfo) {
-		TextureFontList resource;
+		texture_font_list resource;
 		for (auto chara : text) {
 			resource.push_back(make_texture_char(chara, fontInfo));
 		}

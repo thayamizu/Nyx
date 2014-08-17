@@ -19,7 +19,7 @@ namespace nyx {
 		
 		back_buffer_format get_back_buffer_format();
 		
-		stencil_buffeR_format get_depth_stencil_buffer_format();
+		stencil_buffer_format get_depth_stencil_buffer_format();
 		
 		bool get_supported_multisampling_level(uint64_t samplingLevel, format_type formatType, uint64_t* quality);
 	private:

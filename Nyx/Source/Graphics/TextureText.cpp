@@ -14,9 +14,9 @@ namespace nyx
 		size_t rows_ = 0;
 		uint8_t transparency_ = limits::UCHAR_MAXIMUM;
 		rect2i rect_ = rect2i();
-		TextureFontList text_;
+		texture_font_list text_;
 
-		void set_text(const TextureFontList & text) {
+		void set_text(const texture_font_list & text) {
 			text_ = text;
 		}
 
@@ -108,7 +108,7 @@ namespace nyx
 
 	//-----------------------------------------------------------------------------------------
 	//
-	texture_text::texture_text(const TextureFontList&text)
+	texture_text::texture_text(const texture_font_list&text)
 		:pimpl_(std::make_shared<PImpl>()) {
 
 		pimpl_->set_text(text);
@@ -116,7 +116,7 @@ namespace nyx
 
 	//-----------------------------------------------------------------------------------------
 	//
-	void texture_text::set(const TextureFontList&text ) {
+	void texture_text::set(const texture_font_list&text ) {
 		NYX_ASSERT(pimpl_ != nullptr);
 		pimpl_->set_text(text);
 	}

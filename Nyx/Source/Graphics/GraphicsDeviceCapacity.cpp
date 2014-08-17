@@ -85,7 +85,7 @@ namespace nyx
 		}
 
 
-		stencil_buffeR_format GetDepthStencilFormat() {
+		stencil_buffer_format GetDepthStencilFormat() {
 			auto d3d = D3d9Driver::GetD3d9();
 
 			std::vector<D3DFORMAT> depthStencilFormatList;
@@ -96,7 +96,7 @@ namespace nyx
 
 
 			//ディスプレイのアダプタに最適なステンシルバッファフォーマットを取得する
-			stencil_buffeR_format result = 0; 
+			stencil_buffer_format result = 0; 
 			auto displayFormat = displayMode_.Format;
 			for (auto it = depthStencilFormatList.begin(); it != depthStencilFormatList.end(); ++it) {
 				auto depthStencilFormat = *it;

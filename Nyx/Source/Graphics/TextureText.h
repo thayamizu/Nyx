@@ -6,18 +6,18 @@
 
 namespace nyx {
 
-	typedef std::vector< std::shared_ptr<texture_font> > TextureFontList;
+	typedef std::vector< std::shared_ptr<texture_font> > texture_font_list;
 	class texture_text : public irenderable, public iresource {
 	public:
 		/**
 		*
 		*/
-		explicit texture_text(const TextureFontList& text);
+		explicit texture_text(const texture_font_list& text);
 
 		/**
 		*
 		*/
-		void set(const TextureFontList& text);
+		void set(const texture_font_list& text);
 		
 
 		/**

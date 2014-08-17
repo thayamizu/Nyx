@@ -41,7 +41,7 @@ namespace nyx {
 	///リソースタイプ
 	enum class RESOURCE_TYPE 
 	{
-		RESOURCETYPE_SURFACE,
+		RESOURCE_TYPE_SURFACE,
 		RESOURCE_TYPE_VOLUME,
 		RESOURCE_TYPE_TEXTURE,
 		RESOURCE_TYPE_VOLUME_TEXTURE,
@@ -56,7 +56,7 @@ namespace nyx {
 	typedef format_type back_buffer_format;
 	typedef format_type display_format;
 	typedef format_type index_buffer_format;
-	typedef format_type stencil_buffeR_format;
+	typedef format_type stencil_buffer_format;
 	typedef format_type vertex_buffer_format;
 
 	///サンプリングレベル

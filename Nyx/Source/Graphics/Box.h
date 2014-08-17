@@ -9,9 +9,5 @@ namespace nyx {
 		T minY, minY;
 		T minZ, maxZ;
 	};
-
-	
-
-	
 }
 #endif

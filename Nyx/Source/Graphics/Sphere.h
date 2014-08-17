@@ -8,6 +8,5 @@ namespace nyx {
 		T r;
 		T center;
 	};
-
 }
 #endif
