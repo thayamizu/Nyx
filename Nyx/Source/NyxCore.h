@@ -42,7 +42,6 @@
 ///GUI
 #include "GUI/IControl.h"
 #include "GUI/ICheckBox.h"
-#include "GUI/IDispatcher.h"
 #include "GUI/IPushButton.h"
 #include "GUI/IRadioButton.h"
 #include "GUI/IListBox.h"
@@ -149,6 +148,5 @@ class SkinMesh;
 #include "Utility/Limits.h"
 #include "Utility/Math.h"
 #include "Utility/NonCopyable.h"
-
 
 #endif

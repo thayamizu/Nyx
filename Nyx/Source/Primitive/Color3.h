@@ -21,7 +21,7 @@
 namespace nyx
 {
 	template <typename T>
-	class Color3{
+	class color3{
 		static_assert(std::is_arithmetic<T>::value, "T required arithmetic type.");
 	public:
 		//--------------------------------------------------------------------------------------
@@ -43,42 +43,42 @@ namespace nyx
 		// 定数
 		//--------------------------------------------------------------------------------------
 		///
-		static const Color3<T> White;
+		static const color3<T> White;
 
 		///
-		static const Color3<T> Gray;
+		static const color3<T> Gray;
 
 		///
-		static const Color3<T> Black;
+		static const color3<T> Black;
 
 		///
-		static const Color3<T> Red;
+		static const color3<T> Red;
 
 		///
-		static const Color3<T> Green;
+		static const color3<T> Green;
 
 		///
-		static const Color3<T> Blue;
+		static const color3<T> Blue;
 
 		///
-		static const Color3<T> Cyan;
+		static const color3<T> Cyan;
 
 		///
-		static const Color3<T> Magenta;
+		static const color3<T> Magenta;
 
 		///
-		static const Color3<T> Yellow;
+		static const color3<T> Yellow;
 
 		//--------------------------------------------------------------------------------------
 		// コンストラクタ
 		//--------------------------------------------------------------------------------------
-		Color3<T>() {
+		color3<T>() {
 			Set(0, 0, 0);
 		}
-		Color3<T>(T r, T g, T b) {
+		color3<T>(T r, T g, T b) {
 			Set(r, g, b);
 		}
-		Color3<T>(const Color3<T>& other) {
+		color3<T>(const color3<T>& other) {
 			Set(other.r, other.g, other.b);
 		}
 
@@ -100,39 +100,39 @@ namespace nyx
 		//--------------------------------------------------------------------------------------
 		// 演算
 		//--------------------------------------------------------------------------------------
-		Color3<T> operator +(const Color3<T>&  color) const {
-			return Color3<T>(r + color.r, g + color.g, b + color.b);
+		color3<T> operator +(const color3<T>&  color) const {
+			return color3<T>(r + color.r, g + color.g, b + color.b);
 
 		}
-		Color3<T> operator -(const Color3<T>&  color) const {
-			return Color3<T>(r - color.r, g - color.g, b - color.b);
+		color3<T> operator -(const color3<T>&  color) const {
+			return color3<T>(r - color.r, g - color.g, b - color.b);
 
 		}
-		Color3<T> operator *(const T value) const {
-			return Color3<T>(r * value, g * value, b * value);
+		color3<T> operator *(const T value) const {
+			return color3<T>(r * value, g * value, b * value);
 
 		}
-		Color3<T> operator /(const T value) const {
-			return Color3<T>(r / value, g / value, b / value);
+		color3<T> operator /(const T value) const {
+			return color3<T>(r / value, g / value, b / value);
 
 		}
 
 		//--------------------------------------------------------------------------------------
 		// 代入演算
 		//--------------------------------------------------------------------------------------
-		Color3<T>& operator +=(const Color3<T>&  color) {
+		color3<T>& operator +=(const color3<T>&  color) {
 			Set(r + color.r, g + color.g, b + color.b);
 			return *this;
 		}
-		Color3<T>& operator -=(const Color3<T>& color) {
+		color3<T>& operator -=(const color3<T>& color) {
 			Set(r - color.r, g - color.g, b - color.b);
 			return *this;
 		}
-		Color3<T>& operator *=(T value) {
+		color3<T>& operator *=(T value) {
 			Set(r * value, g * value, b * value);
 			return *this;
 		}
-		Color3<T>& operator /=(T value) {
+		color3<T>& operator /=(T value) {
 			Set(r / value, g / value, b / value);
 			return *this;
 		}
@@ -140,13 +140,13 @@ namespace nyx
 		//--------------------------------------------------------------------------------------
 		// 論理演算
 		//--------------------------------------------------------------------------------------
-		bool operator ==(const Color3<T>& color) const {
+		bool operator ==(const color3<T>& color) const {
 			return (
 				math::abs(r - color.r) <= math::EPSILON &&
 				math::abs(g - color.g) <= math::EPSILON &&
 				math::abs(b - color.b) <= math::EPSILON);
 		}
-		bool operator !=(const Color3<T>& color) const {
+		bool operator !=(const color3<T>& color) const {
 			return !( *this == color);
 		}
 	};
@@ -155,8 +155,8 @@ namespace nyx
 	//--------------------------------------------------------------------------------------
 	// 別名定義
 	//--------------------------------------------------------------------------------------
-	typedef Color3<uint8_t> color3c;
-	typedef Color3<float> color3f;
+	typedef color3<uint8_t> color3c;
+	typedef color3<float> color3f;
 
 	template<>
 	void color3f::Clamp() {
@@ -170,39 +170,39 @@ namespace nyx
 	// 定数定義
 	//--------------------------------------------------------------------------------------
 	template <typename T>
-	const Color3<T> Color3<T>::White(255 , 255, 255);
+	const color3<T> color3<T>::White(255 , 255, 255);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Gray(128, 128, 128);
+	const color3<T> color3<T>::Gray(128, 128, 128);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Black(0, 0, 0);
+	const color3<T> color3<T>::Black(0, 0, 0);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Red(255, 0, 0);
+	const color3<T> color3<T>::Red(255, 0, 0);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Green(0, 255, 0);
+	const color3<T> color3<T>::Green(0, 255, 0);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Blue(0, 0, 255);
+	const color3<T> color3<T>::Blue(0, 0, 255);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Cyan(0, 255, 255);
+	const color3<T> color3<T>::Cyan(0, 255, 255);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Magenta(255, 0, 255);
+	const color3<T> color3<T>::Magenta(255, 0, 255);
 
 	///
 	template <typename T>
-	const Color3<T> Color3<T>::Yellow(255, 255, 0);
+	const color3<T> color3<T>::Yellow(255, 255, 0);
 
 	///
 	const color3f color3f::White(1.f , 1.f, 1.f);

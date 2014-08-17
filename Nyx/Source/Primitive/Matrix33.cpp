@@ -19,20 +19,20 @@
 #include "Primitive/Vector3.h"
 namespace nyx {
 
-	const Matrix33 Matrix33::Unit(1, 0, 0,
+	const matrix33 matrix33::Unit(1, 0, 0,
 		0, 1, 0,
 		0, 0, 1);
 
-	const Matrix33 Matrix33::Zero(0, 0, 0,
+	const matrix33 matrix33::Zero(0, 0, 0,
 		0, 0, 0,
 		0, 0, 0);
 
-	Matrix33::Matrix33() {
+	matrix33::matrix33() {
 		Set(0, 0, 0,
 			0, 0, 0,
 			0, 0, 0);
 	}
-	Matrix33::Matrix33(
+	matrix33::matrix33(
 		float a11, float a12, float a13, 
 		float a21, float a22, float a23,
 		float a31, float a32, float a33){
@@ -41,7 +41,7 @@ namespace nyx {
 				a31, a32, a33);
 	}
 
-	void Matrix33::Set(float a11, float a12, float a13, 
+	void matrix33::Set(float a11, float a12, float a13, 
 		float a21, float a22, float a23,
 		float a31, float a32, float a33) {
 			this->_11 = a11;
@@ -58,21 +58,21 @@ namespace nyx {
 	}
 
 
-	Matrix33 Matrix33::operator +(const Matrix33& mat) const {
-		return Matrix33(
+	matrix33 matrix33::operator +(const matrix33& mat) const {
+		return matrix33(
 			Mat[0][0] + mat.Mat[0][0], Mat[0][1] + mat.Mat[0][1], Mat[0][2] + mat.Mat[0][2],
 			Mat[1][0] + mat.Mat[1][0], Mat[1][1] + mat.Mat[1][1], Mat[1][2] + mat.Mat[1][2],
 			Mat[2][0] + mat.Mat[2][0], Mat[2][1] + mat.Mat[2][1], Mat[2][2] + mat.Mat[2][2]);
 	}
 
-	Matrix33 Matrix33::operator-(const Matrix33& mat) const {
-		return Matrix33(Mat[0][0] - mat.Mat[0][0], Mat[0][1] - mat.Mat[0][1], Mat[0][2] - mat.Mat[0][2],
+	matrix33 matrix33::operator-(const matrix33& mat) const {
+		return matrix33(Mat[0][0] - mat.Mat[0][0], Mat[0][1] - mat.Mat[0][1], Mat[0][2] - mat.Mat[0][2],
 			Mat[1][0] - mat.Mat[1][0], Mat[1][1] - mat.Mat[1][1], Mat[1][2] - mat.Mat[1][2],
 			Mat[2][0] - mat.Mat[2][0], Mat[2][1] - mat.Mat[2][1], Mat[2][2] - mat.Mat[2][2]);
 	}
 
-	Matrix33 Matrix33::operator*(const Matrix33& mat) const {
-		return Matrix33(
+	matrix33 matrix33::operator*(const matrix33& mat) const {
+		return matrix33(
 			Mat[0][0]*mat.Mat[0][0] + Mat[0][1]*mat.Mat[1][0] + Mat[0][2]*mat.Mat[2][0], 
 			Mat[0][0]*mat.Mat[0][1] + Mat[0][1]*mat.Mat[1][1] + Mat[0][2]*mat.Mat[2][1], 
 			Mat[0][0]*mat.Mat[0][2] + Mat[0][1]*mat.Mat[1][2] + Mat[0][2]*mat.Mat[2][2], 
@@ -89,21 +89,21 @@ namespace nyx {
 
 	}
 
-	Matrix33 Matrix33::operator*(const float s) const {
-		return Matrix33(
+	matrix33 matrix33::operator*(const float s) const {
+		return matrix33(
 			Mat[0][0] * s, Mat[0][1] * s, Mat[0][2] * s,
 			Mat[1][0] * s, Mat[1][1] * s, Mat[1][2] * s,
 			Mat[2][0] * s, Mat[2][1] * s, Mat[2][2] * s);
 	}
 
-		Matrix33 Matrix33::operator / (const float s) const {
-		return Matrix33(
+		matrix33 matrix33::operator / (const float s) const {
+		return matrix33(
 			Mat[0][0] / s, Mat[0][1] / s, Mat[0][2] / s,
 			Mat[1][0] / s, Mat[1][1] / s, Mat[1][2] / s,
 			Mat[2][0] / s, Mat[2][1] / s, Mat[2][2] / s);
 	}
 
-	vector3f Matrix33::operator *(const vector3f& v) const {
+	vector3f matrix33::operator *(const vector3f& v) const {
 		return vector3f(
 			_11 * v.x + _12 * v.y + _13 * v.z,
 			_21 * v.x + _22 * v.y + _23 * v.z,
@@ -111,7 +111,7 @@ namespace nyx {
 	}
 
 
-	Matrix33& Matrix33::operator+=(const Matrix33 & mat) {
+	matrix33& matrix33::operator+=(const matrix33 & mat) {
 		Mat[0][0] += mat.Mat[0][0];
 		Mat[0][1] += mat.Mat[0][1];
 		Mat[0][2] += mat.Mat[0][2];
@@ -125,7 +125,7 @@ namespace nyx {
 		return *this;
 	}
 
-	Matrix33& Matrix33::operator-=(const Matrix33 & mat) {
+	matrix33& matrix33::operator-=(const matrix33 & mat) {
 		Mat[0][0] -= mat.Mat[0][0];
 		Mat[0][1] -= mat.Mat[0][1];
 		Mat[0][2] -= mat.Mat[0][2];
@@ -139,7 +139,7 @@ namespace nyx {
 		return *this;
 	}
 
-	Matrix33& Matrix33::operator*=(const float s) {
+	matrix33& matrix33::operator*=(const float s) {
 		Mat[0][0] *= s;
 		Mat[0][1] *= s;
 		Mat[0][2] *= s;
@@ -152,7 +152,7 @@ namespace nyx {
 
 		return *this;
 	}
-	Matrix33& Matrix33::operator/=(const float s) {
+	matrix33& matrix33::operator/=(const float s) {
 		Mat[0][0] /= s;
 		Mat[0][1] /= s;
 		Mat[0][2] /= s;
@@ -166,7 +166,7 @@ namespace nyx {
 		return *this;
 	}
 
-	Matrix33& Matrix33::operator*=(const Matrix33& mat) {
+	matrix33& matrix33::operator*=(const matrix33& mat) {
 		Set(
 			Mat[0][0]*mat.Mat[0][0] + Mat[0][1]*mat.Mat[1][0] + Mat[0][2]*mat.Mat[2][0], 
 			Mat[0][0]*mat.Mat[0][1] + Mat[0][1]*mat.Mat[1][1] + Mat[0][2]*mat.Mat[2][1], 
@@ -182,31 +182,31 @@ namespace nyx {
 		return *this;
 	}
 
-	void Matrix33::SetupIdentity() {
+	void matrix33::SetupIdentity() {
 		Set(1, 0, 0,
 			0, 1, 0,
 			0, 0, 1);
 	}
-	float Matrix33::Determinant() {
+	float matrix33::Determinant() {
 		return (
 			Mat[0][0] * (Mat[1][1] * Mat[2][2] - Mat[1][2] * Mat[2][1]) -
 			Mat[0][1] * (Mat[1][0] * Mat[2][2] - Mat[1][2] * Mat[2][0]) +
 			Mat[0][2] * (Mat[1][0] * Mat[2][1] - Mat[1][1] * Mat[2][0]));
 	}
 
-	Matrix33 Matrix33::Transpose() {
-		return Matrix33(Mat[0][0], Mat[1][0], Mat[2][0],
+	matrix33 matrix33::Transpose() {
+		return matrix33(Mat[0][0], Mat[1][0], Mat[2][0],
 			Mat[0][1], Mat[1][1], Mat[2][1],
 			Mat[0][2], Mat[1][2], Mat[2][2]);
 	}
 
-	Matrix33 Matrix33::Inverse() {
+	matrix33 matrix33::Inverse() {
 		float d = this->Determinant();
 		if (d == 0) {
 			return Zero;
 		}
 
-		return Matrix33((Mat[1][1]*Mat[2][2] - Mat[1][2]*Mat[2][1])/d, 
+		return matrix33((Mat[1][1]*Mat[2][2] - Mat[1][2]*Mat[2][1])/d, 
 			-(Mat[0][1]*Mat[2][2] - Mat[0][2]*Mat[2][1])/d, 
 			(Mat[0][1]*Mat[1][2] - Mat[0][2]*Mat[1][1])/d,
 			-(Mat[1][0]*Mat[2][2] - Mat[1][2]*Mat[2][0])/d, 

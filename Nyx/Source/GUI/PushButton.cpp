@@ -19,14 +19,16 @@
 #include "GUI/PushButton.h"
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
+#include "Dispatcher.h"
+#include "Window.h"
 
 namespace nyx {
 	//------------------------------------------------------------------------------
-	push_button::push_button(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id)
-		:label_(label), hwnd_(NULL), id_(id), atom_(NULL), isShow_(false), isActivate_(true)
+	push_button::push_button(std::shared_ptr<window>& parent, const std::wstring& label, int x, int y, int width, int height, bool isOwnerDraw)
+		:label_(label), hwnd_(NULL),  atom_(NULL), isShow_(false), isActivate_(true), guiEventList_(std::make_shared<dispatcher>())
 	{
-
-		on_create(hwnd, label, x, y, width, height, id);
+		parent->register_widget(*this);
+		create(parent->get_handle(), label, x, y, width, height,isOwnerDraw);
 	}       
 
 	//------------------------------------------------------------------------------
@@ -38,14 +40,22 @@ namespace nyx {
 	}
 
 	//------------------------------------------------------------------------------
-	bool push_button::on_create(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id) {
+	bool push_button::create(window_handle hwnd, const std::wstring& label, int x, int y, int width, int height, bool isOwnerDraw) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
-		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 	
-			x, y, width, height, hwnd,  (HMENU)id, hInstance, NULL);
+		
+		DWORD buttonStyle;
+		if (isOwnerDraw){
+			buttonStyle = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON | BS_OWNERDRAW;
+		}
+		else {
+			buttonStyle = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON;
+		}
 
-		NYX_ASSERT(hwnd != NULL);
-		if (!hwnd) {
-			::MessageBox(NULL, TEXT("失敗しました"), TEXT("error"), MB_OK);
+		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), buttonStyle, 	
+			x, y, width, height, hwnd,  (HMENU)id_, hInstance, NULL);
+
+		if (!hwnd_) {
+			::MessageBox(NULL, TEXT("ウインドウの生成に失敗しました"), TEXT("error"), MB_OK);
 			return false;
 		}
 		//コントロールの表示
@@ -125,7 +135,7 @@ namespace nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	void push_button::set_user_data(std::shared_ptr<void> data) 
+	void push_button::set_user_data(const std::shared_ptr<void>& data) 
 	{
 		userData_ = data;
 	}
@@ -187,16 +197,36 @@ namespace nyx {
 	}
 
 	//---------------------------------------------------------------------------------------
-	std::wstring push_button::GetLabel() 
+	std::wstring push_button::get_label() 
 		const
 	{
 		return label_;
 	}
 
 	//---------------------------------------------------------------------------------------
-	void push_button::SetLabel(const std::wstring& label)
+	void push_button::set_label(const std::wstring& label)
 	{
 		label_ = label;
 		SetWindowText(hwnd_, label_.c_str());
+	}
+
+	//---------------------------------------------------------------------------------------
+	void push_button::on_click(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CLICK, callback);
+	}
+	
+	//---------------------------------------------------------------------------------------
+	void push_button::on_paint(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
+	}
+
+	//----------------------------------------------------------------
+	void push_button::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e){
+		NYX_ASSERT(guiEventList_ != nullptr);
+		if (eventType != WIDGET_EVENT_TYPE_NUM) {
+			this->guiEventList_->dispatch(eventType, *this, e);
+		}
 	}
 }

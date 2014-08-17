@@ -12,7 +12,7 @@
 *
 *ソフトウェアは「現状のまま」で、明示であるか暗黙であるかを問わず、何らの保証もなく提供されます。ここでいう保証とは、商品性、特定の目*的への適合性、および権利非侵害についての保証も含みますが、それに限定されるものではありません。 作者または著作権者は、契約行為、不法
 *行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請
-*求、損害、その他の義務について何らの責任も負わないものとします。 
+*求、損害、その他の義務について何らの責任も負わないものとします。
 ********************************************************************************/
 #include "PCH/PCH.h"
 #include "GUI/Window.h"
@@ -23,17 +23,14 @@
 
 namespace nyx {
 	//-----------------------------------------------------------------------------------------
-	window::window(HWND hWnd, std::wstring caption, std::wstring icon, int x, int y, int width, int height, int id)
-		:hwnd_(NULL), caption_(caption), icon_(icon), id_(id), childControl_(), guiEventList_(nullptr), userEventList_(nullptr)  {
-			//フックリストが初期化されていなければ、初期化する
-			guiEventList_ = std::make_shared<dispatcher>();
-			
-			//フックリストが初期化されていなければ、初期化する
-			userEventList_ = std::make_shared<dispatcher>();
+	window::window(window_handle handle, const std::wstring& caption, const std::wstring& icon, int x, int y, int width, int height)
+		:hwnd_(NULL), caption_(caption), icon_(icon), id_(0), childControl_(), guiEventList_(nullptr) {
+		//フックリストが初期化されていなければ、初期化する
+		guiEventList_ = std::make_shared<dispatcher>();
 
-			//コントロールの生成
-			on_create(hWnd, x, y, width, height);
-	}    
+		//コントロールの生成
+		create(handle, x, y, width, height);
+	}
 
 	//-----------------------------------------------------------------------------------------
 	//
@@ -43,33 +40,32 @@ namespace nyx {
 		}
 
 		childControl_.clear();
-		userEventList_->clear();
-		guiEventList_->clear();
+		guiEventList_->clear_callback();
 	}
 
 
 	//-----------------------------------------------------------------------------------------
 	//
-	bool window::on_create(HWND hwnd, int x, int y, int width, int height) {
+	bool window::create(window_handle hwnd, int x, int y, int width, int height) {
 		//ウインドウクラスの作成
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
 		WNDCLASS winc;
-		winc.style			= CS_HREDRAW | CS_VREDRAW;
-		winc.lpfnWndProc	= global_procedure;
-		winc.cbClsExtra		= winc.cbWndExtra	= 0;
-		winc.hInstance		= hInstance;
-		winc.hIcon			= LoadIcon(NULL , icon_.c_str());
-		winc.hCursor		= LoadCursor(NULL , IDC_ARROW);
-		winc.hbrBackground	= (HBRUSH)GetStockObject(WHITE_BRUSH);
-		winc.lpszMenuName	= NULL;
-		winc.lpszClassName	= caption_.c_str();
+		winc.style = CS_HREDRAW | CS_VREDRAW;
+		winc.lpfnWndProc = global_procedure;
+		winc.cbClsExtra = winc.cbWndExtra = 0;
+		winc.hInstance = hInstance;
+		winc.hIcon = LoadIcon(NULL, icon_.c_str());
+		winc.hCursor = LoadCursor(NULL, IDC_ARROW);
+		winc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+		winc.lpszMenuName = NULL;
+		winc.lpszClassName = caption_.c_str();
 		atom_ = RegisterClass(&winc);
 
 		//ウインドウの生成
 		hwnd_ = CreateWindow(
 			caption_.c_str(),
 			caption_.c_str(), //タイトルバーにこの名前が表示されます
-			WS_OVERLAPPEDWINDOW , //ウィンドウの種類
+			WS_OVERLAPPEDWINDOW, //ウィンドウの種類
 			x,	//Ｘ座標
 			y,	//Ｙ座標
 			width,	//幅
@@ -85,7 +81,7 @@ namespace nyx {
 		}
 
 		::SetWindowLong(hwnd_, GWL_USERDATA, (long)this);
-		
+
 		show();
 		return true;
 	}
@@ -93,7 +89,7 @@ namespace nyx {
 
 	//---------------------------------------------------------------------------------------
 	nyx::window_handle window::get_handle()
-{
+	{
 		NYX_ASSERT(hwnd_ != NULL);
 		return hwnd_;
 	}
@@ -122,12 +118,12 @@ namespace nyx {
 	bool window::is_show() {
 		return isShow;
 	}
-	
+
 	//----------------------------------------------------------------
 	void window::show_cursor(bool isShowCursor) {
 		::ShowCursor(isShowCursor);
 	}
-	
+
 	//----------------------------------------------------------------
 	void window::activate() {
 		NYX_ASSERT(hwnd_ != NULL);
@@ -158,7 +154,7 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void window::set_user_data(std::shared_ptr<void> data) {
+	void window::set_user_data(const std::shared_ptr<void>& data) {
 		userData_ = data;
 
 	}
@@ -180,9 +176,9 @@ namespace nyx {
 		::GetWindowRect(hwnd_, &_r);
 
 		//
-		rect.x      = _r.left;
-		rect.y      = _r.top;
-		rect.width  = _r.right  - _r.left;
+		rect.x = _r.left;
+		rect.y = _r.top;
+		rect.width = _r.right - _r.left;
 		rect.height = _r.bottom - _r.top;
 	}
 
@@ -215,29 +211,31 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	HMENU window::get_menu() {
+	nyx::menu_handle window::get_menu()
+	{
 		NYX_ASSERT(hwnd_ != NULL);
 		return ::GetMenu(hwnd_);
 	}
 
 	//----------------------------------------------------------------
-	void window::set_menu(HMENU menu) {
+	void window::set_menu(menu_handle menu) {
 		NYX_ASSERT(hwnd_ != NULL);
 		::SetMenu(hwnd_, menu);
 	}
 
-		//----------------------------------------------------------------
-	void window::register_widget(std::shared_ptr<iwidget> control) {
-		uint32_t key = control->get_id();
+	//----------------------------------------------------------------
+	void window::register_widget(iwidget& control) {
+		uint32_t key = childControl_.size() + id_ + 1;
+		control.set_id(key);
 		auto it = childControl_.find(key);
 		if (it == childControl_.end()) {
-			childControl_[key] = control;
+			childControl_.insert(hook_list::value_type(key, control));
 		}
 	}
 
 	//----------------------------------------------------------------
-	void window::unregister_widget(std::shared_ptr<iwidget> control) {
-		auto id = control->get_id();
+	void window::unregister_widget(iwidget& control) {
+		auto id = control.get_id();
 		auto it = childControl_.find(id);
 		if (it != childControl_.end()) {
 			childControl_.erase(it);
@@ -245,41 +243,24 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void window::add_event(std::shared_ptr<iwidget> control, gui_callback fp) {
-		NYX_ASSERT(guiEventList_ != NULL);
-		register_widget(control);
-		guiEventList_->add(control, fp);
+	//
+	void window::on_mouse_down(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MOUSE_DOWN, callback);
 	}
 
 	//----------------------------------------------------------------
-	void window::del_event(std::shared_ptr<iwidget> control) {
-		NYX_ASSERT(guiEventList_ != NULL);
-		guiEventList_->remove(control);
+	//
+	void window::on_mouse_up(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MOUSE_UP, callback);
 	}
 
 	//----------------------------------------------------------------
-	void window::clear_event() {
-		NYX_ASSERT(guiEventList_ != NULL);
-		guiEventList_->clear();
-	}
-
-	//----------------------------------------------------------------
-	void window::add_user_event(std::shared_ptr<iwidget> control, gui_callback fp) {
-		NYX_ASSERT(userEventList_ != NULL);
-		register_widget(control);
-		userEventList_->add(control, fp);
-	}
-
-	//----------------------------------------------------------------
-	void window::del_user_event(std::shared_ptr<iwidget> control) {
-		NYX_ASSERT(userEventList_ != NULL);
-		userEventList_->remove(control);
-	}
-
-	//----------------------------------------------------------------
-	void window::clear_user_event() {
-		NYX_ASSERT(userEventList_ != NULL);
-		userEventList_->clear();
+	//
+	void window::on_paint(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
 	}
 
 	//----------------------------------------------------------------
@@ -293,26 +274,49 @@ namespace nyx {
 		return msg.message != WM_QUIT;
 	}
 
-	LRESULT __stdcall window::global_procedure(HWND hWnd, UINT msg,WPARAM wParam, LPARAM lParam) {
+	void window::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e) {
+		if (eventType != WIDGET_EVENT_TYPE_NUM) {
+			this->guiEventList_->dispatch(eventType, *this, e);
+		}
+	}
+
+	LRESULT __stdcall window::global_procedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		//-------------------------------------------------------------------------------------
 		//OS側のメッセージ処理
 		//-------------------------------------------------------------------------------------
-		switch(msg) 
+		WIDGET_EVENT_TYPE eventType = WIDGET_EVENT_TYPE_NUM;
+		event_args e{ msg, wParam, lParam };
+		int controlId = -1;
+		switch (msg)
 		{
+		case WM_COMMAND:
+			controlId = LOWORD(wParam);
+			eventType = WIDGET_EVENT_TYPE_CLICK;
+			break;
+		case WM_DRAWITEM:
+			controlId = LOWORD(wParam);
+			eventType = WIDGET_EVENT_TYPE_PAINT;
+			break;
+		case WM_PAINT:
+			controlId = LOWORD(wParam);
+			eventType = WIDGET_EVENT_TYPE_PAINT;
+			break;
 		case WM_LBUTTONDOWN:
 		case WM_RBUTTONDOWN:
 		case WM_MBUTTONDOWN:
-			::SetCapture( hWnd );
+			eventType = WIDGET_EVENT_TYPE_MOUSE_DOWN;
+			::SetCapture(hWnd);
 			break;
 		case WM_LBUTTONUP:
 		case WM_RBUTTONUP:
 		case WM_MBUTTONUP:
+			eventType = WIDGET_EVENT_TYPE_MOUSE_UP;
 			::ReleaseCapture();
 			break;
 		case WM_IME_SETCONTEXT:
 			lParam = 0;
 			break;
-		case WM_DESTROY:	
+		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
 		case WM_CLOSE:
@@ -322,33 +326,25 @@ namespace nyx {
 		}
 
 		//ウインドウデータを取得
-		window* win= (window*)GetWindowLongW(hWnd, GWL_USERDATA);
+		window* win = (window*)GetWindowLongW(hWnd, GWL_USERDATA);
 		if (win == NULL) {
 			return DefWindowProc(hWnd, msg, wParam, lParam);
 		}
 
-		//メッセージ送ってきたコントロールを特定
-		uint32_t controlId = LOWORD(wParam);
-		if (win->childControl_.size() > 0) {
+		if (controlId == -1) {
+			win->dispatch(eventType, e);
+		}
+		else {
 			hook_list_iterator it = win->childControl_.find(controlId);
 			if (it == win->childControl_.end()) {
 				return DefWindowProc(hWnd, msg, wParam, lParam);
 			}
 
 			//メッセージディスパッチ
-			auto sender = it->second;
-			event_args e(msg, wParam, lParam);
-
-			//-------------------------------------------------------------------------------------
-			//GUIイベントメッセージ処理
-			//-------------------------------------------------------------------------------------
-			win->guiEventList_->dispatch(sender, e);
-
-			//-------------------------------------------------------------------------------------
-			//ユーザーイベントメッセージ処理
-			//-------------------------------------------------------------------------------------
-			win->userEventList_->dispatch(sender, e);
+			iwidget& sender = it->second;
+			sender.dispatch(eventType, e);
 		}
+
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
 }

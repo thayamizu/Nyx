@@ -214,6 +214,12 @@
     <Filter Include="Graphics\Font\System">
       <UniqueIdentifier>{3fed7b1f-1d8a-46d0-8db3-b88d3d7710cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\Base">
+      <UniqueIdentifier>{f5398fe0-e5a4-4b23-9f28-6d311011a4a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\System">
+      <UniqueIdentifier>{53d71862-22b4-463c-99dd-772889d4d795}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">
@@ -246,7 +252,6 @@
     <ClInclude Include="..\Source\Primitive\Vector4.h">
       <Filter>Primitive</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\Collision\BulletDefinition.h">
       <Filter>Collision\detail</Filter>
     </ClInclude>
@@ -330,45 +335,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Input\Mouse.h">
       <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\ICheckBox.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IControl.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IDispatcher.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IListBox.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IPushButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IRadioButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\IWindow.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\CheckBox.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\Dispatcher.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\ListBox.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\PushButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\RadioButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\Window.h">
-      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Sound\WaveFileHeader.h">
       <Filter>Sound\Utility</Filter>
@@ -541,6 +507,46 @@
     <ClInclude Include="..\Source\IO\FileUtility.h">
       <Filter>IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\GUI\detail\Win32\Win32Window.h">
+      <Filter>GUI\detail\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\NyxCore.h" />
+    <ClInclude Include="..\Source\GUI\Dispatcher.h">
+      <Filter>GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\Window.h">
+      <Filter>GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\ICheckBox.h">
+      <Filter>GUI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IControl.h">
+      <Filter>GUI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IListBox.h">
+      <Filter>GUI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IPushButton.h">
+      <Filter>GUI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IRadioButton.h">
+      <Filter>GUI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\IWindow.h">
+      <Filter>GUI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\PushButton.h">
+      <Filter>GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\CheckBox.h">
+      <Filter>GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\ListBox.h">
+      <Filter>GUI\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\GUI\RadioButton.h">
+      <Filter>GUI\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">
@@ -608,24 +614,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Input\Mouse.cpp">
       <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\CheckBox.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\ListBox.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\PushButton.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\RadioButton.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\GUI\Window.cpp">
-      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sound\DirectSoundStaticAudioBuffer.cpp">
       <Filter>Sound\detail\DirectSound\AudioBuffer\StereoAudio\Static</Filter>
@@ -722,6 +710,24 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\SpriteManager.cpp">
       <Filter>Graphics\SpriteSystem\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
+      <Filter>GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\Window.cpp">
+      <Filter>GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\PushButton.cpp">
+      <Filter>GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\CheckBox.cpp">
+      <Filter>GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\ListBox.cpp">
+      <Filter>GUI\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\GUI\RadioButton.cpp">
+      <Filter>GUI\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

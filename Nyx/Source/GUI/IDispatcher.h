@@ -22,7 +22,7 @@ namespace nyx {
 	struct event_args;
 	class iwidget;
 
-	typedef std::function<void(std::shared_ptr<iwidget>, event_args)> gui_callback;
+
 
 	///ディスパッチャインタフェース
 	class idispatcher {

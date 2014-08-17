@@ -22,7 +22,7 @@
 
 namespace nyx {
 
-	NYX_DEPRECATED class Matrix33 {
+	NYX_DEPRECATED class matrix33 {
 	public:
 		/// 3x3行列
 		union {	
@@ -33,15 +33,15 @@ namespace nyx {
 			};
 			float Mat[3][3];
 		};
-		static const Matrix33 Unit;
+		static const matrix33 Unit;
 
-		static const Matrix33 Zero;
+		static const matrix33 Zero;
 
 		/**
 		* デフォルトコンストラクタ
 		* 行列の値をすべてゼロに設定する
 		*/
-		Matrix33();
+		matrix33();
 
 		/**
 		* コンストラクタ
@@ -56,7 +56,7 @@ namespace nyx {
 		* @param a32
 		* @param a33
 		*/
-		Matrix33(float a11, float a12, float a13, 
+		matrix33(float a11, float a12, float a13, 
 			float a21, float a22, float a23,
 			float a31, float a32, float a33);
 		
@@ -82,7 +82,7 @@ namespace nyx {
 		* @param 右辺値
 		* @return 加算結果
 		*/
-		Matrix33 operator +(const Matrix33& mat) const;
+		matrix33 operator +(const matrix33& mat) const;
 
 
 		/**
@@ -90,7 +90,7 @@ namespace nyx {
 		* @param 右辺値
 		* @return 減算結果
 		*/
-		Matrix33 operator -(const Matrix33& mat) const;
+		matrix33 operator -(const matrix33& mat) const;
 
 
 		/**
@@ -98,7 +98,7 @@ namespace nyx {
 		* @param 右辺値
 		* @return 乗算結果
 		*/
-		Matrix33 operator *(const float s) const;
+		matrix33 operator *(const float s) const;
 
 
 		/**
@@ -106,7 +106,7 @@ namespace nyx {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix33 operator *(const Matrix33& mat) const;
+		matrix33 operator *(const matrix33& mat) const;
 
 
 		/**
@@ -122,7 +122,7 @@ namespace nyx {
 		* @param 右辺値
 		* @return 除算結果
 		*/
-		Matrix33 operator /(const float s) const;
+		matrix33 operator /(const float s) const;
 
 
 		/**
@@ -130,7 +130,7 @@ namespace nyx {
 		* @param 右辺値 
 		* @return 加算結果 
 		*/
-		Matrix33& operator +=(const Matrix33 & mat);
+		matrix33& operator +=(const matrix33 & mat);
 
 
 		/**
@@ -138,7 +138,7 @@ namespace nyx {
 		* @param 右辺値 
 		* @return 減算結果
 		*/
-		Matrix33& operator -=(const Matrix33 & mat);
+		matrix33& operator -=(const matrix33 & mat);
 
 
 		/**
@@ -146,7 +146,7 @@ namespace nyx {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix33& operator *=(const float s);
+		matrix33& operator *=(const float s);
 
 
 		/**
@@ -154,7 +154,7 @@ namespace nyx {
 		* @param 右辺値 
 		* @return 乗算結果
 		*/
-		Matrix33& operator *=(const Matrix33& s);
+		matrix33& operator *=(const matrix33& s);
 
 
 		/**
@@ -162,9 +162,9 @@ namespace nyx {
 		* @param 右辺値 
 		* @return 除算結果
 		*/
-		Matrix33& operator /=(const float s);
+		matrix33& operator /=(const float s);
 
-		bool operator==(const Matrix33& mat) const {
+		bool operator==(const matrix33& mat) const {
 			return (
 			Mat[0][0] == mat.Mat[0][0] && 
 			Mat[0][1] == mat.Mat[0][1] &&
@@ -180,7 +180,7 @@ namespace nyx {
 		}
 
 
-		bool operator != (const Matrix33& mat) const {
+		bool operator != (const matrix33& mat) const {
 			return !(*this == mat);
 		}
 
@@ -199,14 +199,14 @@ namespace nyx {
 		* 行列の転置
 		* @return 転置行列
 		*/
-		Matrix33 Transpose();
+		matrix33 Transpose();
 
 
 		/**
 		* 逆行列
 		* @return 逆行列
 		*/
-		Matrix33 Inverse();
+		matrix33 Inverse();
 	};
 }
 //-----------------------------------------------------

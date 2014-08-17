@@ -19,6 +19,9 @@
 #include "GUI/ICheckBox.h"
 
 namespace nyx {
+	class dispatcher;
+	class window;
+
 	///チェックボックス
 	class check_box : public icheckbox {
 	public:
@@ -28,7 +31,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		check_box(HWND hWnd,std::wstring label, int x, int y, int width,int height, int id);
+		check_box(const std::shared_ptr<window>& parent, const std::wstring& label, int x, int y, int width,int height, bool isOwnerDraw = false);
 		/**
 		*
 		*/
@@ -37,7 +40,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		bool on_create(HWND hWnd,std::wstring label, int x, int y, int width,int height, int id);
+		bool create(window_handle hWnd, const std::wstring& label, int x, int y, int width,int height, bool isOwnerDraw);
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
 		//---------------------------------------------------------------------------------------
@@ -107,7 +110,7 @@ namespace nyx {
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void set_user_data(std::shared_ptr<void> data) ;
+		void set_user_data(const std::shared_ptr<void>& data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -151,19 +154,24 @@ namespace nyx {
 		* ラベルの取得
 		* @return std::wstring& ラベル
 		*/
-		std::wstring GetLabel() const;
+		std::wstring get_label() const;
 
 		/**
 		* ラベルの設定
 		* @param const std::wstring& ラベル
 		*/
-		void SetLabel(const std::wstring& label);
+		void set_label(const std::wstring& label);
 
 		/**
 		* ボタンがチェック状態かどうか
 		* @return bool trueならチェックされている
 		*/
-		bool IsChecked() const;
+		bool is_checked() const;
+
+		void on_paint(const gui_callback& callback);
+		void on_click(const gui_callback& callback);
+		void on_checked_changed(const gui_callback& callback);
+		void dispatch(WIDGET_EVENT_TYPE eventType, event_args& e);
 	private:
 		/// ハンドルインスタンス
 		HWND hwnd_;
@@ -177,6 +185,8 @@ namespace nyx {
 		bool isShow_;
 		///ユーザーデータ
 		std::shared_ptr<void> userData_;
-	};
+
+		std::shared_ptr<dispatcher> guiEventList_;
+};
 }
 #endif

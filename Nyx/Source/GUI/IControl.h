@@ -4,10 +4,10 @@
 #include "Primitive/Vector2.h"
 #include "Primitive/Rect.h"
 #include <Windows.h>
+
 namespace nyx 
 {
-	typedef HWND window_handle;
-
+	class iwidget;
 	///GUIコントロールの種別
 	enum WIDGET_TYPE {
 		WIDGET_TYPE_WINDOW,
@@ -17,6 +17,16 @@ namespace nyx
 		WIDGET_TYPE_BUTTON,
 		WIDGET_TYPE_RADIO_BUTTON,
 		WIDGET_TYPE_NUM,
+	};
+
+	enum WIDGET_EVENT_TYPE {
+		WIDGET_EVENT_TYPE_CLICK,
+		WIDGET_EVENT_TYPE_CHECKED_CHANGED,
+		WIDGET_EVENT_TYPE_INDEX_CHANGED,
+		WIDGET_EVENT_TYPE_MOUSE_DOWN,
+		WIDGET_EVENT_TYPE_MOUSE_UP,
+		WIDGET_EVENT_TYPE_PAINT,
+		WIDGET_EVENT_TYPE_NUM
 	};
 
 	///イベント引数
@@ -47,9 +57,12 @@ namespace nyx
 
 		//LPARAM
 		LPARAM lparam;
+
 	};
-
-
+	typedef HWND  window_handle;
+	typedef HMENU menu_handle;
+	typedef std::function < void(iwidget&, event_args& e)> gui_callback;
+	
 	///コントロールインタフェース
 	class iwidget {
 	public:
@@ -129,7 +142,7 @@ namespace nyx
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		virtual void set_user_data(std::shared_ptr<void> data)  = 0;
+		virtual void set_user_data(const std::shared_ptr<void>& data) = 0;
 		
 
 		/**
@@ -143,7 +156,7 @@ namespace nyx
 		* コントロールのIDを設定する
 		* @return コントロールのID
 		*/
-		virtual void set_id(size_t id)   = 0;
+		virtual void set_id(uint32_t id) = 0;
 
 
 		/**
@@ -171,6 +184,8 @@ namespace nyx
 		* ウインドウの位置を設定する
 		*/
 		virtual void set_position(const point2i& p) = 0;
+
+		virtual void dispatch(WIDGET_EVENT_TYPE eventType, event_args& e) = 0;
 	};
 };
 #endif

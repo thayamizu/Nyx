@@ -44,7 +44,7 @@ namespace nyx {
 	bool winsock_udp_socket::bind(const char* address, size_t port) {
 		// ローカルサーバのアドレスを指定
 		address_.sin_family           = AF_INET;
-		address_.sin_port			  = htons(port);
+		address_.sin_port			  = static_cast<u_short>(htons(port));
 		address_.sin_addr.S_un.S_addr = inet_addr(address);
 
 		// 無効だったので, DomainName から検索する

@@ -9,7 +9,7 @@
 int main()
 {
 	auto timer = nyx::fps_timer();
-	auto mainWindow = nyx::window(NULL, L"ウインドウ",L"");
+	auto mainWindow = nyx::window(nullptr, L"ウインドウ",L"");
 	auto movie = nyx::movie_player(mainWindow, L"3rd 夏色えがおで1、2、jump.mp4");
 	movie.set_aspect_ratio_mode(false);
 	movie.play();

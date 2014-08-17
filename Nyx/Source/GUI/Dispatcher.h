@@ -18,14 +18,14 @@
 #define NYX_CORE_INCLUDED_DISPATCHER_H_
 #include <Windows.h>
 #include <unordered_map>
-#include "GUI/IDispatcher.h"
+#include "IControl.h"
 #include "Utility/NonCopyable.h"
 namespace nyx {
 
 	///ディスパッチャ
-	class dispatcher : public idispatcher, private noncopyable {
-		typedef std::unordered_map<uint32_t, gui_callback> HookList;
-		typedef std::unordered_map<uint32_t, gui_callback>::iterator HookListIterator;
+	class dispatcher : private noncopyable {
+		typedef std::unordered_map<WIDGET_EVENT_TYPE, gui_callback> hook_list;
+		typedef std::unordered_map<WIDGET_EVENT_TYPE, gui_callback>::iterator hook_list_iterator;
 	public:
 		//---------------------------------------------------------------------------------------
 		//構築・破壊
@@ -47,25 +47,25 @@ namespace nyx {
 		* ディスパッチャにコントロールを登録する
 		* @param GUICallback
 		*/
-		void add(std::shared_ptr<iwidget> control, gui_callback callback);
+		void add_callback(WIDGET_EVENT_TYPE eventType, gui_callback callback);
 
 		/**
 		* ディスパッチャに登録されているコントロールを削除する
 		* @param uint id
 		*/
-		void remove(std::shared_ptr<iwidget> control);
+		void remove_callback(WIDGET_EVENT_TYPE eventType);
 
 		/**
 		* ディスパッチャに登録されているコントロールをクリアする
 		*/
-		void clear();
+		void clear_callback();
 
 		/**
 		* ディスパッチャに登録されているコントロールを取得する
 		* @param uint id
 		* @return Delegate2<std::shared_ptr<IControl>, EventArgs*>* 
 		*/
-		gui_callback get_callback(const std::shared_ptr<iwidget> control);
+		gui_callback get_callback(WIDGET_EVENT_TYPE eventType);
 		
 		//---------------------------------------------------------------------------------------
 		//イベントの割り当て
@@ -75,10 +75,10 @@ namespace nyx {
 		* @param std::shared_ptr<IControl> sender
 		* @param EventArgs* e
 		*/
-		void dispatch(std::shared_ptr<iwidget> control, event_args e);
+		void dispatch(WIDGET_EVENT_TYPE eventType, iwidget& widget, event_args& e);
 	private:
 		///ディスパッチャにフックされているコントロールのリスト
-		HookList hooklist;
+		hook_list hooklist_;
 	};
 }
 

@@ -6,7 +6,7 @@
 namespace nyx {
 	
 	///プッシュボタンインタフェース
-	class ibutton : public iwidget
+	class ipush_button : public iwidget
 	{
 	public:
 		//----------------------------------------------------------------
@@ -15,7 +15,7 @@ namespace nyx {
 		/**
 		* デストラクタ
 		*/
-		virtual ~ibutton() {}
+		virtual ~ipush_button() {}
 
 		//----------------------------------------------------------------
 		// プッシュボタン固有の操作
@@ -31,6 +31,9 @@ namespace nyx {
 		* @param const std::wstring& ラベル
 		*/
 		virtual void set_label(const std::wstring& label) = 0;
+
+
+		virtual void on_click(const gui_callback& callback) = 0;
 	};
 }
 #endif

@@ -20,6 +20,9 @@
 #include "GUI/IListBox.h"
 
 namespace nyx {
+	class window;
+	class dispatcher;
+
 	///リストボックス
 	class list_box : public ilist_box {
 	public:
@@ -29,7 +32,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		list_box(HWND hwnd,std::wstring label, int x, int y, int width,int height, int id=0);
+		list_box(std::shared_ptr<window>& parent, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw=false);
 		/**
 		*
 		*/
@@ -38,7 +41,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		bool onc_create(HWND hwnd, std::wstring label, int x, int y, int width,int height, int id);
+		bool create(HWND hwnd, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -107,7 +110,7 @@ namespace nyx {
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void set_user_data(std::shared_ptr<void> data) ;
+		void set_user_data(const std::shared_ptr<void>& data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -150,17 +153,17 @@ namespace nyx {
 		/**
 		* リストボックスにアイテムを追加する
 		*/
-		void add(const std::wstring& item);
+		void add_item(const std::wstring& item);
 
 		/**
 		* リストボックスのアイテムを削除する
 		*/
-		void remove();
+		void remove_item();
 
 		/**
 		* リストボックスのアイテムをクリアする
 		*/
-		void clear();
+		void clear_item();
 
 		/**
 		* 現在選択されているアイテムのインデックスを取得する
@@ -172,6 +175,12 @@ namespace nyx {
 		* @return std::wstring
 		*/
 		std::wstring get_select_item();
+
+	
+		void on_paint(const gui_callback& callback);
+		void on_click(const gui_callback& callback);
+		void on_index_changed(const gui_callback& callback);
+		void dispatch(WIDGET_EVENT_TYPE eventType, event_args& e);
 
 	private:
 		/// ハンドルインスタンス
@@ -188,6 +197,8 @@ namespace nyx {
 		std::shared_ptr<void> userData_;
 		///アトム
 		ATOM atom_;
+
+		std::shared_ptr<dispatcher> guiEventList_;
 	};
 }
 #endif

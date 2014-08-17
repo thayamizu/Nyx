@@ -20,9 +20,11 @@
 #include "GUI/IRadioButton.h"
 
 namespace nyx {
-	class iwindow;
+	class window;
+	class dispatcher;
+
 	///ラジオボタン
-	class radio_button : public IRadioButton {
+	class radio_button : public iradio_button {
 	public:
 		//---------------------------------------------------------------------------------------
 		//生成・破棄
@@ -30,7 +32,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		radio_button(HWND hwnd,std::wstring label, int x, int y, int width,int height, int id);
+		radio_button(std::shared_ptr<window>& parent,std::wstring label, int x, int y, int width,int height, bool isOwnerDraw=false);
 		/**
 		*
 		*/
@@ -39,7 +41,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		bool on_create(HWND hwnd, std::wstring label, int x, int y, int width,int height, int id);
+		bool create(window_handle hwnd, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -116,7 +118,7 @@ namespace nyx {
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void set_user_data(std::shared_ptr<void> data) ;
+		void set_user_data(const std::shared_ptr<void>& data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -174,6 +176,15 @@ namespace nyx {
 		*/
 		bool is_checked() const ;
 
+		void on_checked_changed(const gui_callback& callback);
+
+		void on_click(const gui_callback& callback);
+
+		void on_paint(const gui_callback& callback);
+
+		void dispatch(WIDGET_EVENT_TYPE eventType, event_args& e);
+	private:
+
 	private:
 		///ボタンの表示ラベル
 		std::wstring label_;
@@ -187,6 +198,8 @@ namespace nyx {
 		bool isShow_;
 		///ユーザーデータ
 		std::shared_ptr<void> userData_;
+
+		std::shared_ptr<dispatcher> guiEventList_;
 	};
 }
 #endif

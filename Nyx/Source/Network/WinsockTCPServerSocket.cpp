@@ -79,7 +79,7 @@ namespace nyx {
 	bool winsock_tcp_server_socket::bind() {
 		// ソケットの設定
 		address_.sin_family           = AF_INET;
-		address_.sin_port             = htons(port_);
+		address_.sin_port             = static_cast<u_short>(htons(port_));
 		address_.sin_addr.S_un.S_addr = INADDR_ANY;
 		int result = ::bind(source_, (sockaddr *)&address_, sizeof(address_));
 

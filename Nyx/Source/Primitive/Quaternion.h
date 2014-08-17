@@ -106,7 +106,7 @@ namespace nyx {
 		*/
 		quaternion<T> operator / (const T s) const  {
 			if (s <= math::EPSILON) {
-				return std::move(quaternion<T>(*this));
+				return *this;
 			}
 			return quaternion<T>(w / s, x / s, y / s, z / s);
 		}

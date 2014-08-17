@@ -24,8 +24,8 @@ namespace nyx {
 	///ウインドウ
 	class window : public iwindow
 	{
-		typedef std::unordered_map<uint32_t, std::shared_ptr<iwidget>> hook_list;
-		typedef std::unordered_map<uint32_t, std::shared_ptr<iwidget>>::iterator hook_list_iterator;
+		typedef std::unordered_map<uint32_t, iwidget&> hook_list;
+		typedef std::unordered_map<uint32_t, iwidget&>::iterator hook_list_iterator;
 	public:
 		//---------------------------------------------------------------------------------------
 		//生成・破壊
@@ -33,7 +33,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		window(HWND hWnd, const std::wstring caption, std::wstring icon,  int x=0,int y=0, int width=800, int height=600,int id=0);
+		window(window_handle handle, const std::wstring& caption, const std::wstring& icon,  int x=0,int y=0, int width=800, int height=600);
 		/**
 		*
 		*/
@@ -42,7 +42,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		bool on_create(HWND hwnd, int x=0, int y=0, int width=800, int height=600);
+		bool create(window_handle hwnd, int x = 0, int y = 0, int width = 800, int height = 600);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -115,7 +115,7 @@ namespace nyx {
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void set_user_data(std::shared_ptr<void> data) ;
+		void set_user_data(const std::shared_ptr<void>& data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -157,59 +157,24 @@ namespace nyx {
 		/**
 		* コントロールの登録
 		*/
-		void register_widget(std::shared_ptr<iwidget> control);
+		void register_widget(iwidget& control);
 
 		/**
 		*　コントロールの削除
 		*/
-		void unregister_widget(std::shared_ptr<iwidget> control);
+		void unregister_widget(iwidget& control);
 
-		//---------------------------------------------------------------------------------------
-		//イベントの登録と削除
-		//---------------------------------------------------------------------------------------
-		/**
-		*
-		*/
-		void add_event(std::shared_ptr<iwidget> colntrol, gui_callback callback);
-
-		/**
-		*
-		*/
-		void del_event(std::shared_ptr<iwidget> colntrol);
-
-		/**
-		*
-		*/
-		void clear_event();
-
-		/**
-		*
-		*/
-		void add_user_event(std::shared_ptr<iwidget> control, gui_callback callback);
-
-		/**
-		*
-		*/
-		void del_user_event(std::shared_ptr<iwidget> colntrol);
-
-		/**
-		*
-		*/
-		void clear_user_event();
-
-		//----------------------------------------------------------------
-		//ウインドウ固有の操作
-		//----------------------------------------------------------------
+	
 		/**
 		* メニューを取得する
 		*/
-		HMENU get_menu();
+		menu_handle get_menu();
 
 		/**
 		* メニューを設定する
 		* 
 		*/
-		void set_menu(HMENU menu);
+		void set_menu(menu_handle menu);
 
 		/**
 		* メッセージ処理
@@ -217,6 +182,13 @@ namespace nyx {
 		*/
 		bool process_message();
 
+		void on_mouse_down(const gui_callback& callback);
+
+		void on_mouse_up(const gui_callback& callback);
+
+		void on_paint(const gui_callback& callback);
+
+		void dispatch(WIDGET_EVENT_TYPE evenType, event_args& e);
 	private:
 		/**
 		* ウインドウプロ―シージャ
@@ -250,8 +222,6 @@ namespace nyx {
 		hook_list childControl_;
 		///ディスパッチャにフックされているGUIイベントのリスト
 		std::shared_ptr<dispatcher> guiEventList_;
-		///ディスパッチャにフックされているユーザーイベントのリスト
-		std::shared_ptr<dispatcher> userEventList_;
 	};
 }
 

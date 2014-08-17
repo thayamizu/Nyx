@@ -44,7 +44,7 @@ namespace nyx {
 	bool winsock_tcp_client_socket::connect(const char* address, size_t port) {
 		// Ú‘±æw’è—p\‘¢‘Ì‚Ì€”õ
 		address_.sin_family           = AF_INET;
-		address_.sin_port             = htons(port);
+		address_.sin_port             = static_cast<u_short>(htons(port));
 		address_.sin_addr.S_un.S_addr = inet_addr(address);
 
 		// –³Œø‚¾‚Á‚½‚Ì‚Å, DomainName ‚©‚çŒŸõ‚·‚é

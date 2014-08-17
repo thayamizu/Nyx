@@ -2,20 +2,14 @@
 #define NYX_CORE_INCLUDED_IRADIO_BUTTON_H_
 #include "GUI/IControl.h"
 #include "Utility/Type.h"
-namespace nyx 
+namespace nyx
 {
 	///ラジオボタンインタフェース
-	class IRadioButton : public iwidget
+	class iradio_button : public iwidget
 	{
 	public:
-		//----------------------------------------------------------------
-		//構築・破壊
-		//----------------------------------------------------------------
-		virtual ~IRadioButton() {}
+		virtual ~iradio_button() {}
 
-		//----------------------------------------------------------------
-		// ラジオボタン固有の操作
-		//----------------------------------------------------------------
 		/**
 		* ラベルの取得
 		* @return std::wstring& ラベル

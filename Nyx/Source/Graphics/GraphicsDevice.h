@@ -15,7 +15,7 @@ namespace nyx {
 	class graphics_device 
 	{
 		friend class sprite;
-		friend class Texture;
+		friend class texture;
 	public:
 		/**
 		* コンストラクタ

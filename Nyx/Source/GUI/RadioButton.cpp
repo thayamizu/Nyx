@@ -19,13 +19,16 @@
 #include "Debug/Assert.h"
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
+#include "Window.h"
+#include "Dispatcher.h"
 
 namespace nyx {
 	//-----------------------------------------------------------------------------------------
-	radio_button::radio_button(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
-		:label_(label), hwnd_(NULL), id_(id), atom_(NULL), isShow_(false), userData_(NULL) {
+	radio_button::radio_button(std::shared_ptr<window>& parent, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw)
+		: label_(label), hwnd_(NULL), atom_(NULL), isShow_(false), userData_(nullptr), guiEventList_(std::make_shared<dispatcher>()) {
 
-			on_create(hwnd, label_, x, y, width, height, id);
+		parent->register_widget(*this);
+		create(parent->get_handle(), label_, x, y, width, height, isOwnerDraw);
 	}       
 
 	//-----------------------------------------------------------------------------------------
@@ -36,11 +39,19 @@ namespace nyx {
 	}
 
 	//-----------------------------------------------------------------------------------------
-	bool radio_button::on_create(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool radio_button::create(window_handle hwnd, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
+
+		DWORD radioButtonStyle;
+		if (isOwnerDraw) {
+			radioButtonStyle = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_OWNERDRAW;
+		}
+		else {
+			radioButtonStyle = WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON;
+		}
 		hwnd_ = CreateWindow(
-			TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON, //ウィンドウの種類
-			x, y, width, height, hwnd, (HMENU)id, hInstance, NULL);
+			TEXT("BUTTON"), label.c_str(), radioButtonStyle, //ウィンドウの種類
+			x, y, width, height, hwnd, (HMENU)id_, hInstance, NULL);
 
 		NYX_ASSERT(hwnd_ != NULL);
 		if (!hwnd_) {
@@ -115,7 +126,7 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void radio_button::set_user_data(std::shared_ptr<void> data) {
+	void radio_button::set_user_data(const std::shared_ptr<void>& data) {
 		userData_ = data;
 	}
 
@@ -182,5 +193,31 @@ namespace nyx {
 	bool radio_button::is_checked() const {
 		LRESULT result = ::SendMessage(hwnd_, BST_CHECKED, 0, 0);
 		return result == BST_CHECKED;
+	}
+
+	//----------------------------------------------------------------
+	void radio_button::on_checked_changed(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CHECKED_CHANGED, callback);
+	}
+
+	//----------------------------------------------------------------
+	void radio_button::on_click(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CLICK, callback);
+	}
+
+	//----------------------------------------------------------------
+	void radio_button::on_paint(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
+	}
+
+	//----------------------------------------------------------------
+	void radio_button::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		if (eventType != WIDGET_EVENT_TYPE_NUM) {
+			this->guiEventList_->dispatch(eventType, *this, e);
+		}
 	}
 }

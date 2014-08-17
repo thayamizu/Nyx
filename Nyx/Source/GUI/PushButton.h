@@ -16,13 +16,15 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_PUSH_BUTTON_H_
 #define NYX_CORE_INCLUDED_PUSH_BUTTON_H_
-
 #include "GUI/IPushButton.h"
 #include "Utility/Type.h"
 
 namespace nyx {
+	class dispatcher;
+	class window;
+
 	///プッシュボタン
-	class push_button : public ibutton {
+	class push_button : public ipush_button {
 	public:
 		//---------------------------------------------------------------------------------------
 		//生成・破棄
@@ -30,7 +32,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		push_button(HWND hwnd, const std::wstring& label, int x, int y, int width,int height, int id);
+		push_button(std::shared_ptr<window>& hwnd, const std::wstring& label, int x, int y, int width,int height, bool isOwnerDraw=false);
 
 		/**
 		*
@@ -39,7 +41,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		bool on_create(HWND hwnd, const std::wstring& label, int x, int y, int width, int height, int id);
+		bool create(window_handle hwnd, const std::wstring& label, int x, int y, int width, int height, bool isOwnerDraw = false);
 
 		//--------------------------------------------------------------------------------------
 		//ハンドルの取得
@@ -109,7 +111,7 @@ namespace nyx {
 		* ユーザーデータを設定する
 		* @param void* ユーザーデータ
 		*/
-		void set_user_data(std::shared_ptr<void> data) ;
+		void set_user_data(const std::shared_ptr<void>& data) ;
 
 		/**
 		* コントロールのIDを取得する
@@ -152,13 +154,20 @@ namespace nyx {
 		* ラベルの取得
 		* @return std::wstring& ラベル
 		*/
-		std::wstring GetLabel() const ;
+		std::wstring get_label() const ;
 
 		/**
 		* ラベルの設定
 		* @param const std::wstring& ラベル
 		*/
-		void SetLabel(const std::wstring& label) ;
+		void set_label(const std::wstring& label) ;
+
+		void on_click(const gui_callback& callback);
+
+		
+		void on_paint(const gui_callback& callback);
+
+		void dispatch(WIDGET_EVENT_TYPE eventType, event_args& e);
 	private:
 		///ボタンの表示ラベル
 		std::wstring label_;
@@ -174,6 +183,8 @@ namespace nyx {
 		bool isActivate_;
 		///ユーザーデータ
 		std::shared_ptr<void> userData_;
+
+		std::shared_ptr<dispatcher> guiEventList_;
 	};
 }
 #endif

@@ -19,20 +19,31 @@
 #include "Debug/Assert.h"
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
+#include "Window.h"
 
 namespace nyx {
 	//---------------------------------------------------------------------------------------
-	check_box::check_box(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) 
-		:hwnd_(NULL), label_(label), id_(id), atom_(NULL), isShow_(false), userData_(NULL)	{
-		on_create(hwnd, label, x, y, width, height, id);
+	check_box::check_box(const std::shared_ptr<window>& parent, const std::wstring& label, int x, int y, int width, int height, bool isOwnerDraw) 
+		:hwnd_(NULL), label_(label), atom_(NULL), isShow_(false), userData_(NULL),guiEventList_(std::make_shared<dispatcher>())	{
+		parent->register_widget(*this);
+		create(parent->get_handle(), label, x, y, width, height, isOwnerDraw);
 	}
 
 	//---------------------------------------------------------------------------------------
-	bool check_box::on_create(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool check_box::create(window_handle hwnd, const std::wstring& label, int x, int y, int width, int height, bool isOwnerDraw) {
 
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
-		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX, 
-			x, y, width, height, hwnd, (HMENU)id,  hInstance, NULL);
+	
+		DWORD checkBoxStyle;
+		if (isOwnerDraw) {
+			checkBoxStyle = WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX | BS_OWNERDRAW;
+		}
+		else {
+			checkBoxStyle = WS_CHILD | WS_VISIBLE | BS_AUTOCHECKBOX;
+		}
+
+		hwnd_ = CreateWindow(TEXT("BUTTON"), label.c_str(), checkBoxStyle, 
+			x, y, width, height, hwnd, (HMENU)id_,  hInstance, NULL);
 
 		NYX_ASSERT(hwnd_ != NULL);
 		if (!hwnd_) {
@@ -110,7 +121,7 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void check_box::set_user_data(std::shared_ptr<void> data) {
+	void check_box::set_user_data(const std::shared_ptr<void>& data) {
 		userData_ = data;
 	}
 
@@ -163,21 +174,47 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	std::wstring check_box::GetLabel() const {
+	std::wstring check_box::get_label() const {
 		return label_;
 	}
 
 	//----------------------------------------------------------------
-	void check_box::SetLabel(const std::wstring& label) {
+	void check_box::set_label(const std::wstring& label) {
 		NYX_ASSERT(hwnd_ != NULL);
 		label_ = label;
 		SetWindowText(hwnd_, label_.c_str());
 	}
 
 	//----------------------------------------------------------------
-	bool check_box::IsChecked() const {
+	bool check_box::is_checked() const {
 		NYX_ASSERT(hwnd_ != NULL);
 		LRESULT result = ::SendMessage(hwnd_, BM_GETCHECK, 0, 0);
 		return result == BST_CHECKED;
+	}
+
+	//----------------------------------------------------------------
+	void check_box::on_paint(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
+	}
+	
+	//----------------------------------------------------------------
+	void check_box::on_click(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CLICK, callback);
+	}
+
+	//----------------------------------------------------------------
+	void check_box::on_checked_changed(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CHECKED_CHANGED, callback);
+	}
+
+	//----------------------------------------------------------------
+	void check_box::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e){
+		NYX_ASSERT(guiEventList_ != nullptr);
+		if (eventType != WIDGET_EVENT_TYPE_NUM) {
+			this->guiEventList_->dispatch(eventType, *this, e);
+		}
 	}
 }

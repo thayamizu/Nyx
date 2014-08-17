@@ -6,7 +6,7 @@
 namespace nyx
 {
 	///チェックボックスインタフェース
-	class icheckbox : public iwidget {
+	class icheckbox : public iwidget{
 	public:
 		//----------------------------------------------------------------
 		//構築・破壊

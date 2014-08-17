@@ -9,6 +9,5 @@ namespace nyx {
 		int   button;
 		void* handle;
 	};
-
 }
 #endif

@@ -19,15 +19,17 @@
 #include "Debug/Assert.h"
 #include "Primitive/Rect.h"
 #include "Primitive/Vector2.h"
+#include "Window.h"
 
 namespace nyx {
 	//---------------------------------------------------------------------------------------
 	//ê∂ê¨ÅEîjä¸
 	//---------------------------------------------------------------------------------------
-	list_box::list_box(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id)
-		:label_(label), id_(id){
+	list_box::list_box(std::shared_ptr<window>& parent, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw)
+		:hwnd_(NULL), label_(label), isShow_(true), atom_(NULL), isActivate_(true), userData_(nullptr), guiEventList_(std::make_shared<dispatcher>()) {
 
-			onc_create(hwnd, label, x, y, width, height, id);
+		parent->register_widget(*this);
+		create(parent->get_handle(), label, x, y, width, height, isOwnerDraw);
 	}       
 	list_box::~list_box() {
 		if (atom_) {
@@ -35,10 +37,20 @@ namespace nyx {
 		}
 	}
 
-	bool list_box::onc_create(HWND hwnd, std::wstring label, int x, int y, int width, int height, int id) {
+	bool list_box::create(window_handle hwnd, std::wstring label, int x, int y, int width, int height, bool isOwnerDraw) {
 		HINSTANCE hInstance = ::GetModuleHandle(NULL);
-		hwnd_ = CreateWindow(TEXT("LISTBOX"), label.c_str(), WS_CHILD | WS_VISIBLE | LBS_STANDARD & ~LBS_SORT, 
-			x, y, width, height, hwnd, (HMENU)id, hInstance, NULL);
+
+		DWORD listboxStyle;
+		if (isOwnerDraw) {
+			listboxStyle = WS_CHILD | WS_VISIBLE | LBS_STANDARD & ~LBS_SORT | BS_OWNERDRAW;
+
+		}
+		else {
+			listboxStyle = WS_CHILD | WS_VISIBLE | LBS_STANDARD & ~LBS_SORT;
+		}
+
+		hwnd_ = CreateWindow(TEXT("LISTBOX"), label.c_str(), listboxStyle,
+			x, y, width, height, hwnd, (HMENU)id_, hInstance, NULL);
 
 		NYX_ASSERT(hwnd_ != NULL);
 		if (!hwnd_) {
@@ -112,7 +124,7 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void list_box::set_user_data(std::shared_ptr<void> data) {
+	void list_box::set_user_data(const std::shared_ptr<void>& data) {
 		userData_ = data;
 	}
 
@@ -165,12 +177,12 @@ namespace nyx {
 
 	}
 	//----------------------------------------------------------------
-	void list_box::add(const std::wstring& item) {
+	void list_box::add_item(const std::wstring& item) {
 		SendMessage(hwnd_, LB_ADDSTRING, 0, (LPARAM)item.c_str());
 	}
 
 	//----------------------------------------------------------------
-	void list_box::remove() {
+	void list_box::remove_item() {
 		int index = SendMessage(hwnd_, LB_GETCURSEL, 0, 0);
 		if (index == LB_ERR) return;
 
@@ -178,7 +190,7 @@ namespace nyx {
 	}
 
 	//----------------------------------------------------------------
-	void list_box::clear() {
+	void list_box::clear_item() {
 		SendMessage(hwnd_, LB_RESETCONTENT, 0, 0);
 	}
 
@@ -195,5 +207,31 @@ namespace nyx {
 		
 		SendMessage(hwnd_, LB_GETTEXT, index, 0);
 		return TEXT("");
+	}
+
+	//----------------------------------------------------------------
+	void list_box::on_paint(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
+	}
+
+	//----------------------------------------------------------------
+	void list_box::on_click(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_CLICK, callback);
+	}
+
+	//----------------------------------------------------------------
+	void list_box::on_index_changed(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_INDEX_CHANGED, callback);
+	}
+
+	//----------------------------------------------------------------
+	void list_box::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		if (eventType != WIDGET_EVENT_TYPE_NUM) {
+			this->guiEventList_->dispatch(eventType, *this, e);
+		}
 	}
 }
