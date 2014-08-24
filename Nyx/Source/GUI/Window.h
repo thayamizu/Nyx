@@ -188,6 +188,8 @@ namespace nyx {
 
 		void on_paint(const gui_callback& callback);
 
+		void on_resize(const gui_callback& callback);
+
 		void dispatch(WIDGET_EVENT_TYPE evenType, event_args& e);
 	private:
 		/**

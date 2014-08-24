@@ -19,55 +19,5 @@
 
 namespace nyx {
 
-	///データベースの接続情報を保持する
-	class IDatabaseConnection {
-	public:
-		IDatabaseConnection() {
-
-		}
-		virtual ~IDatabaseConection() {
-
-		}
-
-		virtual void Open()  = 0;
-		virtual void Close() = 0;
-
-		virtual void ToString() = 0;
-
-		std::wstring address; ///< 接続先データベースのアドレス情報
-
-	};
-
-	///< データベースへの接続を担う
-	class IDatabaseConnector {
-	public:
-		IDatabaseConnector();
-		virtual ~IDatabaseConnector() {
-		}
-
-		virtual bool Connect() = 0;
-	};
-
-	///< クエリーを表現する
-	class IDatabaseQuery {
-	public:
-	};
-
-	///< DatabaseへのSQLクエリを生成する
-	class IDatabaseQueryBuilder {
-	public:
-		IDatabaseQueryBuilder() {}
-		virtual ~IDatabaseQueryBuilder() {
-
-		}
-
-		virtual IDatabaseQuery MakeQuery(std::wstring ) = 0;
-	};
-
-	///<
-	class IDatabase {
-	public:
-
-	};
 }
 #endif

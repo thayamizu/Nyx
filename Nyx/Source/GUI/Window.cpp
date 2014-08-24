@@ -262,6 +262,10 @@ namespace nyx {
 		NYX_ASSERT(guiEventList_ != nullptr);
 		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
 	}
+	void window::on_resize(const gui_callback& callback) {
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_RESIZE, callback);
+	}
 
 	//----------------------------------------------------------------
 	bool window::process_message() {
@@ -273,6 +277,7 @@ namespace nyx {
 
 		return msg.message != WM_QUIT;
 	}
+
 
 	void window::dispatch(WIDGET_EVENT_TYPE eventType, event_args& e) {
 		if (eventType != WIDGET_EVENT_TYPE_NUM) {
@@ -306,6 +311,9 @@ namespace nyx {
 			break;
 		case WM_PAINT:
 			eventType = WIDGET_EVENT_TYPE_PAINT;
+			break;
+		case WM_SIZE:
+			eventType = WIDGET_EVENT_TYPE_RESIZE;
 			break;
 		case WM_LBUTTONDOWN:
 		case WM_RBUTTONDOWN:

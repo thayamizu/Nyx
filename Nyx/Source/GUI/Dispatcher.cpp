@@ -34,8 +34,9 @@ namespace nyx {
 
 
 	//-----------------------------------------------------------------------------------------
-	void dispatcher::add_callback(WIDGET_EVENT_TYPE eventType, gui_callback delegate) {
-		hooklist_.insert(std::make_pair(eventType, delegate));
+	void dispatcher::add_callback(WIDGET_EVENT_TYPE eventType, gui_callback callback) {
+		//hooklist_.insert(hook_list::value_type(eventType, callback));
+		hooklist_[eventType] = callback;
 	}
 
 	//-----------------------------------------------------------------------------------------

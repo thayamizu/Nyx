@@ -81,8 +81,11 @@ namespace nyx {
 #else 
 //リリース時は、メモリチェッカーを切る
 namespace nyx {
+	typedef ::_CrtMemState memory_state;
+
 	class memory_checker {
 	public:
+
 		static bool initialize();
 
 		static memory_state get_memory_state();

@@ -19,6 +19,10 @@ namespace nyx {
 		*/
 		ogg_reader(const std::wstring& fileName);
 
+		/**
+		* デストラクタ
+		*/
+		~ogg_reader();
 
 		/**
 		* WAVファイルを開く
@@ -26,7 +30,11 @@ namespace nyx {
 		*/
 		void open(const std::wstring& fileName);
 		
-
+		/**
+		* WAVファイルを閉じます
+		*/
+		void close();
+		
 		/**
 		* 読み込みカーソルを指定した位置にセットする
 		* @param ulong 読み込みカーソル位置
@@ -56,7 +64,10 @@ namespace nyx {
 		*/
 		std::shared_ptr<char> read(size_t bufferSize, uint64_t* readSize=nullptr);
 	private:
-		wav_file_header header;
+		wav_file_header header_;
+		OggVorbis_File* vorbisFile_;
+		vorbis_info *  vorbisInfo_;
+
 	};
 }
 

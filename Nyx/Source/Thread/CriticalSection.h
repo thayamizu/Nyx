@@ -33,7 +33,7 @@ namespace nyx
 		* デストラクタ
 		*/
 		~critical_section();
-
+	private:
 		/**
 		* クリティカルセクションの開始
 		*/
@@ -44,7 +44,7 @@ namespace nyx
 		*/
 		void leave();
 
-	private:
+
 		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;
 	};

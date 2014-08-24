@@ -307,6 +307,7 @@ namespace nyx {
 			windowlessControl_.reset();
 			captureGraphBuilder_.reset();
 		}
+
 	private:
 		bool isInitialized_;
 		char alignment_[3];

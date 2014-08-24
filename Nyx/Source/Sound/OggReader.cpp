@@ -1,11 +1,15 @@
 #include "PCH/PCH.h"
 #include "WaveReader.h"
 #include "OggReader.h"
+#include "vorbis/codec.h"
+#include "vorbis/vorbisfile.h"
 
 namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
-	ogg_reader::ogg_reader() {}
+	ogg_reader::ogg_reader() {
+		
+	}
 
 
 	//-------------------------------------------------------------------------------------------------------
@@ -15,13 +19,40 @@ namespace nyx {
 
 	}
 
+	//-------------------------------------------------------------------------------------------------------
+	//
+	ogg_reader::~ogg_reader()
+	{
+		close();
+	}
+
 
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void ogg_reader::open(const std::wstring& fileName) {
-		fileName;
+		FILE * fp = _wfopen(fileName.c_str(), L"rb");
+		if (fp == NULL) {
+			fclose(fp);
+		}
+
+		if (ov_open(fp, &vf) < 0) {
+			fclose(fp);
+		}
+
+		vorbis_info* vi;
+		vi = ov_info(&vf, -1);
+		if (vi == NULL) {
+			return -1;
+		}
+
 	}
 
+	void ogg_reader::close()
+	{
+		if (vorbisFile_ != nullptr) {
+			//ov_clear(&(vorbisFile_.get()));
+		}
+	}
 
 	//-------------------------------------------------------------------------------------------------------
 	//

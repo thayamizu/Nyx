@@ -220,6 +220,12 @@
     <Filter Include="GUI\System">
       <UniqueIdentifier>{53d71862-22b4-463c-99dd-772889d4d795}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Database\Base">
+      <UniqueIdentifier>{01972c02-d105-4d75-b138-56c91d596f9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database\System">
+      <UniqueIdentifier>{621dded4-860a-411d-8a8e-9a09b6fb9a24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Debug\Assert.h">

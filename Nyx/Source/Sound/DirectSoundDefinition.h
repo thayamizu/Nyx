@@ -9,7 +9,7 @@
 #include <dsound.h> 
 #include <d3dx9.h>
 #pragma comment( lib, "dsound.lib")
-
+#include <boost/container/flat_map.hpp>
 typedef boost::intrusive_ptr< IDirectSound8 >           dsound_ptr;               ///< DirectSoudオブジェクト
 typedef boost::intrusive_ptr< IDirectSoundBuffer >      dsound_primary_buffer_ptr;  ///< DirectSoudプライマリバッファ
 typedef boost::intrusive_ptr< IDirectSoundBuffer8 >     dsound_buffer_ptr;         ///< DirectSoundセカンダリーバッファー

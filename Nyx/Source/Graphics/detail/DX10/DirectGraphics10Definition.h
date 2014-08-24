@@ -19,4 +19,13 @@
 #pragma comment( lib, "d3dx10.lib") 
 
 
+namespace nyx
+{
+	class d3d10Driver
+	{
+
+	};
+
+}
+
 #endif

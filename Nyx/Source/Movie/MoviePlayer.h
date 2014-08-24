@@ -64,7 +64,6 @@ namespace nyx
 		*/
 		void resume();
 
-
 		/**
 		* アスペクト比維持するかどうかを指定します．
 		* @param bool アスペクト比を維持するならtrue
