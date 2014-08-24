@@ -18,10 +18,10 @@
 #include "Timer/ITimer.h"
 #include "Timer/Timer.h"
 #include "Timer/FixedTimer.h"
-namespace nyx {
+namespace Nyx {
 	
 	//---------------------------------------------------------------------------------------
-	struct fixed_timer::PImpl
+	struct FixedTimer::PImpl
 	{
 		PImpl()
 			:timer(new Timer()), flushTime(0)
@@ -29,11 +29,11 @@ namespace nyx {
 
 		}
 		std::unique_ptr<Timer> timer;///< タイマ 
-		uint64_t flushTime;///< 前回フラッシュした時刻
+		ulong flushTime;///< 前回フラッシュした時刻
 	};
 
 	//---------------------------------------------------------------------------------------
-	fixed_timer::fixed_timer():
+	FixedTimer::FixedTimer():
 		pimpl_(new PImpl())
 	{
 		//タイマ生成時の時間を記憶させておく．
@@ -42,41 +42,41 @@ namespace nyx {
 	}
 	
 	//---------------------------------------------------------------------------------------
-	fixed_timer::~fixed_timer () {
+	FixedTimer::~FixedTimer () {
 	}
 	
 	//---------------------------------------------------------------------------------------
-	void fixed_timer::reset() {
-		pimpl_->timer->reset();
+	void FixedTimer::Reset() {
+		pimpl_->timer->Reset();
 	}
 	
 	//---------------------------------------------------------------------------------------
-	uint64_t fixed_timer::get() {
+	ulong FixedTimer::Get() {
 		return pimpl_->flushTime;
 	}
 	
 	//---------------------------------------------------------------------------------------
-	void fixed_timer::set(uint64_t t) {
-		pimpl_->timer->set(t);
+	void FixedTimer::Set(ulong t) {
+		pimpl_->timer->Set(t);
 	}
 	
 	//---------------------------------------------------------------------------------------
-	void fixed_timer::pause(bool pause) {
-		pimpl_->timer->pause(pause);
+	void FixedTimer::Pause(bool pause) {
+		pimpl_->timer->Pause(pause);
 	}
 	
 	//---------------------------------------------------------------------------------------
-	bool fixed_timer::is_pause() {
-		return pimpl_->timer->is_pause();
+	bool FixedTimer::IsPause() {
+		return pimpl_->timer->IsPause();
 	}
 	
 	//---------------------------------------------------------------------------------------
-	void fixed_timer::restart() {
-		pimpl_->timer->restart();
+	void FixedTimer::Restart() {
+		pimpl_->timer->Restart();
 	}
 
 	//---------------------------------------------------------------------------------------
-	void fixed_timer::Flush() {
-		pimpl_->flushTime = pimpl_->timer->get();
+	void FixedTimer::Flush() {
+		pimpl_->flushTime = pimpl_->timer->Get();
 	}
 }
