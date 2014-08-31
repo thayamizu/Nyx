@@ -79,4 +79,6 @@ namespace nyx {
 	void fixed_timer::flush() {
 		pimpl_->flushTime = pimpl_->timer->get();
 	}
+
+
 }
