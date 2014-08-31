@@ -1,6 +1,7 @@
 #ifndef NYX_CORE_INCLUDED_OGG_READER_H_
 #define NYX_CORE_INCLUDED_OGG_READER_H_
 #include "SoundReader.h"
+#include "vorbis/vorbisfile.h"
 
 namespace nyx {
 	struct wav_file_header;

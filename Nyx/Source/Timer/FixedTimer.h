@@ -67,7 +67,7 @@ namespace nyx {
 		/**
 		* タイマをフラッシュする
 		*/
-		void Flush();
+		void flush();
 	private:
 		struct PImpl;
 		std::unique_ptr<PImpl> pimpl_;

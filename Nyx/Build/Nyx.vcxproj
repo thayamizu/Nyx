@@ -202,6 +202,7 @@
     <ClInclude Include="..\Source\Thread\detail\Win32\Win32Thread.h" />
     <ClInclude Include="..\Source\Timer\detail\Win32\Win32Timer.h" />
     <ClInclude Include="..\Source\Utility\Common.h" />
+    <ClInclude Include="..\Source\Utility\ComPtr.h" />
     <ClInclude Include="..\Source\Utility\Exception.h" />
     <ClInclude Include="..\Source\Utility\Limits.h" />
     <ClInclude Include="..\Source\Utility\Math.h" />

@@ -553,6 +553,9 @@
     <ClInclude Include="..\Source\GUI\RadioButton.h">
       <Filter>GUI\System</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Utility\ComPtr.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp">

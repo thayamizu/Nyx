@@ -1,8 +1,6 @@
 #include "PCH/PCH.h"
 #include "WaveReader.h"
 #include "OggReader.h"
-#include "vorbis/codec.h"
-#include "vorbis/vorbisfile.h"
 
 namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
@@ -30,7 +28,7 @@ namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void ogg_reader::open(const std::wstring& fileName) {
-		FILE * fp = _wfopen(fileName.c_str(), L"rb");
+	/*	FILE * fp = _wfopen(fileName.c_str(), L"rb");
 		if (fp == NULL) {
 			fclose(fp);
 		}
@@ -44,7 +42,7 @@ namespace nyx {
 		if (vi == NULL) {
 			return -1;
 		}
-
+*/
 	}
 
 	void ogg_reader::close()
@@ -71,7 +69,7 @@ namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	const wav_file_header& ogg_reader::read_header() {
-		return header;
+		return this->header_;
 	}
 
 

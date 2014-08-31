@@ -148,5 +148,6 @@ class SkinMesh;
 #include "Utility/Limits.h"
 #include "Utility/Math.h"
 #include "Utility/NonCopyable.h"
+#include "Utility/ComPtr.h"
 
 #endif
