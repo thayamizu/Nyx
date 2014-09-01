@@ -189,12 +189,12 @@ namespace nyx {
 				write_wave_data();
 				break;
 			case WAIT_OBJECT_0+NotifyEventNum:
-				std::cout <<"バッファ書き込み5" << std::endl;
+				//std::cout <<"バッファ書き込み5" << std::endl;
 
 				MSG msg;
 				while( PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) { 
 					if( msg.message == WM_QUIT ){
-				std::cout <<"バッファ書き込み6" << std::endl;
+				//std::cout <<"バッファ書き込み6" << std::endl;
 						isDone=true;
 					}
 				}

@@ -87,5 +87,7 @@ namespace nyx
 	private:
 		HRESULT hResult_;
 	};
+
+	typedef std::domain_error ogg_exception;
 }
 #endif

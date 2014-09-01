@@ -1,6 +1,7 @@
 #ifndef NYX_CORE_INCLUDED_SOUND_READER_H_
 #define NYX_CORE_INCLUDED_SOUND_READER_H_
 #include "Utility/NonCopyable.h"
+#include "WaveFileHeader.h"
 
 namespace nyx {
 

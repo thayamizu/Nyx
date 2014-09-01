@@ -10,9 +10,6 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{2c25916e-2b58-4e27-91ca-81608c9ca34f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input">
-      <UniqueIdentifier>{0ae8796c-17f6-46c8-a89a-def79c2ffa0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{0193c9ef-2ce5-4e3f-bfd0-7dfc8d2581b4}</UniqueIdentifier>
     </Filter>
@@ -91,9 +88,6 @@
     <Filter Include="IO\detail\Win32">
       <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input\detail">
-      <UniqueIdentifier>{e69bb2af-99fb-4f15-9c53-6726a2ad4fc1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI\detail">
       <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
     </Filter>
@@ -156,9 +150,6 @@
     </Filter>
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\detail\DirectInput">
-      <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Camera\Base">
       <UniqueIdentifier>{2ff7e408-af8c-448e-b452-a948b0f73b32}</UniqueIdentifier>
@@ -225,6 +216,15 @@
     </Filter>
     <Filter Include="Database\System">
       <UniqueIdentifier>{621dded4-860a-411d-8a8e-9a09b6fb9a24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device">
+      <UniqueIdentifier>{0ae8796c-17f6-46c8-a89a-def79c2ffa0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\detail">
+      <UniqueIdentifier>{e69bb2af-99fb-4f15-9c53-6726a2ad4fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Device\detail\DirectInput">
+      <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -340,7 +340,7 @@
       <Filter>IO</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\Mouse.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Sound\WaveFileHeader.h">
       <Filter>Sound\Utility</Filter>
@@ -421,25 +421,25 @@
       <Filter>Primitive</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\DirectInputDefinition.h">
-      <Filter>Input\detail\DirectInput</Filter>
+      <Filter>Device\detail\DirectInput</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\Keyboard.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\IKeyBase.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\IJoystick.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\Joystick.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\InputDeviceDesc.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Input\KeyCode.h">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h">
       <Filter>Graphics\Core\Base\detail\GDI</Filter>
@@ -622,7 +622,7 @@
       <Filter>IO</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Input\Mouse.cpp">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Sound\DirectSoundStaticAudioBuffer.cpp">
       <Filter>Sound\detail\DirectSound\AudioBuffer\StereoAudio\Static</Filter>
@@ -673,16 +673,16 @@
       <Filter>Primitive</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Input\Keyboard.cpp">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Input\IKeyBase.cpp">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Input\IJoystick.cpp">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Input\Joystick.cpp">
-      <Filter>Input</Filter>
+      <Filter>Device</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp">
       <Filter>Graphics\Core\Base\detail\GDI</Filter>

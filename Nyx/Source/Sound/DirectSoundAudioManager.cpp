@@ -150,8 +150,27 @@ namespace nyx {
 	//---------------------------------------------------------------------------------------
 	//
 	std::shared_ptr<iaudio_buffer> dsound_audio_manager::create_audio_buffer_from_ogg(const std::wstring& fileName, const audio_buffer_desc& bufferDesc) {
-		nyx::debug_out::trace("Oggファイルはサポートされていません");
-		fileName, bufferDesc;
-		return nullptr;
+		std::shared_ptr<iaudio_buffer> audio;
+		std::shared_ptr<sound_reader> reader = std::make_shared<ogg_reader>(fileName);
+		//sound readerは必ず初期化される
+		NYX_ASSERT(reader != nullptr)
+
+			switch (bufferDesc.bufferType) {
+			case AUDIO_BUFFER_TYPE_STATIC:
+				audio = std::make_shared<dsound_static_audio_buffer>(bufferDesc, directSound_, reader);
+				break;
+			case AUDIO_BUFFER_TYPE_STATIC_3D:
+				audio = std::make_shared<dsound_static_3d_audio_buffer>(bufferDesc, directSound_, reader);
+				break;
+			case AUDIO_BUFFER_TYPE_STREAMING:
+				audio = std::make_shared<dsound_streaming_audio_buffer>(bufferDesc, directSound_, reader);
+				break;
+			case AUDIO_BUFFER_TYPE_STREAMING_3D:
+				audio = std::make_shared<dsound_streaming_3d_audio_buffer>(bufferDesc, directSound_, reader);
+				break;
+			default:
+				throw std::invalid_argument("無効な引数が渡されました。");
+		}
+		return audio;
 	}
 }

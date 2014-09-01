@@ -3,6 +3,8 @@
 #include "SoundReader.h"
 #include "vorbis/vorbisfile.h"
 
+
+
 namespace nyx {
 	struct wav_file_header;
 	///oggファイルリーダ
@@ -65,10 +67,12 @@ namespace nyx {
 		*/
 		std::shared_ptr<char> read(size_t bufferSize, uint64_t* readSize=nullptr);
 	private:
-		wav_file_header header_;
-		OggVorbis_File* vorbisFile_;
-		vorbis_info *  vorbisInfo_;
-
+		uint64_t fileSize_;
+		uint64_t cursor_;
+		std::wstring fileName_;
+		wav_file_header waveHeader_;
+		OggVorbis_File vorbisFile_;
+		vorbis_info  vorbisInfo_;
 	};
 }
 
