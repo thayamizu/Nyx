@@ -16,8 +16,40 @@
 ********************************************************************************/
 #ifndef NYX_CORE_INCLUDED_IDATABASE_CONNECTOR_H_
 #define NYX_CORE_INCLUDED_IDATABASE_CONNECTOR_H_
+#include <string>
+#include "sqlite3.h"
 
 namespace nyx {
 
+	class database
+	{
+
+		bool open(const std::wstring& dbName) {
+			int result = sqlite3_open(":memory:", &db_);
+			if (result != SQLITE_OK) {
+				throw std::runtime_error("");
+			}
+
+			return (result == SQLITE_OK);
+		}
+		void close() {
+			if (db_ != NULL) {
+				sqlite3_close(db_);
+			}
+			if (statement_ != NULL) {
+				sqlite3_finalize(statement_);
+			}
+
+		}
+
+		void execute(const std::wstring& query) {
+			sqlite3_prepare16_v2(db_, statement_, -1, NULL, NULL);
+			sqlite3_step(statement_);
+		}
+
+	private:
+		sqlite3* db_;
+		sqlite3_stmt * statement_;
+	};
 }
 #endif

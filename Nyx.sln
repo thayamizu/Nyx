@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Nyx", "Nyx\Build\Nyx.vcxproj", "{1B75596E-EBDA-47BD-A1FD-7E865274F809}"
 EndProject
@@ -17,8 +17,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NyxCoreUnitTest", "NyxCoreU
 		{1B75596E-EBDA-47BD-A1FD-7E865274F809} = {1B75596E-EBDA-47BD-A1FD-7E865274F809}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "Project1\Project1.vcxproj", "{F6582F72-7E40-459C-AD9E-DB7F7CFECBD9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,10 +31,6 @@ Global
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Debug|Win32.Build.0 = Debug|Win32
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Release|Win32.ActiveCfg = Release|Win32
 		{8A44EF45-4943-488C-8F62-44EBDFA1AB6A}.Release|Win32.Build.0 = Release|Win32
-		{F6582F72-7E40-459C-AD9E-DB7F7CFECBD9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F6582F72-7E40-459C-AD9E-DB7F7CFECBD9}.Debug|Win32.Build.0 = Debug|Win32
-		{F6582F72-7E40-459C-AD9E-DB7F7CFECBD9}.Release|Win32.ActiveCfg = Release|Win32
-		{F6582F72-7E40-459C-AD9E-DB7F7CFECBD9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
