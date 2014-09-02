@@ -56,7 +56,7 @@ namespace nyx
 		*@param index
 		*@return shared_ptr<char> 
 		*/
-		shared_ptr<char> get_file_data(uint32_t index);
+		std::shared_ptr<char> get_file_data(uint32_t index);
 
 		//-----------------------------------------------------
 		//ƒtƒ@ƒCƒ‹‘€ì
