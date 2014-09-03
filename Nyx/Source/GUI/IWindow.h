@@ -54,6 +54,8 @@ namespace nyx {
 		virtual void on_mouse_up(const gui_callback& callback) = 0;
 
 		virtual void on_paint(const gui_callback& callback) = 0;
+
+		virtual void on_resize(const gui_callback& callback) = 0;
 	};
 }
 

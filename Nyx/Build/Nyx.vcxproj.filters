@@ -751,4 +751,7 @@
       <Filter>Database\System</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Project1\Project1.vcxproj" />
+  </ItemGroup>
 </Project>

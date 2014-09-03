@@ -262,6 +262,9 @@ namespace nyx {
 		NYX_ASSERT(guiEventList_ != nullptr);
 		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_PAINT, callback);
 	}
+
+	//----------------------------------------------------------------
+	//
 	void window::on_resize(const gui_callback& callback) {
 		NYX_ASSERT(guiEventList_ != nullptr);
 		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_RESIZE, callback);
