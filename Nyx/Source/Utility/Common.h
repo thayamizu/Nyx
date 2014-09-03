@@ -77,7 +77,7 @@ namespace nyx {
 	* @return 文字列された数値
 	*/
 	template <typename T> 
-	inline std::wstring to_string(T value) {
+	std::wstring to_string(T value) {
 		std::wstringstream ss;
 		ss<<value;
 
@@ -89,7 +89,7 @@ namespace nyx {
 	* @return int 変換された値
 	*/
 	template <typename T> 
-	inline char to_char(T value) {
+	char to_char(T value) {
 		char result;
 		std::stringstream ss;
 
@@ -105,7 +105,7 @@ namespace nyx {
 	* @return short 変換された値
 	*/  
 	template <typename T> 
-	inline short to_short(T value) {
+	short to_short(T value) {
 		short result;
 		std::stringstream ss;
 
@@ -120,7 +120,7 @@ namespace nyx {
 	* @return int 変換された値
 	*/
 	template <typename T> 
-	inline int to_int(T value) {
+	int to_int(T value) {
 		int result;
 		std::stringstream ss;
 
@@ -136,7 +136,7 @@ namespace nyx {
 	* @return float 変換された値
 	*/
 	template <typename T> 
-	inline float to_float(T value) {
+	float to_float(T value) {
 		float result;
 		std::stringstream ss;
 
@@ -151,7 +151,7 @@ namespace nyx {
 	* @return double 変換された値
 	*/ 
 	template <typename T> 
-	inline double to_double(T value) {
+	double to_double(T value) {
 		double result;
 		std::stringstream ss;
 

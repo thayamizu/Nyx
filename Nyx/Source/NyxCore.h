@@ -39,6 +39,10 @@
 #include "Debug/DebugOutput.h"
 #include "Debug/MemoryChecker.h"
 
+//データベース
+#include "Database/RecordSet.h"
+#include "Database/Database.h"
+
 ///GUI
 #include "GUI/IControl.h"
 #include "GUI/ICheckBox.h"
