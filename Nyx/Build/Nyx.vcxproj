@@ -74,7 +74,7 @@
       </DisableSpecificWarnings>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>msimg32.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>msimg32.lib;d3d9.lib;d3dx9.lib;dxerr.lib;dxguid.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)Nyx_MTd.lib</OutputFile>
       <AdditionalLibraryDirectories>..\..\SDKs\Ogg\Lib\;$(DXSDK_DIR)Lib/x86;..\..\SDKs\Sqlite3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
@@ -118,7 +118,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Collision\BulletDefinition.h" />
-    <ClInclude Include="..\Source\Database\IDatabaseConnector.h" />
+    <ClInclude Include="..\Source\Database\Database.h" />
+    <ClInclude Include="..\Source\Database\RecordSet.h" />
+    <ClInclude Include="..\Source\Database\Sqlite3Database.h" />
+    <ClInclude Include="..\Source\Database\Sqlite3Fwd.h" />
     <ClInclude Include="..\Source\Debug\Assert.h" />
     <ClInclude Include="..\Source\Debug\DebugOutput.h" />
     <ClInclude Include="..\Source\Debug\MemoryChecker.h" />
@@ -229,6 +232,8 @@
     <ClInclude Include="..\Source\Utility\Type.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Database\Database.cpp" />
+    <ClCompile Include="..\Source\Database\Sqlite3Database.cpp" />
     <ClCompile Include="..\Source\Debug\DebugOutput.cpp" />
     <ClCompile Include="..\Source\Debug\MemoryChecker.cpp" />
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp" />
