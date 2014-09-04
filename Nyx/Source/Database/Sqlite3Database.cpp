@@ -2,7 +2,6 @@
 #include "sqlite3.h"
 #include "Sqlite3Database.h"
 
-#pragma comment(lib, "sqlite3.lib")
 
 namespace nyx
 {

@@ -24,7 +24,7 @@ namespace nyx
 		static_assert(std::is_base_of<IUnknown, T>::value == true, "T requires base_of IUnkown");
 
 		typedef com_ptr this_type;
-		pointer_type rawPointer_;
+		pointer_type    rawPointer_;
 	public:
 		com_ptr()
 			:rawPointer_(nullptr)
@@ -32,29 +32,25 @@ namespace nyx
 		}
 
 		com_ptr(T *other, bool add_ref = true)
-		:rawPointer_(other)
+			:rawPointer_(other)
 		{
 			if (rawPointer_ != nullptr && add_ref) {
-				px->AddRef();
-			}
-		}
-
-		com_ptr(const com_ptr<T> & other)
-			:rawPointer_(other->get())
-		{
-			if (rawPointer_ != nullptr) {
 				rawPointer_->AddRef();
 			}
 		}
 
-		com_ptr(com_ptr<T> && other)
-			:rawPointer_(move(other).get()) {
-			other.reset();
+		com_ptr(const com_ptr<T> & other)
+			:rawPointer_(other.rawPointer_)
+		{
+			if (rawPointer_ != NULL) {
+				rawPointer_->AddRef();
+			}
 		}
+
 
 		~com_ptr(void)
 		{
-			if (rawPointer_ != nullptr) {
+			if (rawPointer_ != NULL) {
 				rawPointer_->Release();
 			}
 		}
@@ -63,39 +59,28 @@ namespace nyx
 		friend  bool operator != (com_ptr<T> const & lhs, com_ptr<T> const & rhs);
 		bool is_null()
 		{
-			return rawPointer_ ? false : true;
+			return rawPointer_ == NULL ? true : false;
 		}
 
-		operator T*()
+		operator T*() const throw()
 		{
 			return rawPointer_;
 		}
 
-		operator T**()
-		{
-			return &rawPointer_;
-		}
-
-		operator T&()
-		{
-			return *rawPointer_;
-		}
-
-		T& operator*()
+		T& operator*() const
 		{
 			NYX_ASSERT(rawPointer_ != NULL);
 			return *rawPointer_;
 		}
 
-		T** operator&()
+		T** operator &() throw()
 		{
-			if (rawPointer_) {
-				reset();
-			}
+			NYX_ASSERT(rawPointer_ == NULL);
 			return &rawPointer_;
 		}
 
-		T* operator->()
+
+		T* operator->() const throw()
 		{
 			NYX_ASSERT(rawPointer_ != NULL);
 			return rawPointer_;
@@ -103,15 +88,31 @@ namespace nyx
 
 		T* operator=(T *other)
 		{
-			if (other == rawPointer_) {
-				return rawPointer_;
+			if (*this != other)
+			{
+				reset(other);
 			}
+
+			return *this;
+		}
+
+		T* attach(T *other)
+		{
 			if (rawPointer_) {
-				reset();
+				auto ref = rawPointer_->Release();
+				(ref);
+
+				NYX_ASSERT(ref != NULL || other != rawPointer_);
 			}
 
 			rawPointer_ = other;
-			return rawPointer_;
+		}
+
+		T* detach() throw()
+		{
+			T* pt = rawPointer_;
+			rawPointer_ = NULL;
+			return pt;
 		}
 
 		com_ptr<T>& operator=(com_ptr<T> & other)
@@ -120,7 +121,7 @@ namespace nyx
 			return *this;
 		}
 
-		T* get()
+		T* get() const
 		{
 			return rawPointer_;
 		}
