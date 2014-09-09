@@ -3,9 +3,7 @@
 #include "OggReader.h"
 #include "Debug/DebugOutput.h"
 #include "Debug/Assert.h"
-#pragma comment(lib, "libogg_static.lib")
-#pragma comment(lib, "libvorbis_static.lib")
-#pragma comment(lib, "libvorbisfile_static.lib")
+
 namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
@@ -36,7 +34,8 @@ namespace nyx {
 	//-------------------------------------------------------------------------------------------------------
 	//
 	void ogg_reader::open(const std::wstring& fileName) {
-		FILE * fp = _wfopen(fileName.c_str(), L"rb");
+		FILE * fp = NULL;
+		_wfopen_s(&fp, fileName.c_str(), L"rb");
 		if (fp == NULL) {
 			fclose(fp);
 		}
@@ -47,7 +46,7 @@ namespace nyx {
 		vorbisInfo_ = *ov_info(&vorbisFile_, -1);
 
 		auto timeLength = ov_time_total(&vorbisFile_, -1);
-		fileSize_ = timeLength * (vorbisInfo_.rate * 2 * 2);
+		fileSize_ = static_cast<uint64_t>(timeLength * (vorbisInfo_.rate * 2 * 2));
 	}
 
 	void ogg_reader::close()
@@ -83,7 +82,7 @@ namespace nyx {
 		memcpy(waveHeader_.formatChunk.formatChunkID, "fmt ", 4);
 		memcpy(waveHeader_.dataChunk.dataChunkID, "data", 4);
 
-		waveHeader_.formatChunk.channelNum = vorbisInfo_.channels;
+		waveHeader_.formatChunk.channelNum = static_cast<uint16_t>(vorbisInfo_.channels);
 		waveHeader_.formatChunk.chunkSize = 16;
 		waveHeader_.formatChunk.samplingRate = vorbisInfo_.rate;
 		waveHeader_.formatChunk.bytesPerSec = vorbisInfo_.rate * 2 * 2;

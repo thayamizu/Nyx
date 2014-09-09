@@ -33,7 +33,7 @@ namespace nyx
 	bool database::open(const std::wstring& dbName)
 	{
 		NYX_ASSERT(db_ != nullptr);
-		db_->open(dbName);
+		return db_->open(dbName);
 	}
 
 	//----------------------------------------------------------------------------------
