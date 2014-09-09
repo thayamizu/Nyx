@@ -159,26 +159,25 @@ namespace nyx  {
 		*/
 		matrix operator *(const matrix& mat) const {
 			return matrix(
+				mat_[0][0] * mat.mat_[0][0] + mat_[0][1] * mat.mat_[1][0] + mat_[0][2] * mat.mat_[2][0] + mat_[0][3] * mat.mat_[3][0],
+				mat_[0][0] * mat.mat_[0][1] + mat_[0][1] * mat.mat_[1][1] + mat_[0][2] * mat.mat_[2][1] + mat_[0][3] * mat.mat_[3][1],
+				mat_[0][0] * mat.mat_[0][2] + mat_[0][1] * mat.mat_[1][2] + mat_[0][2] * mat.mat_[2][2] + mat_[0][3] * mat.mat_[3][2],
+				mat_[0][0] * mat.mat_[0][3] + mat_[0][1] * mat.mat_[1][3] + mat_[0][2] * mat.mat_[2][3] + mat_[0][3] * mat.mat_[3][3],
 
-				mat_[0][0]*mat.mat_[0][0] + mat_[0][1]*mat.mat_[1][0] + mat_[0][2]*mat.mat_[2][0] + mat_[0][3] * mat.mat_[3][0],  
-				mat_[0][0]*mat.mat_[0][1] + mat_[0][1]*mat.mat_[1][1] + mat_[0][2]*mat.mat_[2][1] + mat_[0][3] * mat.mat_[3][1], 
-				mat_[0][0]*mat.mat_[0][2] + mat_[0][1]*mat.mat_[1][2] + mat_[0][2]*mat.mat_[2][2] + mat_[0][3] * mat.mat_[3][2], 
-				mat_[0][0]*mat.mat_[0][3] + mat_[0][1]*mat.mat_[1][3] + mat_[0][2]*mat.mat_[2][3] + mat_[0][3] * mat.mat_[3][3], 
+				mat_[1][0] * mat.mat_[0][0] + mat_[1][1] * mat.mat_[1][0] + mat_[1][2] * mat.mat_[2][0] + mat_[1][3] * mat.mat_[3][0],
+				mat_[1][0] * mat.mat_[0][1] + mat_[1][1] * mat.mat_[1][1] + mat_[1][2] * mat.mat_[2][1] + mat_[1][3] * mat.mat_[3][1],
+				mat_[1][0] * mat.mat_[0][2] + mat_[1][1] * mat.mat_[1][2] + mat_[1][2] * mat.mat_[2][2] + mat_[1][3] * mat.mat_[3][2],
+				mat_[1][0] * mat.mat_[0][3] + mat_[1][1] * mat.mat_[1][3] + mat_[1][2] * mat.mat_[2][3] + mat_[1][3] * mat.mat_[3][3],
 
-				mat_[1][0]*mat.mat_[0][0] + mat_[1][1]*mat.mat_[1][0] + mat_[1][2]*mat.mat_[2][0] + mat_[1][3] * mat.mat_[3][0],
-				mat_[1][0]*mat.mat_[0][1] + mat_[1][1]*mat.mat_[1][1] + mat_[1][2]*mat.mat_[2][1] + mat_[1][3] * mat.mat_[3][1],
-				mat_[1][0]*mat.mat_[0][2] + mat_[1][1]*mat.mat_[1][2] + mat_[1][2]*mat.mat_[2][2] + mat_[1][3] * mat.mat_[3][2], 
-				mat_[1][0]*mat.mat_[0][3] + mat_[1][1]*mat.mat_[1][3] + mat_[1][2]*mat.mat_[2][3] + mat_[1][3] * mat.mat_[3][3], 
+				mat_[2][0] * mat.mat_[0][0] + mat_[2][1] * mat.mat_[1][0] + mat_[2][2] * mat.mat_[2][0] + mat_[2][3] * mat.mat_[3][0],
+				mat_[2][0] * mat.mat_[0][1] + mat_[2][1] * mat.mat_[1][1] + mat_[2][2] * mat.mat_[2][1] + mat_[2][3] * mat.mat_[3][1],
+				mat_[2][0] * mat.mat_[0][2] + mat_[2][1] * mat.mat_[1][2] + mat_[2][2] * mat.mat_[2][2] + mat_[2][3] * mat.mat_[3][2],
+				mat_[2][0] * mat.mat_[0][3] + mat_[2][1] * mat.mat_[1][3] + mat_[2][2] * mat.mat_[2][3] + mat_[2][3] * mat.mat_[3][3],
 
-				mat_[2][0]*mat.mat_[0][0] + mat_[2][1]*mat.mat_[1][0] + mat_[2][2]*mat.mat_[2][0] + mat_[2][3] * mat.mat_[3][0], 
-				mat_[2][0]*mat.mat_[0][1] + mat_[2][1]*mat.mat_[1][1] + mat_[2][2]*mat.mat_[2][1] + mat_[2][3] * mat.mat_[3][1], 
-				mat_[2][0]*mat.mat_[0][2] + mat_[2][1]*mat.mat_[1][2] + mat_[2][2]*mat.mat_[2][2] + mat_[2][3] * mat.mat_[3][2], 
-				mat_[2][0]*mat.mat_[0][3] + mat_[2][1]*mat.mat_[1][3] + mat_[2][2]*mat.mat_[2][3] + mat_[2][3] * mat.mat_[3][3], 
-
-				mat_[3][0]*mat.mat_[0][0] + mat_[3][1]*mat.mat_[1][0] + mat_[3][2]*mat.mat_[3][0] + mat_[3][3] * mat.mat_[3][0], 
-				mat_[3][0]*mat.mat_[0][1] + mat_[3][1]*mat.mat_[1][1] + mat_[3][2]*mat.mat_[3][1] + mat_[3][3] * mat.mat_[3][1], 
-				mat_[3][0]*mat.mat_[0][2] + mat_[3][1]*mat.mat_[1][2] + mat_[3][2]*mat.mat_[3][2] + mat_[3][3] * mat.mat_[3][2], 
-				mat_[3][0]*mat.mat_[0][3] + mat_[3][1]*mat.mat_[1][3] + mat_[3][2]*mat.mat_[3][3] + mat_[3][3] * mat.mat_[3][3]	
+				mat_[3][0] * mat.mat_[0][0] + mat_[3][1] * mat.mat_[1][0] + mat_[3][2] * mat.mat_[2][0] + mat_[3][3] * mat.mat_[3][0],
+				mat_[3][0] * mat.mat_[0][1] + mat_[3][1] * mat.mat_[1][1] + mat_[3][2] * mat.mat_[2][1] + mat_[3][3] * mat.mat_[3][1],
+				mat_[3][0] * mat.mat_[0][2] + mat_[3][1] * mat.mat_[1][2] + mat_[3][2] * mat.mat_[2][2] + mat_[3][3] * mat.mat_[3][2],
+				mat_[3][0] * mat.mat_[0][3] + mat_[3][1] * mat.mat_[1][3] + mat_[3][2] * mat.mat_[2][3] + mat_[3][3] * mat.mat_[3][3]
 			);
 		}
 

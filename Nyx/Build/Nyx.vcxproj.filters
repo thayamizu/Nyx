@@ -88,12 +88,6 @@
     <Filter Include="IO\detail\Win32">
       <UniqueIdentifier>{f9656a22-50b7-48bd-ad2a-4de941be282d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\detail">
-      <UniqueIdentifier>{889abc9b-8108-49ea-8b86-0e28530019d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\detail\Win32">
-      <UniqueIdentifier>{38cec03a-1066-4e4e-aca1-f54708ac01f4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sound\detail\DirectSound\Core">
       <UniqueIdentifier>{020b21d5-81b6-40e5-abdc-b951a17f13b8}</UniqueIdentifier>
     </Filter>
@@ -506,9 +500,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\IO\FileUtility.h">
       <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\GUI\detail\Win32\Win32Window.h">
-      <Filter>GUI\detail\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\NyxCore.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h">

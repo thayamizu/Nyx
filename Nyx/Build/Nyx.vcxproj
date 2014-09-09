@@ -92,7 +92,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(DXSDK_DIR)Include\;..\Source;..\..\Common;..\..\SDKs\Ogg\include\;..\..\SDKs\fbx;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(DXSDK_DIR)Include\;..\Source;..\..\Common;..\..\SDKs\Ogg\include\;..\..\SDKs\Sqlite3\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UNICODE;WIN32;RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -107,9 +107,9 @@
       <ProgramDataBaseFileName>$(IntDir)Nyx_MT.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>msimg32.lib;d3d9.lib;d3dx9.lib%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>msimg32.lib;d3d9.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86\;..\..\SDKs\Ogg\Lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86\;..\..\SDKs\Ogg\Lib\;..\..\\SDKs\Sqlite3\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -148,7 +148,6 @@
     <ClInclude Include="..\Source\Graphics\TextureFont.h" />
     <ClInclude Include="..\Source\Graphics\TextureText.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
-    <ClInclude Include="..\Source\GUI\detail\Win32\Win32Window.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
     <ClInclude Include="..\Source\GUI\ICheckBox.h" />
     <ClInclude Include="..\Source\GUI\IControl.h" />
