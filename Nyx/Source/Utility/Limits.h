@@ -103,7 +103,7 @@ namespace nyx
 		*/
 		template<typename T>
 		static bool is_char_range(T value) {
-			return ((value >= CHAR_MINIMUM) && (value <= CHAR_MINIMUM));
+			return ((value >= CHAR_MINIMUM) && (value <= CHAR_MAXIMUM));
 		}
 
 		/**

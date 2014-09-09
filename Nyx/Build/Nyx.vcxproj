@@ -148,7 +148,6 @@
     <ClInclude Include="..\Source\Graphics\TextureFont.h" />
     <ClInclude Include="..\Source\Graphics\TextureText.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
-    <ClInclude Include="..\Source\GUI\detail\Win32\Win32Window.h" />
     <ClInclude Include="..\Source\GUI\Dispatcher.h" />
     <ClInclude Include="..\Source\GUI\ICheckBox.h" />
     <ClInclude Include="..\Source\GUI\IControl.h" />
