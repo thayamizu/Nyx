@@ -1,5 +1,6 @@
 #pragma once
 #include "PCH/PCH.h"
+#include <xnamath.h>
 
 using namespace nyx;
 
@@ -175,14 +176,25 @@ BEGIN_TEST(MATRIX44009)
 				 5,  6,7,8,
 				 9,  10,11,12,
 				 13, 14,15,16);
-
+	const XMMATRIX xA(2, 4, 6, 8,
+		10, 12, 14, 16,
+		18, 20, 22, 24,
+		26, 28, 30, 32);
+	const XMMATRIX xB(2, 4, 6, 8,
+		10, 12, 14, 16,
+		18, 20, 22, 24,
+		26, 28, 30, 32);
 	matrix value = A * B;
+	const XMMATRIX xExp = xA * xB;
+	nyx::debug_out::set_output_mode(DEBUG_OUTPUT_MODE_CONSOLE);
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			//WIN_ASSERT_TRUE(value.Mat[i][j] == exp.Mat[i][j]);
+			nyx::debug_out::trace("(%f, %f) ", value.mat_[i][j], xExp.m[i][j]);
+		
 		}
+		nyx::debug_out::trace("\n");
 	}
 }
 END_TEST
@@ -302,6 +314,72 @@ BEGIN_TEST(MATRIX44014)
 		{
 			//WIN_ASSERT_TRUE(value.Mat[i][j] == exp.Mat[i][j]);
 		}
+	}
+}
+END_TEST
+
+BEGIN_TEST(MATRIX44015)
+{
+	matrix A{};
+	A.identity();
+	matrix::set_rotate_x(&A, 0.4f);
+	
+	XMMATRIX exp;
+	exp = XMMatrixRotationX(0.4f);
+
+	nyx::debug_out::set_output_mode(DEBUG_OUTPUT_MODE_CONSOLE);
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			WIN_ASSERT_TRUE((A.mat_[i][j] - exp.m[i][j]) < nyx::math::EPSILON); 
+			//nyx::debug_out::trace("(%f, %f) ", A.mat_[i][j], exp.m[i][j]);
+		}
+		nyx::debug_out::trace("\n");
+	}
+}
+END_TEST
+
+BEGIN_TEST(MATRIX44016)
+{
+	matrix A{};
+	A.identity();
+	matrix::set_rotate_y(&A, 0.4f);
+
+	XMMATRIX exp;
+	exp = XMMatrixRotationY(0.4f);
+
+	nyx::debug_out::set_output_mode(DEBUG_OUTPUT_MODE_CONSOLE);
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			WIN_ASSERT_TRUE((A.mat_[i][j] - exp.m[i][j]) < nyx::math::EPSILON);
+		//	nyx::debug_out::trace("(%f, %f) ", A.mat_[i][j], exp.m[i][j]);
+		}
+		nyx::debug_out::trace("\n");
+	}
+}
+END_TEST
+
+BEGIN_TEST(MATRIX44017)
+{
+	matrix A{};
+	A.identity();
+	matrix::set_rotate_z(&A, 0.4f);
+
+	XMMATRIX exp;
+	exp = XMMatrixRotationZ(0.4f);
+
+	nyx::debug_out::set_output_mode(DEBUG_OUTPUT_MODE_CONSOLE);
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			WIN_ASSERT_TRUE((A.mat_[i][j] - exp.m[i][j]) < nyx::math::EPSILON);
+			//nyx::debug_out::trace("(%f, %f) ", A.mat_[i][j], exp.m[i][j]);
+		}
+		nyx::debug_out::trace("\n");
 	}
 }
 END_TEST

@@ -23,17 +23,6 @@
 
 //header
 #include <windows.h>
-#include <mmsystem.h>
-
-//Windows Library
-#pragma comment( lib, "msimg32.lib" )
-#pragma comment( lib, "ole32.lib" )
-#pragma comment( lib, "gdi32.lib" )
-#pragma comment( lib, "user32.lib" )
-#pragma comment( lib, "comdlg32.lib" )
-#pragma comment( lib, "advapi32.lib" )
-#pragma comment( lib, "winmm.lib" )
-
 #endif
 
 //ƒCƒ“ƒ‰ƒCƒ“ŠÖ”‚Ì[‚³
@@ -62,8 +51,4 @@
 #include "Utility/Type.h"
 #include "Utility/Limits.h"
 #include "Utility/Math.h"
-
-//DirectX
-//#include "Graphics/DirectXDefinition.h"
-
 #endif

@@ -5,7 +5,7 @@ using namespace nyx;
 BEGIN_TEST(Limits001)
 {
 	WIN_ASSERT_TRUE(limits::CHAR_MINIMUM == CHAR_MIN);
-	WIN_ASSERT_TRUE(limits::CHAR_MINIMUM == CHAR_MAX);
+	WIN_ASSERT_TRUE(limits::CHAR_MAXIMUM == CHAR_MAX);
 
 }
 END_TEST;
