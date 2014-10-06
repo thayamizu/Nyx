@@ -74,7 +74,7 @@ namespace nyx {
 			// D3dDevice9オブジェクトの取得
 			auto d3dDevice = D3d9Driver::GetD3dDevice9();
 
-			using nyx::gdi::font;
+			using nyx::win32::font;
 
 			//DCの取得とフォントの生成
 			wchar_t fontFace[32] = {};

@@ -60,7 +60,7 @@ namespace nyx {
 	typedef format_type vertex_buffer_format;
 
 	///サンプリングレベル
-	typedef uint64_t multi_sampling_level;
+	typedef uint64_t sampling_level;
 
 	///ミップマップレベル
 	typedef uint64_t mipmap_level;

@@ -18,7 +18,7 @@
 #include "Graphics/detail/GDI/Pen.h"
 
 namespace nyx {
-	namespace gdi {
+	namespace win32 {
 		//------------------------------------------------------------------------------
 		//
 		pen::pen()

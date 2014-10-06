@@ -21,7 +21,7 @@
 #include "Primitive/Vector2.h"
 
 namespace nyx {
-	namespace gdi
+	namespace win32
 	{  
 		/// ペンスタイル 
 		enum class PEN_STYLE {

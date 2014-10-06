@@ -115,10 +115,10 @@ namespace nyx
 		}
 
 		if (statement_ == NULL) {
-			return rs; //無効なSQL文なら空のレコードセットを返す
+			return rs; //if invalid query, return empty record set
 		}
 
-		// カラム数の取得
+		// get column number
 		auto columns = sqlite3_column_count(statement_);
 		
 		while (true) {

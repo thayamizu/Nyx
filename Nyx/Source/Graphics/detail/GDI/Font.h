@@ -18,7 +18,7 @@
 #define NYX_CORE_INCLUDED_FONT_H_
 
 namespace nyx {
-	namespace gdi {
+	namespace win32 {
 
 		typedef HFONT font_handle;
 

@@ -34,9 +34,6 @@
     <Filter Include="Database">
       <UniqueIdentifier>{ba5282d5-d5ee-423b-862c-a89fed9a291a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Collision">
-      <UniqueIdentifier>{6fd923f3-74b8-4bdb-ac4a-03d426dcfa83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Camera">
       <UniqueIdentifier>{3d3db83e-9af0-4c1e-aa1a-8da528671e7e}</UniqueIdentifier>
     </Filter>
@@ -138,9 +135,6 @@
     </Filter>
     <Filter Include="Database\detail">
       <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Collision\detail">
-      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
@@ -248,9 +242,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Vector4.h">
       <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Collision\BulletDefinition.h">
-      <Filter>Collision\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Limits.h">
       <Filter>Utility</Filter>

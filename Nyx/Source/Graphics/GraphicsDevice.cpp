@@ -24,7 +24,7 @@ namespace nyx
 		bool isShowCursor_;
 		std::shared_ptr<window> window_;
 		std::shared_ptr<graphics_capacity> capacity_;
-		multi_sampling_level multiSamplingLevel_;
+		sampling_level multiSamplingLevel_;
 		D3dStateBlock9Ptr stateBlock_;
 		PImpl()
 			:isInitialized_(false), capacity_(std::make_shared<graphics_capacity>()), stateBlock_(nullptr) {
@@ -37,7 +37,7 @@ namespace nyx
 
 		//-----------------------------------------------------------------------------------
 		//
-		bool Initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode, multi_sampling_level samplingLevel) {
+		bool Initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode, sampling_level samplingLevel) {
 			window_ = window;
 			NYX_ASSERT(window_ != nullptr);
 
@@ -266,14 +266,14 @@ namespace nyx
 
 	}
 
-	graphics_device::graphics_device(std::shared_ptr<window> window, WINDOW_MODE windowMode  = WINDOW_MODE::WINDOW_MODE_DEFAULT, multi_sampling_level level = 0)
+	graphics_device::graphics_device(std::shared_ptr<window> window, WINDOW_MODE windowMode  = WINDOW_MODE::WINDOW_MODE_DEFAULT, sampling_level level = 0)
 		:pimpl_(new PImpl())
 	{
 		auto result = pimpl_->Initialize(window, windowMode, level);
 		NYX_ASSERT(result  == true);
 	}
 
-	bool graphics_device::initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode  = WINDOW_MODE::WINDOW_MODE_DEFAULT, multi_sampling_level level = 0)
+	bool graphics_device::initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode  = WINDOW_MODE::WINDOW_MODE_DEFAULT, sampling_level level = 0)
 	{
 		NYX_ASSERT(pimpl_ != nullptr);
 		if (pimpl_->IsInitialized()) {

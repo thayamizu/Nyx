@@ -81,7 +81,7 @@ namespace nyx {
 		friend bool InitializeD3d9(
 			std::shared_ptr<window> window, WINDOW_MODE windowMode, 
 			std::shared_ptr<graphics_capacity> capacity, 
-			multi_sampling_level samplingLevel);
+			sampling_level samplingLevel);
 	
 		static D3d9Ptr        d3d9Ptr_;
 		static D3dDevice9Ptr  d3dDevice9Ptr_;
@@ -99,7 +99,7 @@ namespace nyx {
 	* @param std::shared_ptr<GraphicsDeviceCapacity>
 	* @param MutiSamplingLevel
 	*/
-	bool InitializeD3d9(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, multi_sampling_level samplingLevel);
+	bool InitializeD3d9(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, sampling_level samplingLevel);
 	
 
 	/**
@@ -109,7 +109,7 @@ namespace nyx {
 	* @param std::shared_ptr<GraphicsDeviceCapacity>
 	* @param MutiSamplingLevel
 	*/
-	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity,  multi_sampling_level samplingLevel);
+	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity,  sampling_level samplingLevel);
 }
 
 #endif

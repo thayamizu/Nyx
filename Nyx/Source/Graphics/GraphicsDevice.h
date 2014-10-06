@@ -29,7 +29,7 @@ namespace nyx {
 		* @param WindowMode ウインドウモード
 		* @param MultiSamplingLevel サンプリングレベル（0~16)
 		*/
-		graphics_device(std::shared_ptr<window> window, WINDOW_MODE windowMode, multi_sampling_level level);
+		graphics_device(std::shared_ptr<window> window, WINDOW_MODE windowMode, sampling_level level);
 
 
 
@@ -39,7 +39,7 @@ namespace nyx {
 		* @param WindowMode ウインドウモード
 		* @param MultiSamplingLevel サンプリングレベル（0~16)
 		*/
-		bool initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode, multi_sampling_level level);
+		bool initialize(std::shared_ptr<window> window, WINDOW_MODE windowMode, sampling_level level);
 
 		/**
 		* 現在のウインドウモードを取得します

@@ -24,7 +24,7 @@
 #define NYX_CORE_INCLUDED_IMAGE_H_
 
 namespace nyx {
-	namespace gdi {
+	namespace win32 {
 
 		///DIB
 		class  bitmap{

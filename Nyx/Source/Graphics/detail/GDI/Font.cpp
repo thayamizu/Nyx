@@ -20,7 +20,7 @@
 #include "Graphics/detail/GDI/Font.h"
 
 namespace nyx {
-	namespace gdi {
+	namespace win32 {
 
 		//------------------------------------------------------------------------------
 		//

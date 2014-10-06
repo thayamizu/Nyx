@@ -14,7 +14,7 @@ namespace nyx
 
 	//-----------------------------------------------------------------------------------
 	//
-	bool InitializeD3d9(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, multi_sampling_level samplingLevel) {
+	bool InitializeD3d9(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, sampling_level samplingLevel) {
 			// Direct3Dオブジェクトの作成
 			auto  d3d = D3d9Driver::GetD3d9();
 			NYX_ASSERT(d3d != nullptr);
@@ -59,7 +59,7 @@ namespace nyx
 
 	//-----------------------------------------------------------------------------------
 	//
-	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, multi_sampling_level samplingLevel) {
+	D3DPRESENT_PARAMETERS BuildPresentParameter(std::shared_ptr<window> window, WINDOW_MODE windowMode, std::shared_ptr<graphics_capacity> capacity, sampling_level samplingLevel) {
 
 		// D3DPresentParametersの設定
 		D3DPRESENT_PARAMETERS presentParameter = {};
