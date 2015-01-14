@@ -32,11 +32,11 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 
 [Files]
-Source: "C:\Users\hayamizu\Documents\SourceTree\lib_nyx\Lib\MT\Nyx_MT.lib"; DestDir: "{app}\Lib\"; Flags: ignoreversion
-Source: "C:\Users\hayamizu\Documents\SourceTree\lib_nyx\Lib\MTd\Nyx_MTd.lib"; DestDir: "{app}\Lib\"; Flags: ignoreversion
-Source: "C:\Users\hayamizu\Documents\SourceTree\lib_nyx\Lib\MD\Nyx_MD.lib"; DestDir: "{app}\Lib\"; Flags: ignoreversion
-Source: "C:\Users\hayamizu\Documents\SourceTree\lib_nyx\Lib\MDd\Nyx_MDd.lib"; DestDir: "{app}\Lib\"; Flags: ignoreversion
-Source: "C:\Users\hayamizu\Documents\SourceTree\lib_nyx\Nyx\Source\*.h"; DestDir: "{app}\Include\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\hayamizu\Dropbox\SourceTree\Libraries\lib_nyx\Lib\MT\Nyx_MT.lib"; DestDir: "{app}\Lib\"; Flags: ignoreversion
+Source: "C:\Users\hayamizu\Dropbox\SourceTree\Libraries\lib_nyx\Lib\MTd\Nyx_MTd.lib"; DestDir: "{app}\Lib\"; Flags: ignoreversion
+Source: "C:\Users\hayamizu\Dropbox\SourceTree\Libraries\lib_nyx\Lib\MD\Nyx_MD.dll"; DestDir: "{app}\Lib\"; Flags: ignoreversion
+Source: "C:\Users\hayamizu\Dropbox\SourceTree\Libraries\lib_nyx\Lib\MDd\Nyx_MDd.dll"; DestDir: "{app}\Lib\"; Flags: ignoreversion
+Source: "C:\Users\hayamizu\Dropbox\SourceTree\Libraries\lib_nyx\Nyx\Source\*.h"; DestDir: "{app}\Include\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

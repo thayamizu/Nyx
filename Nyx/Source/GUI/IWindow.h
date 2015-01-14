@@ -49,9 +49,9 @@ namespace nyx {
 		*/
 		virtual bool process_message() = 0;
 
-		virtual void on_mouse_down(const gui_callback& callback) = 0;
+		virtual void on_left_button_down(const gui_callback& callback) = 0;
 
-		virtual void on_mouse_up(const gui_callback& callback) = 0;
+		virtual void on_left_button_up(const gui_callback& callback) = 0;
 
 		virtual void on_paint(const gui_callback& callback) = 0;
 

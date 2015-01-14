@@ -23,7 +23,7 @@
 
 namespace nyx {
 	//-----------------------------------------------------------------------------------------
-	window::window(window_handle handle, const std::wstring& caption, const std::wstring& icon, int x, int y, int width, int height)
+	window::window(window_handle handle, const std::wstring& caption, uint32_t icon/*=0*/, int x/*=0*/, int y/*=0*/, int width/*=800*/, int height/*=600*/) 
 		:hwnd_(NULL), caption_(caption), icon_(icon), id_(0), childControl_(), guiEventList_(nullptr) {
 		//フックリストが初期化されていなければ、初期化する
 		guiEventList_ = std::make_shared<dispatcher>();
@@ -54,7 +54,7 @@ namespace nyx {
 		winc.lpfnWndProc = global_procedure;
 		winc.cbClsExtra = winc.cbWndExtra = 0;
 		winc.hInstance = hInstance;
-		winc.hIcon = LoadIcon(NULL, icon_.c_str());
+		winc.hIcon = LoadIcon(hInstance,MAKEINTRESOURCE(icon_));
 		winc.hCursor = LoadCursor(NULL, IDC_ARROW);
 		winc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 		winc.lpszMenuName = NULL;
@@ -244,16 +244,51 @@ namespace nyx {
 
 	//----------------------------------------------------------------
 	//
-	void window::on_mouse_down(const gui_callback& callback) {
+	void window::on_left_button_down(const gui_callback& callback) {
 		NYX_ASSERT(guiEventList_ != nullptr);
-		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MOUSE_DOWN, callback);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_LEFT_BUTTON_DOWN, callback);
 	}
 
 	//----------------------------------------------------------------
 	//
-	void window::on_mouse_up(const gui_callback& callback) {
+	void window::on_left_button_up(const gui_callback& callback) {
 		NYX_ASSERT(guiEventList_ != nullptr);
-		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MOUSE_UP, callback);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_LEFT_BUTTON_UP, callback);
+	}
+
+	//----------------------------------------------------------------
+	//
+	void window::on_middle_button_down(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MIDDLE_BUTTON_DOWN, callback);
+
+	}
+
+	//----------------------------------------------------------------
+	//
+	void window::on_middle_button_up(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MIDDLE_BUTTON_UP, callback);
+
+	}
+
+	//----------------------------------------------------------------
+	//
+	void window::on_right_button_down(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_RIGHT_BUTTON_DOWN, callback);
+
+	}
+
+	//----------------------------------------------------------------
+	//
+	void window::on_right_button_up(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MIDDLE_BUTTON_UP, callback);
 	}
 
 	//----------------------------------------------------------------
@@ -269,8 +304,32 @@ namespace nyx {
 		NYX_ASSERT(guiEventList_ != nullptr);
 		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_RESIZE, callback);
 	}
+	//----------------------------------------------------------------
+	//
+	void window::on_move(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_WINDOW_MOVE, callback);
+	}
 
 	//----------------------------------------------------------------
+	//
+	void window::on_mouse_move(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MOUSE_MOVE, callback);
+	}
+
+	//----------------------------------------------------------------
+	//
+	void window::on_mouse_wheel(const gui_callback& callback)
+	{
+		NYX_ASSERT(guiEventList_ != nullptr);
+		this->guiEventList_->add_callback(WIDGET_EVENT_TYPE_MOUSE_WHEEL, callback);
+	}
+
+	//----------------------------------------------------------------
+	//
 	bool window::process_message() {
 		MSG msg;
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
@@ -309,6 +368,7 @@ namespace nyx {
 			}
 			break;
 		case WM_DRAWITEM:
+		
 			controlId = LOWORD(wParam);
 			eventType = WIDGET_EVENT_TYPE_PAINT;
 			break;
@@ -318,17 +378,38 @@ namespace nyx {
 		case WM_SIZE:
 			eventType = WIDGET_EVENT_TYPE_RESIZE;
 			break;
+		case WM_MOVE:
+			eventType = WIDGET_EVENT_TYPE_WINDOW_MOVE;
+			break;
 		case WM_LBUTTONDOWN:
+			SetCapture(hWnd);
+			eventType = WIDGET_EVENT_TYPE_LEFT_BUTTON_DOWN;
+			break;
 		case WM_RBUTTONDOWN:
+			SetCapture(hWnd);
+			eventType = WIDGET_EVENT_TYPE_RIGHT_BUTTON_DOWN;
+			break;
 		case WM_MBUTTONDOWN:
-			eventType = WIDGET_EVENT_TYPE_MOUSE_DOWN;
-			::SetCapture(hWnd);
+			SetCapture(hWnd);
+			eventType = WIDGET_EVENT_TYPE_MIDDLE_BUTTON_DOWN;
 			break;
 		case WM_LBUTTONUP:
+			ReleaseCapture();
+			eventType = WIDGET_EVENT_TYPE_LEFT_BUTTON_UP;
+			break;
 		case WM_RBUTTONUP:
+			ReleaseCapture();
+			eventType = WIDGET_EVENT_TYPE_RIGHT_BUTTON_UP;
+			break;
 		case WM_MBUTTONUP:
-			eventType = WIDGET_EVENT_TYPE_MOUSE_UP;
-			::ReleaseCapture();
+			ReleaseCapture();
+			eventType = WIDGET_EVENT_TYPE_MIDDLE_BUTTON_UP;
+			break;
+		case WM_MOUSEWHEEL:
+			eventType = WIDGET_EVENT_TYPE_MOUSE_WHEEL;
+			break;
+		case WM_MOUSEMOVE:
+			eventType = WIDGET_EVENT_TYPE_MOUSE_MOVE;
 			break;
 		case WM_IME_SETCONTEXT:
 			lParam = 0;
@@ -364,4 +445,5 @@ namespace nyx {
 
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
+
 }

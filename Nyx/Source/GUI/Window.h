@@ -33,7 +33,7 @@ namespace nyx {
 		/**
 		*
 		*/
-		window(window_handle handle, const std::wstring& caption, const std::wstring& icon,  int x=0,int y=0, int width=800, int height=600);
+		window(window_handle handle, const std::wstring& caption, uint32_t icon=0, int x=0,int y=0, int width=800, int height=600);
 		/**
 		*
 		*/
@@ -182,13 +182,26 @@ namespace nyx {
 		*/
 		bool process_message();
 
-		void on_mouse_down(const gui_callback& callback);
+		void on_left_button_down(const gui_callback& callback);
 
-		void on_mouse_up(const gui_callback& callback);
+		void on_middle_button_down(const gui_callback& callback);
+
+		void on_right_button_down(const gui_callback& callback);
+		
+		void on_left_button_up(const gui_callback& callback);
+
+		void on_middle_button_up(const gui_callback& callback);
+	
+		void on_right_button_up(const gui_callback& callback);
 
 		void on_paint(const gui_callback& callback);
 
 		void on_resize(const gui_callback& callback);
+
+		void on_move(const gui_callback& callback);
+		
+		void on_mouse_move(const gui_callback& callback);
+		void on_mouse_wheel(const gui_callback& callback);
 
 		void dispatch(WIDGET_EVENT_TYPE evenType, event_args& e);
 	private:
@@ -210,14 +223,14 @@ namespace nyx {
 		HWND hwnd_;
 		///ウインドウID
 		uint32_t id_;
+		///アイコンリソース
+		uint32_t icon_;
 		///ウインドウスタイル
 		uint64_t style_;
 		///アトム
 		ATOM atom_;
 		///タイトル
 		std::wstring caption_;
-		///アイコンリソース
-		std::wstring icon_;
 		///ユーザーデータ
 		std::shared_ptr<void> userData_;
 		///ウインドウに結びつけらている子コントロールのリスト

@@ -88,7 +88,7 @@ namespace nyx
 
 		T* operator=(T *other)
 		{
-			if (*this != other)
+			if (this->rawPointer_ != other)
 			{
 				reset(other);
 			}
