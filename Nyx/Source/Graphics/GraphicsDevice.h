@@ -14,7 +14,7 @@ namespace nyx {
 	///DirectGraphicsデバイス
 	class graphics_device 
 	{
-		friend class sprite;
+		friend class sprite_batch;
 		friend class texture;
 	public:
 		/**
