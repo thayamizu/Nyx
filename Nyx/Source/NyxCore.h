@@ -110,8 +110,7 @@ class SkinMesh;
 #include "Graphics/FontInfo.h"
 #include "Graphics/TextureFont.h"
 #include "Graphics/TextureText.h"
-#include "Graphics/Sprite.h"
-#include "Graphics/SpriteManager.h"
+#include "Graphics/SpriteBatch.h"
 
 //ƒTƒEƒ“ƒh
 #include "Sound/AudioBuffer.h"
