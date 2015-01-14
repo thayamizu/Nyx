@@ -233,7 +233,7 @@
     <ClInclude Include="..\Source\Debug\Assert.h" />
     <ClInclude Include="..\Source\Debug\DebugOutput.h" />
     <ClInclude Include="..\Source\Debug\MemoryChecker.h" />
-    <ClInclude Include="..\Source\Graphics\Box.h" />
+    <ClInclude Include="..\Source\Graphics\Geometry.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX10\DirectGraphics10Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX11\DirectGraphics11Definition.h" />
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h" />
@@ -248,11 +248,10 @@
     <ClInclude Include="..\Source\Graphics\GraphicsDeviceType.h" />
     <ClInclude Include="..\Source\Graphics\IRenderable.h" />
     <ClInclude Include="..\Source\Graphics\IResource.h" />
+    <ClInclude Include="..\Source\Graphics\ISceneNode.h" />
     <ClInclude Include="..\Source\Graphics\ResourceCache.h" />
     <ClInclude Include="..\Source\Graphics\ResourceHandle.h" />
-    <ClInclude Include="..\Source\Graphics\Sphere.h" />
-    <ClInclude Include="..\Source\Graphics\Sprite.h" />
-    <ClInclude Include="..\Source\Graphics\SpriteManager.h" />
+    <ClInclude Include="..\Source\Graphics\SpriteBatch.h" />
     <ClInclude Include="..\Source\Graphics\TextureFont.h" />
     <ClInclude Include="..\Source\Graphics\TextureText.h" />
     <ClInclude Include="..\Source\GUI\CheckBox.h" />
@@ -351,8 +350,7 @@
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp" />
     <ClCompile Include="..\Source\Graphics\GraphicsDeviceCapacity.cpp" />
     <ClCompile Include="..\Source\Graphics\ResourceCache.cpp" />
-    <ClCompile Include="..\Source\Graphics\Sprite.cpp" />
-    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp" />
+    <ClCompile Include="..\Source\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureFont.cpp" />
     <ClCompile Include="..\Source\Graphics\TextureText.cpp" />
     <ClCompile Include="..\Source\GUI\CheckBox.cpp" />
@@ -406,9 +404,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Thread\CriticalSection.cpp" />
     <ClCompile Include="..\Source\Thread\Thread.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Project1\Project1.vcxproj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

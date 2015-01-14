@@ -34,9 +34,6 @@
     <Filter Include="Database">
       <UniqueIdentifier>{ba5282d5-d5ee-423b-862c-a89fed9a291a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Camera">
-      <UniqueIdentifier>{3d3db83e-9af0-4c1e-aa1a-8da528671e7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Core">
       <UniqueIdentifier>{30c428a5-9e68-45ee-a903-8a90d5740b24}</UniqueIdentifier>
     </Filter>
@@ -139,23 +136,8 @@
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Camera\Base">
-      <UniqueIdentifier>{2ff7e408-af8c-448e-b452-a948b0f73b32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Camera\System">
-      <UniqueIdentifier>{c6f13ccb-4f05-490b-849c-7af6c39dbcfc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Core\Base">
       <UniqueIdentifier>{a0c0aaf1-5ccb-47b6-bfd5-a982e932ef54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Geometry">
-      <UniqueIdentifier>{fd85f2c3-343f-4020-9a62-3b028c9b0995}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Geometry\Base">
-      <UniqueIdentifier>{0392c2f7-3c77-426e-830a-7afb8c897634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Geometry\System">
-      <UniqueIdentifier>{6acb0121-6117-47db-9a07-6187dac5e251}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Core\Resource">
       <UniqueIdentifier>{661fab4c-b31d-48d0-8401-eaae6af06048}</UniqueIdentifier>
@@ -175,24 +157,6 @@
     <Filter Include="Graphics\Core\Base\detail\GDI">
       <UniqueIdentifier>{dcb3b735-18df-479b-b389-6e94d48fce77}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\SpriteSystem">
-      <UniqueIdentifier>{8baf611c-8ff9-4aa2-867c-153dde8ba99f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\SpriteSystem\Base">
-      <UniqueIdentifier>{1e12d315-57d1-4eea-9aea-35be20d1d4db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\SpriteSystem\System">
-      <UniqueIdentifier>{04641af2-3878-4ae6-bfb0-d17137f091a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Font">
-      <UniqueIdentifier>{406f78f2-5dcf-4ed8-8663-b982d413dbd5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Font\Base">
-      <UniqueIdentifier>{f6b9dbf2-954b-4da2-89ed-24ac3688f6cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Font\System">
-      <UniqueIdentifier>{3fed7b1f-1d8a-46d0-8db3-b88d3d7710cc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI\Base">
       <UniqueIdentifier>{f5398fe0-e5a4-4b23-9f28-6d311011a4a2}</UniqueIdentifier>
     </Filter>
@@ -210,6 +174,36 @@
     </Filter>
     <Filter Include="Device\detail\DirectInput">
       <UniqueIdentifier>{66eb67ad-e452-4f2f-8773-e5f1fe49e652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem">
+      <UniqueIdentifier>{8baf611c-8ff9-4aa2-867c-153dde8ba99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\Font">
+      <UniqueIdentifier>{406f78f2-5dcf-4ed8-8663-b982d413dbd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\SpriteBatch">
+      <UniqueIdentifier>{16fd0f60-a10a-4e82-a742-c44b7e54f5be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\Base">
+      <UniqueIdentifier>{0c31864b-6a5b-4194-abba-f2b7c666ca44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\Geometry">
+      <UniqueIdentifier>{fd85f2c3-343f-4020-9a62-3b028c9b0995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\LevelOfDetail">
+      <UniqueIdentifier>{90f381aa-f582-4e45-b122-e0158d006315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\Camera">
+      <UniqueIdentifier>{3d3db83e-9af0-4c1e-aa1a-8da528671e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Core\Base\detail\GDI\Base">
+      <UniqueIdentifier>{9ccedd94-6431-4887-9f32-ad8cec24ab98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\Skybox">
+      <UniqueIdentifier>{8f629d8c-7882-43de-b18e-0a36545339bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SceneSystem\Mesh">
+      <UniqueIdentifier>{32667a27-9f44-4342-94e2-2c4d2f197754}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -420,15 +414,6 @@
     <ClInclude Include="..\Source\Input\KeyCode.h">
       <Filter>Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h">
-      <Filter>Graphics\Core\Base\detail\GDI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\GDI\Font.h">
-      <Filter>Graphics\Core\Base\detail\GDI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h">
-      <Filter>Graphics\Core\Base\detail\GDI</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Graphics\detail\DX9\DirectXDefinition.h">
       <Filter>Graphics\Core\Base\detail\DX9</Filter>
     </ClInclude>
@@ -450,44 +435,8 @@
     <ClInclude Include="..\Source\Graphics\detail\GDI\GDIAll.h">
       <Filter>Graphics\Core\Base\detail\GDI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\IResource.h">
-      <Filter>Graphics\Core\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ResourceCache.h">
-      <Filter>Graphics\Core\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\ResourceHandle.h">
-      <Filter>Graphics\Core\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\Utility\NonCopyable.h">
       <Filter>Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\IRenderable.h">
-      <Filter>Graphics\Core\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\Sprite.h">
-      <Filter>Graphics\SpriteSystem\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\TextureFont.h">
-      <Filter>Graphics\Font\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\Sphere.h">
-      <Filter>Graphics\Geometry\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\Box.h">
-      <Filter>Graphics\Geometry\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\FontInfo.h">
-      <Filter>Graphics\Font\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\TextureText.h">
-      <Filter>Graphics\Font\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\FontManager.h">
-      <Filter>Graphics\Font\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Graphics\SpriteManager.h">
-      <Filter>Graphics\SpriteSystem\Base</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\IO\FileUtility.h">
       <Filter>IO</Filter>
@@ -543,6 +492,48 @@
     </ClInclude>
     <ClInclude Include="..\Source\Database\RecordSet.h">
       <Filter>Database\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\Geometry.h">
+      <Filter>Graphics\SceneSystem\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\SpriteBatch.h">
+      <Filter>Graphics\SceneSystem\SpriteBatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\FontInfo.h">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\TextureFont.h">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\TextureText.h">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\FontManager.h">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ISceneNode.h">
+      <Filter>Graphics\SceneSystem\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IRenderable.h">
+      <Filter>Graphics\SceneSystem\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\DIBitmap.h">
+      <Filter>Graphics\Core\Base\detail\GDI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\Font.h">
+      <Filter>Graphics\Core\Base\detail\GDI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\detail\GDI\Pen.h">
+      <Filter>Graphics\Core\Base\detail\GDI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\IResource.h">
+      <Filter>Graphics\SceneSystem\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ResourceCache.h">
+      <Filter>Graphics\SceneSystem\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\ResourceHandle.h">
+      <Filter>Graphics\SceneSystem\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -672,15 +663,6 @@
     <ClCompile Include="..\Source\Input\Joystick.cpp">
       <Filter>Device</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp">
-      <Filter>Graphics\Core\Base\detail\GDI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\GDI\Font.cpp">
-      <Filter>Graphics\Core\Base\detail\GDI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp">
-      <Filter>Graphics\Core\Base\detail\GDI</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Graphics\GraphicsDevice.cpp">
       <Filter>Graphics\Core\Base</Filter>
     </ClCompile>
@@ -689,24 +671,6 @@
     </ClCompile>
     <ClCompile Include="..\Source\Graphics\detail\DX9\DirectXDefinition.cpp">
       <Filter>Graphics\Core\Base\detail\DX9</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\Sprite.cpp">
-      <Filter>Graphics\SpriteSystem\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\TextureFont.cpp">
-      <Filter>Graphics\Font\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\ResourceCache.cpp">
-      <Filter>Graphics\Core\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\TextureText.cpp">
-      <Filter>Graphics\Font\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\FontManager.cpp">
-      <Filter>Graphics\Font\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp">
-      <Filter>Graphics\SpriteSystem\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
       <Filter>GUI\System</Filter>
@@ -732,8 +696,29 @@
     <ClCompile Include="..\Source\Database\Database.cpp">
       <Filter>Database\System</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Project1\Project1.vcxproj" />
+    <ClCompile Include="..\Source\Graphics\SpriteBatch.cpp">
+      <Filter>Graphics\SceneSystem\SpriteBatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\TextureFont.cpp">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\TextureText.cpp">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\FontManager.cpp">
+      <Filter>Graphics\SceneSystem\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\GDI\DIBitmap.cpp">
+      <Filter>Graphics\Core\Base\detail\GDI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\GDI\Font.cpp">
+      <Filter>Graphics\Core\Base\detail\GDI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\detail\GDI\Pen.cpp">
+      <Filter>Graphics\Core\Base\detail\GDI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\ResourceCache.cpp">
+      <Filter>Graphics\SceneSystem\Base</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
