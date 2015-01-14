@@ -9,7 +9,7 @@ namespace nyx
 		template<typename T>
 		struct com_ptr_base
 		{
-			typedef typename std::remove_pointer<T>::type raw_type;
+			typedef typename std::decay<T>::type	raw_type;
 			typedef raw_type const &				const_reference_type;
 			typedef raw_type const *				const_pointer_type;
 			typedef raw_type &						reference_type;
