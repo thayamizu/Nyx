@@ -5,6 +5,11 @@
 #include "Primitive/Rect.h"
 #include <Windows.h>
 
+
+#define NYX_BIND_CALLBACK_HANDLER(fn)\
+	std::bind(fn, std::ref(*this),\
+	std::placeholders::_1, std::placeholders::_2)
+
 namespace nyx 
 {
 	class iwidget;
