@@ -219,7 +219,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Collision\BulletDefinition.h" />
     <ClInclude Include="..\Source\Database\Database.h" />
     <ClInclude Include="..\Source\Database\RecordSet.h" />
     <ClInclude Include="..\Source\Database\Sqlite3Database.h" />

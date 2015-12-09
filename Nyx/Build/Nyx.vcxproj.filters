@@ -34,12 +34,6 @@
     <Filter Include="Database">
       <UniqueIdentifier>{ba5282d5-d5ee-423b-862c-a89fed9a291a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Collision">
-      <UniqueIdentifier>{6fd923f3-74b8-4bdb-ac4a-03d426dcfa83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Camera">
-      <UniqueIdentifier>{3d3db83e-9af0-4c1e-aa1a-8da528671e7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Core">
       <UniqueIdentifier>{30c428a5-9e68-45ee-a903-8a90d5740b24}</UniqueIdentifier>
     </Filter>
@@ -139,17 +133,8 @@
     <Filter Include="Database\detail">
       <UniqueIdentifier>{bc2415ae-4a19-4366-aa5b-82cfecaba713}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Collision\detail">
-      <UniqueIdentifier>{1884c18c-0857-4289-a999-93cf5fe4c2dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Movie\detail">
       <UniqueIdentifier>{90260f19-f484-426c-bf86-527b1d90a826}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Camera\Base">
-      <UniqueIdentifier>{2ff7e408-af8c-448e-b452-a948b0f73b32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Camera\System">
-      <UniqueIdentifier>{c6f13ccb-4f05-490b-849c-7af6c39dbcfc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Core\Base">
       <UniqueIdentifier>{a0c0aaf1-5ccb-47b6-bfd5-a982e932ef54}</UniqueIdentifier>
@@ -159,9 +144,6 @@
     </Filter>
     <Filter Include="Graphics\Geometry\Base">
       <UniqueIdentifier>{0392c2f7-3c77-426e-830a-7afb8c897634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Geometry\System">
-      <UniqueIdentifier>{6acb0121-6117-47db-9a07-6187dac5e251}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Core\Resource">
       <UniqueIdentifier>{661fab4c-b31d-48d0-8401-eaae6af06048}</UniqueIdentifier>
@@ -248,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="..\Source\Primitive\Vector4.h">
       <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Source\Collision\BulletDefinition.h">
-      <Filter>Collision\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Utility\Limits.h">
       <Filter>Utility</Filter>
@@ -495,9 +474,6 @@
     <ClInclude Include="..\Source\Graphics\FontManager.h">
       <Filter>Graphics\Font\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\Graphics\SpriteManager.h">
-      <Filter>Graphics\SpriteSystem\Base</Filter>
-    </ClInclude>
     <ClInclude Include="..\Source\IO\FileUtility.h">
       <Filter>IO</Filter>
     </ClInclude>
@@ -552,6 +528,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Database\RecordSet.h">
       <Filter>Database\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Graphics\SpriteManager.h">
+      <Filter>Graphics\SpriteSystem\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -714,9 +693,6 @@
     <ClCompile Include="..\Source\Graphics\FontManager.cpp">
       <Filter>Graphics\Font\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp">
-      <Filter>Graphics\SpriteSystem\Base</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\GUI\Dispatcher.cpp">
       <Filter>GUI\System</Filter>
     </ClCompile>
@@ -740,6 +716,9 @@
     </ClCompile>
     <ClCompile Include="..\Source\Database\Database.cpp">
       <Filter>Database\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Graphics\SpriteManager.cpp">
+      <Filter>Graphics\SpriteSystem\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
